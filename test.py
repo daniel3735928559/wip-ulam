@@ -193,7 +193,7 @@ def experiment9(l,m):
         s[gcd(i,m)] += 1
     gcds = phid(m)
     for x in s:
-        print("{} : {} =? {}".format(x,s[x],int((l/m)*len([t for t in gcds if t[1] == x]))))
+        print("{} : {} =? {}".format(x,s[x],int((len(l)/m)*len([t for t in gcds if t[1] == x]))))
 
 def evolve_random(d,m,total,N):
     end = total + N
@@ -250,10 +250,10 @@ def experiment12(l,a):
         print("{} {} {} {}".format(x,len(s[x]), math.cos(a * x), s[x]))
     return s
 
-u1_2 = read_seq("seq1,2")
-u1_3 = read_seq("seq1,3")
-u2_3 = read_seq("seq2,3")
-u12_13 = read_seq("seq12,13")
+u1_2 = read_seq("seqs/seq1,2")
+u1_3 = read_seq("seqs/seq1,3")
+u2_3 = read_seq("seqs/seq2,3")
+u12_13 = read_seq("seqs/seq12,13")
 alpha1_2 = 2.5714474995
 # experiment6(u1_2,[5,17,22,259,281,540,2441,2981,5422,2711,27*5,2*2*3*3*3*5*5,2*2*2,2**4,2*2*3*3*5,7*7*7*7*7*7])
 # experiment6(u1_2,[540*i for i in range(1,20)])
@@ -261,7 +261,7 @@ alpha1_2 = 2.5714474995
 # experiment6(u1_2,range(1,3000))
 # experiment7()
 # experiment8(u1_2)
-# experiment9(u1_2,87292)
+experiment9(u1_2,87292)
 # experiment10(u1_2,221,540,100000)
 # experiment11(u1_2, alpha1_2)
 # experiment12(u1_2, alpha1_2)
