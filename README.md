@@ -1,0 +1,107 @@
+This file is still being populated with notes from previous
+experiments.  Pardon our dust.
+
+### 20151229 Subgroup considerations
+
+One possible source of bias mod 540 (say) would be if a_n tended to
+miss certain whole subgroups mod 540.  This seems kind of attractive
+based on the fact that 540 has a lot of divisors (though this isn't
+always true of the other denominators in the continued fraction
+expansion).
+
+### 20151230 Evolving a distribution
+
+Another possible source of bias is that 
+
+### 20151230 A correlation between summands and cos(alpha*a_n)
+
+We note with interest the observation in the abstract of Steinerberger
+that cos(alpha*a_n) < 0 for all a_n other than 2, 3, 47, and 69.  In
+particular, thee were also the a_n that showed up most frequently as
+summands in our earlier computation.
+
+So we compute which how often each a_n appears as the smaller summand
+of a later a_i and we compute cos(alpha*a_n) for each and sort by this
+quantity.  We note what looks like a very strong correlation between
+how often a_n shows up as a summand and cos(alpha*a_n) in the
+resulting table, computed by `experiment11`:
+
+```
+Format: a_n, # a_i such that a_n is the smaller summand of a_i, cos(alpha_{1,2} * a_n) [a_i : a_i = a_n + a_*]
+
+2 3630 0.41733070262870486 [6, 8, 13, 18, 28, 38, 99, 177, 182, 221, 238, ...
+3 1356 0.13918577174048308 [11, 16, 72, 102, 148, 180, 209, 241, 319, 412, ...
+47 1190 0.09314945116148635 [236, 253, 356, 363, 429, 456, 544, 720, 732, ...
+69 999 0.07005004608158771 [175, 258, 451, 483, 566, 820, 1018, 1052, 1101, ...
+102 836 -0.03533426907901862 [282, 441, 502, 585, 624, 646, 668, 949, 1125, ...
+339 589 -0.0711987488469575 [695, 739, 751, 861, 905, 1186, 1230, 1770, 1853, ...
+36 465 -0.10468116468523993 [138, 309, 602, 927, 1191, 1550, 1682, 2090, 2288, ...
+273 305 -0.1403260484112354 [612, 673, 685, 1164, 1296, 1308, 1428, 1660, 1765, ...
+8 181 -0.15065198092326257 [26, 36, 77, 114, 197, 324, 390, 991, 1470, 1602, ...
+2581 85 -0.28740411578013597 [5795, 7459, 8947, 9443, 9619, 9641, 9663, 10677, ...
+400 55 -0.2884371848720607 [3214, 3605, 3991, 12763, 13562, 13799, 13931, 15160, ...
+983 50 -0.3160870169407304 [2445, 2748, 5514, 9553, 16121, 17135, 19427, 21626, ...
+97 47 -0.3204537967301412 [316, 370, 497, 1252, 2581, 3622, 4057, 10366, 13628, ...
+356 21 -0.33249578951071784 [983, 4118, 11226, 22676, 27817, 34104, 34969, 52789, ...
+1155 16 -0.34664508490498336 [4878, 9132, 13733, 16047, 27883, 30886, 38920, 40931, ...
+206 33 -0.35210835605364843 [522, 891, 1155, 1514, 2787, 4324, 9399, 11432, 20375, ...
+53 35 -0.36400375717687433 [155, 409, 1208, 3038, 5049, 8421, 14945, 16648, 19480, ...
+1308 18 -0.3694282571996273 [3029, 8368, 10501, 20937, 29147, 34784, 37765, 61029, ...
+9193 8 -0.39212546438962775 [20419, 68914, 74099, 83323, 92073, 108317, 123718, 124864]
+10831 4 -0.4275703245958347 [31878, 56503, 89101, 126493]
+13 6 -0.4278336499870973 [82, 219, 273, 19642, 59734, 91748]
+14892 2 -0.43270258250883076 [41620, 84500]
+13531 3 -0.4379518060471682 [47279, 61451, 83139]
+23883 2 -0.4409365382548865 [65740, 106394]
+10269 1 -0.4463455890816818 [44816]
+8368 1 -0.4494994835242297 [20968]
+20643 0 -0.45329707066551345 []
+316 5 -0.4579687420768522 [2897, 9509, 37809, 44377, 45132]
+30315 1 -0.4603261098428447 [64928]
+3205 1 -0.46097252485489365 [89057]
+56437 0 -0.4623937767448221 []
+4118 0 -0.46422907716529205 []
+10247 0 -0.46696423929912617 []
+3038 2 -0.4683040193517334 [7156, 95616]
+57 3 -0.46925689465650167 [126, 339, 9250]
+483 1 -0.4712894777269175 [80891]
+60665 0 -0.4719075620475581 []
+63646 0 -0.47285836474034365 []
+39912 1 -0.4732674578528013 [128969]
+1023 3 -0.47331956082924576 [2178, 20643, 65705]
+69608 0 -0.4747583182234548 []
+47920 0 -0.4752710197227344 []
+123683 0 -0.47626799121658503 []
+33274 1 -0.48172182638061584 [97956]
+11586 0 -0.4822323173406816 []
+75706 0 -0.482256288588461 []
+128969 0 -0.48251534075104174 []
+3723 1 -0.4834321003782536 [34038]
+39653 1 -0.484451819395134 [84469]
+42217 0 -0.484555301907165 []
+```
+
+If nothing else, this might suggest to us how to compute more a_n more
+quickly: Rather than searching previous summands in order, search in
+the order given by using cos(alpha*a_n) as the index.  Once we find a
+sum that is unique, we only have to search all smaller sums, again in
+this order.
+
+## 20151231 Experiment 7
+
+```
+1,2 (2.5714479999999997, 1586.3495100297046)
+1,3 (2.8334960000000002, 1587.3716251000853)
+2,3 (1.184224, 1497.1305405102953)
+12,13 (3.141592, 1847.9732996138823)
+```
+
+## 20151231 Frequency of a_n as a summand, revisited
+
+```
+python test.py | grep '^2 ' | sed 's/.*[[]//;s/]//;s/, /\n/g'|nl -ba > ss2
+python test.py | grep '^3 ' | sed 's/.*[[]//;s/]//;s/, /\n/g'|nl -ba > ss3
+```
+
+See ss2.png and ss3.png for the output.  Looks very linear.
+
