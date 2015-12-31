@@ -1,6 +1,132 @@
 This file is still being populated with notes from previous
 experiments.  Pardon our dust.
 
+### Takeaways so far:
+
+* With f_N(x) the fourier transform of the indicator function of a_n (in the Steinberger's sense), f_N(alpha) grows linearly in N. 
+
+* Possibly alpha_(x,x+1) = pi for x that are >= 12 and are even
+
+* Possibly alpha_(1,x) -> 0 as x -> infinity
+
+* The a_i are very unusually biased mod 540, and generally are biased
+  modulo the denominators of the continued fraction convergents of
+  alpha
+
+* In general, if we're imagining alpha = 2pi*k/m (where k is related
+  to the set of favoured congruence classes mod m), then there are
+  several available choices for k but only one that gives the apparent
+  continuity observed.  For example, 10839*alpha mod 2pi =
+  5.9926... works about as well as alpha for giving a peak in the
+  Fourier transform.
+
+* How likely a_n is to be used as a summand of a later a_i is not at
+  all random, but appears instead to be correlated with the value of
+  cos(alpha*a_n)
+
+* The set of i for which a_n appears as a summand appears to have
+  fixed density, whose numerical value is somehow correlated with
+  cos(alpha*a_n).
+
+### 20151220 Linearity of f_N in N
+
+
+
+### 20151221 More alphas
+
+We compute these in `experiment1` and `experiment2`
+
+```
+Format: a1 a2 (optimal alpha, approximated to four decimal places, ||F_200||^2 (only meaningful if orders of magnitude bigger than 200))
+
+1 2 (2.571600000001008, 23348.35938929195)
+1 3 (2.8334000000015607, 24293.720371257674)
+1 4 (2.094400000000001, 39007.46385460891)
+1 5 (1.7648999999998278, 26597.042612213307)
+1 6 (4.833200000002081, 32338.778040479963)
+1 7 (0.32669999999998606, 24192.1315190365)
+1 8 (0.2736999999999919, 25928.99448125898)
+1 9 (6.038099999999273, 26372.972667249553)
+1 10 (6.061699999999218, 25717.807140737834)
+1 11 (6.083299999999167, 25743.731352831754)
+1 12 (6.101599999999125, 25737.80981551202)
+1 13 (6.115499999999092, 25926.87112676625)
+1 14 (6.124499999999071, 25983.886809829368)
+1 15 (6.135699999999045, 25647.874299833387)
+1 16 (6.1453999999990225, 26048.466535913547)
+1 17 (6.155099999999, 26086.336559974516)
+1 18 (6.158099999998993, 26167.0885135168)
+1 19 (6.166099999998974, 26600.041630256266)
+1 20 (6.174099999998956, 25678.082435323184)
+1 2 (2.571600000001008, 23348.35938929195)
+2 3 (1.1841999999998918, 16192.09475962663)
+3 4 (5.380900000000804, 26414.80301587582)
+4 5 (5.600000000000294, 21640.564248470706)
+5 6 (2.0588999999999262, 22783.571558654858)
+6 7 (2.6889000000012557, 19502.053865731123)
+7 8 (3.9426000000039014, 23910.35721534735)
+8 9 (3.490300000002947, 19172.229899792306)
+9 10 (5.955799999999464, 13422.672633312626)
+10 11 (3.4270000000028134, 17537.29505082042)
+11 12 (6.00919999999934, 14069.21195102112)
+12 13 (3.141600000002211, 17955.65635464096)
+13 14 (2.9106000000017236, 18768.829084251494)
+14 15 (3.141600000002211, 19043.701112532486)
+15 16 (2.940100000001786, 15916.092915960573)
+16 17 (3.141600000002211, 23103.745481433194)
+17 18 (2.963400000001835, 17551.757008092867)
+18 19 (3.141600000002211, 21903.769889105457)
+19 20 (6.123199999999074, 15870.335860431833)
+```
+
+So for example, when a1 = 12, a2 = 13, it looks like alpha = pi, which seems to be confirmed for this particular instance by computing more terms and searching with more precision.  This is saying that the a_i are very biased mod 2pi/pi = 2, which seems experimentally to be very much the case even out to thousands of terms (for this particular example): the a_i are over 80% odd.  Proving something in this direction seems accessible, but some first efforts were unfruitful.
+
+Note for example
+  that in the extreme case where a_i = r mod m for all i, |f_N(2pi/m)|
+  will be N on the nose.  If instead a_i is only ever congruent to r
+  or s mod m, then if k = 1/(r-s) mod m, then again |f_N(2pi*k/m)| is
+  close to N.
+
+In general, one could imagine that for whatever initial values, the existence of such alpha is saying the a_i prefer a set of congruence classes mod m for some (possibly large) m.  In this case, alpha could be 2pi*k/m for some k.  (To see what k is, think what happens if the a_i happen to biased toward only two congruence classes r and s modulo m, then k would be such that kr and ks are all as close as possible mod m, say k = 1/(s-r) mod m.  If the preference is for more than two congruence classes, then the choice of k seems complicated (though still elementary): Given r1, ... rM mod m, find the k such that the k*r_i are all "as tightly clustered as possible".  There could be multiple k that do the job well, even if one of them is the very best.
+
+
+### 20151221 Continued fractions
+
+
+It is more likely that there is a sequence of m mod which the
+congruence classes of a_i are increasingly clustered.  The continued
+fraction of 2pi/alpha, which we're imagining is m/k, doesn't have some
+really large coefficient where we would obviously truncate it.
+Instead, for 2pi/alpha_(1,2) it is just
+
+```[2; 2, 3, 1, 11, 1, 1, 4, 1, 1, 7, 2, 2, 6, 5, 3, 1, 3, 1, 2, 1, 3, 2, 1, 14, 2, 5, 3, 2, 3, 1, 2, 13, 2]```
+
+For most of the alpha(i,j) that we computed to any meaningful
+precision, either this continues to be true, or there is a very small
+obvious modulus like 2.
+
+
+There may not be a single best m: For example, one could imagine a sequence that is slightly biased to being odd, say 60% are 1 mod 2.  But then in fact it turns out that mod 4, it is more strongly biased, with 65% being only 2 or 3 mod 4.  And maybe in fact mod 12, 80% of terms are only ever 2, 3, 6, or 8 mod 12, and maybe in fact 99% are 2, 3, 6, 8, or 1 mod 48, and maybe you can catch more and more of the sequence with a slowly expanding set of congruence classes modulo quickly growing modulus.  If there is a "bias mod m" thing happening, this is probably the flavour it takes, but I'm happy to try to treat the approximation to alpha as indicating an "at least some bias toward some congruence classes mod some fixed m" phenomenon.
+
+```
+Format: c < 41000,  c*alpha mod 2pi,  |f_1000(c*alpha)| if "large enough"
+
+1 2.5714474995 792.4132845820646
+5421 3.7118834651791985 697.9602738649951
+5423 2.571593156997551 667.6433815922704
+10843 3.7120291226783593 430.5852814483841
+10845 2.5717388144948927 382.76395161416815
+19246 3.711096030579938 188.76234341111504
+27109 3.7124660951667465 192.74127423547188
+27111 2.572175787005108 192.3664947764681
+30090 3.7113873455818975 251.33288416753032
+30092 2.571097037391155 299.91484894398576
+35512 3.7115330030792393 564.7163838117917
+35514 2.5712426948884968 604.3427231679284
+40934 3.711678660576581 767.1522122115849
+40936 2.5713883524003904 780.2228219170503
+```
+
 ### 20151229 Subgroup considerations
 
 One possible source of bias mod 540 (say) would be if a_n tended to
@@ -226,14 +352,13 @@ The data for i such that a_i = 2 + a_n (some n) is plotted here:
 
 ![indices of elements with 2 as a summand](figs/ss2.png)
 
-and for the a_i with 3, 47, 69, 273, 339, and 8 (respectively) as a summand:
+and for the a_i with 3, 47, 69, etc. as summands:
 
 ![indices of elements with 3 as a summand](figs/ss3.png)
 ![indices of elements with 47 as a summand](figs/ss47.png)
 ![indices of elements with 69 as a summand](figs/ss69.png)
+![indices of elements with 102 as a summand](figs/ss102.png)
 ![indices of elements with 273 as a summand](figs/ss273.png)
-![indices of elements with 339 as a summand](figs/ss339.png)
-![indices of elements with 8 as a summand](figs/ss8.png)
 
 Looks quite linear.  Indeed, computing the lines of best fit like:
 
@@ -245,11 +370,37 @@ gnuplot> fit f(x) "data/ss2" u 1:2 via a,b
 we get:
 
 ```
-2:   2.73325 x + 89.98
-3:   7.39206 x - 68.4331
-47:  8.21144 x + 103.419
-69:  10.0008 x + 130.561
-273: 17.0196 x - 58.678
-339: 33.4172 x - 5.79674
-8:   57.7111 x - 229.248
+a_n   line of best fit      density of i with a_n a summand of a_i
+=================================================================
+2:    2.73325 x + 89.98     .36586481295161437848
+3:    7.39206 x - 68.4331   .13528028722710584059
+47:   8.21144 x + 103.419   .12178131971980553958
+69:   10.0008 x + 130.561   .09999200063994880409
+102:  11.9520 x + 16.9218   .08366800535475234270
+273:  17.0196 x - 58.678    .05875578744506333873
+36:   21.1842 x + 117.105   .04720499239999622360
+339:  33.4172 x - 5.79674   .02992470943107142429
+8:    57.7111 x - 229.248   .01732768912739490323
+2581: 112.838 x - 415.223   .00886226271291586167
 ```
+
+We can take these densities against the values of cos(alpha*x) and plot them: 
+
+```
+0.41733070262870486    .36586481295161437848
+0.13918577174048308    .13528028722710584059
+0.09314945116148635    .12178131971980553958
+0.07005004608158771    .09999200063994880409
+-0.03533426907901862   .08366800535475234270
+-0.0711987488469575    .05875578744506333873
+-0.10468116468523993   .04720499239999622360
+-0.1403260484112354    .02992470943107142429
+-0.15065198092326257   .01732768912739490323
+-0.28740411578013597   .00886226271291586167
+```
+
+![plot of density against cos(ax)](figs/cos_density_correlation.png)
+
+There is a definite correlation, but it isn't linear or particularly
+obvious what the quantitative relationship is (particularly with this
+small dataset).  
