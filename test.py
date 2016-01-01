@@ -234,7 +234,7 @@ def experiment11(l,a):
                 s[l[j]].append(i)
                 break
     for x in s:
-        print("{} {} {} {}".format(x,len(s[x]), math.cos(a * x), s[x]))
+        print("{} {} {} {} {}".format(x,len(s[x]), a*x-2*math.pi*math.floor(a*x/(2*math.pi)), math.cos(a * x), s[x]))
     return s
 
 def experiment12(l,a):

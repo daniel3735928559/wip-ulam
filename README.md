@@ -403,4 +403,28 @@ We can take these densities against the values of cos(alpha*x) and plot them:
 
 There is a definite correlation, but it isn't linear or particularly
 obvious what the quantitative relationship is (particularly with this
-small dataset).  
+small dataset).
+
+A closelyrelated but perhaps more natural quantity that is similarly
+correlated is simply the distance between alpha*a_n and the middle of
+the interval [0,2pi], i.e.: `|(alpha*a_n mod 2pi) - pi|`:
+
+```
+2.001302345410207     .36586481295161437848
+1.7104354622693787    .13528028722710584059
+1.6640810135019244    .12178131971980553958
+1.6409037891182088    .09999200063994880409
+1.5354547010472182    .08366800535475234270
+1.499537286127282     .05875578744506333873
+1.4659230278960003    .04720499239999622360
+1.4300056129761636    .02992470943107142429
+1.4195685791285513    .01732768912739490323
+1.2792808257332915    .00886226271291586167
+```
+
+We note that the two closest terms to the middle of this interval are
+11 and 10833.  Even though these are very much outside of the two main
+bulges in the distribution that go from about 2.1-3.0 and 3.2-4.2,
+they still show up rarely as summands.  For a striking visualisation
+of the frequency of things as summands, see [this file](data/ax_by_dist_from_pi).
+
