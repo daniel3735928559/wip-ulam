@@ -485,7 +485,7 @@ it lives, rather than its actual value.  We compute these in
 `experiment13`, generating output [here](data/indices_of_summands) of the form:
 
 ```
-n       a_n     i       n-j   (with a_i + a_j = a_n and i < j)
+n 	a_n	i	n-j   (with a_i + a_j = a_n and i < j)
 2 	1 	0 	1
 3 	2 	0 	1
 4 	3 	1 	1
