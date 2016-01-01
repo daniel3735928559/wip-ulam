@@ -4,7 +4,7 @@ experiments.  Pardon our dust.
 ### Takeaways so far:
 
 * [link](#20151220-linearity-of-f_n-in-n) With `f_N(x)` the fourier
-  transform of the indicator function of `a_n` (in the Steinberger's
+  transform of the indicator function of `a_n` (in Steinerberger's
   sense), `f_N(alpha)` grows linearly in N.
 
 * [link](#20151221-more-alphas) Possibly alpha_(x,x+1) = pi for x that are >= 12 and are even
@@ -351,7 +351,7 @@ minute computation for each:
 12,13 (3.141592, 1847.9732996138823)
 ```
 
-We note that alpha_{2,3} is different from that in Steinberger.
+We note that alpha_{2,3} is different from that in Steinerberger.
 Unclear whether this is a programming error or another peak or what.
 
 ### 20151231 Frequency of a_n as a small summand, revisited
