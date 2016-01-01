@@ -1,4 +1,4 @@
-import math,sys,random
+import math,sys,random,bisect
 
 ## Utility functions: 
 
@@ -9,6 +9,40 @@ def read_seq(fn):
             l.append(int(x))
     return l
 
+def red(x):
+    return abs(x - 2*math.pi*math.floor(x/2*math.pi)-math.pi)
+
+def extend_seq(l,a,N):
+    d = {x for x in l}
+    al = [(x,red(a*x)) for x in l]
+    al.sort(key=lambda x:-x[1])
+    dists = [x[1] for x in al]
+    xs = [x[0] for x in al]
+    sums = {}
+    for rep in range(N):
+        min_sum = 2*l[-1]
+        best_small = 1
+        for i in range(len(xs)):
+            small = xs[i]
+            large_idx = -1
+            top = l[-1]
+            while(small+large > top and small+large < min_sum):
+                large = l[large_idx]
+                if(not small+large in candidates):
+                    sums[small+large] = 0
+                sums[small+large] += 1
+                large_idx -= 1
+            candidates = [x for x in sums if sums[x] == 1 and x < min_sum]
+            for s in candidates:
+                j = i+1
+                ok = True
+                while(j < len(s)-1 and l[j]+l[j+1] <= s):
+                    if(s-l[j] in d):
+                        sums[s] += 1
+                        ok = False
+                        break
+                if(ok):
+                    min_sum = s
 def next_seq(l):
     i = 0
     j = len(l)-1
@@ -80,6 +114,25 @@ def ft(a,l):
     ss = sum([math.sin(a*x) for x in l])
     return math.sqrt(cs*cs+ss*ss)
 
+def evolve_random(d,m,total,N):
+    end = total + N
+    while total < end:
+        r1 = random.uniform(0,total)
+        r2 = random.uniform(0,total)
+        c = 0
+        a = -1
+        b = -1
+        for i in range(m):
+            c += d[i]
+            if r1 < c and a == -1:
+                a = d[i]
+            if r2 < c and b == -1:
+                b = d[i]
+            if a != -1 and b != -1:
+                break
+        d[(a+b)%540] += 1
+        total += 1
+    return d
 
 def find_alpha(l,s=.02,prec=2):
     a = 0.2
@@ -116,18 +169,18 @@ def find_alpha(l,s=.02,prec=2):
 ## Experiments: 
 
 def experiment0():
-    print("Attempt to confirm that alpha_{12,13} == pi")
+    """Attempt to confirm that alpha_{12,13} == pi"""
     print(ft(math.pi,ulam(12,13,500)))
 
 def experiment1():
-    print("Compute alpha_{1,i+1} for i = 1..19")
+    """Compute alpha_{1,i+1} for i = 1..19"""
     n = 200
     s = 0.0001
     for i in range(1,20):
         print(1,i+1,find_alpha(ulam(1,i+1,n),s))
 
 def experiment2():
-    print("Compute alpha_{i,i+1} for i = 1..19")
+    """Compute alpha_{i,i+1} for i = 1..19"""
     n = 200
     s = 0.0001
     for i in range(1,20):
@@ -135,7 +188,7 @@ def experiment2():
 
     
 def experiment3(l):
-    print("Check linearity of f_N(alpha) in N")
+    """Check linearity of f_N(alpha) in N"""
     a = alpha1_2
     for N in range(0,1000,100):
         print(ft(a,l[:N]))
@@ -155,7 +208,7 @@ def experiment5():
             print(k,d,f)
 
 def experiment6(us,ms):
-    print("Try to measure the bias in the 'us' mod each m in ms by computing the std dev of the number of times each residue class mod m shows up")
+    """Try to measure the bias in the 'us' mod each m in ms by computing the std dev of the number of times each residue class mod m shows up"""
     m = 1
     for x in ms:
         m = x
@@ -167,14 +220,14 @@ def experiment6(us,ms):
         print(sigma/m, m,sigma)
     
 def experiment7():
-    print("Approximate alpha for a few precomputed sequences")
+    """Approximate alpha for a few precomputed sequences"""
     print("1,2",find_alpha(u1_2[:2000]))
     print("1,3",find_alpha(u1_3[:2000]))
     print("2,3",find_alpha(u2_3[:2000]))
     print("12,13",find_alpha(u12_13[:2000]))
             
 def experiment8(l):
-    print("Compute the summands of each element of l")
+    """Compute the summands of each element of l"""
     s = {x : (0, x) for x in l}
     for i in range(2,len(l)):
         for j in range(i):
@@ -187,7 +240,7 @@ def experiment8(l):
         print("{} = {} + {}".format(x,s[x][0],s[x][1]))
 
 def experiment9(l,m):
-    print("Compute how many times a_n lies in each additive subgroup mod m:")
+    """Compute how many times a_n lies in each additive subgroup mod m:"""
     s = {x:0 for x in range(1,m+1) if m%x == 0}
     for i in l:
         s[gcd(i,m)] += 1
@@ -195,28 +248,8 @@ def experiment9(l,m):
     for x in s:
         print("{} : {} =? {}".format(x,s[x],int((len(l)/m)*len([t for t in gcds if t[1] == x]))))
 
-def evolve_random(d,m,total,N):
-    end = total + N
-    while total < end:
-        r1 = random.uniform(0,total)
-        r2 = random.uniform(0,total)
-        c = 0
-        a = -1
-        b = -1
-        for i in range(m):
-            c += d[i]
-            if r1 < c and a == -1:
-                a = d[i]
-            if r2 < c and b == -1:
-                b = d[i]
-            if a != -1 and b != -1:
-                break
-        d[(a+b)%540] += 1
-        total += 1
-    return d
-
 def experiment10(l,k,m,N):
-    print("Evolve the mod m distribution on the elements of l (multiplied by k) by selecting new summands randomly according to the existing distribution")
+    """Evolve the mod m distribution on the elements of l (multiplied by k) by selecting new summands randomly according to the existing distribution"""
     s = {x:0 for x in range(m)}
     for i in l:
         s[(k*i)%m] += 1
@@ -226,7 +259,7 @@ def experiment10(l,k,m,N):
     
 
 def experiment11(l,a):
-    print("Compute how often each element x of l occurs as the small summand and compare with cos(a*x)")
+    """Compute how often each element x of l occurs as the small summand and compare with cos(a*x)"""
     s = {x : [] for x in l}
     for i in range(2,len(l)):
         for j in range(i):
@@ -235,10 +268,10 @@ def experiment11(l,a):
                 break
     for x in s:
         print("{} {} {} {} {}".format(x,len(s[x]), a*x-2*math.pi*math.floor(a*x/(2*math.pi)), math.cos(a * x), s[x]))
-    return s
+    return 
 
 def experiment12(l,a):
-    print("Compute how often each element x of l occurs as any summand and compare with cos(a*x)")
+    """Compute how often each element x of l occurs as any summand and compare with cos(a*x)"""
     s = {x : [] for x in l}
     for i in range(2,len(l)):
         for j in range(i):
@@ -249,6 +282,20 @@ def experiment12(l,a):
     for x in s:
         print("{} {} {} {}".format(x,len(s[x]), math.cos(a * x), s[x]))
     return s
+
+def experiment13(l):
+    """For each x in l, compute how far from x the large summand of x is"""
+    s = {l[i] : i for i in range(len(l))}
+    ans = []
+    for i in range(2,len(l)):
+        for j in range(i):
+            if(l[i] - l[j] in s):
+                ans.append((l[j],l[i] - l[j],j,i-(s[l[i] - l[j]])))
+                break
+    for i in range(len(ans)):
+        print("{} \t{} \t{} \t{}".format(i+2,l[i],ans[i][2],ans[i][3]))
+    return s
+
 
 u1_2 = read_seq("seqs/seq1,2")
 u1_3 = read_seq("seqs/seq1,3")
@@ -263,5 +310,6 @@ alpha1_2 = 2.5714474995
 # experiment8(u1_2)
 # experiment9(u1_2,2*3*47*69)
 # experiment10(u1_2,221,540,100000)
-experiment11(u1_2, alpha1_2)
+# experiment11(u1_2, alpha1_2)
 # experiment12(u1_2, alpha1_2)
+experiment13(u1_2)

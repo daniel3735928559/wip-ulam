@@ -3,30 +3,45 @@ experiments.  Pardon our dust.
 
 ### Takeaways so far:
 
-* With f_N(x) the fourier transform of the indicator function of a_n (in the Steinberger's sense), f_N(alpha) grows linearly in N. 
+* [link](#20151220-linearity-of-f_n-in-n) With `f_N(x)` the fourier
+  transform of the indicator function of `a_n` (in the Steinberger's
+  sense), `f_N(alpha)` grows linearly in N.
 
-* Possibly alpha_(x,x+1) = pi for x that are >= 12 and are even
+* [link](#20151221-more-alphas) Possibly alpha_(x,x+1) = pi for x that are >= 12 and are even
 
-* Possibly alpha_(1,x) -> 0 as x -> infinity
+* [link](#20151221-more-alphas) Possibly alpha_(1,x) -> 0 as x -> infinity
 
-* The a_i are very unusually biased mod 540, and generally are biased
-  modulo the denominators of the continued fraction convergents of
-  alpha
+* [link](#20151221-continued-fractions) The a_i are very unusually biased mod 540, and generally
+  are biased modulo the denominators of the continued fraction
+  convergents of alpha
 
-* In general, if we're imagining alpha = 2pi*k/m (where k is related
-  to the set of favoured congruence classes mod m), then there are
-  several available choices for k but only one that gives the apparent
-  continuity observed.  For example, 10839*alpha mod 2pi =
-  5.9926... works about as well as alpha for giving a peak in the
+* [link](#20151221-continued-fractions) In general, if we're imagining `alpha = 2pi*k/m` (where k
+  is related to the set of favoured congruence classes mod m), then
+  there are several available choices for k but only one that gives
+  the apparent continuity observed.  For example, `10839*alpha mod 2pi
+  = 5.9926...` works about as well as alpha for giving a peak in the
   Fourier transform.
 
-* How likely a_n is to be used as a summand of a later a_i is not at
-  all random, but appears instead to be correlated with the value of
+* [link](#20151229-subgroup-considerations) Whatever is going on is
+  not purely algebraic.
+
+* [link](#20151230-evolving-a-distribution) Whatever is going on is
+  not a result of something that can be simulated by a simple random
+  process.
+
+* [link](#20151230-a-correlation-between-summands-and-cosalphaa_n) How
+  likely a_n is to be used as a summand of a later a_i is not at all
+  random, but appears instead to be correlated with the value of
   cos(alpha*a_n)
 
-* The set of i for which a_n appears as a summand appears to have
-  fixed density, whose numerical value is somehow correlated with
-  cos(alpha*a_n).
+* [link](#20151231-frequency-of-a_n-as-a-summand-revisited) The set of
+  i for which a_n appears as a summand appears to have fixed density,
+  whose numerical value is somehow correlated with `cos(alpha*a_n)`
+  (or, perhaps equivalently but more simply, with the distance between
+  `alpha*a_n mod 2pi` and pi.
+
+* [link](#20160101-large-summands) Each `a_n` can be written in a unique was as `a_i + a_j`.  In the
+  first 10000 a_n, there are only 312 unique pairs `(i, n-j)`.
 
 ### 20151220 Linearity of f_N in N
 
@@ -339,7 +354,7 @@ minute computation for each:
 We note that alpha_{2,3} is different from that in Steinberger.
 Unclear whether this is a programming error or another peak or what.
 
-### 20151231 Frequency of a_n as a summand, revisited
+### 20151231 Frequency of a_n as a small summand, revisited
 
 We run `experiment11(u1_2, alpha1_2)` to compute 
 
@@ -450,3 +465,67 @@ show up rarely as summands.  For a striking visualisation of the
 frequency of things as summands, see [this
 file](data/ax_by_dist_from_pi).
 
+### 20160101 Large summands
+
+We've studied the smaller summands a bit--now the question is: What
+about the large summands?
+
+We note first that if 2 or 3 is the small summand of `a_{n+1}`, then
+the large summand is necesarily `a_n` (if 2 is the small summand and
+`a_n` is not the large summand, then `a_{n+1}` would be `a_n + 1`
+which is impossible since this is a duplicate sum with `a_n+a_1`.  If
+3 is the small summand and `a_n` is not the large summand, then
+`a_{n+1}` is either `a_n + 1` or `a_n + 2`, both of which would be
+duplicates.)
+
+This means that over 50% of the time, the large summand will be the
+last thing in the list so far.  When looking at the large summand,
+then, it seems more relevant to consider how many indices from the end
+it lives, rather than its actual value.  We compute these in
+`experiment13`, generating output [here](data/indices_of_summands) of the form:
+
+```
+n       a_n     i       n-j   (with a_i + a_j = a_n and i < j)
+2 	1 	0 	1
+3 	2 	0 	1
+4 	3 	1 	1
+5 	4 	1 	1
+6 	6 	2 	1
+7 	8 	1 	1
+8 	11 	2 	1
+9 	13 	1 	1
+10 	16 	5 	1
+11 	18 	1 	1
+...
+```
+
+We can do some processing on these to figure out which n-j are the
+most common:
+
+```
+cat data/indices_of_summands | cut -d ' ' -f 4 | sort -n|uniq -c|sort -n > data/n_minus_js
+```
+
+results [here](data/n_minus_js).  Note in particular that there are
+only 159 of them and (as suggested above) that n-j = 1 accounts for
+over 50% of them.  This list seems to contain few surprises: Among all
+the values of n-j that appear more than 10 times, nothing bigger than
+34 shows up.
+
+If we look at values that show up fewer than 10 times, then it looks
+like n-j = 100 and 185 < n-j < 205 seem to be preferred, with many of
+these showing up 3 or more times, while all other values show up 2 or
+fewer times.  This could be an artifact of not much data, however.
+
+We might instead take a look instead at enumerating `(i,n-j)` pairs,
+rather than just values of n-j:
+
+```
+cat data/indices_of_summands | cut -d ' ' -f 3,4 | sort -n|uniq -c|sort -n > data/i_nmj
+```
+
+with results [here](data/n_nmj).  Note in particular that there are
+only 312 distinct such pairs, meaning that technically, to compute the
+first 10000 Ulam numbers, we only have to check 312 possibilities for
+each.  If only there were a way of knowing ahead of time which 312 we
+had to check...
