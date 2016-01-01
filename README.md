@@ -377,14 +377,30 @@ a_n   line of best fit      density of i with a_n a summand of a_i
 47:   8.21144 x + 103.419   .12178131971980553958
 69:   10.0008 x + 130.561   .09999200063994880409
 102:  11.9520 x + 16.9218   .08366800535475234270
-273:  17.0196 x - 58.678    .05875578744506333873
+339:  17.0196 x - 58.678    .05875578744506333873
 36:   21.1842 x + 117.105   .04720499239999622360
-339:  33.4172 x - 5.79674   .02992470943107142429
+273:  33.4172 x - 5.79674   .02992470943107142429
 8:    57.7111 x - 229.248   .01732768912739490323
 2581: 112.838 x - 415.223   .00886226271291586167
 ```
 
-We can take these densities against the values of cos(alpha*x) and plot them: 
+One thing that we see from the later plots, e.g.
+
+![indices of elements with 8 as a summand](figs/ss8.png)
+
+is that the graph seems to oscillate around the line of best fit.  To
+this end, we take a few of these and subtract the lines of best fit to
+see if we get something particularly striking:
+
+![plot of differences from line of best fit](figs/ss2_line.png)
+![plot of differences from line of best fit](figs/ss3_line.png)
+![plot of differences from line of best fit](figs/ss339_line.png)
+![plot of differences from line of best fit](figs/ss8_line.png)
+
+Unclear...
+
+We can also take these densities against the values of cos(alpha*x)
+and plot them:
 
 ```
 0.41733070262870486    .36586481295161437848
@@ -405,7 +421,7 @@ There is a definite correlation, but it isn't linear or particularly
 obvious what the quantitative relationship is (particularly with this
 small dataset).
 
-A closelyrelated but perhaps more natural quantity that is similarly
+A closely related but perhaps more natural quantity that is similarly
 correlated is simply the distance between alpha*a_n and the middle of
 the interval [0,2pi], i.e.: `|(alpha*a_n mod 2pi) - pi|`:
 
@@ -422,9 +438,15 @@ the interval [0,2pi], i.e.: `|(alpha*a_n mod 2pi) - pi|`:
 1.2792808257332915    .00886226271291586167
 ```
 
-We note that the two closest terms to the middle of this interval are
-11 and 10833.  Even though these are very much outside of the two main
-bulges in the distribution that go from about 2.1-3.0 and 3.2-4.2,
-they still show up rarely as summands.  For a striking visualisation
-of the frequency of things as summands, see [this file](data/ax_by_dist_from_pi).
+![plot of density against ax mod 2pi](figs/dist_from_pi_density_correlation.png)
+
+Still nothing particular earth-shatteringly obvious.  sqrt(density)
+looks a little more like a line, but not hugely convincingly.
+
+We note that the two closest terms to the middle of \[0,2pi\] are 11 and
+10833.  Even though these are very much outside of the two main bulges
+in the distribution that go from about 2.1-3.0 and 3.2-4.2, they still
+show up rarely as summands.  For a striking visualisation of the
+frequency of things as summands, see [this
+file](data/ax_by_dist_from_pi).
 
