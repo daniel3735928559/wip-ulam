@@ -43,6 +43,10 @@ experiments.  Pardon our dust.
 * [link](#20160101-large-summands) Each `a_n` can be written in a unique was as `a_i + a_j`.  In the
   first 10000 a_n, there are only 312 unique pairs `(i, n-j)`.
 
+* [link](#20160102-more-data) Each `a_n` can be written in a unique
+  was as `a_i + a_j`.  In the first 100000 a_n, there are only 662
+  unique pairs `(i, n-j)`.
+
 ### 20151220 Linearity of f_N in N
 
 
@@ -557,7 +561,7 @@ minutes to compute the first 100000 Ulam numbers on my 7-year-old Core
 2 Duo laptop.
 
 The data needed to continue the computation is in
-[seqs/raw/s1000k](seqs/raw/s1000k).
+[seqs/raw/s100k](seqs/raw/s100k).
 
 This means we can repeat a lot of the computations we did earlier with
 10x more data.  For example, there are now 662 unique `(i,n-j)` pairs:
@@ -654,3 +658,69 @@ that there are only 81 different values for this, ranging from 1 to
       1 115
       1 107
 ```
+
+### 20150102 Algebraicity
+
+My guess is that since apparently alpha=pi sometimes, alpha should not
+be expected to be algebraic, but really 2pi/alpha is the relevant
+quantity anyways.  At any rate, we tried some tests on both using LLL
+to hunt for the minimal polynomial of b = 2pi/alpha and b = alpha.  It
+should be noted that f(b) << 10^(-10) is what is needed to be
+convincing that f(b) is actually zero.  Also, I am not sure what
+effect result from the lack of precision in our knowledge of alpha.
+
+For what it's worth, then, here is the basic computation (done in
+Sage):
+
+```
+from sage.libs.fplll.fplll import FP_LLL
+b2=2.57144749848
+b=N(2*pi/2.57144749848)
+
+def find_mp(x,deg=50,n=10^10):
+    M = []
+    for i in range(deg+1):
+        M.append([1 if v == i else 0 for v in range(deg+1)]+[int(n*(x^i)+.5)])
+    M = matrix(M)
+    F=FP_LLL(M)
+    F.LLL()
+    l=F._sage_()[0][:-1]
+
+    R = ZZ['X']
+    X=R.gen()
+    fx = 0
+    for i in range(len(l)):
+        fx += X^i * l[i]
+    ans = N(fx(x),50)
+    return(fx, ans, fx.factor())
+
+ms = [find_mp(b,i) for i in range(2,10)]
+ms.sort(key=lambda x:abs(x[1]))
+for x in ms:
+    print(x)
+
+print("")
+ms = [find_mp(b2,i) for i in range(2,10)]
+ms.sort(key=lambda x:abs(x[1]))
+for x in ms:
+    print(x)
+    
+
+(5*X^7 - 9*X^6 - 8*X^5 - 4*X^4 + 6*X^3 + 6*X^2 + 3*X + 24, -4.8860471224543e-11, 5*X^7 - 9*X^6 - 8*X^5 - 4*X^4 + 6*X^3 + 6*X^2 + 3*X + 24)
+(-5*X^8 + 9*X^7 + 8*X^6 + 4*X^5 - 6*X^4 - 6*X^3 - 3*X^2 - 24*X, 1.1938777481609e-10, (-1) * X * (5*X^7 - 9*X^6 - 8*X^5 - 4*X^4 + 6*X^3 + 6*X^2 + 3*X + 24))
+(22*X^5 - 27*X^4 - 47*X^3 - 22*X^2 - 49*X - 17, -6.4223470985780e-10, 22*X^5 - 27*X^4 - 47*X^3 - 22*X^2 - 49*X - 17)
+(X^9 - 6*X^8 + 6*X^7 + 8*X^6 - 4*X^5 - X^4 + 5*X^3 + 6*X^2 - 12*X + 1, 1.3065359905085e-9, X^9 - 6*X^8 + 6*X^7 + 8*X^6 - 4*X^5 - X^4 + 5*X^3 + 6*X^2 - 12*X + 1)
+(-4*X^6 - 10*X^5 + 39*X^4 + 24*X^3 + 2*X^2 - 18*X + 14, 2.0213413165493e-9, (-1) * (4*X^6 + 10*X^5 - 39*X^4 - 24*X^3 - 2*X^2 + 18*X - 14))
+(-28*X^4 + 13*X^3 + 91*X^2 + 95*X + 33, 2.9011744118179e-9, (-1) * (28*X^4 - 13*X^3 - 91*X^2 - 95*X - 33))
+(-25*X^3 + 62*X^2 + 123*X - 306, 3.7695372157032e-8, (-1) * (25*X^3 - 62*X^2 - 123*X + 306))\n(-509*X^2 + 947*X + 725, 2.5785948309931e-7, (-1) * (509*X^2 - 947*X - 725))
+
+(X^8 - 11*X^5 - 13*X^4 - 9*X^3 + 8*X^2 - 6*X + 9, 1.8155628112027e-9, X^8 - 11*X^5 - 13*X^4 - 9*X^3 + 8*X^2 - 6*X + 9)
+(X^8 - 11*X^5 - 13*X^4 - 9*X^3 + 8*X^2 - 6*X + 9, 1.8155628112027e-9, X^8 - 11*X^5 - 13*X^4 - 9*X^3 + 8*X^2 - 6*X + 9)
+(X^6 + 6*X^5 - 22*X^4 + 7*X^3 + X^2 - 34*X - 40, -1.8250148059451e-9, X^6 + 6*X^5 - 22*X^4 + 7*X^3 + X^2 - 34*X - 40)
+(-3*X^7 + 3*X^6 + 15*X^5 + 2*X^4 - 21*X^3 - 4*X^2 - 13*X + 6, -2.3348913913424e-9, (-1) * (3*X^7 - 3*X^6 - 15*X^5 - 2*X^4 + 21*X^3 + 4*X^2 + 13*X - 6))
+(27*X^4 - 92*X^3 + 40*X^2 + 25*X + 55, 3.9355683156828e-9, 27*X^4 - 92*X^3 + 40*X^2 + 25*X + 55)
+(3*X^5 + 22*X^4 - 54*X^3 - 32*X^2 - 55*X - 28, 6.7800982606059e-9, 3*X^5 + 22*X^4 - 54*X^3 - 32*X^2 - 55*X - 28)
+(-49*X^2 + 252*X - 324, -1.7553418274474e-8, (-1) * (7*X - 18)^2)
+(-49*X^2 + 252*X - 324, -1.7553418274474e-8, (-1) * (7*X - 18)^2)
+```
+
