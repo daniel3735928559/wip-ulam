@@ -12,6 +12,67 @@ def read_seq(fn):
 def red(x):
     return abs(x - 2*math.pi*math.floor(x/2*math.pi)-math.pi)
 
+def extend_with_storage(l,N):
+    ans = l
+    top = l[-1]
+    sums = {}
+    for i in range(len(l)):
+        for j in range(i):
+            if(ans[i]+ans[j] > top):
+                sums[ans[i]+ans[j]] = 1 if (not ans[i]+ans[j] in sums) else sums[ans[i]+ans[j]]+1
+        if(i % 500 == 0):
+            print("{} / {}".format(i,len(l)))
+            sys.stdout.flush()
+    print(sums)
+    prev_an = 0
+    for c in range(N):
+        an = ans[-1]+1
+        while((not an in sums) or sums[an] != 1):
+            an += 1
+        for i in ans:
+            sums[an+i] = 1 if (not an+i in sums) else sums[an+i]+1
+        ans.append(an)
+        if(c % 500 == 0):
+            for i in range(prev_an,an):
+                sums.pop(i,None)
+            prev_an = an
+            sys.stderr.write("{} {}\n".format(c,len(sums)))
+            sys.stderr.flush()
+            sys.stdout.flush()
+    return ans
+
+def extend_with_storage_careful(l,c,dq,N):
+    ans = l
+    top = l[-1]
+    candidates = c
+    candidates_list = sorted([-x for x in c])
+    disqualified = dq
+    prev_an = 0
+    for c in range(N):
+        an = 0
+        while(an <= ans[-1]):
+            an = -candidates_list.pop(-1)
+            candidates.remove(an)
+        for i in ans:
+            v = an+i
+            if(v in disqualified):
+                pass
+            elif(v in candidates):
+                candidates.remove(an+i)
+                candidates_list.pop(bisect.bisect_left(candidates_list,-v))
+                disqualified[v] = 2
+            else:
+                candidates.add(v)
+                candidates_list.insert(bisect.bisect_left(candidates_list,-v),-v)
+        ans.append(an)
+        if(c % 500 == 0):
+            for i in range(prev_an,an):
+                disqualified.pop(i,None)
+            prev_an = an
+            print(c,len(disqualified))
+            sys.stdout.flush()
+    return candidates,disqualified,ans
+
 def extend_seq(l,a,N):
     d = {x for x in l}
     al = [(x,red(a*x)) for x in l]
@@ -290,10 +351,10 @@ def experiment13(l):
     for i in range(2,len(l)):
         for j in range(i):
             if(l[i] - l[j] in s):
-                ans.append((l[j],l[i] - l[j],j,i-(s[l[i] - l[j]])))
+                ans.append((l[j],l[i] - l[j],j,i-(s[l[i] - l[j]]),l[i]-l[i-1]))
                 break
     for i in range(len(ans)):
-        print("{} \t{} \t{} \t{}".format(i+2,l[i],ans[i][2],ans[i][3]))
+        print("{} \t{} \t{} \t{} \t{} \t{}".format(i+2,l[i],ans[i][0],ans[i][2],ans[i][3],ans[i][4]))
     return s
 
 
@@ -313,3 +374,8 @@ alpha1_2 = 2.5714474995
 # experiment11(u1_2, alpha1_2)
 # experiment12(u1_2, alpha1_2)
 experiment13(u1_2)
+# print(extend_with_storage(u1_2,10000))
+#ans,c,dq = extend_with_storage_careful([1,2],{3},{},100000)
+#print(c)
+#print(dq)
+#print(ans)

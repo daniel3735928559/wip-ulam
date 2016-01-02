@@ -529,3 +529,128 @@ only 312 distinct such pairs, meaning that technically, to compute the
 first 10000 Ulam numbers, we only have to check 312 possibilities for
 each.  If only there were a way of knowing ahead of time which 312 we
 had to check...
+
+### 20160102 More data
+
+Turns out the previous way of computing Ulam numbers was much slower
+than it needed to be, as we can exchange a lot of the computation time
+for space.
+
+In particular, we can treat computing the sequence as a sieving
+procedure in which we maintain three sets:
+
+* Ulam numbers found thus far
+* Numbers that are sums of two distinct Ulam numbers in a unique way
+* Numbers that are sums of two distinct Ulam numbers in more than one way
+
+At each stage, the next Ulam number is simply the smallest element of
+the second set that is larger than the largest Ulam number found to
+date.  In particular, we will want the first and second sets to be
+ordered.
+
+Further, if instead of storing just the Ulam numbers this computes, we
+store all three sets, then we can easily resume the computation where
+we left off.
+
+This is implemented in `extend_with_storage_careful` and takes 50
+minutes to compute the first 100000 Ulam numbers on my 7-year-old Core
+2 Duo laptop.
+
+The data needed to continue the computation is in
+[seqs/raw/s1000k](seqs/raw/s1000k).
+
+This means we can repeat a lot of the computations we did earlier with
+10x more data.  For example, there are now 662 unique `(i,n-j)` pairs:
+
+```
+$ python test.py|awk '{print $4" "$5}'|sort -n | uniq -c | sort -n|wc -l
+662
+```
+
+Interestingly, we also computed `a_{n+1}-a_n` for each n and found
+that there are only 81 different values for this, ranging from 1 to
+587.
+
+```
+  36935 2
+  13695 3
+   8572 17
+   7689 20
+   5354 25
+   4975 12
+   3855 22
+   3401 15
+   3294 42
+   2174 39
+   1199 34
+   1191 8
+   1169 5
+    860 47
+    683 30
+    628 44
+    544 56
+    381 27
+    348 69
+    326 37
+    304 61
+    265 78
+    227 7
+    209 24
+    184 52
+    182 19
+    160 64
+    151 100
+    136 41
+    119 29
+    114 10
+     82 122
+     73 86
+     69 83
+     65 66
+     40 108
+     33 91
+     33 144
+     28 73
+     28 59
+     22 32
+     20 130
+     18 166
+     13 113
+     13 105
+     12 46
+     11 49
+     10 63
+     10 218
+     10 174
+      9 196
+      7 85
+      7 152
+      6 95
+      6 139
+      5 51
+      4 68
+      4 210
+      3 9
+      3 188
+      3 127
+      3 117
+      3 1
+      2 4
+      2 205
+      2 157
+      2 135
+      2 129
+      1 71
+      1 587
+      1 337
+      1 315
+      1 262
+      1 249
+      1 240
+      1 183
+      1 181
+      1 137
+      1 13
+      1 115
+      1 107
+```
