@@ -606,8 +606,8 @@ obvious what the quantitative relationship is (particularly with this
 small dataset).
 
 A closely related but perhaps more natural quantity that is similarly
-correlated is simply the distance between alpha*a_n and the middle of
-the interval [0,2pi], i.e.: `|(alpha*a_n mod 2pi) - pi|`:
+correlated is simply the distance between `alpha*a_n` and the middle
+of the interval [0,2pi], i.e.: `|(alpha*a_n mod 2pi) - pi|`:
 
 ```
 2.001302345410207     .36586481295161437848
@@ -832,7 +832,7 @@ quantity anyways.  At any rate, we tried some tests on both using LLL
 to hunt for the minimal polynomial of b = 2pi/alpha and b = alpha.  It
 should be noted that f(b) << 10^(-10) is what is needed to be
 convincing that f(b) is actually zero.  Also, I am not sure what
-effect result from the lack of precision in our knowledge of alpha.
+effects result from the lack of precision in our knowledge of alpha.
 
 For what it's worth, then, here is the basic computation (done in
 Sage):
@@ -889,3 +889,4 @@ for x in ms:
 (-49*X^2 + 252*X - 324, -1.7553418274474e-8, (-1) * (7*X - 18)^2)
 ```
 
+All told, both look pretty transcendental...
