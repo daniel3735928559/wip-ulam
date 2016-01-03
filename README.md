@@ -3,17 +3,17 @@ experiments.  Pardon our dust.
 
 ### Takeaways so far:
 
+* [link](#20151220-more-alphas) Possibly alpha_(x,x+1) = pi for x that are >= 12 and are even
+
+* [link](#20151220-more-alphas) Possibly alpha_(1,x) -> 0 as x -> infinity
+
 * [link](#20151220-linearity-of-f_n-in-n) With `f_N(x)` the fourier
   transform of the indicator function of `a_n` (in Steinerberger's
   sense), `f_N(alpha)` grows linearly in N.
 
-* [link](#20151221-more-alphas) Possibly alpha_(x,x+1) = pi for x that are >= 12 and are even
-
-* [link](#20151221-more-alphas) Possibly alpha_(1,x) -> 0 as x -> infinity
-
-* [link](#20151221-continued-fractions) The a_i are very unusually biased mod 540, and generally
-  are biased modulo the denominators of the continued fraction
-  convergents of alpha
+* [link](#20151221-continued-fractions) The a_i are very unusually
+  biased mod 540, and generally are biased modulo the denominators of
+  the continued fraction convergents of alpha
 
 * [link](#20151221-continued-fractions) In general, if we're imagining `alpha = 2pi*k/m` (where k
   is related to the set of favoured congruence classes mod m), then
@@ -47,11 +47,7 @@ experiments.  Pardon our dust.
   was as `a_i + a_j`.  In the first 100000 a_n, there are only 662
   unique pairs `(i, n-j)`.
 
-### 20151220 Linearity of f_N in N
-
-
-
-### 20151221 More alphas
+### 20151220 More alphas
 
 We compute these in `experiment1` and `experiment2`
 
@@ -98,19 +94,55 @@ Format: a1 a2 (optimal alpha, approximated to four decimal places, ||F_200||^2 (
 19 20 (6.123199999999074, 15870.335860431833)
 ```
 
-So for example, when a1 = 12, a2 = 13, it looks like alpha = pi, which seems to be confirmed for this particular instance by computing more terms and searching with more precision.  This is saying that the a_i are very biased mod 2pi/pi = 2, which seems experimentally to be very much the case even out to thousands of terms (for this particular example): the a_i are over 80% odd.  Proving something in this direction seems accessible, but some first efforts were unfruitful.
+So for example, when a1 = 12, a2 = 13, it looks like alpha = pi, which
+seems to be confirmed for this particular instance by computing more
+terms and searching with more precision.  This is saying that the a_i
+are very biased mod 2pi/pi = 2, which seems experimentally to be very
+much the case even out to thousands of terms (for this particular
+example): the a_i are over 80% odd.  Proving something in this
+direction seems accessible, but some first efforts were unfruitful.
 
-Note for example
-  that in the extreme case where a_i = r mod m for all i, |f_N(2pi/m)|
-  will be N on the nose.  If instead a_i is only ever congruent to r
-  or s mod m, then if k = 1/(r-s) mod m, then again |f_N(2pi*k/m)| is
-  close to N.
 
-In general, one could imagine that for whatever initial values, the existence of such alpha is saying the a_i prefer a set of congruence classes mod m for some (possibly large) m.  In this case, alpha could be 2pi*k/m for some k.  (To see what k is, think what happens if the a_i happen to biased toward only two congruence classes r and s modulo m, then k would be such that kr and ks are all as close as possible mod m, say k = 1/(s-r) mod m.  If the preference is for more than two congruence classes, then the choice of k seems complicated (though still elementary): Given r1, ... rM mod m, find the k such that the k*r_i are all "as tightly clustered as possible".  There could be multiple k that do the job well, even if one of them is the very best.
+### 20151220 Linearity of f_N in N
 
+If we plot `g(N) = f_N(alpha)/N = ||sum_{n=1 to N} exp(i*alpha*a_n)||/N`
+as a function of N, (done in `experiment0`) we get the following plot:
+
+![y(N) = f_N(alpha)/N](figs/ftN.png)
+
+We see that this quantity seems to approach 0.8 from below, and while
+it is not monotonically increasing, it is close.  This looks like it
+might be `0.8-N^{-a}` for some n.  To get an idea for this, we look at
+a plot of `log(0.8-f_N(alpha)/N)/log(N)`:
+
+![y(N) = log(0.8-f_N(alpha)/N)/log(N)](figs/ftN_log.png)
+
+We note by looking at the [data](data/ftN_log) that this seems to be
+approaching -0.56....  So this suggests that `f_N(alpha) = 0.8N - c*N^(0.44...)`
+
+At any rate, we know that f_N(alpha) <= N, so it can't very secretly
+be growing just barely faster than linear (NlogloglogN or something).
+So we conclude that very likely, in fact f_N(alpha) is about 0.8N, as
+Steinerberger also mentions.
+
+What sort of phenomenon gives rise to this?  Note for example that in
+the extreme case where a_i = r mod m for all i, |f_N(2pi/m)| will be N
+on the nose.  If instead a_i is only ever congruent to r or s mod m,
+then if k = 1/(r-s) mod m, then again |f_N(2pi*k/m)| is close to N.
+
+In general, one could imagine that for whatever initial values, the
+existence of such alpha is saying the a_i prefer a set of congruence
+classes mod m for some (possibly large) m.  In this case, alpha could
+be 2pi*k/m for some k.  (To see what k is, think what happens if the
+a_i happen to biased toward only two congruence classes r and s modulo
+m, then k would be such that kr and ks are all as close as possible
+mod m, say k = 1/(s-r) mod m.  If the preference is for more than two
+congruence classes, then the choice of k seems complicated (though
+still elementary): Given r1, ... rM mod m, find the k such that the
+k*r_i are all "as tightly clustered as possible".  There could be
+multiple k that do the job well, even if one of them is the very best.
 
 ### 20151221 Continued fractions
-
 
 It is more likely that there is a sequence of m mod which the
 congruence classes of a_i are increasingly clustered.  The continued
@@ -120,31 +152,164 @@ Instead, for 2pi/alpha_(1,2) it is just
 
 ```[2; 2, 3, 1, 11, 1, 1, 4, 1, 1, 7, 2, 2, 6, 5, 3, 1, 3, 1, 2, 1, 3, 2, 1, 14, 2, 5, 3, 2, 3, 1, 2, 13, 2]```
 
-For most of the alpha(i,j) that we computed to any meaningful
-precision, either this continues to be true, or there is a very small
-obvious modulus like 2.
+(For most of the alpha(i,j) that we computed to any meaningful
+precision, either this "not obviously a rational number" continues to
+be true, except when there is a very small obvious modulus like 2.)
 
-
-There may not be a single best m: For example, one could imagine a sequence that is slightly biased to being odd, say 60% are 1 mod 2.  But then in fact it turns out that mod 4, it is more strongly biased, with 65% being only 2 or 3 mod 4.  And maybe in fact mod 12, 80% of terms are only ever 2, 3, 6, or 8 mod 12, and maybe in fact 99% are 2, 3, 6, 8, or 1 mod 48, and maybe you can catch more and more of the sequence with a slowly expanding set of congruence classes modulo quickly growing modulus.  If there is a "bias mod m" thing happening, this is probably the flavour it takes, but I'm happy to try to treat the approximation to alpha as indicating an "at least some bias toward some congruence classes mod some fixed m" phenomenon.
+This gives rational approximations: 
 
 ```
-Format: c < 41000,  c*alpha mod 2pi,  |f_1000(c*alpha)| if "large enough"
-
-1 2.5714474995 792.4132845820646
-5421 3.7118834651791985 697.9602738649951
-5423 2.571593156997551 667.6433815922704
-10843 3.7120291226783593 430.5852814483841
-10845 2.5717388144948927 382.76395161416815
-19246 3.711096030579938 188.76234341111504
-27109 3.7124660951667465 192.74127423547188
-27111 2.572175787005108 192.3664947764681
-30090 3.7113873455818975 251.33288416753032
-30092 2.571097037391155 299.91484894398576
-35512 3.7115330030792393 564.7163838117917
-35514 2.5712426948884968 604.3427231679284
-40934 3.711678660576581 767.1522122115849
-40936 2.5713883524003904 780.2228219170503
+5/2
+17/7
+22/9
+259/106
+281/115
+540/221
+2441/999
+2981/1220
+5422/2219
+40935/16753
+87292/35725
+215519/88203
+1380406/564943
+7117549/2912918
+22733053/9303697
+29850602/12216615
+112284859/45953542
+142135461/58170157
+396555781/162293856
+538691242/220464013
+2012629507/823685895
+4563950256/1867835803
+6576579763/2691521698
+96636066938/39549139575
+199848713639/81789800848
+1095879635133/448498143815
+3487487619038/1427284232293
+8070854873209/3303066608401
+27700052238665/11336484057496
+35770907111874/14639550665897
+99241866462413/40615585389290
+1325915171123243/542642160726667
 ```
+
+These suggest, for example, that for m = 540, there should be
+substantial bias in which congruence classes show up in the Ulam
+sequence.
+
+This is borne out in very crude measurement by taking the first 10000
+(now: 100000) terms of the Ulam sequence and computing them mod,
+e.g. 540, and asking how often each confruence class mod 540 shows up
+and computing the standard deviation of all these numbers.
+
+For the first few moduli coming from the convergents of the confinued
+fraction, we get:
+
+```
+5 139.9757121789348
+17 263.62138626089813
+22 298.6996058675916
+259 341.73231186554915
+281 274.8670335289345
+540 664.2715810068448
+2441 3022.3025069077416
+2981 3009.780526078754
+5422 2580.6984215609386
+40935 970.8607009744287
+87292 690.3748130781282
+215519 482.8027781782595
+1380406 304.5611017423058
+```
+
+Note, however, that while it looks like the bias starts falling off at
+40935, in fact we only know alpha to within 10^(-10) or so, and for
+p/q convergents from the continued fraction, |alpha - p/q| < 1/q^2.
+So being confident about alpha to within 10^(-10) suggests that we
+should only trust convergents up to 5-6 digits.
+
+Moreover, we note that if we take fewer terms, then fewer of the terms
+will be less than the modulus, so we may see less of the bias even if
+there is some.  For example, the same calculation with only the first
+10000 terms looks like:
+
+```
+5 21.633307652783937
+17 61.68515885956209
+22 72.60478321332931
+259 89.57462754381896
+281 193.62880436289325
+540 682.2864609640275
+2441 382.62668898244124
+2981 348.9472882781135
+5422 263.99360062887
+40935 122.81328398767178
+87292 105.0829179694691
+215519 97.65246431214172
+1380406 99.63712935143478
+```
+
+Also of note is that if we repeat the computation with N=100000 with
+other random moduli, then we don't see numbers of that magnitude at
+all:
+
+```
+530 259.81675690726956
+531 268.71357064883694
+532 260.1569364421163
+533 255.68231196723025
+534 266.62552117028446
+535 271.33290240078446
+536 254.8672320447439
+537 252.96083561994615
+538 266.52186279126255
+539 255.35109519675422
+540 664.2715810068448
+541 258.6315258698218
+542 263.9800814357665
+543 245.40391780272816
+544 248.46681338348031
+545 248.57633534874722
+546 260.8123404347978
+547 257.8431350005471
+548 259.2776180307103
+549 266.2013289617154
+2430 303.14196649730286
+2431 253.30600410441076
+2432 253.86890201025946
+2433 257.71596117841796
+2434 255.44123618514527
+2435 259.8991085246571
+2436 257.7740924891793
+2437 249.03420505884276
+2438 254.54509601734742
+2439 264.9962194257936
+2440 255.43572224088751
+2441 3022.3025069077416
+2442 258.0622079927702
+2443 255.08506362547774
+2444 258.5368531157321
+2445 251.56480095544921
+2446 264.22911525323224
+2447 247.80200745731952
+2448 256.7669749242785
+2449 260.62877921543617
+```
+
+One takeaway from this study of increasing moduli is the following:
+earlier we discussed the possibility of the behaviour indicting bias
+mod some m.  In fact, there may not be a single m with the most bias,
+but an increasing sequence of m's with progressively more bias.  For
+example, one could imagine a sequence that is slightly biased to being
+odd, say 60% are 1 mod 2.  But then in fact it turns out that mod 4,
+it is more strongly biased, with 65% being only 2 or 3 mod 4.  And
+maybe in fact mod 12, 80% of terms are only ever 2, 3, 6, or 8 mod 12,
+and maybe in fact 99% are 2, 3, 6, 8, or 1 mod 48, and maybe you can
+catch more and more of the sequence with a slowly expanding set of
+congruence classes modulo quickly growing modulus.  If there is a
+"bias mod m" thing happening, this is probably the flavour it takes,
+but I'm happy to try to treat the approximation to alpha as indicating
+an "at least some bias toward some congruence classes mod some fixed
+m" phenomenon.
 
 ### 20151229 Subgroup considerations
 

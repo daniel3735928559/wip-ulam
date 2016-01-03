@@ -140,13 +140,17 @@ def next_seq2(l,d):
             return s[i]
     return s[0]
 
-def ulam(a,b,n):
+def ulam_old(a,b,n):
     seq = [a,b]
     m = 2
     for i in range(n):
         m = next_seq(seq)
         seq.append(m)
     return seq
+
+def ulam(a,b,n):
+    ans,c,dq = extend_with_storage_careful([a,b],{a+b},{},n)
+    return ans
 
 def gcd(a,b):
     return b if a == 0 else gcd(b,a%b if b != 0 else a)
@@ -229,10 +233,19 @@ def find_alpha(l,s=.02,prec=2):
 
 ## Experiments: 
 
-def experiment0():
-    """Attempt to confirm that alpha_{12,13} == pi"""
-    print(ft(math.pi,ulam(12,13,500)))
-
+def experiment0(l,a,n):
+    """Attempt to confirm that f_N(alpha) is linear in N"""
+    cs = math.cos(a*l[0])
+    ss = math.sin(a*l[0])
+    prev = 0
+    for N in range(1,min(n,len(l))):
+        cs += math.cos(a*l[N])
+        ss += math.sin(a*l[N])
+        ans = math.sqrt(cs*cs+ss*ss)/N
+        #print(ans)
+        print(math.log(0.8-ans)/math.log(N) if N > 10 else 0)
+        prev = ans
+        
 def experiment1():
     """Compute alpha_{1,i+1} for i = 1..19"""
     n = 200
@@ -278,7 +291,7 @@ def experiment6(us,ms):
             l[a % m] += 1
         mu = len(us)/x
         sigma = math.sqrt(sum([(i - mu)*(i - mu) for i in l]))
-        print(sigma/m, m,sigma)
+        print(m,sigma)
     
 def experiment7():
     """Approximate alpha for a few precomputed sequences"""
@@ -363,7 +376,10 @@ u1_3 = read_seq("seqs/seq1,3")
 u2_3 = read_seq("seqs/seq2,3")
 u12_13 = read_seq("seqs/seq12,13")
 alpha1_2 = 2.5714474995
-# experiment6(u1_2,[5,17,22,259,281,540,2441,2981,5422,2711,27*5,2*2*3*3*3*5*5,2*2*2,2**4,2*2*3*3*5,7*7*7*7*7*7])
+                   
+# experiment0(u1_2, alpha1_2, 100000)
+# experiment6(u1_2[:10000],[5,17,22,259,281,540,2441,2981,5422,40935,87292,215519,1380406])
+experiment6(u1_2,list(range(530,550))+list(range(2430,2450)))
 # experiment6(u1_2,[540*i for i in range(1,20)])
 # experiment6(u1_2,[3*5*2729,3*5*2730])
 # experiment6(u1_2,range(1,3000))
@@ -373,7 +389,7 @@ alpha1_2 = 2.5714474995
 # experiment10(u1_2,221,540,100000)
 # experiment11(u1_2, alpha1_2)
 # experiment12(u1_2, alpha1_2)
-experiment13(u1_2)
+# experiment13(u1_2)
 # print(extend_with_storage(u1_2,10000))
 #ans,c,dq = extend_with_storage_careful([1,2],{3},{},100000)
 #print(c)
