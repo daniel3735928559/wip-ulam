@@ -53,6 +53,16 @@ experiments.  Pardon our dust.
   simple distribution (maybe a binomial distribution?), rather than
   the sort of "peak with some noise" in the simple picture.
 
+### Questions
+
+* What is alpha?
+
+* What do the peaks mean in the distribution of a_n mod 2pi/alpha?
+
+* Why is the sequence starting with (12,13) almost always odd?  There
+  may or may not be finitely many evens in this sequence, but they
+  seem very very low density.
+
 ### 20151220 More alphas
 
 We compute these in `experiment1` and `experiment2`
@@ -1042,8 +1052,13 @@ biases we have uncovered) algorithm, we have the first 10^6 Ulam
 numbers in [seqs/seq1,2](seqs/seq1,2).  The raw data needed to
 continue the computation is in `seqs/raw/s1m.gz`.
 
-A few things to note: Our crude measure of bias now favours 5422 as
-the modulus with the most extreme bias (rerunning `experiment6`):
+A few things to note:
+
+From `experiment13`, there are now 1661 distinct `(i,n-j)`
+complementary pairs.
+
+Our crude measure of bias now favours 5422 as the modulus with the
+most extreme bias (rerunning `experiment6`):
 
 ```
 5 333.0003003001649
@@ -1068,4 +1083,7 @@ mod 540 now, we get this plot:
 ![Frequency of congruence classes mod 540 in first 10^7 221a_n](figs/1m_mod_540.png)
 
 The two peaks are still visible, but they are now convincingly getting
-washed out by the rest of the data.  
+washed out by the rest of the data.  This strongly suggests that to
+view the phenomenon as a discrete one, we have to take the subtler
+approach of "there is increasing bias mod m for a sequence of m".  I
+still don't know how to reason about it as a continuous phenomenon.

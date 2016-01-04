@@ -379,6 +379,8 @@ def experiment14(l,a,k,m):
                 s[l[j]].append(i)
                 break
     for x in s:
+        if(len(s(x)) < 10):
+            continue
         lm = [0 for i in range(m)]
         for i in s[x]:
             lm[(k*l[i])%m]+=1
@@ -400,13 +402,13 @@ u12_13 = read_seq("seqs/seq12,13")
 alpha1_2 = 2.5714474995
 alpha1_4 = 0.506013502
 
-m=540
-k=221
-l = {x:0 for x in range(m)}
-for x in u1_2:
-    l[(k*x)%m]+=1
-for x in range(m):
-    print("{} {}".format(x,l[x]))
+# m=540
+# k=221
+# l = {x:0 for x in range(m)}
+# for x in u1_2:
+#     l[(k*x)%m]+=1
+# for x in range(m):
+#     print("{} {}".format(x,l[x])) 
 # experiment0(u1_2, alpha1_2, 100000)
 # experiment6(u1_2,[5,17,22,259,281,540,2441,2981,5422,40935,87292,215519,1380406])
 # experiment6(u1_2,list(range(530,550))+list(range(2430,2450)))
@@ -419,12 +421,12 @@ for x in range(m):
 # experiment10(u1_2,221,540,100000)
 # experiment11(u1_2, alpha1_2)
 # experiment12(u1_2, alpha1_2)
-# experiment13(u1_2)
+experiment13(u1_2)
 # print(extend_with_storage(u1_2,10000))
-#ans,c,dq = extend_with_storage_careful([1,2],{3},{},100000)
-#print(c)
-#print(dq)
-#print(ans)
-#experiment11(u1_4, alpha1_4)
-#experiment14(u1_2, alpha1_2,2219,5422)
+# ans,c,dq = extend_with_storage_careful([1,2],{3},{},100000)
+# print(c)
+# print(dq)
+# print(ans)
+# experiment11(u1_4, alpha1_4)
+# experiment14(u1_2, alpha1_2, 2219, 5422)
 # experiment15(u1_2, 2219,5422)
