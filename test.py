@@ -12,7 +12,7 @@ def read_seq(fn):
 def red(x):
     return abs(x - 2*math.pi*math.floor(x/2*math.pi)-math.pi)
 
-def extend_with_storage(l,N):
+def extend_with_storage(l,N,debug=True):
     ans = l
     top = l[-1]
     sums = {}
@@ -41,7 +41,7 @@ def extend_with_storage(l,N):
             sys.stdout.flush()
     return ans
 
-def extend_with_storage_careful(l,c,dq,N):
+def extend_with_storage_careful(l,c,dq,N,debug=True):
     ans = l
     top = l[-1]
     candidates = c
@@ -69,7 +69,8 @@ def extend_with_storage_careful(l,c,dq,N):
             for i in range(prev_an,an):
                 disqualified.pop(i,None)
             prev_an = an
-            print(c,len(disqualified))
+            if(debug):
+                print(c,len(disqualified))
             sys.stdout.flush()
     return candidates,disqualified,ans
 
@@ -148,8 +149,8 @@ def ulam_old(a,b,n):
         seq.append(m)
     return seq
 
-def ulam(a,b,n):
-    ans,c,dq = extend_with_storage_careful([a,b],{a+b},{},n)
+def ulam(a,b,n,debug=False):
+    c,dq,ans = extend_with_storage_careful([a,b],{a+b},{},n,debug)
     return ans
 
 def gcd(a,b):
@@ -292,7 +293,7 @@ def experiment6(us,ms):
         mu = len(us)/x
         sigma = math.sqrt(sum([(i - mu)*(i - mu) for i in l]))
         print(m,sigma)
-    
+
 def experiment7():
     """Approximate alpha for a few precomputed sequences"""
     print("1,2",find_alpha(u1_2[:2000]))
@@ -341,7 +342,7 @@ def experiment11(l,a):
                 s[l[j]].append(i)
                 break
     for x in s:
-        print("{} {} {} {} {}".format(x,len(s[x]), a*x-2*math.pi*math.floor(a*x/(2*math.pi)), math.cos(a * x), s[x]))
+        print("{} {} {} {} {}".format(x,len(s[x]), abs(a*x-2*math.pi*math.floor(a*x/(2*math.pi))-math.pi), math.cos(a * x), s[x]))
     return 
 
 def experiment12(l,a):
@@ -370,16 +371,38 @@ def experiment13(l):
         print("{} \t{} \t{} \t{} \t{} \t{}".format(i+2,l[i],ans[i][0],ans[i][2],ans[i][3],ans[i][4]))
     return s
 
+def experiment14(l,a,k,m):
+    s = {x : [] for x in l}
+    for i in range(2,len(l)):
+        for j in range(i):
+            if(l[i] - l[j] in s):
+                s[l[j]].append(i)
+                break
+    for x in s:
+        lm = [0 for i in range(m)]
+        for i in s[x]:
+            lm[(k*l[i])%m]+=1
+        print("{} \t{} \t{} \t{} \t{} \t{}".format(x,len(s[x]), a*x-2*math.pi*math.floor(a*x/(2*math.pi)), math.cos(a * x), (k*x)%m, lm))
+    return 
+
+
+def experiment15(l,k,m):
+    cs = [0 for i in range(m)]
+    for x in l:
+        cs[(k*x) % m] += 1
+    print(cs)
 
 u1_2 = read_seq("seqs/seq1,2")
 u1_3 = read_seq("seqs/seq1,3")
+u1_4 = read_seq("seqs/seq1,4")
 u2_3 = read_seq("seqs/seq2,3")
 u12_13 = read_seq("seqs/seq12,13")
 alpha1_2 = 2.5714474995
+alpha1_4 = 0.506013502
                    
 # experiment0(u1_2, alpha1_2, 100000)
 # experiment6(u1_2[:10000],[5,17,22,259,281,540,2441,2981,5422,40935,87292,215519,1380406])
-experiment6(u1_2,list(range(530,550))+list(range(2430,2450)))
+# experiment6(u1_2,list(range(530,550))+list(range(2430,2450)))
 # experiment6(u1_2,[540*i for i in range(1,20)])
 # experiment6(u1_2,[3*5*2729,3*5*2730])
 # experiment6(u1_2,range(1,3000))
@@ -395,3 +418,6 @@ experiment6(u1_2,list(range(530,550))+list(range(2430,2450)))
 #print(c)
 #print(dq)
 #print(ans)
+#experiment11(u1_4, alpha1_4)
+experiment14(u1_2, alpha1_2,2219,5422)
+# experiment15(u1_2, 2219,5422)
