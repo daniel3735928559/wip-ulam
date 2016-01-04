@@ -54,7 +54,8 @@ experiments.  Pardon our dust.
 * [link](#20160102-what-are-the-peaks) For any given a_i that shows up
   often as a summand of future a_n, the distribution of the other
   summand a_n - a_i (as always, mod 2pi/alpha) seems to always be a
-  simple distribution (maybe a binomial distribution?) with mean 
+  simple distribution (maybe a binomial distribution?), rather than
+  the sort of "peak with some noise" in the simple picture.
 
 ### 20151220 More alphas
 
@@ -912,15 +913,15 @@ multiply it by 2219 (5422/2219 being a good rational approximation to
 2pi/alpha).  Of course, this gives rise to the usual distribution
 we've come to expect:
 
-![2219*a_n mod 5422](figs/u1_2_5422.png)
+![2219*a_n mod 5422](figs/u1_2_mod5422.png)
 
 Supposing we look instead only at a_n's for which 2, say is a summand.  Then we get this nice picture:
 
-![2219*a_n mod 5422 for a_n with 2 as the small summand](figs/summand2.png)
+![2219*a_n mod 5422 for a_n with 2 as the small summand](figs/summands2.png)
 
 Likewise for 47:
 
-![2219*a_n mod 5422 for a_n with 47 as the small summand](figs/summand2.png)
+![2219*a_n mod 5422 for a_n with 47 as the small summand](figs/summands47.png)
 
 These are relatively clean-looking distributions, by comparison.  If
 we plot these graphs for all of the top 25 most common summands all in
@@ -937,9 +938,9 @@ parameters of each, starting with the means.  We do this with a crunchy bash scr
 for x in `ls`; do y=$(echo $x|sed 's/summands//'); z=$(echo '('$(cat $x|sed 's/\([0-9]\)[ \t]\+\([0-9]\)/\1*\2/' | tr '\n' '+' | sed 's/+$//;s/[ \t]//g')')/'$(cat $x|awk '{x+=$2} END {print x}')|bc -l);  echo -e "$y\t$(((y*2219)%5422))\t$z"; done|sort -n -k 2
 ```
 
-Which outputs the summand a_i, 2219*a_i mod 5422, and the calculated
-mean of the distribution of 2219*a_n mod 5422 for which a_i is a
-summand, we get: 
+Which outputs the suqmmand `a_i`, the quantity `2219*a_i mod 5422`,
+and the calculated mean of the distribution of `2219*a_n mod 5422` for
+which `a_i` is a summand, we get:
 
 ```
 3	1235	3241.07886089813800657174
@@ -995,31 +996,31 @@ And if we plot these, we get:
 That's more like it.  Running the same mean computation as above on this, we get:
 
 ```
-3	1235	2006.07886089813800657174
-47	1275	2013.00715563506261180679
-69	1295	2005.94546174403642482430
-8	1486	1945.55542168674698795180
-2581	1607	1878.87893462469733656174
-983	1633	1870.28070175438596491228
-206	1666	1852.47580645161290322580
-1308	1682	1843.95679012345679012345
-9193	1703	1838.35227272727272727272
-13	1737	1814.59183673469387755102
-23883	1749	1823.53333333333333333333
-30315	3653	3587.70000000000000000000
-13531	3675	3574.60000000000000000000
-14892	3680	3575.36363636363636363636
-10831	3685	3582.62962962962962962962
-53	3745	3549.41395348837209302325
-1155	3761	3544.37745098039215686274
-356	3774	3526.85087719298245614035
-97	3785	3528.29746835443037974683
-400	3814	3520.78585086042065009560
-273	3945	3461.79197207678883071553
-36	3976	3441.70821114369501466275
-339	4005	3430.33377814845704753961
-102	4036	3413.29907648591049017286
-2	4438	3303.24248003248950859618
+3    		1235	2006.07886089813800657174
+47   		1275	2013.00715563506261180679
+69   		1295	2005.94546174403642482430
+8    		1486	1945.55542168674698795180
+2581 		1607	1878.87893462469733656174
+983  		1633	1870.28070175438596491228
+206  		1666	1852.47580645161290322580
+1308 		1682	1843.95679012345679012345
+9193 		1703	1838.35227272727272727272
+13   		1737	1814.59183673469387755102
+23883		1749	1823.53333333333333333333
+30315		3653	3587.70000000000000000000
+13531		3675	3574.60000000000000000000
+14892		3680	3575.36363636363636363636
+10831		3685	3582.62962962962962962962
+53  		3745	3549.41395348837209302325
+1155 		3761	3544.37745098039215686274
+356  		3774	3526.85087719298245614035
+97   		3785	3528.29746835443037974683
+400  		3814	3520.78585086042065009560
+273  		3945	3461.79197207678883071553
+36   		3976	3441.70821114369501466275
+339  		4005	3430.33377814845704753961
+102  		4036	3413.29907648591049017286
+2    		4438	3303.24248003248950859618
 ```
 
 We note also that the picture kind of suggests a binomial distribution

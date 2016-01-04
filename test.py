@@ -419,5 +419,10 @@ alpha1_4 = 0.506013502
 #print(dq)
 #print(ans)
 #experiment11(u1_4, alpha1_4)
-experiment14(u1_2, alpha1_2,2219,5422)
+#experiment14(u1_2, alpha1_2,2219,5422)
 # experiment15(u1_2, 2219,5422)
+l = {x:0 for x in range(5422)}
+for x in u1_2:
+    l[(2219*x)%5422]+=1
+for x in range(5422):
+    print("{} {}".format(x,l[x]))
