@@ -46,10 +46,6 @@ experiments.  Pardon our dust.
 * [link](#20160102-more-data) Each `a_n` can be written in a unique
   was as `a_i + a_j`.  In the first 100000 a_n, there are only 662
   unique pairs `(i, n-j)`.
-
-* [link](#20160102-more-data) Each `a_n` can be written in a unique
-  was as `a_i + a_j`.  In the first 100000 a_n, there are only 662
-  unique pairs `(i, n-j)`.
   
 * [link](#20160102-what-are-the-peaks) For any given a_i that shows up
   often as a summand of future a_n, the distribution of the other
