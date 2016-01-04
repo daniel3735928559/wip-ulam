@@ -399,9 +399,16 @@ u2_3 = read_seq("seqs/seq2,3")
 u12_13 = read_seq("seqs/seq12,13")
 alpha1_2 = 2.5714474995
 alpha1_4 = 0.506013502
-                   
+
+m=540
+k=221
+l = {x:0 for x in range(m)}
+for x in u1_2:
+    l[(k*x)%m]+=1
+for x in range(m):
+    print("{} {}".format(x,l[x]))
 # experiment0(u1_2, alpha1_2, 100000)
-# experiment6(u1_2[:10000],[5,17,22,259,281,540,2441,2981,5422,40935,87292,215519,1380406])
+# experiment6(u1_2,[5,17,22,259,281,540,2441,2981,5422,40935,87292,215519,1380406])
 # experiment6(u1_2,list(range(530,550))+list(range(2430,2450)))
 # experiment6(u1_2,[540*i for i in range(1,20)])
 # experiment6(u1_2,[3*5*2729,3*5*2730])
@@ -421,8 +428,3 @@ alpha1_4 = 0.506013502
 #experiment11(u1_4, alpha1_4)
 #experiment14(u1_2, alpha1_2,2219,5422)
 # experiment15(u1_2, 2219,5422)
-l = {x:0 for x in range(5422)}
-for x in u1_2:
-    l[(2219*x)%5422]+=1
-for x in range(5422):
-    print("{} {}".format(x,l[x]))

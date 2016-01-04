@@ -439,17 +439,17 @@ and, under this evolution, gets smeared out to:
 
 Also unsurprising, but at least worth checking.
 
-### 20151230 A correlation between summands and cos(alpha*a_n)
+### 20151230 A correlation between summands and `cos(alpha*a_n)`
 
 We note with interest the observation in the abstract of Steinerberger
-that cos(alpha*a_n) < 0 for all a_n other than 2, 3, 47, and 69.  In
+that `cos(alpha*a_n) < 0` for all a_n other than 2, 3, 47, and 69.  In
 particular, thee were also the a_n that showed up most frequently as
 summands in our earlier computation.
 
 So we compute which how often each a_n appears as the smaller summand
-of a later a_i and we compute cos(alpha*a_n) for each and sort by this
-quantity.  We note what looks like a very strong correlation between
-how often a_n shows up as a summand and cos(alpha*a_n) in the
+of a later a_i and we compute `cos(alpha*a_n)` for each and sort by
+this quantity.  We note what looks like a very strong correlation
+between how often a_n shows up as a summand and cos(alpha*a_n) in the
 resulting table, computed by `experiment11`:
 
 ```
@@ -1033,3 +1033,39 @@ such test is pick randomly from the 100000 a_ns in that congruence
 class and ask whether 2 is ever a complement of that a_n), and the
 proportion of times 2 shows up as a complement of k is equal to the
 proportion of times we get exactly k successes in our trials.
+
+### 20160104 Even more data
+
+After 36 hours of computation on a more powerful computer using the
+above (still relatively naive--not taking advantage of the summand
+biases we have uncovered) algorithm, we have the first 10^6 Ulam
+numbers in [seqs/seq1,2](seqs/seq1,2).  The raw data needed to
+continue the computation is in `seqs/raw/s1m.gz`.
+
+A few things to note: Our crude measure of bias now favours 5422 as
+the modulus with the most extreme bias (rerunning `experiment6`):
+
+```
+5 333.0003003001649
+17 800.6146903179714
+22 1030.8448432761795
+259 760.5017851727679
+281 874.8656470315152
+540 1296.7354137731163
+2441 2491.5036709586934
+2981 5851.266028263648
+5422 23762.002609084015
+40935 9401.535274749083
+87292 6472.813968180937
+215519 4165.845328641447
+1380406 1808.8909720773165
+```
+
+We also note that 540, formerly heavily biased, is not so much any
+more.  Indeed, if we plot how many a_n are in each congruence class
+mod 540 now, we get this plot:
+
+![Frequency of congruence classes mod 540 in first 10^7 221a_n](figs/1m_mod_540.png)
+
+The two peaks are still visible, but they are now convincingly getting
+washed out by the rest of the data.  
