@@ -834,7 +834,7 @@ that there are only 81 different values for this, ranging from 1 to
       1 107
 ```
 
-### 20150102 Algebraicity
+### 20160102 Algebraicity
 
 My guess is that since apparently alpha=pi sometimes, alpha should not
 be expected to be algebraic, but really 2pi/alpha is the relevant
@@ -901,7 +901,7 @@ for x in ms:
 
 All told, both look like they don't have small degree if algebraic at all...
 
-### 20150102 What are the peaks?
+### 20160102 What are the peaks?
 
 In the cases Steinerberger looks at, the resulting non-uniform
 distributions consist usually of multiple peaks.  In the case of the
