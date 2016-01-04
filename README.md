@@ -139,13 +139,13 @@ then if k = 1/(r-s) mod m, then again |f_N(2pi*k/m)| is close to N.
 In general, one could imagine that for whatever initial values, the
 existence of such alpha is saying the a_i prefer a set of congruence
 classes mod m for some (possibly large) m.  In this case, alpha could
-be 2pi*k/m for some k.  (To see what k is, think what happens if the
+be `2pi*k/m` for some k.  (To see what k is, think what happens if the
 a_i happen to biased toward only two congruence classes r and s modulo
 m, then k would be such that kr and ks are all as close as possible
 mod m, say k = 1/(s-r) mod m.  If the preference is for more than two
 congruence classes, then the choice of k seems complicated (though
 still elementary): Given r1, ... rM mod m, find the k such that the
-k*r_i are all "as tightly clustered as possible".  There could be
+`k*r_i` are all "as tightly clustered as possible".  There could be
 multiple k that do the job well, even if one of them is the very best.
 
 ### 20151221 Continued fractions
