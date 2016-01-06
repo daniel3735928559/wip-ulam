@@ -1,5 +1,23 @@
-This file is still being populated with notes from previous
-experiments.  Pardon our dust.
+### The problem:
+
+The Ulam numbers are defined by a_1 = 1, a_2 = 2, and for n > 2, a_n
+is the smallest integer that can be written in a unique way as a sum
+of two distinct a_i for i < n.
+
+In particular, this means that to compute a_n, one needs to consider
+information from all preceeding a_i, which makes the a_n apparently
+quite difficult to describe cleanly.  In principle, one could
+reasonably hope to think of the a_n as random in some way.
+
+In a recent [paper](http://arxiv.org/abs/1507.00267), Stefan
+Steinerberger found that if one Fourier transforms the indicator
+function of the a_n on the positive integers, there are visible peaks
+at a few specific frequencies.  Looking at the distribution of a large
+number of a_n modulo these frequencies, the distribution that is
+observed appears highly non-uniform.
+
+This repository contains assorted computations exploring that
+non-uniformity.
 
 ### Takeaways so far:
 
@@ -58,10 +76,6 @@ experiments.  Pardon our dust.
 * What is alpha?
 
 * What do the peaks mean in the distribution of a_n mod 2pi/alpha?
-
-* Why is the sequence starting with (12,13) almost always odd?  There
-  may or may not be finitely many evens in this sequence, but they
-  seem very very low density.
 
 ### 20151220 More alphas
 
@@ -1087,3 +1101,27 @@ washed out by the rest of the data.  This strongly suggests that to
 view the phenomenon as a discrete one, we have to take the subtler
 approach of "there is increasing bias mod m for a sequence of m".  I
 still don't know how to reason about it as a continuous phenomenon.
+
+### 20160106 Calculation error
+
+Comparing the output to a computation by hand, it looks like the
+earlier method used to compute the sequence for initial values 12, 13
+was incorrect.  This has now been rectfied and the first 50000 have
+been computed, and by all appearances, the sequence in fact has only
+finitely many evens.  Specifically:
+
+```
+1:12
+5:38
+9:64
+14:90
+20:116
+27:142
+35:168
+66:364
+```
+
+In particular, this would mean (by Finch) that the sequence of
+consecutive differences is periodic.  So there is nothing more subtle
+than regularity happening there after all.
+

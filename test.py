@@ -208,7 +208,7 @@ def find_alpha(l,s=.02,prec=2):
     while(prec >= 0):
         contenders = []
         for a in candidates:
-            #print(a)
+            print(a)
             rwinner = a-s
             rmax = 0
             for i in range(-50,50):
@@ -217,7 +217,7 @@ def find_alpha(l,s=.02,prec=2):
                 if(c > rmax):
                     rwinner = t
                     rmax = c
-            #print(rwinner,rmax,curmax)
+            print(rwinner,rmax,curmax)
             if(rmax*10 > curmax):
                 contenders.append((rwinner,rmax))
             if(rmax > curmax):
@@ -227,9 +227,9 @@ def find_alpha(l,s=.02,prec=2):
         candidates = []
         contenders.sort(key=lambda x:x[1])
         candidates = [x[0] for x in contenders[-100:] if 10*x[1] > curmax]
-        #print("contenders: {} {}".format(curmax,candidates))
+        print("contenders: {} {}".format(curmax,candidates))
         s /= 10
-        #print(winner,curmax)
+        print(winner,curmax)
     return winner,curmax
 
 ## Experiments: 
@@ -398,6 +398,7 @@ u1_2 = read_seq("seqs/seq1,2")
 u1_3 = read_seq("seqs/seq1,3")
 u1_4 = read_seq("seqs/seq1,4")
 u2_3 = read_seq("seqs/seq2,3")
+u2_5 = read_seq("seqs/seq2,5")
 u12_13 = read_seq("seqs/seq12,13")
 alpha1_2 = 2.5714474995
 alpha1_4 = 0.506013502
@@ -421,7 +422,7 @@ alpha1_4 = 0.506013502
 # experiment10(u1_2,221,540,100000)
 # experiment11(u1_2, alpha1_2)
 # experiment12(u1_2, alpha1_2)
-experiment13(u1_2)
+# experiment13(u1_2)
 # print(extend_with_storage(u1_2,10000))
 # ans,c,dq = extend_with_storage_careful([1,2],{3},{},100000)
 # print(c)
@@ -430,3 +431,7 @@ experiment13(u1_2)
 # experiment11(u1_4, alpha1_4)
 # experiment14(u1_2, alpha1_2, 2219, 5422)
 # experiment15(u1_2, 2219,5422)
+#find_alpha(u2_5,prec=1)
+#experiment6(u2_5,[x for x in range(1,5001,2) if x < 10 or (x%7 != 0 and x%3!=0)])
+#experiment15(u2_5,1,3)
+experiment13(u12_13)
