@@ -1125,3 +1125,32 @@ In particular, this would mean (by Finch) that the sequence of
 consecutive differences is periodic.  So there is nothing more subtle
 than regularity happening there after all.
 
+### 20160106 Two Papers of Gibbs
+
+I have found two papers of Philip Gibbs that seem to already contain
+some of the observations here, heavily distilled:
+
+* [A Conjecture for Ulam Sequences](http://vixra.org/pdf/1508.0045v2.pdf)
+* [An Efficient Method for Computing Ulam Numbers](http://vixra.org/pdf/1508.0085v2.pdf)
+
+The second describes an algorithm along the lines suggested above,
+searching for summands starting with those on the edge of the interval
+mod 2pi/alpha ("outliers", in the paper) (though it should be noted
+that the paper predates the above observations).
+
+The first conjectures a kind of quasi-regularity for Ulam numbers by
+noting that the peaks are actually contained within the middle 1/3 of
+the interval, with those outside being called "outliers".  In
+particular, because the sum of any two elements in the middle third
+lives outside the middle third, the statement that most elements live
+in the middle third would require that most elements have an outlier
+as a summand.
+
+It is not clear that this conjecture alone requires the furthest
+outliers to be more common summands than the near ones, but it
+certainly sheds some light on the particular shape that appears.  At
+any rate, it is neatly analogous to the "finitely many evens implies
+regularity", conjecturing instead "finitely many in any open interval
+excluding the middle third", and relating this to the
+"quasi-regularity" observed by Steinerberger.
+
