@@ -1154,3 +1154,100 @@ regularity", conjecturing instead "finitely many in any open interval
 excluding the middle third", and relating this to the
 "quasi-regularity" observed by Steinerberger.
 
+### 20150108 Understanding regularity
+
+If we want to prove this kind of generalised regularity statement, it
+might help to understand existing proofs of regularity (i.e. that
+consecutive differences are eventually periodic).  A criterion for
+regularity, as well as two proofs of regularity, were easily found:
+
+[Finch's criterion for regularity](http://projecteuclid.org/download/pdf_1/euclid.em/1048709116)
+
+[Schmerl and Speigel prove of regularity for 2, 2n+1](http://ac.els-cdn.com/0097316594900582/1-s2.0-0097316594900582-main.pdf?_tid=56db3e1c-b289-11e5-86f1-00000aacb35f&acdnat=1451874044_6fa64d41ee935f0eb9dc6e74883cdb1c)
+
+[Cassaigne and Finch prove regularity for 4, 4n+1](http://projecteuclid.org/download/pdf_1/euclid.em/1062621142)
+
+We'll go through each in turn
+
+### 20150108 Finch
+
+The criterion in the first paper is that finitely many evens implies
+regularity, and the proof is short and sweet.  The idea is that if
+there are finitely many evens, say `e_1 < ... < e_s`, then every term
+n after the last even must be odd.  Since it can be written as sum of
+two earlier terms, and it is odd, one of its summands must be even.
+And since it can be written in such a sum in a unique way, this is
+saying that n - e_i is in the sequence for a unique i from 1 to s.
+This is finitely many things to check.
+
+More precisely, if x_n is the number of representations of n as a sum
+of two elements of the sequence (and again, n is odd), then we can
+write a finite recurrence:
+
+```
+x_n = sum 1(x_{n-e_i})
+```
+
+where 1(x) is 0 unless x == 1, in which case 1(x) = 1.  In particular,
+`0 < x_n <= s` for all odd `n > e_s`.  Note also that x_n depends on a
+finite range of earlier x_i's: x_{n-2}, ..., x_{n-e_s}.  Call this
+sequence B_n.  Each of the e_s/2 values in B_n is between 1 and s, so
+there are finitely many such sequences, so at some point B_n = B_{n+N}
+for some n and N.  But since x_n and x_{n+N} only depend on B_n and
+B_{n+N} respectively, this means `x_n = x_{n+N}`.
+
+And further, x_{n+N+2} only depends on B_{n+N+2}, whose entries are
+the same as those of B_{n+N}, but shifted by 1 with x_{n+N} added onto
+the beginning.  In particular, the entries of B_{n+N+2} after the
+first all agree with those of B_{n+2}.  And the first entry of
+B_{n+N+2} is x_{n+N}, which we just saw is x_n, which is the first
+entry in B_{n+2}.  So in fact B_{n+N+2} = B_{n+2} and we can proceed
+by induction to show the B_n are periodic with period N.  Since the
+x_n are a function of the B_n, x_n is therefore also periodic with
+period N.
+
+### 20150108 Schmerl-Speigel
+
+The claim here is that in the sequence S starting with 2, v for v odd
+and bigger than 3, the only evens are 2 and 2v+2.
+
+The first step is to note that if we look at, say, the first n terms
+in the sequence and these are still the only evens seen up to then,
+then there cannot be a gap of odd numbers of length 2v.  This is
+simply because for any odd number r in S, then since 2 in S also, the
+only way r+2 is not in S is if r+2 = a+b for some other a+b in S.  But
+r+2 is odd, so one of its summands has to be even.  The only other
+choice is 2+2v, so this tells us r+2-(2+2v) = r - 2v is in S.
+
+So for any r in S, either r+2 is in S or r-2v is in S.  
+
+This lets us find an element close to x in the sequence, say between
+x-3v and x-v.  Because we know all the small elements of the sequence,
+we can provably write x = a+b for two reasonably explicit elements of
+the sequence.  Because x is in the sequence, this must be the unique
+such representation.  However, using knowledge of the other small
+terms in the sequence, we can find a second representation of x with
+some casework, leading to a contradiction of the existence of x.
+
+### 20150108 Cassaigne-Finch
+
+The strategy of Cassaigne and Finch is to show that there are finitely
+many (3, to be specific) even terms, from which regularity follows (by
+Finch's earlier work).  To do this, they first note that if in fact
+there are exactly 3 even terms A, B, and C, then we can write a simple
+recurrence for x_n the number of representatives of any n as a_i +
+a_j, namely
+
+x_n = 1(x_{n-A}) + 1(x_{n-B}) + 1(x_{n-C})
+
+where 1(a) = 1 if a == 1 and 0 otherwise.  We can thus get a
+recurrence for the indicator function of the a_i's: y_n = 1(x_n).
+This recurrence, it turns out, has a similar form to a recurrence for
+certain binomial coefficients mod 2, so we can massage that recurrence
+into this one and thereby get a closed form expression for y_n.
+
+Since this assumed that A, B, and C were the only even terms, it then
+remains to prove that this sequence for which we have the closed form
+expression is in fact 1-additive in the minimal way that the Ulam
+sequence needs to be, which is asking about properties of these
+binomial coefficients.
