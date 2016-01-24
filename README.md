@@ -1251,3 +1251,25 @@ remains to prove that this sequence for which we have the closed form
 expression is in fact 1-additive in the minimal way that the Ulam
 sequence needs to be, which is asking about properties of these
 binomial coefficients.
+
+### 20150109 Imitating Schmerl Speigel
+
+In the case of the Ulam numbers, we don't have finitely many evens and
+we don't appear to have periodicity either, but there is still Gibbs's
+conjecture.  We might then take the conjecture and see what conclusion
+falls out of a similar argument.
+
+First, we might imagine imitating the lemma:
+
+Let S be the Ulam sequence.  Say I is `[l/3, 2l/3]` and J_0 is
+
+`[l/6,l/3-epsilon) union (2l/3+epsilon,5l/6]`
+
+Then the conjecture claims that there are finitely many elements of S
+in J_0.  Let b_1, ..., b_p be the ones we have found thus far.
+
+Let r be in S with r mod l in I.  Let c_1, ..., c_q be the elements of
+J_0 such that r+c_i mod l is in I, ordered by distance from the
+boundary.  Then either r+c_k is in S, or else it is a sum of two other
+elements from S.  Because it is in I, one of those elements must be in
+J_0.  Say s_j.  Then r+c_k - s_j...  This isn't terribly convincing...

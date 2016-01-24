@@ -394,6 +394,79 @@ def experiment15(l,k,m):
         cs[(k*x) % m] += 1
     print(cs)
 
+
+def experiment16(l):
+    s = {x:() for x in l}
+    s[l[0]] = (0,l[0])
+    s[l[1]] = (0,l[1])
+    for a in l:
+        for x in s:
+            if(a-x in s and a-x != x):
+                s[a] = (x,a-x) if x < a-x else (a-x,x)
+                break
+
+    #print(s)
+    ans = {l[0]:(1,0),l[1]:(0,1)}
+    for a in l[2:]:
+        first = ans[s[a][0]]
+        second = ans[s[a][1]]
+        ans[a] = (first[0]+second[0],first[1]+second[1])
+    for a in l:
+        print(a,ans[a],ans[a][0]/ans[a][1] if ans[a][1] > 0 else 0)
+
+def experiment17(l,k,m):
+    s = {x:() for x in l}
+    s[l[0]] = (0,l[0])
+    s[l[1]] = (0,l[1])
+    for a in l:
+        for x in s:
+            if(a-x in s and a-x != x):
+                s[a] = (x,a-x) if x < a-x else (a-x,x)
+                break
+
+    #print(s)
+    coms = {x:[] for x in [0]+l}
+    weird = [];
+    for a in l:
+        coms[s[a][0]] += [s[a][1]]
+        coms[s[a][1]] += [s[a][0]]
+    for a in l:
+        lo = 0
+        hi = 0
+        for c in coms[a]:
+            if (k*c)%m < m/2:
+                lo += 1
+            else:
+                hi += 1
+        if(lo != 0 and hi != 0):
+            weird += [(a,lo,hi)]
+        print(a,lo,hi,coms[a])
+    print("WEIRD")
+    for w in weird:
+        print(w)
+
+def breakdown(s,u,k,m):
+    if((k*u)%m < m/3 or (k*u)%m > 2*m/3):
+        return [u]
+    if(s[u][0] == 0):
+        return [s[u][1]]
+    if(s[u][1] == 0):
+        return [s[u][0]]
+    
+    return breakdown(s,s[u][0],k,m) + breakdown(s,s[u][1],k,m)
+    
+def experiment18(l,us,k,m):
+    s = {x:() for x in l}
+    s[l[0]] = (0,l[0])
+    s[l[1]] = (0,l[1])
+    for a in l:
+        for x in s:
+            if(a-x in s and a-x != x):
+                s[a] = (x,a-x) if x < a-x else (a-x,x)
+                break
+    for u in us:
+        print(breakdown(s,u,k,m))
+    
 u1_2 = read_seq("seqs/seq1,2")
 u1_3 = read_seq("seqs/seq1,3")
 u1_4 = read_seq("seqs/seq1,4")
@@ -434,4 +507,7 @@ alpha1_4 = 0.506013502
 #find_alpha(u2_5,prec=1)
 #experiment6(u2_5,[x for x in range(1,5001,2) if x < 10 or (x%7 != 0 and x%3!=0)])
 #experiment15(u2_5,1,3)
-experiment13(u12_13)
+#experiment13(u12_13)
+#experiment16(u1_2)
+#experiment17(u1_2[:100000],2219,5422)
+experiment18(u1_2[:100],u1_2[50:60],2219,5422)
