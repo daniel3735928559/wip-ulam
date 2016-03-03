@@ -71,6 +71,26 @@ non-uniformity.
   simple distribution (maybe a binomial distribution?), rather than
   the sort of "peak with some noise" in the simple picture.
 
+* [link](#20160127-ulam-factorisations) Each Ulam number can be split
+  uniquely into a sum of smaller ones.  We can repeat this process
+  until we break every Ulam number into a sum of 1s and 2s.  When we
+  do this, we seem to get about 38% 1s and 62% 2s.
+  
+* [link](#20160229-modified-ulam-numbers) It probably doesn't matter whether we define the Ulam
+  numbers as "those expressible uniquely as sums of pairs of distinct
+  smaller Ulam numbers" or whether we drop "distinct" from this definition.
+
+* [link](#20160302-non-ulam-numbers) There are numbers that are not sums of two Ulam numbers.
+  Mod lambda, these live only in the middle 2/3.  In particular, the
+  reason for anything in [0,lambda/6] or [5lambda/6,lambda] to not be
+  Ulam is that they all have more than 1 representation as a sum of
+  Ulam numbers.
+
+* [link](#20160219-no-ulam-numbers-near-nlambda) It seems, appropriately understood, that the largest peak
+  in the Fourier transform does control the number of representations
+  of any given x as a+b for Ulam a and b, for x in the [0,lambda/6] or
+  [5lambda/6,lambda]
+
 ### Questions
 
 * What is alpha?
