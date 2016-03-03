@@ -1,0 +1,16 @@
+f := function(l,k)   
+i:=k;             
+ans := 1/l[i];     
+while i gt 1 do    
+i := i - 1;        
+ans := 1/(l[i]+ans);
+end while;          
+return ans;
+end function;       
+l:=ContinuedFraction(2*Pi(RealField())/1.1650128748);
+print l;
+k:=1;
+while k lt #l do 
+print f(l,k);
+k := k+1;
+end while;

@@ -9,8 +9,11 @@ def read_seq(fn):
             l.append(int(x))
     return l
 
-def red(x):
-    return abs(x - 2*math.pi*math.floor(x/2*math.pi)-math.pi)
+def real_mod(x,m):
+    return x - int(x/m)*m
+
+def red(x,a=2*math.pi):
+    return abs(x - a*math.floor(x/a)-(a/2))
 
 def extend_with_storage(l,N,debug=True):
     ans = l
@@ -41,6 +44,9 @@ def extend_with_storage(l,N,debug=True):
             sys.stdout.flush()
     return ans
 
+def sigma(l):
+    return len({i+j for i in l for j in l})/len(l)
+
 def extend_with_storage_careful(l,c,dq,N,debug=True):
     ans = l
     top = l[-1]
@@ -48,6 +54,7 @@ def extend_with_storage_careful(l,c,dq,N,debug=True):
     candidates_list = sorted([-x for x in c])
     disqualified = dq
     prev_an = 0
+    num_hidden = 0
     for c in range(N):
         an = 0
         while(an <= ans[-1]):
@@ -67,11 +74,15 @@ def extend_with_storage_careful(l,c,dq,N,debug=True):
         ans.append(an)
         if(c % 500 == 0):
             for i in range(prev_an,an):
-                disqualified.pop(i,None)
-            prev_an = an
-            if(debug):
-                print(c,len(disqualified))
-            sys.stdout.flush()
+                num_hidden += 1 if disqualified.pop(i,None) != None else 0
+        #     prev_an = an
+        #     if(debug):
+        #         print(c,len(disqualified))
+        #     sys.stdout.flush()
+        if(debug and c % 100 == 0):
+            #print(len(ans),len(candidates),len(disqualified))
+            print(c,'e',(num_hidden+len(disqualified)),len(ans))
+            print(c,'sigma',(num_hidden+len(ans)+len(candidates)+len(disqualified))/len(ans))
     return candidates,disqualified,ans
 
 def extend_seq(l,a,N):
@@ -153,6 +164,29 @@ def ulam(a,b,n,debug=False):
     c,dq,ans = extend_with_storage_careful([a,b],{a+b},{},n,debug)
     return ans
 
+def ulam_rep_dumb(l,n):
+    seq = l
+    d = {}
+    for x in l:
+        for y in l:
+            if(x+y in d):
+                d[x+y]+=1
+            else:
+                d[x+y]=1
+    for x in l:
+        d[x] = 0
+    
+    for i in range(n):
+        m = min(x for x in d if d[x] == 1 and x > seq[-1])
+        seq.append(m)
+        d[m] = 0
+        for x in seq:
+            if(x+m in d):
+                d[x+m] += 1
+            else:
+                d[x+m] = 1
+    return seq
+
 def gcd(a,b):
     return b if a == 0 else gcd(b,a%b if b != 0 else a)
 
@@ -180,6 +214,17 @@ def ft(a,l):
     ss = sum([math.sin(a*x) for x in l])
     return math.sqrt(cs*cs+ss*ss)
 
+def ft_complex_2pi(t,l,N):
+    d=len(l)/N
+    cs = sum([math.cos(2*math.pi*t*x/N) for x in l])
+    ss = sum([math.sin(2*math.pi*t*x/N) for x in l])
+    return cs,ss
+
+def ft_complex(t,l):
+    cs = sum([math.cos(t*x) for x in l])
+    ss = sum([math.sin(t*x) for x in l])
+    return cs,ss
+    
 def evolve_random(d,m,total,N):
     end = total + N
     while total < end:
@@ -372,6 +417,11 @@ def experiment13(l):
     return s
 
 def experiment14(l,a,k,m):
+    """
+    For each x in l, create a histogram of all values mod alpha for
+    which x shows up as a summand (only for xs that show up as a
+    summand at least 10 times)
+    """
     s = {x : [] for x in l}
     for i in range(2,len(l)):
         for j in range(i):
@@ -379,7 +429,7 @@ def experiment14(l,a,k,m):
                 s[l[j]].append(i)
                 break
     for x in s:
-        if(len(s(x)) < 10):
+        if(len(s[x]) < 10):
             continue
         lm = [0 for i in range(m)]
         for i in s[x]:
@@ -389,6 +439,7 @@ def experiment14(l,a,k,m):
 
 
 def experiment15(l,k,m):
+    """Compute a histogram of values of a_i mod lambda"""
     cs = [0 for i in range(m)]
     for x in l:
         cs[(k*x) % m] += 1
@@ -396,6 +447,10 @@ def experiment15(l,k,m):
 
 
 def experiment16(l):
+    """
+    Factor each element of l into l[0] and l[1] and compute how many of
+    each shows up.
+    """
     s = {x:() for x in l}
     s[l[0]] = (0,l[0])
     s[l[1]] = (0,l[1])
@@ -412,9 +467,14 @@ def experiment16(l):
         second = ans[s[a][1]]
         ans[a] = (first[0]+second[0],first[1]+second[1])
     for a in l:
-        print(a,ans[a],ans[a][0]/ans[a][1] if ans[a][1] > 0 else 0)
+        print(a,ans[a],ans[a][0]+ans[a][1],(ans[a][0]/(ans[a][0]+ans[a][1]),ans[a][1]/(ans[a][0]+ans[a][1])) if ans[a][0]+ans[a][1] > 0 else 0)
 
 def experiment17(l,k,m):
+    """
+    Compute all complements of each Ulam number.  Denote any a_i with
+    complements both in the low half and the high half mod k/m as being
+    weird, and print those.
+    """
     s = {x:() for x in l}
     s[l[0]] = (0,l[0])
     s[l[1]] = (0,l[1])
@@ -427,6 +487,7 @@ def experiment17(l,k,m):
     #print(s)
     coms = {x:[] for x in [0]+l}
     weird = [];
+    weird2 = [];
     for a in l:
         coms[s[a][0]] += [s[a][1]]
         coms[s[a][1]] += [s[a][0]]
@@ -438,24 +499,55 @@ def experiment17(l,k,m):
                 lo += 1
             else:
                 hi += 1
+        low = (k*a)%m < m/2
         if(lo != 0 and hi != 0):
             weird += [(a,lo,hi)]
-        print(a,lo,hi,coms[a])
+        if ((low and hi > 0) or (not low and lo > 0)) and hi*lo == 0:
+            weird2 += [(a,lo,hi)]
+        #print(a,lo,hi,coms[a])
     print("WEIRD")
     for w in weird:
         print(w)
+    print("WEIRDER")
+    for w in weird2:
+        print(w)
+    
 
 def breakdown(s,u,k,m):
-    if((k*u)%m < m/3 or (k*u)%m > 2*m/3):
-        return [u]
+    if((k*u)%m < m/3):
+        return [(u,"lo")]
+    if((k*u)%m > 2*m/3):
+        return [(u,"hi")]
     if(s[u][0] == 0):
-        return [s[u][1]]
+        return [(s[u][1],"init")]
     if(s[u][1] == 0):
-        return [s[u][0]]
+        return [(s[u][0],"init")]
     
-    return breakdown(s,s[u][0],k,m) + breakdown(s,s[u][1],k,m)
-    
-def experiment18(l,us,k,m):
+    return {s[u][0]:breakdown(s,s[u][0],k,m), s[u][1]:breakdown(s,s[u][1],k,m)}
+
+def pprint(d, i=0):
+    idt = " "
+    if(isinstance(d, list)):
+        print(idt*(i-1)+str(d))
+    else:
+        for x in d:
+            #print(idt*i+str(x))
+            pprint(d[x],i+1)
+
+def squash_breakdown(b):
+    if type(b) == dict:
+        bs = [squash_breakdown(b[x]) for x in b]
+        ans = {}
+        for bl in bs:
+            for x in bl:
+                ans[x] = ans.get(x,0)+bl[x]
+        return ans
+    if type(b) == list:
+        return {b[0]:1}
+        
+def experiment18(l,us,k,m,complete=False):
+    """Print the complete factorisation tree of any Ulam number, along with outlier information"""
+    # s is a dictionary of summands given as x:(a,b) where a+b = x, are all in l, and a < b
     s = {x:() for x in l}
     s[l[0]] = (0,l[0])
     s[l[1]] = (0,l[1])
@@ -465,8 +557,38 @@ def experiment18(l,us,k,m):
                 s[a] = (x,a-x) if x < a-x else (a-x,x)
                 break
     for u in us:
-        print(breakdown(s,u,k,m))
-    
+        b = breakdown(s,u,k,m)
+        sq = squash_breakdown(b)
+        lsq = sorted([(x[0],sq[x]) for x in sq],key=lambda x: (k*x[0])%m)
+        print(u,lsq)
+        if(complete):
+            pprint(b)
+
+def experiment19(l):
+    """Get an idea of the density of l"""
+    n = 10
+    while(n <= len(l)):
+#       print(n,sigma(l[:n]))
+        print(n,l[n]/n)
+        n *= 10
+
+def experiment20(l):
+    """Compute 2A - 2A for the set A given by l"""
+    ta = {i+j for i in l for j in l}
+    tamta = {i-j for i in ta for j in ta}
+    a = sorted([i for i in tamta if i > 0])
+    print([i for i in range(a[-1]) if not i in a])
+    print(l)
+
+def experiment21(a,l):
+    """Compute the complex Fourier transform of a sequence"""
+    n = 10
+    while(n <= len(l)):
+        print(ft_complex(a,l[:n]))
+        n *= 10
+    print(ft_complex(a,l))
+
+        
 u1_2 = read_seq("seqs/seq1,2")
 u1_3 = read_seq("seqs/seq1,3")
 u1_4 = read_seq("seqs/seq1,4")
@@ -508,6 +630,136 @@ alpha1_4 = 0.506013502
 #experiment6(u2_5,[x for x in range(1,5001,2) if x < 10 or (x%7 != 0 and x%3!=0)])
 #experiment15(u2_5,1,3)
 #experiment13(u12_13)
-#experiment16(u1_2)
-#experiment17(u1_2[:100000],2219,5422)
-experiment18(u1_2[:100],u1_2[50:60],2219,5422)
+#experiment16(u1_2[:10000])
+#experiment17(u1_2,2219,5422)
+#experiment18(u1_2[:10000],u1_2[:10000],2219,5422)
+#experiment17(u2_3,857,4622)
+#experiment19(u1_2)
+# c,d,l=extend_with_storage_careful([1,2],{3},{},100000,True)
+# for i in range(len(l)):
+#     if l[i] != u1_2[i]:
+#         print("AAAAA",i,l[i],u1_2[i])
+#         break
+# print(sigma(u1_2[:1000]))
+#experiment20(u1_2[:1000])
+
+#experiment21(alpha1_2,u1_2)
+    
+# def reps_conv2(x,l,N):
+#     al = [ft_complex_2pi(t,l,N) for t in range(N)]
+#     #print(sorted([(t,(al[t][0]*al[t][0]+al[t][1]*al[t][1])/N,al[t]) for t in range(N)],key=lambda x:x[1]))
+#     ccs = [(al[t][0]**2 - al[t][1]**2)*math.cos(2*math.pi*t*x/N)+2*al[t][0]*al[t][1]*math.sin(2*math.pi*t*x/N) for t in range(N)]
+#     ccss = sorted([(t,ccs[t]/N) for t in range(N)],key=lambda x:abs(x[1]))
+#     ccsst = [ccss[t][1] for t in range(N)]
+#     print(sum(ccsst[:-5]))
+#     print(ccss[-5:])
+#     print(2219,ccs[2219]/N)
+#     return (1/N)*sum(ccs)
+
+
+def reps_conv(x,l,k,m):
+    fts = [ft_complex_2pi(t,l,m) for t in range(m)]
+    #print(sorted([(t,(fts[t][0]*fts[t][0]+fts[t][1]*fts[t][1])/m,fts[t]) for t in range(m)],key=lambda x:x[1]))
+    ccs = [(fts[t][0]**2 - fts[t][1]**2)*math.cos(2*math.pi*t*x/m)+2*fts[t][0]*fts[t][1]*math.sin(2*math.pi*t*x/m) for t in range(m)]
+    ccsm = [(1/m)*x for x in ccs]
+    bigs = [ccsm[0],ccsm[k],ccsm[m-k]]
+    mediums = [ccsm[1],ccsm[k+1],ccsm[k-1],ccsm[m-k+1],ccsm[m-k-1],ccsm[m-1]]
+    #if(sum(mediums) > 0):
+    #    bigs += mediums
+    bigs += mediums
+    b = sum(bigs)
+    c = sum(ccsm)
+    return b>abs(c-b)+3,c,b,c-b,[round(t,2) for t in bigs]
+
+# def reps_conv2(x,l,N):
+#     al = [ft_complex_2pi(t,l,N) for t in range(N)]
+#     return (1/N)*sum([(al[t][0]**2 - al[t][1]**2)*math.cos(2*math.pi*t*x/N)-2*al[t][0]*al[t][1]*math.sin(2*math.pi*t*x/N) for t in range(N)])
+
+def reps_real(x,l):
+    """
+    Return a count for how many representations of x there are as a+b
+    for a and b in l, where a and b are neither necessarily distinct nor 
+    in order
+    """
+    ans = 0
+    s = {t for t in l}
+    for t in l:
+        if x-t in s:
+            ans += 1
+    return ans
+
+def experiment22(l,kinv,k,m):
+    for x in range(1,int(m/6)):
+        t = (kinv*x)%m
+        if(t > m/2):
+            print(t,"too big")
+            continue
+        r = reps_conv(t,l,k,m)
+        print(x,t,reps_real(t,l),r)
+
+def experiment23(l,a):
+    l=[0]+l
+    s = {x+y for x in l for y in l if x <= y}
+    m = max(s)
+    lambda_a=2*math.pi/a
+    mods = []
+    for i in range(l[-1]):
+        if not i in s:
+            mods.append((i,real_mod(i,lambda_a)))
+
+            bins = {}
+    for x in mods:
+        d = round(x[1],2)
+        bins[d] = bins.get(d,0)+1
+    mods += [("---",x) for x in [lambda_a/6,lambda_a/3,lambda_a/2,2*lambda_a/3,5*lambda_a/6,lambda_a]]
+    print("\n".join([str(x[0])+" \t"+str(x[1]) for x in sorted(mods,key=lambda x:x[1])]))
+    hist = []
+    for i in range(0,int(lambda_a*100)):
+        hist.append((i/100,bins.get(i/100,0)))
+    print("HISTOGRAM")
+    for x in hist:
+        print(x[0],x[1])
+    #print(lambda_a/6,lambda_a/3,lambda_a/2,2*lambda_a/3,5*lambda_a/6,lambda_a)
+        
+def experiment24():
+    l = ulam_rep_dumb([1,3],5000)
+    for n in [10,100,1000,5000]:
+        print(n/l[n])
+    print(find_alpha(l))
+    
+experiment24()
+#experiment23(u1_2[:5000],alpha1_2)
+# experiment22(u1_2[:253],2441,2219,5422)
+# experiment22(u1_2[:8000],87292,88203,215519)
+# print(reps_conv(69,u1_2[:500],2*5422))
+
+# print(reps_real(1901,u1_2[:500]))
+# print(reps_conv2(1901,u1_2[:500],5422))
+# print(reps_real(69,u1_2[:500]))
+
+#
+#print(ulam_rep_dumb([2,3],400))
+
+# l=[0]+u1_2[:10000]
+# s = {x+y for x in l for y in l if x <= y}
+# m = max(s)
+# lambda1_2=2*math.pi/alpha1_2
+# mods = []
+# for i in range(u1_2[10000]):
+#     if not i in s:
+#         print(i,)
+#         mods.append((i,real_mod(i,lambda1_2)))
+# print("\n".join([str(x) for x in sorted(mods,key=lambda x:x[1])]))
+# print(lambda1_2/3,lambda1_2/2,2*lambda1_2/3,lambda1_2)
+        
+# d = {}
+# idx = {}
+# l=u1_2
+# for i in range(1,len(l)):
+#     diff = l[i]-l[i-1]
+#     d[diff] = d.get(diff,0)+1
+#     idx[diff] = i
+# print(sorted([(x,d[x]) for x in d],key=lambda x:x[0]))
+# print(sorted([(x,idx[x]) for x in idx],key=lambda x:x[0]))
+
+

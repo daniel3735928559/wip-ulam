@@ -1154,7 +1154,7 @@ regularity", conjecturing instead "finitely many in any open interval
 excluding the middle third", and relating this to the
 "quasi-regularity" observed by Steinerberger.
 
-### 20150108 Understanding regularity
+### 20160108 Understanding regularity
 
 If we want to prove this kind of generalised regularity statement, it
 might help to understand existing proofs of regularity (i.e. that
@@ -1169,7 +1169,7 @@ regularity, as well as two proofs of regularity, were easily found:
 
 We'll go through each in turn
 
-### 20150108 Finch
+### 20160108 Finch
 
 The criterion in the first paper is that finitely many evens implies
 regularity, and the proof is short and sweet.  The idea is that if
@@ -1206,7 +1206,7 @@ by induction to show the B_n are periodic with period N.  Since the
 x_n are a function of the B_n, x_n is therefore also periodic with
 period N.
 
-### 20150108 Schmerl-Speigel
+### 20160108 Schmerl-Speigel
 
 The claim here is that in the sequence S starting with 2, v for v odd
 and bigger than 3, the only evens are 2 and 2v+2.
@@ -1229,7 +1229,7 @@ such representation.  However, using knowledge of the other small
 terms in the sequence, we can find a second representation of x with
 some casework, leading to a contradiction of the existence of x.
 
-### 20150108 Cassaigne-Finch
+### 20160108 Cassaigne-Finch
 
 The strategy of Cassaigne and Finch is to show that there are finitely
 many (3, to be specific) even terms, from which regularity follows (by
@@ -1252,7 +1252,7 @@ expression is in fact 1-additive in the minimal way that the Ulam
 sequence needs to be, which is asking about properties of these
 binomial coefficients.
 
-### 20150109 Imitating Schmerl Speigel
+### 20160109 Imitating Schmerl Speigel
 
 In the case of the Ulam numbers, we don't have finitely many evens and
 we don't appear to have periodicity either, but there is still Gibbs's
@@ -1273,3 +1273,340 @@ J_0 such that r+c_i mod l is in I, ordered by distance from the
 boundary.  Then either r+c_k is in S, or else it is a sum of two other
 elements from S.  Because it is in I, one of those elements must be in
 J_0.  Say s_j.  Then r+c_k - s_j...  This isn't terribly convincing...
+
+### 20160127 Ulam factorisations
+
+#### Factoring into 1s an 2s
+
+Every Ulam number can be written uniquely as a sum of two smaller Ulam
+numbers, which can be written as sums of even smaller Ulam numbers,
+and so on until we have written our original Ulam number as a sum of
+some number of 1s and some number of 2s.  So we can ask a simple
+question about how many 1s vs how many 2s show up in these
+factorisations.
+
+This is done in `experiment16`, and with `experiment16(u1_2[:10000])`,
+we can observe the answer in
+[data/u1_2_factorisations_small](data/u1_2_factorisations_small),
+where we see that there seems to be some convergence (though quite
+slow) to .3866... 1s and .6134... 2s in each factorisation,
+proportionally.
+
+#### Factoring into outliers
+
+We might try to break these numbers down a little less aggressively,
+rather than stopping at 1 and 2, stopping at outliers, and seeing how
+many of each outlier appears in the factorisation of each Ulam number.
+Since we expect that there are relatively few outliers, this should
+still be manageable, and should give the answer to the previous
+question as well, but perhaps in a more enlightening way.
+
+Here, because it is visually interesting, I encourage you to look at
+[data/u1_2_factorisations_complete](data/u1_2_factorisations_complete)
+for the outliers involved in building up each of the first 10000 Ulam
+numbers, where the "factors" are listed in order of their residue mod
+lambda and paired with how many times they appear.  This was computed
+using `experiment18` and specifically:
+
+`experiment18(u1_2[:10000],u1_2[:10000],2219,5422)`
+
+#### Factoring into complements
+
+We could be even less aggressive still and look only at the immediate
+factorisation of a given Ulam number into its Ulam summands.  We have
+been calling these two summands complements of each other.  From our
+picture earlier, it appeared that the complements of any given Ulam
+number had some nice distribution, but we can ask how rigid this is:
+That is, is it ever true that an Ulam number has a complement that is
+on the same side of the interval as itself.
+
+We call an Ulam number "weird" if it has complements on both sides,
+and "weirder" if it has complements only the opposite side.  These are
+computed in `experiment17`.  The output of
+`experiment17(u1_2,2219,5422)` is:
+
+```
+WEIRD
+(1, 3, 1)
+(2, 3, 36933)
+(3, 13695, 1)
+(6, 1, 1)
+WEIRDER
+(99, 1, 0)
+```
+
+So 99 is the only Ulam number on the high side mod lambda, with a
+complement on the low side.  This is not merely a feature of our rational approximation:
+
+```
+>>> l=math.pi*2/2.5714474995
+>>> (99-l*int(99/l))/l
+0.516599464225183
+```
+
+So 99 is very close to the middle of the interval, where few Ulam
+numbers exist at all.  This may account for its being the only one in
+the first million to buck the trend.
+
+### 20160209 Arbitrary seed sets?
+
+What happens if we seed the Ulam numbers with a set of size larger
+than 2?  What about an infinite set like the set of powers of two?
+
+These seem like interesting questions, but we will only note them here
+to leave them for future exploration.
+
+### 20160219 No Ulam numbers near n*lambda?
+
+It appears that Ulam numbers avoid being within lambda/6 of any
+n*lambda.  The question is how many integers does this preclude out of
+hand?  Since one such interval has size lambda/3 = 0.8144809889373343,
+we expect that about 81% of integers live in such intervals, which is
+confirmed by an easy calculation.  
+
+In the language of Tao and Vu's "Additive Combinatorics" text, we are
+trying to show exactly that the Bohr set of radius 1/6 around the set
+`{alpha}` does not intersect the Ulam numbers.  Further, since we've
+seen the fourier transform of the first N Ulam numbers at alpha has
+value around 0.8N, in their language this is saying that if A is the
+set of Ulam numbers:
+
+```
+Bohr(Spec_{0.75}(A), 1/6) intersect A is empty
+```
+
+This set `B = Bohr(Spec_{0.75}(A), 1/6)` is precisely the numbers
+within lambda/6 of n*lambda that we were talking about.
+
+Proposition 4.39 of this text deals with a suspiciously similar type
+of statement.  There, they are talking about a set of numbers 2A-2A
+for which membership can be tested by convolving the indicator
+functions.
+
+We note that, albeit in a more complicated way, convolving indicator
+functions can tell us about membership in A itself: If `1_A` is the
+indicator function of A and `*` is the convolution operator, then
+`(1_A * 1_A)(x)` computes exactly "how many representations of x are
+there as `a_i + a_j` for not necessarily distinct `a_i` and `a_j`.  
+
+(We note that this is sort of unnatural from the point of view of the
+usual Ulam sequence, since it counts sums of the form `a_i+a_i`.  We
+shall address this in future.)
+
+So if we can show that for all x in B, that
+
+```
+(1_A * 1_A)(x) > 3
+```
+
+then we could be done.  One problem with applying this theory, it
+should be noted, is that the theorems about deducing combinatorial
+information from Fourier-analytic information are phrased in terms of
+a setting of with finite additive groups.  We can try to convert by
+looking at, say, `{a_1, ..., a_N}` only and working in the finite
+group of integers modulo `a_N`.  However, then a non-Ulam number like
+5 might suddenly have a representation mod a_N as, say, a_{N-1}+a_3.
+To avoid this, maybe we work mod 2*a_N, so that if `a = a_i+a_j =
+a_k+a_l` for i,j,k,l < N, then we can honestly deduce that a is not an
+Ulam number.
+
+Sidestepping this issue for a moment (though it may prove important or
+even an deal-breaker), but letting Z denote the integers modulo m
+where m is a multiple of one of these good moduli (say C*5422) such
+that it is a little bigger than `2 a_N`, we can roughly try to compute
+`1_A * 1_A` as
+
+```
+(1_A * 1_A)(x)
+ = (1/N) FT(FT(1_A) FT(1_A))(-x)
+ = (1/N) sum_{t in Z} FT(1_A)(t)^2 e(-tx)
+ = (1/N) sum_{t in Spec_{0.75}(A)} FT(1_A)(t)^2 e(-tx) + (1/N) sum_{t not in Spec_{0.75}(A)} FT(1_A)(t)^2 e(-tx)
+ = (1/N) (FT(1_A)(0)^2 + 2 Re(FT(1_A)(a)^2 e(-ax))) + (1/N) sum_{t != 0, a, -a} FT(1_A)(t)^2 e(-tx)
+```
+
+And because x is in B, if t is in `Spec_{0.75}(A)`, then `Re(e(tx)) >= 1/2`.  
+
+Now, we might wonder whether the three terms at 0, +-alpha of this sum
+are always enough to guarantee non-Ulamness.  To that end, we may
+compute using `experiment22` the various terms of this sum.
+Specifically, it computes the terms corresponding to 0, +- alpha, the
+sum of these terms, and the sum of the remaining terms.  From this
+computation, it appears that these three terms are not always large
+enough:
+
+```
+kt t r_A+A(t/k) (is sum of big 3 terms >= abs(sum of others) + 3, sum of all terms, sum of big 3, sum of others, [list of big terms])
+1 2441 64 (False, 63.999999999989384, 25.278327274505404, 38.721672725483984, [11.81, 6.74, 6.74])
+4882 too big
+3 1901 60 (False, 59.99999999999936, 25.273388695830736, 34.72661130416863, [11.81, 6.73, 6.73])
+4342 too big
+5 1361 46 (True, 45.99999999999515, 25.26837777315412, 20.731622226841026, [11.81, 6.73, 6.73])
+3802 too big
+7 821 38 (True, 37.99999999999859, 25.263294533393026, 12.736705466605567, [11.81, 6.73, 6.73])
+3262 too big
+9 281 16 (True, 15.99999999999452, 25.25813900385053, -9.25813900385601, [11.81, 6.73, 6.73])
+2722 too big
+5163 too big
+12 2182 60 (False, 59.99999999999457, 25.250270226882364, 34.74972977311221, [11.81, 6.72, 6.72])
+4623 too big
+14 1642 50 (False, 49.99999999999635, 25.24493409489641, 24.755065905099936, [11.81, 6.72, 6.72])
+4083 too big
+16 1102 44 (True, 43.99999999998865, 25.239525771753097, 18.760474228235555, [11.81, 6.72, 6.72])
+3543 too big
+18 562 26 (True, 25.999999999993516, 25.234045286504863, 0.7659547134886537, [11.81, 6.71, 6.71])
+3003 too big
+...
+```
+
+However, if we take also the terms immediately adjacent to these, that
+is, 0, +-1, alpha, alpha+-1, -alpha, -alpha+-1, then we get more a
+more favourable result.  The data, formatted similarly, is found in
+[data/u1_2_reps_5422](data/u1_2_reps_5422).  
+
+This was done with `experiment22(u1_2[:253],2441,2219,5422)`, where we
+use only the first 253 Ulam numbers because these are less than
+5422/2, which means we will not get any interference because of
+wraparound when taking sums mod 5422.
+
+Life is not perfect, as there are two exceptions: 
+
+```
+$ cat data/u1_2_reps_5422 | grep False
+380 418 35 (False, 34.99999999999638, 16.792348832813612, 18.20765116718277, [11.81, 5.65, 5.65, -1.66, 0.57, -2.06, -2.06, 0.57, -1.66])
+551 335 26 (False, 25.99999999999334, 14.37204869320507, 11.627951306788269, [11.81, 4.78, 4.78, -2.12, 0.95, -2.33, -2.33, 0.95, -2.12])
+```
+
+But these are extremely close calls, and they can be fixed by
+excluding the +-1 terms, or even excluding all the adjacent terms, so
+they are not of terrible concern.  For example, it may be fine to say
+something like "include the adjacent terms when the +-1 terms are
+positive, and excluude them when negative".
+
+### 20160229 Modified Ulam numbers
+
+From the point of view of additive combinatorics, the more natural
+definition of the Ulam numbers might be that the nth Ulam number is
+the smallest number expressible uniquely as a sum of two Ulam numbers,
+now not necessarily distinct.  
+
+However, we quickly note that if we seed this process with 1 and 2 as
+the starting numbers, then the resulting sequence is just
+1,2,3,5,7,9,..., just the the positive odd integers with 2 thrown in.
+
+However, if we start this procedure with other seed sets such as 1,3
+or 2,3 or even 1,2,3, we again get something seemingly nontrivial.
+This is computed with `ulam_rep_dumb` in `experiment24`, where we also
+try to compute the alpha for initial values 1,3.
+
+We compute the first 5000 of them, which have density
+0.1544878727019929 and for which we compute alpha (with precision
+0.001) to be 2.834276, with Fourier coefficient there
+4164.12461218469.  We note that this is basically the same (up to our
+precision) as the alpha for the "standard" Ulam sequence starting with
+1,3, namely 2.8335.  
+
+So at least from preliminary analysis, it appears this modification
+does not change the observed behaviour (except in the degenerate case
+of initial values 1,2).
+
+### 20160302 Non-Ulam numbers
+
+There are two ways a number could fail to be Ulam: It could be a sum
+of Ulam numbers in more than one way or it could fail to be a sum of
+Ulam numbers at all.  By contrast, Ulam numbers are sums of distinct
+smaller Ulam numbers in a unique way.  
+
+We have already understood how most Ulam numbers break up as sums of
+smaller ones, namely, with an outlier as a summand, and the more of an
+outlier an Ulam number is, the more likely it is to be a summand.
+However, we have not understood well these two classes of non-Ulam
+numbers: 
+
+* Of those that are sums of Ulam numbers in more than one way, how
+  many representations do they usually have?  Does this correlate with
+  the residue mod lambda?
+
+* Of those that are not sums of two Ulam numbers in any way, how
+  common are they?
+
+We did some exploring of the first numbers in a previous entry.  
+
+For numbers of the second kind, we compute a pile of them in
+`experiment23`.  The output of `experiment23(u1_2[:5000],alpha1_2)` is
+found in [data/u1_2_nonsums_5000](u1_2_nonsums_5000) (with i*lambda/6
+marked as `---`).  For instance, there are none outside
+[lambda/6,5lambda/6].  If we plot the frequency of various residues
+mod lambda (with bin size 0.001), we get the picture:
+
+![Frequency of residues of numbers that are not sums of two Ulam numbers](figs/u1_2_nonsums.png)
+
+### 20160302 A toy example: 
+
+Just by way of example, let us consider an extreme case of this
+phenomenon where A is an arithmetic progression.  First let us think
+about `A = {Mk : k a positive integer}` for a positive integer M > 1.
+Then 
+
+```
+FT(1_A)(x) = sum_{k = 0 to N/M} e(Mkx)
+```
+
+So when x = aN/M for integer a, this takes a maximal value of N/M.  On
+the other hand, when x = aN/M + l for some nonzero l, then the sum is 
+
+```
+FT(1_A)(x) = sum_{k = 0 to N/M} e(lk)
+           = (z^(lN/M)-1)/(z^l-1)
+```
+
+Where `z = e^(2pi i/N)`.
+
+Likewise, it is the case that (1_A * 1_A)(x) = 0 for any x not in the
+progression.  Running the previous analysis, we see: 
+
+```
+(1_A * 1_A)(x)
+ = (1/N) FT(FT(1_A) FT(1_A))(-x)
+ = (1/N) sum_{t in Z} FT(1_A)(t)^2 e(-tx)
+ = (1/N) sum_{a = 0 to M} (N/M)^2 e(-(aN/M)x) + (1/N) sum_{t not a/M} FT(1_A)(t)^2 e(-tx)
+ = (1/N) (N/M)^2 sum_{a = 0 to M-1} e(-(aN/M)x) + (1/N) sum_{t not aN/M} FT(1_A)(t)^2 e(-tx)
+```
+
+If x is not a multiple of M, then this first sum is 0, and the second
+term is 0 (for the morbidly curious:
+
+```
+(1/N) sum_{t not aN/M} FT(1_A)(t)^2 e(-tx) 
+= (1/N) sum_{l = 1 to N/M-1} sum_{a = 0 to M-1} FT(1_A)(aN/M+l)^2 e(-(aN/M+l)x)
+= (1/N) sum_{l = 1 to N/M-1} ((z^(lN/M)-1)/(z^l-1))^2 sum_{a = 0 to M-1} e(-(aN/M+l)x)
+= (1/N) sum_{l = 1 to N/M-1} e(-lx)((z^(lN/M)-1)/(z^l-1))^2 sum_{a = 0 to M-1} e(-axN/M)
+```
+
+and the inner sum dies).  
+
+If x is a multiple of M, then the first term is N/M (as the sum
+evaluates to M), whereas the second term becomes a kind of interesting exponential sum: 
+
+```
+(M/N) sum_{l = 1 to N/M-1} e(-lx)((e(lN/M)-1)/(e(l)-1))^2
+```
+
+Rough calculation (though not proof) suggests that the magnitude of
+the summands can be cheaply bounded if N/M is at all large by 4, at
+which point this entire term is bounded below by:
+
+```
+>= -(M/N) sum_{l = 1 to N/M-1} |((e(lN/M)-1)/(e(l)-1))^2|
+>= -(M/N) sum_{l = 1 to N/M-1} 4
+>= -(M/N) (N/M) 4
+>= - 4
+```
+
+So `(1_A*1_A)(x) >= N/M - 4` so if the progression has at least four
+terms then this technique (if the guessed estimation above is correct)
+computes what values have representations as sums of pairs of sequence
+elements, as we hope to do for the Ulam numbers.  However in this
+example, we did have to compute the "small, extra coefficients" sum
+somewhat precisely than just applying a blanket bound.
+
+
