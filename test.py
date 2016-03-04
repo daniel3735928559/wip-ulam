@@ -727,7 +727,7 @@ def experiment24():
         print(n/l[n])
     print(find_alpha(l))
     
-experiment24()
+#experiment24()
 #experiment23(u1_2[:5000],alpha1_2)
 # experiment22(u1_2[:253],2441,2219,5422)
 # experiment22(u1_2[:8000],87292,88203,215519)
@@ -763,3 +763,4 @@ experiment24()
 # print(sorted([(x,idx[x]) for x in idx],key=lambda x:x[0]))
 
 
+experiment22(u1_2[:253],2441,2219,5422)
