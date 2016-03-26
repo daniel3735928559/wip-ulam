@@ -1630,3 +1630,144 @@ example, we did have to compute the "small, extra coefficients" sum
 somewhat precisely than just applying a blanket bound.
 
 
+### 20160305 Ulam with sums of 3 elements
+
+At a suggestion of Brian Cook, we consider the "3-Ulam" numbers defined as
+unique sums of 3 distinct smaller 3-Ulam numbers, starting with 1, 2, 3.  
+
+The sequence computed to 5000 terms with a relatively naive algorithm
+is found [here](seqs/seq1,2,3).  This, it turns out, has an even
+larger peak in the Fourier transform at `alpha=0.23034156`, which is approximately `2pi*18/491` with 
+
+```
+|FT(1_A)(alpha)| = 4593.9993
+FT(1_A)(alpha) = -746.9632560433929 + 4532.866159153438 i
+```
+
+We note also that 
+
+```
+>>> a=-747
+>>> b=4533
+>>> a**3-3*a*b**2
+45631434726
+>>> 3*a**2 * b-b*b*b
+-85556123046
+```
+
+and 
+
+```
+>>> (3*(atan(4533/-747)+pi))*180/pi
+298.07327027292246
+```
+
+So `FT(1_A)(alpha)^3` has an argument of about 300 degrees.  Since the
+main term that we expect to control the behaviour of the convolution
+`1_A * 1_A * 1_A` is `FT(1_A)(alpha)^3 e^(-i alpha x)`, and it should
+be xs that make this a large real number that have many
+representations as sums of 3 3-Ulam numbers.  Before, since
+`FT(1_A)^2` was close to a positive real number, x being close to 0
+mod lambda worked, meaning the distribution of 2-Ulam numbers was
+expected to be relatively well centred, and it was.  For 3-Ulam
+numbers, this indicates we might expect it to be shifted in some way.  Computing a histogram, we find; 
+
+![histogram of 18*a_n mod 491](figs/hist123.png)
+
+
+### 20160305 The second largest Fourier coefficient
+
+In the toy example above, we had many large Fourier coefficients that
+together controlled the behaviour of the sequence.  In the Ulam case,
+we have been expecting the one largest peak to do this job, but possibly 
+
+In the interest of bounding the convolution above, maybe instead of
+looking near to alpha, we should look near the second largest Fourier
+coefficient.  For example, an arithmetic progression with skip M has
+maximal Fourier coefficient at 1/M, but also has one of reasonable
+size at 2/M even if it doesn't span the whole interval 0-N.  
+
+
+### 20160307 Circle method
+
+It turns out that this business of counting representations by using
+information about the Fourier coefficients has an established method
+called "the circle method", though as normally stated this is a little
+more refined than we've expressed here.
+
+We'll run through a more complete calculation in a later note, but the
+sort of calculation we might consider, roughly, looks like:
+
+```r_{2A}(x) = integral_[0,1] FT(1_A)(t)^2 e(-tx)dt```
+
+Since we know around t = +-alpha and t = 0 there are large spikes, we
+can treat small intervals around these are the "major arcs": 
+
+```r_{2A}(x) = integral_M(0) FT(1_A)(t)^2 e(-tx)dt
+ + integral_M(alpha) FT(1_A)(t)^2 e(-tx)dt
+ + integral_m FT(1_A)(t)^2 e(-tx)dt```
+
+where 
+
+```
+M(0) = [1-eta,1] u [0,eta]
+M(alpha) = [lambda-eta,lambda+eta] u [1-lambda-eta,1-lambda+eta]
+m = the rest of [0,1]
+```
+
+and where eta is some chosen width for these arcs.  Let `delta` be the
+density of `A`.  Then if, for example, `eta=delta/(2|A|)`, then
+
+```integral_M(0) FT(1_A)(t)^2 e(-tx)dt >= delta/2 |A|```
+
+whereas (at least for x in the range we are considering, where
+e(lambda x) has real part >= 1/2)
+
+```integral_M(alpha) FT(1_A)(t)^2 e(-tx)dt >= 2 delta/2 (3/4)^2 (1/2) |A|
+ = 9 delta/32 |A|```
+
+If further we assume that on `m`, `FT(1_A(t))` is bounded by `C
+ sqrt(|A|)`, then 
+
+```|integral_m FT(1_A)(t)^2 e(-tx)dt| <= C^2 delta |A|```
+
+So the major and minor arc terms have the same growth rates.  This is
+borne out by computations (but in the cases where the minor arc
+contributions are large, they are positive, so they actually
+contribute representations.  Saying something about the argument of
+these contributions seems hard, however.)
+
+The way the exponents worked out, however, we should expect a better
+result if we instead ran a similar computation for `r_{3A}`, which
+should give us insight (or even a proof of something!) about the
+3-Ulam sequence analysed earlier.
+
+### 20160317 Some identities
+
+Because there is a relationship between `1_A` and `r_2A` by definition
+and by the Fourier transform, we can write down many identities
+relating the Fourier coefficients of `1_A` to, e.g., |A|.  
+
+For example, there are some basic ones: 
+
+* `1_A = 1(r_{2A} == 2)`
+* `r_{A+A} = 1_A * 1_A (x) = FT(FT(1_A)^2) (-x)` (Convolution and Fourier inversion)
+* `sum_t |FT(1_A)(t)|^2 = m|A|` (Plancherel)
+
+However, the structure of the sequence gives us more: For example, if
+we count triples a, b, x all in A with a+b=x, then in fact each x in A
+determines a and b up to swapping, so there should only be 2|A|
+solutions.  Put another way
+
+* `r_{A+A-A}(0) = 2|A|`
+
+or, applying the same convolution/Fourier inversion business as before: 
+
+* `sum_t |FT(1_A)(t)|^2 FT(1_A)(t) = m|A|` (by the above and Fourier inversion)
+
+But just as we can factor each x in A uniquely into two elements of A,
+we can also factor x into sums of three elements of A relatively
+uniquely:
+
+x = a+b+c
+

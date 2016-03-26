@@ -187,6 +187,32 @@ def ulam_rep_dumb(l,n):
                 d[x+m] = 1
     return seq
 
+
+def ulam_rep_dumb_k(l,n):
+    seq = l
+    d = {}
+    for x in l:
+        for y in l:
+            for z in l:
+                if(x < y and y < z):
+                    d[x+y+z]=d.get(x+y+z,0)+1
+    for x in l:
+        d[x] = 0
+    
+    for i in range(n):
+        m = min(x for x in d if d[x] == 1 and x > seq[-1])
+        seq.append(m)
+        d[m] = 0
+        for x in seq:
+            for y in seq:
+                if(y < x):
+                    d[x+y+m] = d.get(x+y+m,0)+1
+                else:
+                    break
+
+        print(i,seq[-1])
+    return seq
+
 def gcd(a,b):
     return b if a == 0 else gcd(b,a%b if b != 0 else a)
 
@@ -245,7 +271,7 @@ def evolve_random(d,m,total,N):
         total += 1
     return d
 
-def find_alpha(l,s=.02,prec=2):
+def find_alpha(l,s=.02,prec=2,ft=ft):
     a = 0.2
     winner = a
     curmax = 0
@@ -595,8 +621,10 @@ u1_4 = read_seq("seqs/seq1,4")
 u2_3 = read_seq("seqs/seq2,3")
 u2_5 = read_seq("seqs/seq2,5")
 u12_13 = read_seq("seqs/seq12,13")
+u1_2_3 = read_seq("seqs/seq1,2,3")
 alpha1_2 = 2.5714474995
 alpha1_4 = 0.506013502
+alpha1_2_3 = 0.23036348 # 0.23034156 #0.23034016
 
 # m=540
 # k=221
@@ -663,7 +691,9 @@ def reps_conv(x,l,k,m):
     ccs = [(fts[t][0]**2 - fts[t][1]**2)*math.cos(2*math.pi*t*x/m)+2*fts[t][0]*fts[t][1]*math.sin(2*math.pi*t*x/m) for t in range(m)]
     ccsm = [(1/m)*x for x in ccs]
     bigs = [ccsm[0],ccsm[k],ccsm[m-k]]
-    mediums = [ccsm[1],ccsm[k+1],ccsm[k-1],ccsm[m-k+1],ccsm[m-k-1],ccsm[m-1]]
+    mediums = [ccsm[(i*k)%m] for i in range(2,7)]
+    mediums += [ccsm[(m*m-i*k)%m] for i in range(2,7)]
+    mediums += [ccsm[1],ccsm[m-1]]
     #if(sum(mediums) > 0):
     #    bigs += mediums
     bigs += mediums
@@ -693,6 +723,9 @@ def experiment22(l,kinv,k,m):
         t = (kinv*x)%m
         if(t > m/2):
             print(t,"too big")
+            continue
+        if(t < m/4):
+            print(t,"too small")
             continue
         r = reps_conv(t,l,k,m)
         print(x,t,reps_real(t,l),r)
@@ -763,4 +796,72 @@ def experiment24():
 # print(sorted([(x,idx[x]) for x in idx],key=lambda x:x[0]))
 
 
-experiment22(u1_2[:253],2441,2219,5422)
+    
+def experiment25():
+    #print(ulam_rep_dumb_k([1,2,3],5000))
+    #print(find_alpha(u1_2_3,prec=4))
+    print("asd",alpha1_2_3/(2*math.pi))
+    print(2*math.pi/alpha1_2_3)
+    a=alpha1_2_3/(2*math.pi)
+    la = 2*math.pi/alpha1_2_3
+    lambda1_2_3 = la-2*math.pi*int(la/(2*math.pi))
+    print(lambda1_2_3)
+    
+# a=alpha1_2_3/(2*math.pi)
+# print(ft(alpha1_2_3,u1_2_3))
+# print(ft_complex_2pi(a,u1_2_3,1))
+# print(ft_complex_2pi(alpha1_2/(2*math.pi),u1_2,1))
+# experiment15(u1_2_3,18,491)
+# print(find_alpha(u1_2_3,prec=4,ft=lambda t,l: ft_complex(t,l)[0]))
+
+def experiment26(l,lam):
+    """
+    Compute for all integers up to N within 1/6 of n*lam the number of
+    representations as sums of pairs of elements of l
+    """
+    s = {0:0}
+    for x in l:
+        print(x,l[-1])
+        for y in l:
+            if y > x: break
+            s[x+y] = s.get(x+y,0)+1
+    for i in range(l[-1]):
+        r = real_mod(i,lam)
+        lo = lam/6
+        hi=5*lam/6
+        reps = s.get(i,0)
+        if(r < lo):
+            print(i,reps,lo-r)
+        if(r > hi):
+            print(i,reps,r-hi)
+
+#experiment26(u1_2[:10000],2*math.pi/alpha1_2)
+#find_alpha(u1_2[:10000],prec=2)
+
+def experiment27():
+    bigcoeffs = [1.9897120000000001, 1.722024, 1.431156, 1.140288, 2.8623160000000003, 0.290868, 2.28058, 2.5714479999999997]
+    for x in bigcoeffs:
+        f = ft_complex(x,u1_2[:10000])
+        print(f[0],f[1],math.sqrt(f[0]**2+f[1]**2))
+
+    for k in range(540):
+        ak = real_mod(k*alpha1_2,2*math.pi)
+        f = ft_complex(ak,u1_2[:10000])
+        print(k,ak,f,math.sqrt(f[0]**2+f[1]**2))
+    print(bigcoeffs)
+
+
+#experiment22(u1_2[:253],2441,2219,5422)
+
+# m = 5422
+# for a in range(m//2):
+#     c = sum([math.cos(2*math.pi*2*k*a/m) for k in range(m//2)])
+#     s = sum([math.sin(2*math.pi*2*k*a/m) for k in range(m//2)])
+#     print(a,c,s)
+         
+
+#m=87292
+print([sum([math.cos(2*math.pi*i*k*18/491) for i in u1_2_3 if i < 491]) for k in range(10)])
+print([sum([math.sin(2*math.pi*i*k*18/491) for i in u1_2_3 if i < 491]) for k in range(10)])
+find_alpha(u1_2_3,prec=3)
+
