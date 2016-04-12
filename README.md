@@ -1835,7 +1835,7 @@ or, applying the same convolution/Fourier inversion business as before:
 
 * `sum_t |FT(1_A)(t)|^2 FT(1_A)(t) = m|A|` (by the above and Fourier inversion)
 
-### 201603330 d-Ulam numbers?
+### 20160330 d-Ulam numbers?
 
 It seems to be classically the case that the circle method does better
 for estimating representations of a number as a sum of many elements
@@ -1901,7 +1901,7 @@ minor arcs to be as small as sqrt(N) for this to work.  If it is some
 But now there is the question of whether these statements about the
 sizes of the major and minor arcs are true.
 
-### 201603330 How major are the major arcs?
+### 20160330 How major are the major arcs?
 
 `experiment28` of test.py tests the sizes of the 
 
