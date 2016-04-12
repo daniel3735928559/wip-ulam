@@ -11,13 +11,13 @@ reasonably hope to think of the a_n as random in some way.
 
 In a recent [paper](http://arxiv.org/abs/1507.00267), Stefan
 Steinerberger found that if one Fourier transforms the indicator
-function of the a_n on the positive integers, there are visible peaks
-at a few specific frequencies.  Looking at the distribution of a large
-number of a_n modulo these frequencies, the distribution that is
-observed appears highly non-uniform.
+function of the a_n on the positive integers, there is a visible peak
+at a specific frequency.  Looking at a large number of a_n modulo this
+frequency, the distribution that is observed appears to converge to
+something continuous and non-uniform.
 
-This repository contains assorted computations exploring that
-non-uniformity.
+This repository contains assorted computations and calculations
+exploring that distribution.
 
 ### Interesting takeaways so far:
 
