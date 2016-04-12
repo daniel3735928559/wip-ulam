@@ -19,15 +19,56 @@ observed appears highly non-uniform.
 This repository contains assorted computations exploring that
 non-uniformity.
 
-### Takeaways so far:
+### Interesting takeaways so far:
+
+* [link](#20160102-what-are-the-peaks) For any given a_i that shows up
+  often as a summand of future a_n, the distribution of the other
+  summand a_n - a_i (as always, mod 2pi/alpha) seems to always be a
+  simple distribution (maybe a binomial distribution?), rather than
+  the sort of "peak with some noise" in the simple picture.
+
+* [link](#20160219-no-ulam-numbers-near-nlambda) It seems,
+  appropriately understood, that the largest peak in the Fourier
+  transform does control the number of representations of any given x
+  as a+b for Ulam a and b, for x in the [0,lambda/6] or
+  [5lambda/6,lambda]
+
+* [link](#20160307-circle-method) Being an Ulam number is a feature of
+  having no more than three representations as x+y for x, y Ulam
+  numbers.  Counting these representations using knowledge of the
+  Fourier coefficients is what the "circle method" was born to do, so
+  we can try to apply this technique to the Ulam sequence.
+  Empirically, this appears to be justified (the two "major arcs"
+  dominate), but they do not dominate in absolute value.
+  
+* [link](#20160317-some-identities) Any time we can count the
+  solutions to a linear Diophantine equation in the set of Ulam
+  numbers, we can write down a corresponding equality on the Fourier
+  side that should help constrain what the coefficients can be.  In
+  particular, enough of these may force the behaviour of "a single
+  large Fourier coefficient".
+
+* [link](#20160330-d-ulam-numbers) If we make some optimistic
+  assumptions about the sizes of the major and minor arcs, we can
+  outline what should eventually turn into a proof that Ulam numbers
+  have no "far outliers" and finitely many "near outliers",
+  appropriately understood.
+
+* [link](#20160330-how-major-are-the-major-arcs) Our assumptions about
+  the major and minor arcs are not literally true, mostly because
+  there appear to be more "major" arcs than expected.  These seem to
+  come at small integer multiples of the largest one, however, so we
+  may have some hope of understanding them.
+
+### All takeaways:
 
 * [link](#20151220-more-alphas) Possibly alpha_(x,x+1) = pi for x that are >= 12 and are even
 
 * [link](#20151220-more-alphas) Possibly alpha_(1,x) -> 0 as x -> infinity
 
 * [link](#20151220-linearity-of-f_n-in-n) With `f_N(x)` the fourier
-  transform of the indicator function of `a_n` (in Steinerberger's
-  sense), `f_N(alpha)` grows linearly in N.
+  transform of the indicator function of `a_n` up to N (as in
+  Steinerberger's sense), `f_N(alpha)` grows linearly in N.
 
 * [link](#20151221-continued-fractions) The a_i are very unusually
   biased mod 540, and generally are biased modulo the denominators of
@@ -76,21 +117,50 @@ non-uniformity.
   until we break every Ulam number into a sum of 1s and 2s.  When we
   do this, we seem to get about 38% 1s and 62% 2s.
   
-* [link](#20160229-modified-ulam-numbers) It probably doesn't matter whether we define the Ulam
-  numbers as "those expressible uniquely as sums of pairs of distinct
-  smaller Ulam numbers" or whether we drop "distinct" from this definition.
+* [link](#20160229-modified-ulam-numbers) It probably doesn't matter
+  whether we define the Ulam numbers as "those expressible uniquely as
+  sums of pairs of distinct smaller Ulam numbers" or whether we drop
+  "distinct" from this definition.
 
-* [link](#20160302-non-ulam-numbers) There are numbers that are not sums of two Ulam numbers.
-  Mod lambda, these live only in the middle 2/3.  In particular, the
-  reason for anything in [0,lambda/6] or [5lambda/6,lambda] to not be
-  Ulam is that they all have more than 1 representation as a sum of
-  Ulam numbers.
+* [link](#20160302-non-ulam-numbers) There are numbers that are not
+  sums of two Ulam numbers.  Mod lambda, these live only in the middle
+  2/3.  In particular, the reason for anything in [0,lambda/6] or
+  [5lambda/6,lambda] to not be Ulam is that they all have more than 1
+  representation as a sum of Ulam numbers.
 
-* [link](#20160219-no-ulam-numbers-near-nlambda) It seems, appropriately understood, that the largest peak
-  in the Fourier transform does control the number of representations
-  of any given x as a+b for Ulam a and b, for x in the [0,lambda/6] or
+* [link](#20160219-no-ulam-numbers-near-nlambda) It seems,
+  appropriately understood, that the largest peak in the Fourier
+  transform does control the number of representations of any given x
+  as a+b for Ulam a and b, for x in the [0,lambda/6] or
   [5lambda/6,lambda]
 
+* [link](#20160307-circle-method) Being an Ulam number is a feature of
+  having no more than three representations as x+y for x, y Ulam
+  numbers.  Counting these representations using knowledge of the
+  Fourier coefficients is what the "circle method" was born to do, so
+  we can try to apply this technique to the Ulam sequence.
+  Empirically, this appears to be justified (the two "major arcs"
+  dominate), but they do not dominate in absolute value.
+  
+* [link](#20160317-some-identities) Any time we can count the
+  solutions to a linear Diophantine equation in the set of Ulam
+  numbers, we can write down a corresponding equality on the Fourier
+  side that should help constrain what the coefficients can be.  In
+  particular, enough of these may force the behaviour of "a single
+  large Fourier coefficient".
+
+* [link](#20160330-d-ulam-numbers) If we make some optimistic
+  assumptions about the sizes of the major and minor arcs, we can
+  outline what should eventually turn into a proof that Ulam numbers
+  have no "far outliers" and finitely many "near outliers",
+  appropriately understood.
+
+* [link](#20160330-how-major-are-the-major-arcs) Our assumptions about
+  the major and minor arcs are not literally true, mostly because
+  there appear to be more "major" arcs than expected.  These seem to
+  come at small integer multiples of the largest one, however, so we
+  may have some hope of understanding them.
+  
 ### Questions
 
 * What is alpha?
@@ -1765,9 +1835,173 @@ or, applying the same convolution/Fourier inversion business as before:
 
 * `sum_t |FT(1_A)(t)|^2 FT(1_A)(t) = m|A|` (by the above and Fourier inversion)
 
-But just as we can factor each x in A uniquely into two elements of A,
-we can also factor x into sums of three elements of A relatively
-uniquely:
+### 201603330 d-Ulam numbers?
 
-x = a+b+c
+It seems to be classically the case that the circle method does better
+for estimating representations of a number as a sum of many elements
+of a set A.  Indeed, the case of "sums of two Ulam numbers" that we
+study to analyse the standard Ulam sequence appears to be the hardest
+yet.  
 
+As a heuristic suggesting this, take A_N to be the indicator function
+of Ulam numbers up to N.  Suppose somehow we know that have the three
+major arcs at 0, k, and m-k (mod m) with |FT(A_N)(+-k)| = cN, and
+|FT(A_N)(0)| = dN.  Then the Fourier transform on everything else
+might behave something like |FT(A_N)(t)| = O(sqrt(N)).  (This is not
+literally true, but this is perhaps the best thing we could hope for.)
+Then we could compute, for x in the "far outlier range"
+(-lambda/6,lambda/6) (i.e. `Re(e(kx)) >= 1/2`):
+
+```
+r_2A(x) = (1/m) sum_{t=0}^{m-1} FT(A_N)(t)^2 e(-tx)
+        >= (1/m) (d^2 N^2 + c^2 N^2 + sum_{t != 0, +-k} FT(A_N)(t)^2 e(-tx))
+        >= (1/m) (O(N^2) - sum_{t != 0, +-k} |FT(A_N)(t)|^2)
+        >= (1/m) (O(N^2) - sum_{t != 0, +-k} |O(sqrt(N))|^2)
+        >= (1/m) (O(N^2) - O(mN))
+        >= (1/m) (O(N^2) - O(N^2))
+```
+
+which we cannot say much about, since the major and minor arcs have
+the same order of magnitude.  (Also, throughout we are assuming A has
+positive density so that m is O(N).)
+
+In practice, it does appear that the "major arc" terms dominate (see a
+separate post later today) but they do not dominate in absolute value.
+So to push this type of argument through, we would need a careful
+study of the arguments of everything involved as well as the
+magnitude.
+
+Having said that, if we consider the case of "d-Ulam" numbers--the
+sequence defined to start with some specified increasing sequence of
+length d (e.g. 1, 2, ..., d) and suppose again that this has two
+single "major arcs" of size O(N), one at 0 and one at +-k, and the
+rest of size O(sqrt(N)), then for x again in the appropriate range to
+make Re(e(kx)) >= 1/2 we can say:
+
+```
+r_dA(x) = (1/m) sum_{t=0}^{m-1} FT(A_N)(t)^d e(-tx)
+        >= (1/m) (O(N^d) + c^2 N^2 + sum_{t != 0, +-k} FT(A_N)(t)^d e(-tx))
+        >= (1/m) (O(N^d) - sum_{t != 0, +-k} |FT(A_N)(t)|^d)
+        >= (1/m) (O(N^d) - sum_{t != 0, +-k} |O(sqrt(N))|^d)
+        >= (1/m) (O(N^d) - O(mN^{d/2}))
+        >= (1/m) (O(N^d) - O(N^{d/2 + 1}))
+```
+
+which should go to infinity for `d/2+1 < d`, i.e. `d > 2`.  So by some
+analysis of the constants, assuming we knew what we claim about the
+major and minor arcs, we could prove that the "far outlier" range is
+completely void of Ulam numbers and likely even that the "near
+outlier" range (where Re(e(kx)) >= -1/2+epsilon) has only finitely
+many Ulam numbers.
+
+In fact, depending on d, we did not need the Fourier transform on the
+minor arcs to be as small as sqrt(N) for this to work.  If it is some
+`N^(1-1/s)`, then the same argument will work for `d > s`.
+
+But now there is the question of whether these statements about the
+sizes of the major and minor arcs are true.
+
+### 201603330 How major are the major arcs?
+
+`experiment28` of test.py tests the sizes of the 
+
+For the Ulam numbers mod 540/221, the following are the largest
+Fourier coefficients: 
+
+The second column is log(|FT(A_N)|)/log(N) a N grows.  So we see that
+while 221 is close to O(N), there are quite a few others that appear
+to be above O(sqrt(N)):
+
+```
+...
+369 0.6378215743971684 (214.3101514959669, -283.8135425426877)
+171 0.6378215743974017 (214.31015149758795, 283.8135425424214)
+392 0.6791557335650175 (-24.536161490635408, -519.8099128041274)
+148 0.6791557335673123 (-24.53616148345205, 519.8099128154764)
+73 0.6977134530096784 (-614.9469501497889, -54.72624497335534)
+467 0.6977134530125786 (-614.9469501646479, 54.72624499241206)
+246 0.835636470344478 (1029.3315017966531, -1942.97005220292)
+294 0.8356364703454697 (1029.3315017807863, 1942.9700522340543)
+417 0.8535414939136978 (404.91202378011684, -2561.1453812633777)
+123 0.853541493913701 (404.91202378329444, 2561.14538126295)
+442 0.8706641466946238 (3008.0920675294187, 409.48858461829263)
+98 0.8706641466948764 (3008.0920675415896, -409.4885845812055)
+25 0.9057186499880385 (-375.3499266607925, 4175.741239806747)
+515 0.905718649989376 (-375.3499265654346, -4175.741239867164)
+196 0.9193276419714349 (-810.7021265993675, 4682.720629366757)
+344 0.9193276419721422 (-810.7021266792884, -4682.720629384336)
+221 0.9741546188910715 (-7741.471072159591, -1438.5547650363962)
+319 0.9741546188912089 (-7741.471072187735, 1438.5547649394791)
+```
+
+These are the Fourier coefficients with the top 18 growth rates.  We
+note with interest that these all correspond to `+/- 221*t` for small t:
+
+```
+$ k=221; m=540; for x in {1..9}; do echo $x $(((x*k)%m)) $((((m-k)*x)%m)); done
+1 221 319
+2 442 98
+3 123 417
+4 344 196
+5 25 515
+6 246 294
+7 467 73
+8 148 392
+9 369 171
+```
+
+The full list of k with apparently `|FT(A_N)(k)| > O(sqrt(N))` is in
+[data/major_arcs_1_2](data/major_arcs_1_2).
+
+Likewise, for the 3-Ulam sequence starting 1,2,3, we have
+[data/major_arcs_1_2_3](data/major_arcs_1_2_3), with excerpt: 
+
+```
+180 0.817821268510748 (725.7948514263265, -770.6508608750067)
+311 0.8178212685108903 (725.7948514357006, 770.6508608679418)
+149 0.8285517308308487 (-866.97317108188, -770.5657654996639)
+342 0.8285517308311429 (-866.97317109123, 770.5657654935192)
+167 0.8318715136546837 (778.8521859294007, -903.9193004032385)
+324 0.8318715136549053 (778.8521859221736, 903.9193004124376)
+72 0.85086128149522 (-219.39911687104723, 1385.3564609439788)
+419 0.8508612814954545 (-219.39911691709338, -1385.3564609395223)
+162 0.8843089354764948 (-736.7458080652906, -1713.1656281161866)
+329 0.8843089354765867 (-736.7458080454395, 1713.1656281263106)
+54 0.8969506158487784 (1327.523005044359, -1597.172479555565)
+437 0.896950615848911 (1327.523005089195, 1597.17247952135)
+90 0.9014952719698207 (-1271.0858863632063, -1744.922605160494)
+401 0.9014952719700488 (-1271.0858863086755, 1744.9226052054025)
+144 0.9259371757329898 (-2546.620870004256, 762.57830023542)
+347 0.9259371757331403 (-2546.6208700163957, -762.578300206755)
+108 0.9361061459536614 (2693.5693102538094, -1071.3838260708062)
+383 0.9361061459541083 (2693.569310310496, 1071.383825958141)
+126 0.9428717941875684 (879.9655204689706, 2941.9688648900114)
+365 0.9428717941875782 (879.9655204658437, -2941.9688648912106)
+36 0.9576076881132913 (-3317.9516300259866, -1053.9932948584678)
+455 0.9576076881133295 (-3317.951630003762, 1053.993294932172)
+18 0.9899831544018998 (-584.7951594566562, 4549.134020819845)
+473 0.9899831544019125 (-584.7951595337117, -4549.134020810446)
+```
+
+Again, these come largely from t*18 mod 491 for small t:
+
+```
+$ k=18; m=491; for x in {1..10}; do echo $x $(((x*k)%m)) $((((m-k)*x)%m)); done
+1 18 473
+2 36 455
+3 54 437
+4 72 419
+5 90 401
+6 108 383
+7 126 365
+8 144 347
+9 162 329
+10 180 311
+```
+
+So perhaps the circle method argument would properly go by arguing
+that these all the large Fourier coefficients arise this way and then
+bounding their influence on the number of representations.  For
+example, if in the 3-Ulam case most of the Fourier coefficients have
+size `N^{2/3}` but a small number have size larger than this, we can
+still break apart the sum accordingly and bound each piece separately.

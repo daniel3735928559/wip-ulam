@@ -850,6 +850,43 @@ def experiment27():
         print(k,ak,f,math.sqrt(f[0]**2+f[1]**2))
     print(bigcoeffs)
 
+def experiment28(m,l,N,threshold,d):
+    cs = {i:0 for i in range(m)}
+    ss = {i:0 for i in range(m)}
+    ans = {i:[] for i in range(m)}
+    fts = {i:0 for i in range(m)}
+    terms = {i:0 for i in range(m)}
+    
+    for k in range(1,m):
+        #print(k)
+        for n in range(N):
+            cs[k] += math.cos(2*math.pi*k/m*l[n])
+            ss[k] += math.sin(2*math.pi*k/m*l[n])
+            if n % 999 == 0 and n > 0:
+                f = math.sqrt(cs[k]**2+ss[k]**2)
+                ans[k] += [math.log(f)/math.log(n)]
+                fts[k] = (cs[k],ss[k])
+                #terms[k] = cplx_prod(cmplx_exp(-2*math.pi*k/m),dthpower(fts[k],d))
+
+    summary = [(k,ans[k][-1],fts[k]) for k in range(1,m) if len(ans[k]) > 0 and ans[k][-1] > threshold]
+    for x in sorted(summary,key=lambda x:x[1]):
+        print(*x)
+
+def cplx_prod(x,y):
+    return (x[0]*y[0]-x[1]*y[1],x[0]*y[1]+x[1]*y[0])
+            
+def dthpower(z,d):
+    m = z
+    ans = (1,0)
+    while d > 0:
+        if(d % 2 == 1):
+            ans = cplx_prod(m,ans)
+        m = cplx_prod(m,m)
+        d //= 2
+    return ans
+
+def cmplx_exp(theta):
+    return (math.cos(theta),math.sin(theta))
 
 #experiment22(u1_2[:253],2441,2219,5422)
 
@@ -861,7 +898,11 @@ def experiment27():
          
 
 #m=87292
-print([sum([math.cos(2*math.pi*i*k*18/491) for i in u1_2_3 if i < 491]) for k in range(10)])
-print([sum([math.sin(2*math.pi*i*k*18/491) for i in u1_2_3 if i < 491]) for k in range(10)])
-find_alpha(u1_2_3,prec=3)
+#print([sum([math.cos(2*math.pi*i*k*18/491) for i in u1_2_3 if i < 491]) for k in range(10)])
+#print([sum([math.sin(2*math.pi*i*k*18/491) for i in u1_2_3 if i < 491]) for k in range(10)])
+#find_alpha(u1_2_3,prec=3)
+
+experiment28(540,u1_2,10000,0.5,2)
+print("")
+experiment28(491,u1_2_3,5000,0.66,3)
 
