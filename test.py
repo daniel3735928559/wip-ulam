@@ -1,4 +1,4 @@
-import math,sys,random,bisect
+import math,sys,random,bisect,copy
 
 ## Utility functions: 
 
@@ -470,6 +470,7 @@ def experiment15(l,k,m):
     for x in l:
         cs[(k*x) % m] += 1
     print(cs)
+    return cs
 
 
 def experiment16(l):
@@ -622,6 +623,7 @@ u2_3 = read_seq("seqs/seq2,3")
 u2_5 = read_seq("seqs/seq2,5")
 u12_13 = read_seq("seqs/seq12,13")
 u1_2_3 = read_seq("seqs/seq1,2,3")
+sf01001 = read_seq("seqs/01001sf")
 alpha1_2 = 2.5714474995
 alpha1_4 = 0.506013502
 alpha1_2_3 = 0.23036348 # 0.23034156 #0.23034016
@@ -888,7 +890,49 @@ def dthpower(z,d):
 def cmplx_exp(theta):
     return (math.cos(theta),math.sin(theta))
 
+def experiment29(l,d,N):
+    s = {i:([[i]] if i in l else []) for i in range(N)}
+    for i in range(1,d):
+        print(i)
+        ss = {}
+        for x in range(N):
+            ss[x] = []
+            for a in [k for k in l if k <= x]:
+                #print(x-a,s[x-a])
+                ss[x] += [b+[a] for b in s[x-a]]
+        s = ss
+    for x in range(N):
+        print(x,x in l,s[x])
+
+
+def theta(seq,N):
+    p = len(seq)
+    S = set()
+    T = set()
+    U = set()
+    n = 1
+    i = 0
+    while(i < N):
+        while n in S or n in T or n in U:
+            n += 1
+        if(seq[i%p] == "1" or seq[i%p] == 1):
+            S.add(n)
+            T = T.union({a + n for a in S})
+            i += 1
+            n += 1
+        else:
+            U.add(n)
+            n += 1
+    return sorted(list(S)),T,U
+
+
+def thetainv(S,N):
+    SS = {a+b for a in S if a <= N for b in S if b <= N}# and a < b}
+    return [1 if n in S else 0 for n in range(1,N+1) if not n in SS]
+
 #experiment22(u1_2[:253],2441,2219,5422)
+
+
 
 # m = 5422
 # for a in range(m//2):
@@ -902,7 +946,90 @@ def cmplx_exp(theta):
 #print([sum([math.sin(2*math.pi*i*k*18/491) for i in u1_2_3 if i < 491]) for k in range(10)])
 #find_alpha(u1_2_3,prec=3)
 
-experiment28(540,u1_2,10000,0.5,2)
-print("")
-experiment28(491,u1_2_3,5000,0.66,3)
+# experiment28(540,u1_2,10000,0.5,2)
+# print("")
+# experiment28(491,u1_2_3,5000,0.66,3)
 
+#experiment29(u1_2[:100],3,u1_2[100]+2)
+
+# for k in range(1,25):
+#     print(k)
+#     for n in range(10,0,-1):
+#         #print(math.log(ft(k*alpha1_2,u1_2[:len(u1_2)//n]))/math.log((len(u1_2)//n)))
+#         print(ft(k*alpha1_2,u1_2[:len(u1_2)//n])/(len(u1_2)//n), math.log(ft(k*alpha1_2,u1_2[:len(u1_2)//n]))/math.log(len(u1_2)//n))
+
+# for x in u1_2[:10000]:
+#     print(math.cos(alpha1_2*x),math.sin(alpha1_2*x))
+
+# N=2
+# while N <= len(u1_2):
+#     N = (3*N)//2
+#     print((2*sum(u1_2[:N])//alpha1_2)/(N*N))
+    
+
+# N = len(u1_2)
+# u1_2s = [i*i for i in u1_2]
+# print((sum(u1_2s)/sum(u1_2))/((2*N+1)/3)/alpha1_2)
+
+# r = 2
+# s = 1/3
+# a = math.sqrt(2)
+# N = 10000
+# l = []
+# for n in range(N):
+#     x = math.floor(random.gauss(r, 1))
+#     for j in range(x):
+#         l += [n*a + random.uniform(-s,s)]
+
+
+# n = len(l)
+# ls = [i*i for i in l]
+# print((sum(ls)/sum(l))/((2*(n//r)+1)/3))
+    
+
+
+# l = theta("01001",10000)[0]
+# for x in l:
+#     print(x)
+
+
+#find_alpha(sf01001,prec=4)
+
+alpha01001 = 2.508619
+beta01001 = 1.26594784
+
+# print(len(sf01001))
+
+# for N in range(1000,10000,1000):
+#     print(N,ft(alpha01001,sf01001[:N]))
+
+#print(alpha01001/(2*math.pi))
+# [ 2, 1, 1, 53, 2, 1, 1, 3, 5, 2, 7, 5, 2, 9, 2, 1, 1, 4, 13, 3, 1, 728, 17, 1, 3 ]
+# 1/2
+# 1/3
+# 2/5
+# 107/268
+# 216/541
+# 323/809
+# 539/1350
+# 1940/4859
+# 10239/25645
+# 22418/56149
+# 167165/418688
+# 858243/2149589
+# 1883651/4717866
+# 17811102/44610383
+# 37505855/93938632
+# 55316957/138549015
+# 92822812/232487647
+# 426608205/1068499603
+# 5638729477/14122982486
+# 17342796636/43437447061
+# 22981526113/57560429547
+# 16747893806900/41947430157277
+# 284737176243413/713163873103256
+# 301485070050313/755111303260533
+
+ll = experiment15(sf01001,216,541)
+for i in range(len(ll)):
+    print(i,ll[i])
