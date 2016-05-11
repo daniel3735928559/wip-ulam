@@ -624,6 +624,7 @@ u2_5 = read_seq("seqs/seq2,5")
 u12_13 = read_seq("seqs/seq12,13")
 u1_2_3 = read_seq("seqs/seq1,2,3")
 sf01001 = read_seq("seqs/01001sf")
+sf10010 = read_seq("seqs/sf10010")
 alpha1_2 = 2.5714474995
 alpha1_4 = 0.506013502
 alpha1_2_3 = 0.23036348 # 0.23034156 #0.23034016
@@ -911,19 +912,39 @@ def theta(seq,N):
     T = set()
     U = set()
     n = 1
-    i = 0
-    while(i < N):
+    for i in range(N):
         while n in S or n in T or n in U:
             n += 1
         if(seq[i%p] == "1" or seq[i%p] == 1):
             S.add(n)
-            T = T.union({a + n for a in S})
-            i += 1
-            n += 1
+            for a in S:
+                T.add(a+n)
         else:
             U.add(n)
-            n += 1
     return sorted(list(S)),T,U
+
+
+def theta1(seq,N):
+    p = len(seq)
+    S = set()
+    C = {1,2}
+    T = set()
+    U = set()
+    n = 1
+    for i in range(N):
+        while n in S or n not in C or n in U:
+            n += 1
+        if(seq[i%p] == "1" or seq[i%p] == 1):
+            for a in S:
+                if a+n in C:
+                    C.remove(a+n)
+                    T.add(a+n)
+                elif not a+n in T:
+                    C.add(a+n)
+            S.add(n)
+        else:
+            U.add(n)
+    return sorted(list(S)),C,T,U
 
 
 def thetainv(S,N):
@@ -1030,6 +1051,79 @@ beta01001 = 1.26594784
 # 284737176243413/713163873103256
 # 301485070050313/755111303260533
 
-ll = experiment15(sf01001,216,541)
-for i in range(len(ll)):
-    print(i,ll[i])
+# ll = experiment15(sf01001,216,541)
+# for i in range(len(ll)):
+#     print(i,ll[i])
+
+# S = set(u1_2[:10000])
+# S2 = sorted(list({x for x in S if x-2 in S}))
+
+# Sa = []
+# la = 2*math.pi/alpha1_2
+# for x in u1_2[:10000]:
+#     r = real_mod(x,la)
+#     if(la/3 <= r and r <= 2*la/3):
+#         Sa.append(x)
+# print(Sa)
+
+# ll = thetainv(Sa,10000)
+# for x in ll:
+#     print(x,end="")
+# print("")
+
+# [ 3, 4, 1, 2, 2, 3, 5, 2, 1, 10, 6, 1, 1, 2, 1, 2, 1, 1, 1, 22, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 2, 2, 126, 1, 1, 2, 3 ]
+# 1/3
+# 4/13
+# 5/16
+# 14/45
+# 33/106
+# 113/363
+# 598/1921
+# 1309/4205
+# 1907/6126
+# 20379/65465
+# 124181/398916
+# 144560/464381
+# 268741/863297
+# 682042/2190975
+# 950783/3054272
+# 2583608/8299519
+# 3534391/11353791
+# 6117999/19653310
+# 9652390/31007101
+# 218470579/701809532
+# 228122969/732816633
+# 446593548/1434626165
+# 674716517/2167442798
+# 1121310065/3602068963
+# 1796026582/5769511761
+# 4713363229/15141092485
+# 6509389811/20910604246
+# 17732142851/56962300977
+# 24241532662/77872905223
+# 41973675513/134835206200
+# 108188883688/347543317623
+# 258351442889/829921841446
+# 32660470687702/104917695339819
+# 32918822130591/105747617181265
+# 65579292818293/210665312521084
+# 164077407767177/527078242223433
+
+# find_alpha(sf10010,prec=4)
+
+# ll = experiment15(sf10010,113,363)
+# for i in range(len(ll)):
+#     print(i,ll[i])
+
+# ll = theta1("11",200)[0]
+# for x in ll:
+#     print(x)
+# print("")
+
+ll = thetainv(theta("10010",1000)[0][20:4500],4500)
+for x in ll:
+    print(x,end="")
+print("")
+
+
+print()
