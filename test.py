@@ -271,11 +271,12 @@ def evolve_random(d,m,total,N):
         total += 1
     return d
 
-def find_alpha(l,s=.02,prec=2,ft=ft):
+def find_alpha(l,s=.02,prec=2,ft=ft,candidates=None):
     a = 0.2
     winner = a
     curmax = 0
-    candidates = [0.2+i*2*s for i in range(int(math.pi/(2*s)+1))]
+    if candidates is None:
+        candidates = [0.2+i*2*s for i in range(int(math.pi/(2*s)+1))]
     while(prec >= 0):
         contenders = []
         for a in candidates:
@@ -1016,7 +1017,7 @@ def thetainv(S,N):
 
 #find_alpha(sf01001,prec=4)
 
-alpha01001 = 2.508619
+alpha01001 = 2.5086204384047996 #2.508619
 beta01001 = 1.26594784
 
 # print(len(sf01001))
@@ -1120,10 +1121,13 @@ beta01001 = 1.26594784
 #     print(x)
 # print("")
 
-ll = thetainv(theta("10010",1000)[0][20:4500],4500)
-for x in ll:
-    print(x,end="")
-print("")
+# l = theta("01001",100000)[0]
+# for x in l:
+#     print(x)
 
+# find_alpha(sf01001,s=0.2,prec=10,candidates=[alpha01001])
 
-print()
+# ll = thetainv(theta("10010",10000)[0][1:],4500)
+# for x in ll:
+#     print(x,end="")
+# print("")

@@ -2005,3 +2005,835 @@ bounding their influence on the number of representations.  For
 example, if in the 3-Ulam case most of the Fourier coefficients have
 size `N^{2/3}` but a small number have size larger than this, we can
 still break apart the sum accordingly and bound each piece separately.
+
+### 20160413 Representations of Ulam numbers as A+A+A
+
+In the spirit of trying to get a handle on representations in dA for
+larger d, we can ask what is the number of representations of any Ulam
+number
+
+[The data formerly here was computed by a slightly incorrect program]
+
+Without trying to be clever, we can compute these using the
+worst-looking piece of code in this whole business:
+
+```
+l = u1_2[:300]
+d = {a:0 for a in l}
+for x in l:
+    for y in l:
+        for z in l:
+            if x+y+z in d:
+                d[x+y+z] += 1
+                
+for i in range(len(l)):
+    print(i,l[i],d[l[i]],d[l[i]]/l[i])
+```
+
+```
+0 1 0 0.0
+1 2 0 0.0
+2 3 1 0.3333333333333333
+3 4 3 0.75
+4 6 10 1.6666666666666667
+5 8 15 1.875
+6 11 21 1.9090909090909092
+7 13 24 1.8461538461538463
+8 16 30 1.875
+9 18 37 2.0555555555555554
+10 26 30 1.1538461538461537
+11 28 42 1.5
+12 36 30 0.8333333333333334
+13 38 45 1.1842105263157894
+14 47 63 1.3404255319148937
+15 48 55 1.1458333333333333
+16 53 60 1.1320754716981132
+17 57 96 1.6842105263157894
+18 62 99 1.596774193548387
+19 69 78 1.1304347826086956
+20 72 108 1.5
+21 77 126 1.6363636363636365
+22 82 114 1.3902439024390243
+23 87 117 1.3448275862068966
+24 97 102 1.0515463917525774
+25 99 141 1.4242424242424243
+26 102 123 1.2058823529411764
+27 106 189 1.7830188679245282
+28 114 151 1.3245614035087718
+29 126 228 1.8095238095238095
+30 131 213 1.6259541984732824
+31 138 213 1.5434782608695652
+32 145 198 1.3655172413793104
+33 148 231 1.5608108108108107
+34 155 243 1.5677419354838709
+35 175 240 1.3714285714285714
+36 177 300 1.694915254237288
+37 180 249 1.3833333333333333
+38 182 333 1.8296703296703296
+39 189 267 1.4126984126984128
+40 197 363 1.8426395939086295
+41 206 303 1.470873786407767
+42 209 357 1.708133971291866
+43 219 345 1.5753424657534247
+44 221 408 1.8461538461538463
+45 236 426 1.805084745762712
+46 238 387 1.6260504201680672
+47 241 423 1.7551867219917012
+48 243 432 1.7777777777777777
+49 253 468 1.849802371541502
+50 258 465 1.802325581395349
+51 260 504 1.9384615384615385
+52 273 411 1.5054945054945055
+53 282 540 1.9148936170212767
+54 309 558 1.8058252427184467
+55 316 477 1.509493670886076
+56 319 609 1.9090909090909092
+57 324 627 1.9351851851851851
+58 339 501 1.4778761061946903
+59 341 669 1.9618768328445748
+60 356 615 1.7275280898876404
+61 358 738 2.0614525139664805
+62 363 762 2.0991735537190084
+63 370 684 1.8486486486486486
+64 382 621 1.62565445026178
+65 390 729 1.8692307692307693
+66 400 633 1.5825
+67 402 834 2.074626865671642
+68 409 714 1.745721271393643
+69 412 828 2.0097087378640777
+70 414 880 2.1256038647342996
+71 429 927 2.160839160839161
+72 431 807 1.8723897911832947
+73 434 960 2.2119815668202767
+74 441 954 2.163265306122449
+75 451 969 2.1485587583148558
+76 456 954 2.0921052631578947
+77 483 990 2.049689440993789
+78 485 1086 2.239175257731959
+79 497 1014 2.0402414486921527
+80 502 1086 2.1633466135458166
+81 522 1071 2.0517241379310347
+82 524 1137 2.1698473282442747
+83 544 1230 2.261029411764706
+84 546 1201 2.1996336996337
+85 566 1242 2.1943462897526502
+86 568 1176 2.0704225352112675
+87 585 1242 2.123076923076923
+88 602 1143 1.898671096345515
+89 605 1356 2.2413223140495866
+90 607 1299 2.14003294892916
+91 612 1299 2.122549019607843
+92 624 1224 1.9615384615384615
+93 627 1498 2.3891547049441786
+94 646 1293 2.001547987616099
+95 668 1323 1.9805389221556886
+96 673 1362 2.023774145616642
+97 685 1260 1.8394160583941606
+98 688 1638 2.380813953488372
+99 690 1389 2.0130434782608697
+100 695 1458 2.097841726618705
+101 720 1590 2.2083333333333335
+102 722 1716 2.376731301939058
+103 732 1692 2.3114754098360657
+104 734 1482 2.019073569482289
+105 739 1647 2.2286874154262515
+106 751 1443 1.9214380825565913
+107 781 1797 2.30089628681178
+108 783 1773 2.264367816091954
+109 798 2049 2.5676691729323307
+110 800 1728 2.16
+111 820 2124 2.5902439024390245
+112 847 2001 2.3624557260920898
+113 849 2127 2.5053003533568905
+114 861 1710 1.9860627177700347
+115 864 2121 2.454861111111111
+116 866 1980 2.2863741339491916
+117 891 2040 2.2895622895622894
+118 893 2166 2.425531914893617
+119 905 1800 1.988950276243094
+120 927 1990 2.1467098166127294
+121 949 2019 2.1275026343519494
+122 983 1524 1.550356052899288
+123 986 2400 2.4340770791075053
+124 991 2523 2.5459132189707367
+125 1018 2223 2.1836935166994107
+126 1020 2376 2.3294117647058825
+127 1023 2284 2.2326490713587486
+128 1025 2613 2.549268292682927
+129 1030 2643 2.566019417475728
+130 1032 2052 1.9883720930232558
+131 1035 2559 2.472463768115942
+132 1037 2265 2.184185149469624
+133 1052 2715 2.5807984790874525
+134 1079 2631 2.438368860055607
+135 1081 2463 2.278445883441258
+136 1101 2790 2.534059945504087
+137 1103 2733 2.4777878513145963
+138 1125 2733 2.429333333333333
+139 1155 2391 2.07012987012987
+140 1157 2976 2.572169403630078
+141 1164 2523 2.167525773195876
+142 1167 3009 2.5784061696658096
+143 1169 2886 2.468776732249786
+144 1186 2793 2.3549747048903877
+145 1191 2925 2.455919395465995
+146 1208 2679 2.2177152317880795
+147 1230 2892 2.351219512195122
+148 1252 2841 2.2691693290734825
+149 1257 3129 2.4892601431980905
+150 1296 3213 2.4791666666666665
+151 1308 2436 1.8623853211009174
+152 1311 3681 2.807780320366133
+153 1313 2814 2.143183549124143
+154 1335 2787 2.087640449438202
+155 1338 3369 2.5179372197309418
+156 1340 3198 2.3865671641791044
+157 1355 3579 2.641328413284133
+158 1360 3579 2.6316176470588237
+159 1377 3579 2.599128540305011
+160 1387 3354 2.418168709444845
+161 1389 3795 2.7321814254859613
+162 1404 3543 2.5235042735042734
+163 1406 3693 2.626600284495021
+164 1428 3630 2.542016806722689
+165 1431 3438 2.40251572327044
+166 1433 3990 2.784368457780879
+167 1462 2967 2.0294117647058822
+168 1465 3876 2.6457337883959045
+169 1470 3957 2.6918367346938776
+170 1472 4059 2.7574728260869565
+171 1489 3864 2.595030221625252
+172 1492 3918 2.6260053619302948
+173 1509 4008 2.6560636182902586
+174 1514 3903 2.5779392338177014
+175 1516 4047 2.6695250659630605
+176 1531 4251 2.776616590463749
+177 1536 3906 2.54296875
+178 1538 4386 2.8517555266579975
+179 1550 3624 2.338064516129032
+180 1553 4167 2.683193818415969
+181 1594 3765 2.36198243412798
+182 1602 4158 2.595505617977528
+183 1604 4686 2.9214463840399003
+184 1616 3963 2.452351485148515
+185 1641 4428 2.6983546617915906
+186 1643 4449 2.7078514911746803
+187 1646 4278 2.5990279465370594
+188 1648 5136 3.116504854368932
+189 1660 4233 2.55
+190 1682 4149 2.4667063020214033
+191 1707 4686 2.7451669595782073
+192 1709 5043 2.9508484493856058
+193 1721 3948 2.294015107495642
+194 1724 5115 2.9669373549883993
+195 1748 4608 2.6361556064073226
+196 1765 3948 2.236827195467422
+197 1770 4908 2.772881355932203
+198 1790 5331 2.9782122905027935
+199 1792 5115 2.8543526785714284
+200 1812 5103 2.816225165562914
+201 1814 4902 2.7023153252480707
+202 1834 5277 2.8773173391494002
+203 1836 5368 2.923747276688453
+204 1853 4740 2.5580140313005937
+205 1856 5358 2.886853448275862
+206 1858 5379 2.8950484391819162
+207 1900 5631 2.9636842105263157
+208 1902 5805 3.05205047318612
+209 1919 5094 2.6545075560187597
+210 1941 4989 2.57032457496136
+211 1944 5499 2.8287037037037037
+212 1946 5961 3.063206577595067
+213 1966 5790 2.945066124109868
+214 1968 6177 3.138719512195122
+215 1985 5394 2.7173803526448363
+216 2010 5853 2.9119402985074627
+217 2012 6372 3.1669980119284293
+218 2032 5820 2.8641732283464565
+219 2034 6630 3.2595870206489677
+220 2054 5871 2.858325219084713
+221 2056 6627 3.223249027237354
+222 2090 5511 2.636842105263158
+223 2093 6288 3.0043000477783086
+224 2095 6363 3.037231503579952
+225 2112 5631 2.6661931818181817
+226 2115 6357 3.0056737588652482
+227 2117 6414 3.0297590930562115
+228 2134 5799 2.717432052483599
+229 2156 6156 2.855287569573284
+230 2178 6141 2.819559228650138
+231 2247 6357 2.829105473965287
+232 2249 7236 3.2174299688750554
+233 2252 6093 2.705595026642984
+234 2254 7818 3.468500443655723
+235 2288 6924 3.0262237762237763
+236 2327 6012 2.5835840137516115
+237 2330 7128 3.0592274678111586
+238 2332 7377 3.1633790737564325
+239 2354 7365 3.128717077315208
+240 2371 6366 2.6849430619991566
+241 2393 6795 2.839531968240702
+242 2418 7131 2.9491315136476426
+243 2420 7773 3.21198347107438
+244 2445 6636 2.7141104294478526
+245 2447 8367 3.4192889252145484
+246 2462 7410 3.009748172217709
+247 2464 8307 3.3713474025974026
+248 2481 7311 2.946795646916566
+249 2484 7062 2.842995169082126
+250 2486 8073 3.247385358004827
+251 2511 6909 2.751493428912784
+252 2513 8859 3.525268603263032
+253 2525 7977 3.1592079207920793
+254 2550 7428 2.9129411764705884
+255 2552 8841 3.4643416927899686
+256 2572 7689 2.98950233281493
+257 2574 9288 3.6083916083916083
+258 2581 5856 2.268888027896164
+259 2584 8082 3.1277089783281733
+260 2589 7995 3.0880648899188876
+261 2613 8436 3.2284730195177955
+262 2616 7527 2.8772935779816513
+263 2618 9195 3.5122230710466003
+264 2628 8073 3.0719178082191783
+265 2630 7377 2.8049429657794676
+266 2633 8130 3.0877326243828334
+267 2635 8955 3.398481973434535
+268 2650 8328 3.1426415094339624
+269 2660 7458 2.803759398496241
+270 2662 9177 3.4474079639368895
+271 2674 7971 2.980927449513837
+272 2696 8484 3.1468842729970326
+273 2721 8151 2.9955898566703416
+274 2723 9714 3.567388909291223
+275 2748 7641 2.78056768558952
+276 2750 9864 3.586909090909091
+277 2762 8841 3.2009413468501084
+278 2787 8319 2.984930032292788
+279 2789 9954 3.569021154535676
+280 2809 8526 3.035243859024564
+281 2811 10392 3.6969050160085377
+282 2814 7692 2.7334754797441363
+283 2816 10101 3.587002840909091
+284 2831 8676 3.0646414694454256
+285 2833 10407 3.673490998941052
+286 2897 8991 3.103555402140145
+287 2899 11100 3.828906519489479
+288 2916 10365 3.5545267489711936
+289 2919 8745 2.995889003083248
+290 2921 11025 3.7743923313933583
+291 2985 8607 2.8834170854271357
+292 2987 10857 3.6347505858721125
+293 3029 8418 2.7791350280620666
+294 3031 10950 3.6126690861101944
+295 3038 8394 2.763001974983542
+296 3041 10134 3.3324564288063137
+297 3043 10377 3.4101215905356557
+298 3065 10629 3.467862969004894
+299 3068 10158 3.3109517601043024
+```
+
+Not much to comment on at the moment.  
+
+Repeating for 4A: 
+
+```
+l = u1_2[:100]
+d = {a:0 for a in l}
+for x in l:
+    for y in l:
+        for z in l:
+            for w in l:
+                if x+y+z+w in d:
+                    d[x+y+z+w] += 1
+                
+for i in range(len(l)):
+    print(i,l[i],d[l[i]],d[l[i]]/l[i])
+```
+
+Giving: 
+
+```
+0 1 0 0.0
+1 2 0 0.0
+2 3 0 0.0
+3 4 1 0.25
+4 6 10 1.6666666666666667
+5 8 31 3.875
+6 11 68 6.181818181818182
+7 13 92 7.076923076923077
+8 16 131 8.1875
+9 18 160 8.88888888888889
+10 26 326 12.538461538461538
+11 28 314 11.214285714285714
+12 36 506 14.055555555555555
+13 38 484 12.736842105263158
+14 47 500 10.638297872340425
+15 48 682 14.208333333333334
+16 53 748 14.11320754716981
+17 57 624 10.947368421052632
+18 62 696 11.225806451612904
+19 69 1016 14.72463768115942
+20 72 939 13.041666666666666
+21 77 1040 13.506493506493506
+22 82 1292 15.75609756097561
+23 87 1416 16.275862068965516
+24 97 1840 18.969072164948454
+25 99 1720 17.373737373737374
+26 102 2182 21.392156862745097
+27 106 1782 16.81132075471698
+28 114 2694 23.63157894736842
+29 126 2418 19.19047619047619
+30 131 2652 20.244274809160306
+31 138 2694 19.52173913043478
+32 145 3100 21.379310344827587
+33 148 3146 21.256756756756758
+34 155 3376 21.780645161290323
+35 175 4380 25.02857142857143
+36 177 3648 20.610169491525422
+37 180 4958 27.544444444444444
+38 182 3920 21.53846153846154
+39 189 4760 25.185185185185187
+40 197 4840 24.568527918781726
+41 206 5446 26.436893203883496
+42 209 5172 24.74641148325359
+43 219 6264 28.602739726027398
+44 221 5396 24.41628959276018
+45 236 6270 26.56779661016949
+46 238 6718 28.22689075630252
+47 241 7104 29.477178423236513
+48 243 6760 27.818930041152264
+49 253 7240 28.616600790513836
+50 258 7926 30.72093023255814
+51 260 7406 28.484615384615385
+52 273 10584 38.76923076923077
+53 282 8720 30.921985815602838
+54 309 9956 32.22006472491909
+55 316 11916 37.70886075949367
+56 319 10180 31.912225705329153
+57 324 10984 33.901234567901234
+58 339 15212 44.87315634218289
+59 341 11796 34.592375366568916
+60 356 14684 41.247191011235955
+61 358 11952 33.385474860335194
+62 363 12596 34.69972451790633
+63 370 13338 36.04864864864865
+64 382 16308 42.69109947643979
+65 390 14588 37.40512820512821
+66 400 18394 45.985
+67 402 14366 35.7363184079602
+68 409 17264 42.210268948655255
+69 412 16122 39.13106796116505
+70 414 15828 38.231884057971016
+71 429 16428 38.29370629370629
+72 431 18048 41.874709976798144
+73 434 17672 40.71889400921659
+74 441 16904 38.33106575963719
+75 451 17760 39.37915742793792
+76 456 19377 42.49342105263158
+77 483 23536 48.7287784679089
+78 485 20408 42.07835051546392
+79 497 23716 47.71830985915493
+80 502 22686 45.191235059760956
+81 522 25080 48.04597701149425
+82 524 23791 45.402671755725194
+83 544 26526 48.7610294117647
+84 546 25826 47.3003663003663
+85 566 28512 50.37455830388693
+86 568 27912 49.140845070422536
+87 585 30844 52.72478632478632
+88 602 36252 60.21926910299003
+89 605 28688 47.41818181818182
+90 607 31844 52.46128500823723
+91 612 30836 50.38562091503268
+92 624 37742 60.48397435897436
+93 627 30524 48.68261562998405
+94 646 40870 63.26625386996904
+95 668 41488 62.10778443113772
+96 673 38204 56.7667161961367
+97 685 49612 72.42627737226277
+98 688 34424 50.03488372093023
+99 690 44694 64.77391304347826
+```
+
+
+### 20160418 Sum-free sets: simple introduction
+
+Sum-free sets are sets which contain no solution to the equation
+x+y=z.  Two fundamental examples are:
+
+* The odd numbers, the integers that are 1 mod 3, or more generally,
+  the set of all integers that reduce mod m to a sum-free set modulo
+  m.  We call such sets "periodic".
+
+* Even more generally, the integers that reduce mod some real alpha to
+  a sum-free set in R/(alpha Z).  The "biggest" possible such example
+  would be a set of integers that reduces to live in the inteval from
+  `alpha/3` to `2*alpha/3` modulo alpha.
+
+Gibbs has asked whether the phenomenon for the Ulam sequence has to do
+with sets that are sum-free.  In a sense, the Ulam sequence looks to
+be about sum-free: Most of the elements modulo alpha lie in the middle
+third, meaning that if we exclude all elements outside this middle
+third the set actually becomes sum-free.  Certainly in the Ulam case,
+the set of Ulam numbers outside the middle third of the interval mod
+alpha seem seems to be density 0 in the sequence.  This might
+generalise, and Gibbs has asked whether for any sequence A where for
+each a in A, r_2A(a) is bounded, we can remove a density-zero
+subsequence to turn A into an actually sum-free set.
+
+Sum-free sets are known to be in bijection with binary sequences (if
+you like, sequences of coin-flips) by the following simple procedure:
+Whatever your sequence A looks like so far, find the first possible
+integer that is neither in A nor in 2A.  Flip a coin.  If heads,
+include that integer as the next element of A, and if tails, excude
+that integer, move on to the next candidate, and repeat the procedure.
+
+The binary sequence that encodes the results of all these coin-flips
+for a given sum-free set is called the set's "decision sequence".
+From a given sum-free set we can easily back out the decision
+sequence: For each integer n, there are three possibilities: 
+
+* n is in A, in which case write a 1
+* n is in A+A, in which case write nothing
+* n is neither in A or in A+A, in which case write 0
+
+The procedure for turning a decision sequence into a set is
+implemented as the function `theta` in the test.py, while the
+procedure to turn a set into a sequence is the function `thetainv`
+(following the notation of the papers I've read that explain the
+correspondence).
+
+As an example for sum-free set, say, of odd numbers except 1: 3, 5, 7,
+9, ..., we can write the decision sequence:
+
+* 1 is in not in A or A+A, so **0**
+* 2 is in not in A or A+A, so **0**
+* 3 is in A, so **1**
+* 4 is in not in A or A+A, so **0**
+* 5 is in A, so **1**
+* 6 is in A+A, so write nothing
+* 7 is in A, so **1**
+
+and then it is clear that all even numbers thereafter will be in A+A
+and all odds in A, so the decision sequence is `00101111111111111...`
+We will write this as `0010r1` for "0010 and then repeat the pattern
+'1' forever".  
+
+If the decision sequence eventually settles to a repeating pattern,
+then often the sum-free set is one of the "lift of a sum-free set mod
+m" sequences of the first kind above.  However, there are examples of
+periodic decision sequences not known to give periodic sum-free sets.
+For example, `r01001`, `r01010`, and `r10010` are the only period-5
+sequences not known to give periodic sum-free sets (interestingly the
+two other rotations of this--`r00101` and `r10100`--are known to give
+periodic sets).
+
+A fascinating paper that provides some evidence that these three sets
+are in fact not periodic is
+[here](www.emis.de/journals/INTEGERS/papers/a3int2003/a3int2003.pdf).
+
+Nevertheless, there is a possibility these sets could have an
+irrational "period" of sorts in the sense of the second kind of
+sum-free set we mentioned at the beginning.  To detect this, what else
+would we do other than search for the maximal Fourier coefficient?
+For `r01001` we can do this analysis rather easily with some code
+like:
+
+```
+l = theta("01001",10000)[0]
+find_alpha(l,s=0.2,prec=4)
+```
+
+This gives us a sequence starting like:
+
+```
+2,6,9,14,19,26,29,36,39,47,54,64,69,79,84,91,96,106,109,121,...
+```
+
+and a value of alpha=2.508619.  
+
+Using Magma, we compute the continued fraction (and first few
+convergents) of alpha/2pi to be:
+
+```
+[ 2, 1, 1, 53, 2, 2, 6, 7, 149, 8, 1, 4, 1, 3, 12, 1, 1, 13, 4, 3, 1, 1, 11, 1, 1, 1, 2 ]
+1/2
+1/3
+2/5
+107/268
+216/541
+539/1350
+3450/8641
+24689/61837
+...
+```
+
+The 53 means that in fact alpha/2pi is quite close indeed to 2/5, but
+this doesn't seem to be an error of approximation, as 216/541 does do
+better.  
+
+At any rate, we can as usual plot a histogram of the values of 216*a_n
+mod 541 and see what we get: 
+
+![histogram of 216*a_n mod 541](figs/01001,216,541.png).  
+
+Very interesting...
+
+Notably, as far as we can verify, however, there do appear to be
+elements of the sequence that lie outside the middle third mod 541.
+
+### 20160511 Sum-free sets: some questions and some data
+
+Further computation of the set from `r01001` seems to give a value of
+alpha close to 2.5086204384047996.  Given that the process that
+generates it is some simple periodic one, it might make more sense to
+expect this number to be algebraic.  Something to check in future.
+
+Also, we ran the same histogram plotting business for `r10010` and got
+a new alpha, did continued fraction business etcetc and got a rather
+striking picture:
+
+![histogram of 113*a_n mod 363](figs/10010,113,363.png).  
+
+This very blatantly oversteps the middle third, in exchange for what
+looks like greater non-uniformity than would be expected of a proper
+"middle-third mod some alpha" set.
+
+Another suggestion from the world of Ergodic theory is the idea of
+applying the shift operator.  In that world, this operator is an
+Ergodic map on the space of all sequences of positive integers and so
+one can do things with it (significantly, prove Roth's theorem and
+other additive combinatorics results).  For this example, we might
+consider the much more naive approach of saying "suppose we take
+theta(r01001), left shift it by 1, and then compute the decision
+sequence of that.  If theta(r01001) is periodic, then of course it
+remains so if we chop off the first element.  It is also known that
+the decision sequence corresponding to an eventually periodic sum-free
+set is eventually periodic.
+
+In our case, however, we get: 
+
+```
+ll = thetainv(theta("10010",10000)[0][1:],4500)
+for x in ll:
+    print(x,end="")
+
+0000100100010010010010001010001010010100100100010010010100100100101001
+0100101001001001010010100101001010010100101000101000101001010010100101
+0010100010100101001010010100101001010010100101001010010100101001010010
+1001010010100101001010010010010100101001010010100101001010010100101001
+0010010100101001010010100101001010010010010100101001010010100101001010
+0101001010010100101001010010100101001010010100101001010010100101001010
+0101001010010100101001010010100101001010010100101001010010100101001010
+0101001010010100101001010010100101001010010100101001010010100101001010
+0101001010010100101001010010100101001010010100101001010010100101001010
+0101001010010100100100101001010010100101001010010100101001010010100101
+0010100101001010010100101001010010100101001010010100101001010010100101
+0010100101001010010010010100101001010010100101001010010100101001010010
+1001010010100101001010010100101001010010100101001010010100101001010010
+100101001010010100101001010010100101001010010100010100101001010
+```
+
+This looks a lot like a repeating 01001 sequence, except it has some
+extra 0s stuck in occasionally.  These will correspond to a in A such
+that the only solution to x+y=a in A is 2+(a-2)=a.
+
+In other words, if the function `1_A(a)*1_A(a-2)` is eventually
+periodic, then so too will this shifted sequence be.  
+
+### 20160516 Decay of harmonics
+
+There is a general principle in Fourier analysis that decaying Fourier
+coefficients correspond to better smoothness properties of the
+function.  Some intuition for this, which I learned
+[here](http://www-m7.ma.tum.de/foswiki/pub/M7/Analysis/Fourier13/lecture9.pdf),
+is a non-smooth point on a function should be thought of as having a
+large derivative there, and if the Fourier series is
+
+`f(x) = sum_n a_n e(nx)`,
+
+then the only terms with very large derivative are those with large n.
+So if there are sharp points in the function (i.e. points with very
+large derivative), then the coefficients of the only terms that can
+give large derivatives (i.e. large n) can't be too small.
+
+Precise results on this usually apply to continuous functions, but
+there are results for functions that satisfy the weaker condition of
+Holder continuity:
+
+```
+|f(x) - f(y)| <= C |x-y|^a
+
+A theorem of Zygmund implies that a periodic such a function has the
+property that its kth Fourier coefficient bounded above by M k^(-a)
+(with constant `M = pi^a*C/2`).
+
+An indicator function might be reasonably approximated by a
+piecewise-linear function which would be Holder continuous with C = 1
+and a = 1.  If we could use this to prove a result like
+
+```
+|FT(1_{A_N})(k*alpha)/N| <= alpha/|k|
+```
+
+for any integer k, then we might have better control over the types of
+sums we were trying to estimate in the circle method.  For example, if
+we knew further that as N goes to infinity, FT(1_{A_N})(x)/N goes to 0
+unless `x = k*alpha` for integer `k` (that is, a more realistic
+version of the statement that "alpha is the only large Fourier
+coefficient"), then we could compute
+
+```
+             r_2A(x) =  1/N sum_t FT(1_A)(t)^2 e(-tx)
+(as N to infinity)   =  1/N sum_k FT(1_A)(k*alpha)^2 e(-k*alpha*x)
+                     >= 1/N |A| + (2/N)*Re(FT(1_A)(alpha)^2 * e(alpha*x)) - sum_k={2..infinity} alpha^2/k^2
+```
+
+This sum on the right is bounded, and perhaps for values larger than 2
+could be proven to be small enough to ignore.  The first term is the
+density of A and we believe is going to a non-zero positive constant,
+and the middle term will be positive or negative depending on the
+argument of FT(1_A) and the value of x mod alpha.  In particular, this
+could give us for in a certain range mod alpha that there are a large
+number of representations, guaranteeing their exclusion from the set A.  
+
+### 20160519 There is at least one large Fourier coefficient in a positive-density sum-free set
+
+There are several positive-density sum-free sets that we can write
+down, such as the odd positive integers, or the integers that lie in
+(alpha/3,2 alpha/3) when taken modulo alpha (for any alpha in
+R--rational or irrational, though only for irrational alpha is this
+guaranteed to be positive density).  
+
+These constructions are all in some way periodic, and we might wonder
+whether this is necessary.  Motivated by the observations for the Ulam
+sequence and the above sum-free sets, a simple statement in this
+direction would be the following: If A is a positive-density sum-free
+set of the positive integers, and 1_N is the indicator function of the
+elements of A up to N/2, viewed as a function on Z/N, then there is
+some s for which FT(1_N)(s) ~ O(N) as N grows, appropriately
+understood.  
+
+Nailing down this statement precisely requires some work, but for a
+first shot at the kind of argument that will give it, let A be our
+sum-free set of density d in Z/N, and let S be the total number of
+solutions to x+y=z with x,y,z all in A.  
+
+Then as we've discussed many times, 
+
+```
+0 = S = (1/N) sum_{t=0..N-1} FT(1_A)(t) FT(1_A)(t) FT(1_A)(-t)
+```
+
+Using the positive density, we can pull out the t=0 term which is
+`|A|^3 = d^3 N^3`.  Then we can upper-bound the remaining sum by
+pulling out an FT(1_A)(t) and replacing it with -max_t FT(1_A)(t): 
+
+```
+0 = S >= d^3 N^2 - max_{t=1..N-1}(FT(1_A)(t)) (1/N) sum_{t=1..N-1} |FT(1_A)(t)|^2
+```
+
+By Plancherel, `(1/N) sum_{t=0..N-1} |FT(1_A)(t)|^2 = sum_{t=0..N-1} 1_A(t) = |A|`, so:
+
+```
+0 = S >= d^3 N^2 - max_{t=1..N-1}(FT(1_A)(t)) |A| = S >= d^3 N^2 - max_{t=1..N-1}(FT(1_A)(t)) dN
+```
+
+Thus if `max_{t=1..N-1}(FT(1_A)(t)) <= eN`, then 
+
+```
+0 = S >= N^2 (d^3 - de)
+```
+
+In particular, e >= d^2, i.e. for some k, 
+
+```
+FT(1_A)(k) > d^2 N
+```
+
+Intuitively, by pulling out the Fourier coefficient at 0, we are
+saying "Considering density alone, we might expect d^3 N^2 solutions
+(there are d^2 N^2 sums, and absent any other considerations we might
+expect elements of A to occur with density d, giving d^3 N^2 sums in
+A).  Any deviation from this is going to require at least one Fourier
+coefficient on the order of N to counteract the potential solutions
+coming from positive density."  Put another way "if the set is dense,
+then to avoid solutions it needs to have some kind of pattern (such as
+being all odds)."  The statement we have here is a first version of
+precisely the kind of thing that we wanted to be able to say.
+
+Some remarks: 
+
+* How this k varies a N grows is the main question--if k/N is more or
+  less "stable" eventually, then this may be the thing that we want.
+  One possible way to get this may be to say that if we let N grow and
+  take k_N to be the index of the largest Fourier coefficient, then
+  first of all the sequence of arguments of the maximal Fourier
+  coefficient is an infinite sequence on the unit circle--a compact
+  set--and therefore has a convergent subsequnece.  If k_i mod N_i is
+  the sequence of indices of the maximal coefficients in this
+  subsequence, then they give an infinite sequence in [0,1]--also a
+  compact set.  These, therefore have a convergent subsequence meaning
+  we can find some limiting alpha with FT(1_{A_N})(alpha)/N converging
+  to a constant larger than zero.
+
+* This is a large Fourier coefficient but it may differ from our
+  observed "very large" Fourier coefficient in two ways: This argument
+  doesn't guarantee us one that is as large as we seem to be seeing,
+  and it doesn't require that there is only one.
+
+* The main difference between this and my previous attempts is mostly
+  the willingness to consider the total number of solutions in the
+  entire set, rather than to count the representations of any
+  individual number.
+
+* In the proof of Roth's theorem, the existence of a large Fourier
+  coefficient in A is somehow used to deduce the existence of an
+  arithmetic progression P such that A intersected with P has higher
+  density in P than A had in Z/N.  Roth's theorem concludes by making
+  all this numerically precise to be able to say "if we repeat this
+  often enough, either we'll eventually have small Fourier coefficient
+  relative to the increased density, or we'll have density 1 in an
+  arithmetic progression at which point...well...we will be guaranteed
+  to contain an arithmetic progression!"  In our case, we are always
+  guaranteed a largeish Fourier coefficient by the above argument, so
+  maybe we can always perform this "density increment" step until we
+  are literally an arithmetic progression.  Precisely what this
+  implies about the Fourier coefficients of the original 1_A or
+  whether this ensures us any global behaviour of the sequence A
+  depends on precisely how the density-increment step goes.  This will
+  be a another thing to investigate shortly.
+
+* The same argument works not just for sum-free sets, but for any set
+  A_N for which where the number of solutions to x+y=z grows more
+  slowly than N^2.  In particular, it also works for the Ulam sequence
+  (where the growth is exactly dN), or for any sequence A such that
+  for any a in A, the number of x,y in A with x+y=a is bounded above
+  by a constant.  It is interesting to note that this argument does
+  not take advantage of the uniformity with which these solutions
+  occur in the Ulam case, however.  For example, it also applies to a
+  sequence where a_{2^i+1}..., a_{2^(i+1)-1} have no representations
+  but a_{2^i} has 2^{i-1} representations for each i (in which case
+  the number of representations is not bounded above, but is growing,
+  albeit sort of slowly and non-uniformly).
+
+### 20160520 A possible programme for understanding the phenomenon
+
+* Be able to tell when sum-free or boundedly-additive sets have positive density
+
+  This seems hard and it is not clear what the desired statement is.
+  For example, one guess is that sum-free sets with periodic decision
+  sequences have positive density.  Or that sum-free sets with
+  positive-density of 1s in the decision sequence have themselves
+  positive density.  Saying anything about the decision sequence of
+  the sum-free-ification of the Ulam sequence is unclear.  Maybe this
+  is the place to look for an analogue of the decision sequence for
+  1-additive sets?
+
+* Prove that boundedly-additive sets of positive density have a single large Fourier coefficient
+
+* Prove that a single large Fourier coefficient implies the desired result
+
+These start of these last two steps is perhaps somewhat adumbrated in
+the previous two posts.
