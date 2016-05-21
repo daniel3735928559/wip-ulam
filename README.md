@@ -2664,6 +2664,7 @@ Holder continuity:
 
 ```
 |f(x) - f(y)| <= C |x-y|^a
+```
 
 A theorem of Zygmund implies that a periodic such a function has the
 property that its kth Fourier coefficient bounded above by M k^(-a)
