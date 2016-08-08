@@ -1,0 +1,1490 @@
+\documentclass{article}
+\usepackage{amsmath,amsthm,amssymb,graphicx,setspace,mathrsfs,mathstyle,listings,color}
+%\topmargin 0in
+%\headheight 0in
+%\headsep .2in
+%\textheight 220mm
+%\textwidth 159mm
+%\oddsidemargin 0in
+%\evensidemargin 0in
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}{Corollary}[theorem]
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\numberwithin{equation}{section}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\title{The Ulam sequence and related phenomena}
+\author{Daniel Ross}
+\date{ }
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\section{Introduction}
+
+The Ulam sequence is a sequence of positive integers that is defined
+in a recursive way that sounds like it should make it difficult to
+compute.  It starts with $a_1 = 1$, $a_2 = 2$, and then for $n > 2$,
+$a_n$ is the integer satisfying: 
+\begin{enumerate}
+\item It is expressible as a sum of distinct previous terms in exactly
+  one way: There is exactly one pair of $i < j$ with
+  $a_i + a_j = a_n$.
+\item It is larger than the previous element of the sequence: $a_n >
+  a_{n-1}$.
+\item It is the smallest positive integer with the above two
+  properties.
+\end{enumerate}
+
+Thus the first few terms can be computed: 
+
+\[1, 2, 3, 4, 6, 8, 11, 13, 16, 18, 26, 28, 36, 38, 47, 48, 53, 57, 62,
+69, \ldots\]
+
+In particular, there are two ways a number could fail to be Ulam:
+Either it has a representation as a sum of two distinct previous
+smaller Ulam numbers in more than one way (such as $5 = 4+1 = 2+3$),
+or it has no representations as a sum of distinct smaller Ulam numbers
+at all (such as 23).
+
+One thing that makes the sequence interesting is that it seems
+historically to have been very difficult to prove anything about it.
+We know, for example, that it must be infinite, since, given the first
+$n$ elements $a_1, \ldots, a_n$, we can always find at least one
+number that satisfies both the criteria above, namely $a_{n-1} +
+a_n$.  Thus there must be a smallest such number, which is the next
+Ulam number.  
+
+We also know that if we use the same definition but start with
+different initial values, we can get sequences that we can analyse
+very easily indeed: If the $(u,v)$-Ulam sequence is the sequence with
+$a_1 = u, a_2 = v$, and $a_n$ (for $n > 3$) defined exactly as before,
+then by theorems of Finch [PAPER] and Schmerl and Speigel [PAPER], we
+know that the $(2,v)$-Ulam sequence, in the case where $v$ is odd and
+at least 5, is regular in the following sense:
+
+\begin{definition}
+  An increasing, infinite sequence $\{a_i\}$ of positive integers is
+  \textbf{regular} if the sequence $\{b_i = a_i - a_{i-1} : i > 1\}$
+  is eventually periodic.
+\end{definition}
+
+Such sequences are very easy to describe--we could specify them (after
+some initial segment) by a set of congruence classes modulo some
+(possibly large) $m$.  In particular, a regular Ulam-like sequence
+will be far easier to compute than the definition of an Ulam sequence
+would naively suggest.
+
+There are other initial values that are variously known to and
+believed to give rise to regular sequences, also.  See, for example,
+Finch's ``Patterns in 1-additive sequences'' [PAPER].  That said, many
+Ulam-type sequences appear not to be regular, among them the $(1,2)$-
+and $(2,3)$-Ulam sequences.  So one might ask some questions:
+
+\begin{itemize}
+\item What is it that causes some initial conditions to be regular and
+  not others (if indeed they are not)?
+\item Is there any perhaps more general notion of regularity that even
+  the irregular-looking sequences do satisfy?
+\end{itemize}
+
+In looking for hidden regularity, one might take a signal processing
+approach to the sequence and try, for example, to Fourier transform
+the indicator function of the sequence and see if the spectrum has any
+interesting features.  In [PAPER], Stefan Steinerberger did exactly
+that and behold, the spectrum has a large spike exactly only at some
+$\alpha \in \R/\Z$ (and at its harmonics), and seemingly nowhere else.
+
+More precisely: 
+
+\begin{definition} If $f : [N] \to \C$, recall the the \textbf{Fourier
+    transform} of $f$ is a function $\widehat{f}$ defined by the
+  formula:
+
+\[\widehat{f}(x) = \frac 1N \sum_{t=0}^{N-1} f(t) e(-tx)\]
+
+where $e(x) = e_N(x) = e^{2\pi i x / N}$ (where often, $N$ will be
+ommitted from the notation and understood from context).  Thus
+$\widehat{f}$ is a function defined on all of $\R/\Z$.  
+
+\end{definition}
+
+This definition satisfies many properties, which are standard from
+Fourier analysis and additive combinatorics [TAO/VU]:
+
+\begin{proposition}
+If $f : [N] \to \C$, then: 
+
+\begin{itemize}
+\item If in fact $f$ takes values in $\R$, then
+  $\widehat{f}(-x) = \overline{\widehat{f}(x)}$ for all $x \in \R/\Z$.
+
+\item $\widehat{\widehat{f}}(x) = f(-x)$ for all $x \in [N]$.
+
+\item $\widehat{fg}(x) = (\widehat{f} \ast \widehat{g})(x)$ for all
+  $x \in \R/\Z$.
+
+\item If in fact $f$ is the indicator function of a set
+  $A \subseteq [N]$, then $\widehat{f}(0) = \frac{|A|}{N}$.
+\end{itemize}
+\end{proposition}
+
+So if $A$ is a set of positive integers (say, the Ulam sequence), and
+$1_A$ is the indicator function of $A$, then we might define
+$\widehat{1_A}(x) = \lim_{N \to \infty} \widehat{1_{A_N}}(x)$, where
+as usual, $A_N = A \cap [N]$.  Then in the case of the Ulam sequence,
+what is observed numerically is that for one particular value of
+$\alpha \in \R/\Z$ (namely $\alpha = \ldots)$, that
+$\widehat{1_A}(\alpha) \approx 0.8$, and for $k \in \Z$,
+$\widehat{1_A}(k \alpha)$ is also some non-zero value that shrinks
+with $k$.  For example, for $N = 100000$, we compute this for a few
+values of $k$ (noting that of course the values for $-k$ are just the
+conjugates of these: 
+
+\begin{tabular}{|llll|}
+\hline
+$k$ & $\widehat{1_{A_N}}(k\alpha)$\\
+\hline
+0 & \ldots \\
+1 & \ldots \\
+2 & \ldots \\
+3 & \ldots \\
+4 & \ldots \\
+5 & \ldots \\
+\hline
+\end{tabular}
+
+and as $N$ gets large, it appears that
+$\widehat{1_{A_N}}(\beta) \to 0$ as $N \to \infty$ for all other
+$\beta \notin \alpha\Z$.
+
+From a signal processing perspective, this might suggest that the set
+$A$ has some periodicity mod $\frac 1 \alpha \approx \ldots$.  Using
+$\ldots$ as a rational approximation to this, we can plot the
+distribution of $A_N$ for, say, $N = 100000$ modulo this number: 
+
+\includegraphics[scale=0.5]{../figs/u1_2_mod5422.png}
+
+This has many notable features: 
+
+\begin{itemize}
+\item From the value of $\widehat{1_A}(0)$, it looks like the Ulam
+  sequence has small but nonzero density (in fact, around $0.07$).
+
+\item As noted in [STEINERBERGER] it looks like as we increase $N$
+  that this is converging to an actually continuous distribution.
+
+\item It looks at a glance like this distribution is supported on the
+  middle third of the interval $[0,\frac1\alpha]$.  This is not
+  literaly the case, but in [GIBBS] there is a conjecture in this
+  direction.
+
+\item While the obvious peaks seem somewhat irregular, the major bumps
+  look kind of like they might be a sum of normal or other nice
+  distributions.
+\end{itemize}
+
+\section{Background}
+
+\subsection{Known regularity results}
+
+If we want to prove this kind of generalised regularity statement, it
+might help to understand existing proofs of regularity (i.e. that
+consecutive differences are eventually periodic).  A criterion for
+regularity, as well one example of a proof of regularity, are: 
+
+[PAPER] Finch's criterion for regularity
+
+[PAPER] Schmerl and Speigel prove of regularity for $U(2, 2n+1)$
+
+We'll go through these in turn.
+
+\subsubsection{Finch's criterion for regularity}
+
+The criterion in the first paper is that finitely many evens implies
+regularity, and the proof is short and sweet.  The idea is that if
+there are finitely many evens, say $e_1 < ... < e_s$, then every term
+$n$ after the last even must be odd.  Since it can be written as sum of
+two earlier terms, and it is odd, one of its summands must be even.
+And since it can be written in such a sum in a unique way, this is
+saying that $n - e_i$ is in the sequence for a unique $i$ from 1 to $s$.
+This is finitely many things to check.
+
+More precisely, if $x_n$ is the number of representations of $n$ as a sum
+of two elements of the sequence (and again, $n$ is odd), then we can
+write a finite recurrence:
+
+\[x_n = \sum_i 1(x_{n-e_i})\]
+
+where $1(x)$ is 0 unless $x = 1$, in which case $1(x) = 1$.  In particular,
+$0 < x_n \leq s$ for all odd $n > e_s$.  Note also that $x_n$ depends on a
+finite range of earlier $x_i$'s: $x_{n-2}, ..., x_{n-e_s}$.  Call this
+sequence $B_n$.  Each of the $e_s/2$ values in $B_n$ is between 1 and $s$, so
+there are finitely many such sequences, so at some point $B_n = B_{n+N}$
+for some $n$ and $N$.  But since $x_n$ and $x_{n+N}$ only depend on $B_n$ and
+$B_{n+N}$ respectively, this means $x_n = x_{n+N}$.
+
+And further, $x_{n+N+2}$ only depends on $B_{n+N+2}$, whose entries are
+the same as those of $B_{n+N}$, but shifted by 1 with $x_{n+N}$ added onto
+the beginning.  In particular, the entries of $B_{n+N+2}$ after the
+first all agree with those of $B_{n+2}$.  And the first entry of
+$B_{n+N+2}$ is $x_{n+N}$, which we just saw is $x_n$, which is the first
+entry in $B_{n+2}$.  So in fact $B_{n+N+2} = B_{n+2}$ and we can proceed
+by induction to show the $B_n$ are periodic with period $N$.  Since the
+$x_n$ are a function of the $B_n$, $x_n$ is therefore also periodic with
+period $N$.
+
+\subsubsection{Regularity of $U(2,2n+3)$}
+
+The claim here is that in the sequence $S$ starting with $2, v$ for $v$ odd
+and bigger than $3$, the only evens are $2$ and $2v+2$.
+
+The first step is to note that if we look at, say, the first n terms
+in the sequence and these are still the only evens seen up to then,
+then there cannot be a gap of odd numbers of length $2v$.  This is
+simply because for any odd number $r \in S$, then since 2 in $S$ also,
+the only way $r+2$ is not in $S$ is if $r+2 = a+b$ for some other
+$a,b \in S$.  But $r+2$ is odd, so one of its summands has to be even.
+The only other choice is $2+2v$, so this tells us
+$r+2-(2+2v) = r - 2v$ is in $S$.
+
+So for any $r$ in $S$, either $r+2$ is in $S$ or $r-2v$ is in $S$.  
+
+This lets us find an element close to $x$ in the sequence, say between
+$x-3v$ and $x-v$.  Because we know all the small elements of the sequence,
+we can provably write $x = a+b$ for two reasonably explicit elements of
+the sequence.  Because $x$ is in the sequence, this must be the unique
+such representation.  However, using knowledge of the other small
+terms in the sequence, we can find a second representation of $x$ with
+some casework, leading to a contradiction of the existence of $x$.
+
+\subsection{Sum-free sets}
+
+The set of Ulam numbers $A$ has the property that for each $a \in A$,
+there is exactly one solution to $x+y=a$ with $x < y$ in $A$.  The
+condition that $x < y$ is a little hard to capture using standard
+techniques, but, for example, this entails that the number of
+solutions to $x + y = a$ with $x, y \in A$ is at most 3 (namely, the
+unique solution $x+y = a$ above, then also $y+x = a$, and then
+possibly some other $z+z = a$, since the definition of the Ulam
+numbers does not consider this.  For example, 4 is Ulam, and its
+unique representation is $1+3=4$, but it also happens that $2+2=4$ and
+2 is also Ulam).
+
+In particular, this implies that if $A_N$ is again the set of Ulam
+numbers up to $N$, then $A_N$ has at most $3|A_N|$ solutions to $x+y =
+z$ with $x, y, z \in A_N$.  
+
+We might ask how special such a condition is on sets of integers.  For
+instance, suppose we take the integers up to $N$ and we generate a
+random subset by including each one with probability $p$.  The size of
+set we expect to get is $pN$.  The number of pairs $x,y$ is $(pN)^2$,
+and of these, we expect $p$ of them have $x+y$ in the set, so we
+expect $p^3 N^2$ solutions to $x+y=z$.  In particular, an arbitrary
+set of density $p$ we expect to have $O(N^2)$ solutions.  Since the
+Ulam numbers appear to have density around $0.07$ but by construction
+have only $O(N)$ solutions to $x+y=z$, they are already somewhat
+special.  
+
+In the interest of understanding what precisely is happening with the
+Ulam numbers, then, we might turn our attention to the more extreme
+situation of sets with no solutions to this equation at all: So-called
+``sum-free sets''.  
+
+\begin{definition}
+  A subset $A$ of an abelian group is \textbf{sum-free} if the
+  equation $x+y=z$ has no solutions with $x, y, z \in A$.
+\end{definition}
+
+\begin{example}
+For example, the odd positive integers are sum-free.  More generally,
+if $A \subset \Z/m$ is sum-free, then the set of integers $x$ that
+reduce to an element of $A$ modulo $m$ is also sum-free.  In fact,
+even more generally, for any surjective homomorphism
+$\pi : \Z \to \R/\Z$, if $A$ is a sum-free subset of $\R/\Z$, then
+$\pi\inv(A)$ is a sum-free set of integers.  Clearly, any subset of a
+sum-free set is sum-free also.  For one final and very different sort
+of example, the set $\{x^n : x \in \Z, x > 1\}$ (for any fixed
+$n > 2$) is also sum-free by Fermat's last theorem.
+\end{example}
+
+\subsubsection{Construction}
+
+It turns out there is a construction that bijects sum-free sets of
+positive integers with infinite binary sequences.  In words, the
+construction is simple: Take the positive integers in turn starting
+with 1.  Flip a coin.  If it's heads, include it in the set and erase
+all integers that are sums of elements in the set thus far (as these
+could not be in the set if it is to be sum-free).  If tails, do not
+include that integer in the set.  Then move on to the next integer
+that has not been included, excluded, or disqualified.
+
+More formally: Define the function
+$\theta : \{0,1\}^\N \to \{f : \N \to \{0,1\}\}$ from binary sequences
+to sum-free sets of natural numbers (or, in this case, their indicator
+functions) as follows: If $s\in\{0,1\}$ is a binary sequence, then
+using $s$, we will actually define three disjoint sets that partition
+the natural numbers: The target set $A$, the excluded set $E$, and the
+disqualified set $D$.  For each $n \in \N$, iteratively select a set
+for $n$ as follows: 
+
+\[\begin{cases}
+n \in A+A &\implies n \in D\\
+n \notin A+A \text{ and } s_k = 1 &\implies n \in A\\
+n \notin A+A \text{ and } s_k = 0 &\implies n \in E
+\end{cases}\]
+
+where, at each stage, $k = |A|+|E|+1$ is the index of the first
+element of $s$ that we have yet to consult.  
+
+\begin{example}
+  For example, let us compute $\theta(111111111...)$: We start with 1
+  and flip a coin and get heads, so we include 1 in the set $A$.  This
+  automatically disqualifies 2 as $2 = 1+1$.  The next possible
+  candidate is 3, so we flip another coin and get heads, and so we
+  include 3.  This automatically disqualifies 4 ($4 = 1+3$) and 6
+  ($6 = 3+3$).  Continuing in this way, it is clear we will never get
+  a chance to include an even number and will always include the odd
+  numbers, so in the end, the result is the set of odd positive
+  integers.
+\end{example}
+
+It is also possible to reverse this construction.  In words: Say we
+start with $A$ a sum-free set.  We again walk through the positive
+integers starting at 1.  For each $n$ there are three possibilities:
+Either $n \in A$, $n \in A+A$, or neither.  If $n \in A$, then it got
+there by a coin landing heads, so we write down a 1.  If $n \in A+A$,
+then $n$ was disqualified from being in $A$ not by a coin flip, but by
+being a sum of elements of $A$, so we write down nothing.  If $n
+\notin A$ and also $n \notin A+A$ then $n$ could have been included in
+$A$, but was excluded simply because of a coin flip, so we write down
+a 0.  
+
+Formally, we write down the sequence $s = \theta\inv(A)$ by writing
+down first the string: 
+
+\[s'_n = \begin{cases}
+\text{"A" if }& n \in A\\
+\text{"D" if }& n \in A+A\\
+\text{"E" if }& n \notin A \cup A+A
+\end{cases}\]
+
+Then $s$ is got by deleting all $D$s, replacing all $A$s with 1, and
+$E$s with 0.  
+
+There are many questions about this construction.  For example, it is
+known that if a sum-free set $A$ is regular (as defined
+above--i.e. its sequence of successive differences is ultimately
+periodic), then its decision sequence $\theta\inv(A)$ must also be
+ultimately periodic [PAPER].  The converse is believed to be false,
+with one of the simplest apparent counterexamples being
+$\theta(\overline{01001})$ ($\overline{01001}$ meaning the binary
+sequence that repeats the pattern $01001$ forever).  This is a set
+$\{2, \ldots\}$ that has been computed extensively and for which no
+period has been identified.  Nevertheless, there is no known example
+of an ultimately periodic decision sequence for which we can prove its
+sum-free set is non-regular.
+
+\subsubsection{Density and regularity}
+
+Clearly the maximal density a sum-free set can have is $\frac12$,
+which is realised by the example of the odd positive integers.  Luczak
+has given a sort of converse to this example, proving in [PAPER] that
+if a sum-free set contains an even number, then, remarkably, its
+density is automatically bounded above by $\frac25$.  The proof is
+short, but a little delicate, and we shall recall a version of it in
+this section.
+
+The basic idea of the proof is to find disjoint subsets of $[N]$ that
+are the same size as $A$, or of a size related to $A$.  For example,
+if $a \in A$ is any element, then because $A$ is sum-free, $A_N$ and
+$A_N+a$ are disjoint in $[N+a]$, and thus
+$2|A_N|/N <= 1 + \frac{a}{N}$, which is how we deduce our earlier
+statement about $A$ having density bounded by $\frac12$.
+
+The proof breaks up into two cases: Where $A$ has any run of
+consecutive elements and where it does not.
+
+In the case where $A$ has an even element but no two consecutive
+elements.  Note that if $A$ is all even elemenets, then $\frac12 A$ is
+also sum-free, and therefore with density $\leq \frac12$, and so $A$
+has density $\leq \frac14$ and the result is automatic, so without
+loss we may assume $A$ has at least one odd element in addition to its
+at least one even element.  Then, let $t$ be the minimal odd
+difference (which does exist using the odd and even elements, and is
+not 1, since there are no consecutive elements).  Write $t = x-y$ for
+$x, y \in A$.  
+
+This means that if $a \in A$, then $a+t-2$ cannot be in $A$ (else
+$t-2$ would be a smaller odd difference than the minimal odd
+difference $t$).  Put another way, if $a$ and $a+2$ are both in $A$,
+then $a+t$ cannot be in $A$.  Put another way, if $B$ is the set of
+$a \in A$ with $a+2$ also in $A$, then $B+t$ and $A$ are disjoint.  Of
+course, finding two disjoint subsets of even size $|A|$ is already
+easy, however this lets us in fact find three: Since $t=x-y$, this
+means $B+x-y$ and $A$ are disjoint, meaning $B+x$ and $A+y$ are
+disjoint.  But both of these are contained in a set of the form $A+a$
+for some $a \in A$, so they are both also disjoint from $A$.  Thus we
+have $A$, $A+y$, and $B+x$ all disjoint.  If we truncate $A$ to $A_N$,
+then these are all disjoint subsets of $[N+x]$, and so
+
+\[2|A_N|+|B_N| \leq N+x\].
+
+So if we can relate $|B|$ to $|A|$ (for the moment using the shorthand
+$B = B_N$, $A = A_N$), then we are done.  But
+$B, B+1, A\setminus B, A\setminus B + 1, A\setminus B + 2$ are all
+disjoint in $[N+2]$, so $2|B| + 3|A| - 3|B| \leq N+2$, i.e.
+
+\[|B_N| \geq 3|A_N| - N - 2\]
+
+Putting these two inequalities together, we find:
+
+\[2|A_N| + 3|A_N| - N - 2 \leq N+x \]
+
+or
+ 
+\[\frac{|A_N|}{N} \leq \frac25+o(1) \]
+
+
+In the case where $A$ has $d$ consecutive elements
+$a, a+1, \ldots, a+d-1$, say, the argument is similar in flavour but
+the technical details are all slightly different.  This time, we let
+$t$ be any difference for which $t+1, \ldots, t+d$ are all not
+differences.  (This does exist: $a, a+1 \in A$ means $1 \notin A$, so
+let $t$ be the maximum of $1, \ldots, a-1$ that is in $A-A$.  Then
+nothing from $t$ to $a-1$ is in $A-A$ (by definition), and nothing
+from $a$ to $a+d-1$ is either (since these are all in $A$), so at
+least $d$ elements (and possibly more) immediately after $t$ are not
+in $A-A$).  Again, say $t = x-y$ for $x, y \in A$.  
+
+Then now if $B$ is the set of elements for which $b+1, \ldots, b+d-1$
+are all not in $A$, then certainly the sets $A, B+1, \ldots, B+d-1$,
+are all disjoint.  In fact, we can get one more than this: We can
+shift all these sets by $a$ and they are still disjoint: $A+a, B+a+j$
+($j=1, \ldots, d-1$).  But now since the $a+j$ are all in $A$, these
+sets are all themselves disjoint from $A$ (since they are subsets of
+$A+z$ for various $z \in A$.  Thus, again truncating at $N$, we have
+two sets of size $|A_N|$ and $d-1$ sets of size $|B_N|$ all disjoint
+and inside $[N+a+d-1]$.  Thus: 
+
+\[2|A_N|+(d-1)|B_N| \leq N+a+d-\]
+
+So again, we need control over the size of $|B_N|$ in terms of $|A_N|$
+and we will be done.  But this time, we note that if $z \in A$, $z+t$
+could be in $A$, but then because of the definition of $t$, none of
+$z+t+1, \ldots, z+t+(d-1)$ can be in $A$ (lest one of
+$t+1, \ldots, t+(d-1)$ lie in $A-A$).  Thus $A+t$, insofar as it
+intersects $A$, in fact only intesects $B$.  Put another way, $A+t$
+and $A \setminus B$ are disjoint.  Again, this is only two sets, but
+we can use the same trick as before to make it three: Since $t = x-y$,
+we can equally say $A+x$ and $(A \setminus B) + y$ are disjoint, at
+which point these are also disjoint from $A$ (again, being subsets of
+$A+z$ for various $z \in A$).  So we have three disjoint subsets of
+$[N+x]$, of sizes $|A_N|$, $|A_N|$, and $|A_N|-|B_N|$, meaning
+$3|A_N| - |B_N| \leq N+x$ or:
+
+\[|B_N| \geq 3|A_N|-N-x\]
+
+Putting these two together, we get: 
+
+\[2|A_N|+(d-1)(3|A_N|-N-x) \leq N+a+d-\]
+
+which simplifies to: 
+
+\[\frac{|A_N|}{N} \leq \frac{d}{3d-1} + o(1)\]
+
+For $d \geq 2$, this is again bounded by $\frac25$ in the limit, so
+the claimed bound follows.
+
+\subsubsection{Irregular sum-free sets}
+
+A construction of Cameron and Erdos in [CAMERON ERDOS] supplies an
+example of a sum-free set with density $\frac13$ that has no
+periodicity, namely: Take $\alpha \in \R$ irrational, and let
+$A_\alpha$ be the set of integers $n$ such that $n \mod{\alpha}$ lies
+in $[\frac \alpha 3, \frac {2\alpha}{3}]$.  $A_\alpha$ is clearly
+sum-free, since it is sum-free modulo $\alpha$, but they prove that
+for irrational $\alpha$, $A_\alpha$ is also not regular.
+
+\subsection{Roth's theorem}
+
+Roth's theorem is about the number 3-term arithmetic progressions
+$x, y, z$ in a set $A \subseteq \Z^+$.  Specifically, if $A$ has
+positive density $\delta$, then there is always at least one such
+arithmetic progression.  Equivalently, there is always at least one
+solution to $x+z=2y$.  
+
+In a sum-free set $A$, we are asserting that there are no solutions to
+$x+z=y$ (swapping around variable names to highlight the similarity),
+so if we have such a set that we believe has positive density, we
+might wonder what the proof of Roth's theorem has to say about such an
+$A$.  After all, in the case of the slightly different equation
+$x+z=2y$ it says that the set $A$ cannot exist.
+
+\subsubsection{Density increment proof}
+
+First, we look back on how Roth's theorem is proven.  
+
+We start by working mod some $N$.  If $A$ is a set of density $\delta$
+in $\Z/N$, then the number $S$ of solutions to $x+z=2y$ is counted by 
+
+\begin{eqnarray*}
+  S &=& \frac1N \sum_{t=0}^{N-1} \hat 1_A(t)\hat 1_gA(t)\hat 1_A(-2t) \\
+  S &=& \frac1N |A|^3 + \frac1N \sum_{t=1}^{N-1} \hat 1_A(t)\hat 1_gA(t)\hat 1_A(-2t) \\
+    &=& \delta^3 N^2 + \frac1N \sum_{t=0}^{N-1} \hat 1_A(t)^2\hat 1_A(-2t) \\
+    &\geq& \delta^3 N^2 - \sup_t |\hat 1_A(-2t)| \frac1N \sum_{t=0}^{N-1} |\hat 1_A(t)|^2 \\
+    &=& \delta^3 N^2 - \sup_t |\hat 1_A(-2t)| \frac1N \sum_{t=0}^{N-1} |\hat 1_A(t)|^2 \\
+    &=& \delta^3 N^2 - \sup_t |\hat 1_A(-2t)| |A|\\
+    &=& \delta^3 N^2 - \sup_k |\hat 1_A(k)| \delta N
+\end{eqnarray*}
+
+So if there is no large Fourier coefficient--that is, every Fourier
+coefficient is $\leq \epsilon N$, then
+
+\[S \geq (\delta^3 - \delta\epsilon) N^2\]
+
+So if $\epsilon < \delta^2$, then $S > 0$, at which point there is at
+lest one solution as desired.  
+
+If, on the other hand, there is a $k$ such that
+$|\hat 1_A(k)| \geq \delta^2 N$, then this argument does not guarantee
+a solution.  However, in that case, if $P = d[1,L]$ is the arithmetic
+progression length $\{d, 2d, \ldots ,Ld\}$, then we know that 
+$Q(a) = |A \cap (P+a)| = 1_A \star 1_P(a)$ and so: 
+
+\begin{eqnarray*}
+\hat Q(s) = \hat 1_A(s) \overline{\hat 1_P(s)}
+\end{eqnarray*}
+
+Further, we know that for all $s \neq 0$, $\sum_a Q(a) \geq |\hat
+Q(s)|$.  So in particular, for $s = k$: 
+
+\begin{eqnarray*}
+  \sum_a Q(a) &\geq& |\hat Q(k)| \\
+              &=& |\hat 1_A(k)| |\hat 1_P(k)| \\
+              &\geq& \epsilon N |\hat 1_P(k)| 
+\end{eqnarray*}
+
+Thus for some $a$, $Q(a)/N \geq \delta^2 |\hat 1_P(k)|$.  We can
+select $d$ and $L$ such that $|\hat 1_P(k)| \geq L/2$, so for some
+$A$, $Q(a)/N \geq \epsilon L/2$.  In particular, $A$ intersected with
+an arithmetic progression of length $L$ has density
+$\delta + \epsilon/2$, meaning we have increased the density,
+whereupon we can repeeat the argument.
+
+\subsubsection{Abelian arithmetic regularity}
+
+If $A$ is any set, then an easy probablistic argument shows that there
+is a sum-free subset of $A$ of size $|A|/3$.  Indeed, if for any real $\alpha$,
+we define $A_\alpha$ to be set the set of elements $x$ of $A$ with
+
+\[A_\alpha = \{x \in A : 1/3 < \alpha x \mod{1} \leq 2/3\]
+
+then the expected size of $A_\alpha$ is $|A|/3$ as $\alpha$ varies
+over $[0,1]$, and so there must be at least one a for which $A_\alpha$
+has at least this size.
+
+In [this paper](https://arxiv.org/pdf/1301.4579v2.pdf), Eberhard,
+Green, and Manners prove that for every e > 0, there is a set A such
+that A has no sum-free set larger than $(1/3 + \epsilon)|A|$, so this
+bound is in fact sharp (to first order).  (Apropos of nothing, I find
+this paper's organisation and general exposition to be highly
+user-friendly and otherwise excellent.)
+
+In our case, if $A$ is the Ulam sequence up to N, then for any
+$\epsilon > 0$ we believe that for $N$ large enough, we could generate
+a sum-free subset of size $(1-\epsilon)|A|$--kind of the opposite
+extreme.
+
+Nevertheless, the argument follows a kind of local-to-global flow that
+might make it worth understanding, so we work through at least the
+basic idea here:
+
+...
+
+\subsubsection{Energy increment proof of Roth's theorem}
+
+\subsubsection{Green's triangle removal theorem}
+
+\subsubsection{Quantitative bounds in finite fields}
+
+There have been several recent developments in a finite field setting
+on analogous problems (specifically, the work of Croot, Lev, and Pach
+on length-3 arithmetic progression-free sets in $\FF_4^n$ and
+subsequent work by others pushing it to $\FF_3^n$).  I will start by
+explaining this work to the best of my understanding, and follow by
+attempting to apply the methods used there to analogues of the
+problems of boundedly-additive sets in the integers.
+
+The idea for arithmetic progression-free sets is as follows: Let $S^d$
+be the space of all polynomial functions on $\FF_q^n$ of degree $d$
+(that is, polynomials of total degree $d$ where each of the $n$
+variables shows up with degree less than $q$).  Let $m_d$ be the
+dimension of this space, and let $V_d$ be the subspace of polynomial
+functions vanishing on the complement of $2A$ (this is more or less a
+trick).  Then
+
+\[\dim(V_d) >= m_d - (q^n - |A|)\]
+
+(since the requirement to vanish on the complement of $2A$ is at most
+$q^n - |A|$ conditions).
+
+It turns out that we can actually get a polynomial $P_d$ in $V_d$ with
+support of size exactly $\dim(V_d)$, and so this polynomial has:
+
+\[|\supp(P_d)| >= m_d - q^n + |A|\]
+
+Now for the last bit: If we have a degreee-d polynomial $P$ vanishing on
+the complement of $2A$, then we can form the $|A|$ by $|A|$ matrix $M$ whose
+$i,j$ entry is $P(a_i + a_j)$ where $a_i$ are the elements of $A$.  First of
+all, because for $i$ and $j$ different, $a_i+a_j$ is never in $2A$, the
+off-diagonal terms all vanish, whereas because the diagonal terms are
+$P(2a_i)$, they may or may not vanish.
+
+
+We can brutally expand this polynomial into a sum of monomials:
+
+\[P(a_i + a_j) = \sum_{\text{monomials m,m' of degree d or less}} c_{m,m'} m(a_i) m'(a_j)\]
+
+Further, in each term at least one of m and m' has degree at most d/2, so we can sum over 
+
+\[P(a_i + a_j) = \displaystyle\sum_{\text{monomials m of degree d/2 or less}} c_{m} m(a_i) F_m(a_j) + c'_m m(a_j) G_m(a_i)\]
+
+So $M$ is a linear combiantion of $2 m_{d/2}$ matrices $(m(a_i)
+F_m(a_j))$ each of which, as the exterior product of two vectors, has
+rank 1.  Thus the rank of $M$ is at most $2 m_{d/2}$.  And since $M$ is
+diagonal, this means that in fact on $2A$, $P$ has only $2 m_{d/2}$ non-zero
+points.  So the support of $P$ is bounded above by $2 m_{d/2}$.  Since the
+support of $P_d$ was already bounded below by $m_d - q^n + |A|$ we can
+apply this argument to $P_d$ and conclude that
+
+\[2 m_{d/2} \geq m_d - q^n + |A|\]
+
+i.e.
+
+\[|A| \leq 2 m_{d/2} - m_d + q^n\]
+
+Choosing a particular value of d and bounding these quantities is all
+ that remains.
+
+
+\section{Observations}
+
+\subsection{Studying the large Fourier coefficient $\alpha$}
+
+\subsubsection{For other initial conditions}
+
+We compute these in experiment1 and experiment2
+
+
+\begin{tabular}{|llll|}
+\hline
+$a$ & $b$ & $\alpha_{a,b}$ & $|\widehat{1_A}(\alpha_{a,b})|^2$\\
+\hline
+1 & 2 &  2.5716 & 23348.35\\
+1 & 3 &  2.8334 & 24293.72\\
+1 & 4 &  2.0944 & 39007.46\\
+1 & 5 &  1.7648 & 26597.04\\
+1 & 6 &  4.8332 & 32338.77\\
+1 & 7 &  0.3266 & 24192.13\\
+1 & 8 &  0.2736 & 25928.99\\
+1 & 9 &  6.0380 & 26372.97\\
+1 & 10 & 6.0616 & 25717.80\\
+1 & 11 & 6.0832 & 25743.73\\
+1 & 12 & 6.1015 & 25737.80\\
+1 & 13 & 6.1154 & 25926.87\\
+1 & 14 & 6.1244 & 25983.88\\
+1 & 15 & 6.1356 & 25647.87\\
+1 & 16 & 6.1453 & 26048.46\\
+1 & 17 & 6.1550 & 26086.33\\
+1 & 18 & 6.1580 & 26167.08\\
+1 & 19 & 6.1660 & 26600.04\\
+1 & 20 & 6.1740 & 25678.08\\
+1 & 2 &  2.5716 & 23348.35\\
+2 & 3 &  1.1841 & 16192.09\\
+3 & 4 &  5.3809 & 26414.80\\
+4 & 5 &  5.6000 & 21640.56\\
+5 & 6 &  2.0588 & 22783.57\\
+6 & 7 &  2.6889 & 19502.05\\
+7 & 8 &  3.9426 & 23910.35\\
+8 & 9 &  3.4903 & 19172.22\\
+9 & 10 &  5.9557 & 13422.67\\
+10 & 11 & 3.4270 & 17537.29\\
+11 & 12 & 6.0091 & 14069.21\\
+12 & 13 & 3.1416 & 17955.65\\
+13 & 14 & 2.9106 & 18768.82\\
+14 & 15 & 3.1416 & 19043.70\\
+15 & 16 & 2.9401 & 15916.09\\
+16 & 17 & 3.1416 & 23103.74\\
+17 & 18 & 2.9634 & 17551.75\\
+18 & 19 & 3.1416 & 21903.76\\
+19 & 20 & 6.1231 & 15870.33\\
+\hline
+\end{tabular}
+
+So for example, when $a_1 = 12$, $a_2 = 13$, it looks like
+$\alpha = \pi$, which seems to be confirmed for this particular
+instance by computing more terms and searching with more
+precision. This is saying that the $a_i$ are very biased mod
+$2\pi/\pi = 2$, which seems experimentally to be very much the case
+even out to thousands of terms (for this particular example): the
+$a_i$ are over 80\% odd. Proving something in this direction seems
+accessible, but some first efforts were unfruitful.
+
+\subsubsection{Rationality}
+
+
+It is more likely that there is a sequence of m mod which the
+congruence classes of $a_i$ are increasingly clustered.  The continued
+fraction of $2\pi/\alpha$, which we're imagining is $m/k$, doesn't have some
+really large coefficient where we would obviously truncate it.
+Instead, for $2\pi/\alpha_{1,2}$ it is just
+\[[2; 2, 3, 1, 11, 1, 1, 4, 1, 1, 7, 2, 2, 6, 5, 3, 1, 3, 1, 2, 1, 3, 2, 1, 14, 2, 5, 3, 2, 3, 1, 2, 13, 2]\]
+
+(For most of the $\alpha_{a,b}$ that we computed to any meaningful
+precision, either this "not obviously a rational number" continues to
+be true, except when there is a very small obvious modulus like 2.)
+
+This gives rational approximations: 
+\[5/2, 17/7, 22/9, 259/106, 281/115, 540/221, 2441/999, 2981/1220, 5422/2219, 40935/16753, 87292/35725\]
+
+These suggest, for example, that for $m = 540$, there should be
+substantial bias in which congruence classes show up in the Ulam
+sequence.
+
+This is borne out in very crude measurement by taking the first
+100000 terms of the Ulam sequence and computing them mod, e.g. 540, and
+asking how often each confruence class mod 540 shows up and computing
+the standard deviation of all these numbers.
+
+For the first few moduli coming from the convergents of the confinued
+fraction, we get:
+
+\begin{tabular}{ll}
+5 & 139.9757121789348\\
+17 & 263.62138626089813\\
+22 & 298.6996058675916\\
+259 & 341.73231186554915\\
+281 & 274.8670335289345\\
+540 & 664.2715810068448\\
+2441 & 3022.3025069077416\\
+2981 & 3009.780526078754\\
+5422 & 2580.6984215609386\\
+40935 & 970.8607009744287\\
+87292 & 690.3748130781282\\
+215519 & 482.8027781782595\\
+1380406 & 304.5611017423058
+\end{tabular}
+
+Note, however, that while it looks like the bias starts falling off at
+40935, in fact we only know alpha to within $10^(-10)$ or so, and for
+$p/q$ convergents from the continued fraction,
+$|\alpha - p/q| < 1/q^2$.  So being confident about alpha to within
+$10^(-10)$ suggests that we should only trust convergents up to 5-6
+digits.
+
+Moreover, we note that if we take fewer terms, then fewer of the terms
+will be less than the modulus, so we may see less of the bias even if
+there is some.  For example, the same calculation with only the first
+10000 terms looks like:
+
+\begin{tabular}{ll}
+5 & 21.633307652783937\\
+17 & 61.68515885956209\\
+22 & 72.60478321332931\\
+259 & 89.57462754381896\\
+281 & 193.62880436289325\\
+540 & 682.2864609640275\\
+2441 & 382.62668898244124\\
+2981 & 348.9472882781135\\
+5422 & 263.99360062887\\
+40935 & 122.81328398767178\\
+87292 & 105.0829179694691\\
+215519 & 97.65246431214172\\
+1380406 & 99.63712935143478
+\end{tabular}
+
+Also of note is that if we repeat the computation with $N=100000$ with
+other random moduli, then we don't see numbers of that magnitude at
+all:
+
+\begin{tabular}{ll}
+...&...\\
+538 & 266.52186279126255\\
+539 & 255.35109519675422\\
+540 & 664.2715810068448\\
+541 & 258.6315258698218\\
+542 & 263.9800814357665\\
+...&...\\
+2439 & 264.9962194257936\\
+2440 & 255.43572224088751\\
+2441 & 3022.3025069077416\\
+2442 & 258.0622079927702\\
+2443 & 255.08506362547774\\
+...&...\\
+\end{tabular}
+
+One takeaway from this study of increasing moduli is the following:
+earlier we discussed the possibility of the behaviour indicting bias
+mod some m.  In fact, there may not be a single m with the most bias,
+but an increasing sequence of m's with progressively more bias.  For
+example, one could imagine a sequence that is slightly biased to being
+odd, say 60\% are 1 mod 2.  But then in fact it turns out that mod 4,
+it is more strongly biased, with 65\% being only 2 or 3 mod 4.  And
+maybe in fact mod 12, 80\% of terms are only ever 2, 3, 6, or 8 mod 12,
+and maybe in fact 99\% are 2, 3, 6, 8, or 1 mod 48, and maybe you can
+catch more and more of the sequence with a slowly expanding set of
+congruence classes modulo quickly growing modulus.  If there is a
+"bias mod $m$" thing happening, this is probably the flavour it takes,
+but I'm happy to try to treat the approximation to alpha as indicating
+an "at least some bias toward some congruence classes mod some fixed
+$m$" phenomenon.
+
+
+\subsubsection{Algebraicity}
+
+My guess is that since apparently alpha=pi sometimes, alpha should not
+be expected to be algebraic, but really $2pi/alpha$ is the relevant
+quantity anyways. At any rate, we tried some tests on both using LLL
+to hunt for the minimal polynomial of $b = 2pi/alpha$ and b = alpha. It
+should be noted that $f(b) << 10^(-10)$ is what is needed to be
+convincing that f(b) is actually zero. Also, I am not sure what
+effects result from the lack of precision in our knowledge of alpha.
+
+For what it's worth, then, here is the basic computation (done in
+Sage) found in appendix A, and with output: 
+
+\begin{tabular}{ll}
+-4.8860471224543e-11 & $5*X^7 - 9*X^6 - 8*X^5 - 4*X^4 + 6*X^3 + 6*X^2 + 3*X + 24)$\\
+1.1938777481609e-10 & $(-1) * X * (5*X^7 - 9*X^6 - 8*X^5 - 4*X^4 + 6*X^3 + 6*X^2 + 3*X + 24))$\\
+-6.4223470985780e-10 & $22*X^5 - 27*X^4 - 47*X^3 - 22*X^2 - 49*X - 17)$\\
+1.3065359905085e-9 & $X^9 - 6*X^8 + 6*X^7 + 8*X^6 - 4*X^5 - X^4 + 5*X^3 + 6*X^2 - 12*X + 1)$\\
+2.0213413165493e-9 & $(-1) * (4*X^6 + 10*X^5 - 39*X^4 - 24*X^3 - 2*X^2 + 18*X - 14))$\\
+2.9011744118179e-9 & $(-1) * (28*X^4 - 13*X^3 - 91*X^2 - 95*X - 33))$\\
+3.7695372157032e-8 & $(-1) * (25*X^3 - 62*X^2 - 123*X + 306))$\\
+2.5785948309931e-7 & $(-1) * (509*X^2 - 947*X - 725))$
+\end{tabular}
+
+\begin{tabular}{ll}
+ 1.8155628112027e-9 & $X^8 - 11*X^5 - 13*X^4 - 9*X^3 + 8*X^2 - 6*X + 9)$\\
+ 1.8155628112027e-9 & $X^8 - 11*X^5 - 13*X^4 - 9*X^3 + 8*X^2 - 6*X + 9)$\\
+-1.8250148059451e-9 & $X^6 + 6*X^5 - 22*X^4 + 7*X^3 + X^2 - 34*X - 40)$\\
+-2.3348913913424e-9 & $(-1) * (3*X^7 - 3*X^6 - 15*X^5 - 2*X^4 + 21*X^3 + 4*X^2 + 13*X - 6))$\\
+ 3.9355683156828e-9 & $27*X^4 - 92*X^3 + 40*X^2 + 25*X + 55)$\\
+ 6.7800982606059e-9 & $3*X^5 + 22*X^4 - 54*X^3 - 32*X^2 - 55*X - 28)$\\
+-1.7553418274474e-8 & $(-1) * (7*X - 18)^2)$\\
+-1.7553418274474e-8 & $(-1) * (7*X - 18)^2)$
+\end{tabular}
+
+All told, both look like they don't have small degree if algebraic at all...
+
+\subsection{Distribution of summands}
+
+\subsubsection{Small summands}
+
+We note with interest the observation in the abstract of Steinerberger
+that $\cos(\alpha a_n) < 0$ for all $a_n$ other than 2, 3, 47, and 69.  In
+particular, thee were also the $a_n$ that showed up most frequently as
+summands in our earlier computation.
+
+So we compute which how often each $a_n$ appears as the smaller
+summand of a later $a_i$ and we compute $\cos(\alpha a_n)$ for each
+and sort by this quantity.  We note what looks like a very strong
+correlation between how often $a_n$ shows up as a summand and
+$\cos(\alpha a_n)$ in the resulting table, computed by experiment11.
+Define $S_i$ to be the number of $a_i$ such that $a_n$ is the smaller
+summand of $a_i$
+
+\begin{tabular}{llll}
+$a_n$ & $S_n$ & $\cos(\alpha_{1,2}  a_n)$ & $[a_i : a_i = a_n + a_?]$\\
+
+2 & 3630 & 0.4173307 & [6, 8, 13, 18, 28, 38, 99, 177, 182, 221, 238, ...\\
+3 & 1356 & 0.1391857 & [11, 16, 72, 102, 148, 180, 209, 241, 319, 412, ...\\
+47 & 1190 & 0.0931494 & [236, 253, 356, 363, 429, 456, 544, 720, 732, ...\\
+69 & 999 & 0.0700500 & [175, 258, 451, 483, 566, 820, 1018, 1052, 1101, ...\\
+102 & 836 & -0.0353342 & [282, 441, 502, 585, 624, 646, 668, 949, 1125, ...\\
+339 & 589 & -0.071198 & [695, 739, 751, 861, 905, 1186, 1230, 1770, 1853, ...\\
+36 & 465 & -0.1046811 & [138, 309, 602, 927, 1191, 1550, 1682, 2090, 2288, ...\\
+273 & 305 & -0.140326 & [612, 673, 685, 1164, 1296, 1308, 1428, 1660, 1765, ...\\
+8 & 181 & -0.1506519 & [26, 36, 77, 114, 197, 324, 390, 991, 1470, 1602, ...\\
+2581 & 85 & -0.2874041 & [5795, 7459, 8947, 9443, 9619, 9641, 9663, 10677, ...\\
+400 & 55 & -0.288437 & [3214, 3605, 3991, 12763, 13562, 13799, 13931, 15160, ...\\
+983 & 50 & -0.316087 & [2445, 2748, 5514, 9553, 16121, 17135, 19427, 21626, ...\\
+97 & 47 & -0.320453 & [316, 370, 497, 1252, 2581, 3622, 4057, 10366, 13628, ...\\
+356 & 21 & -0.3324957 & [983, 4118, 11226, 22676, 27817, 34104, 34969, 52789, ...\\
+1155 & 16 & -0.3466450 & [4878, 9132, 13733, 16047, 27883, 30886, 38920, 40931, ...\\
+206 & 33 & -0.3521083 & [522, 891, 1155, 1514, 2787, 4324, 9399, 11432, 20375, ...\\
+53 & 35 & -0.3640037 & [155, 409, 1208, 3038, 5049, 8421, 14945, 16648, 19480, ...\\
+1308 & 18 & -0.369428 & [3029, 8368, 10501, 20937, 29147, 34784, 37765, 61029, ...\\
+9193 & 8 & -0.3921254 & [20419, 68914, 74099, 83323, 92073, 108317, 123718, 124864]\\
+10831 & 4 & -0.427570 & [31878, 56503, 89101, 126493]\\
+13 & 6 & -0.427833 & [82, 219, 273, 19642, 59734, 91748]\\
+14892 & 2 & -0.4327025 & [41620, 84500]\\
+13531 & 3 & -0.437951 & [47279, 61451, 83139]\\
+23883 & 2 & -0.440936 & [65740, 106394]\\
+10269 & 1 & -0.446345 & [44816]\\
+8368 & 1 & -0.449499 & [20968]\\
+20643 & 0 & -0.4532970 & []\\
+316 & 5 & -0.457968 & [2897, 9509, 37809, 44377, 45132]\\
+30315 & 1 & -0.460326 & [64928]\\
+3205 & 1 & -0.4609725 & [89057]\\
+56437 & 0 & -0.462393 & []\\
+4118 & 0 & -0.4642290 & []\\
+10247 & 0 & -0.4669642 & []\\
+3038 & 2 & -0.468304 & [7156, 95616]\\
+57 & 3 & -0.4692568 & [126, 339, 9250]\\
+483 & 1 & -0.471289 & [80891]\\
+60665 & 0 & -0.471907 & []\\
+63646 & 0 & -0.4728583 & []\\
+39912 & 1 & -0.473267 & [128969]\\
+1023 & 3 & -0.4733195 & [2178, 20643, 65705]\\
+69608 & 0 & -0.474758 & []\\
+47920 & 0 & -0.475271 & []\\
+123683 & 0 & -0.4762679 & []\\
+33274 & 1 & -0.4817218 & [97956]\\
+11586 & 0 & -0.482232 & []\\
+75706 & 0 & -0.48225 & []\\
+128969 & 0 & -0.4825153 & []\\
+3723 & 1 & -0.483432 & [34038]\\
+39653 & 1 & -0.48445 & [84469]\\
+42217 & 0 & -0.48455 & []
+\end{tabular}
+
+If nothing else, this might suggest to us how to compute more $a_n$ more
+quickly: Rather than searching previous summands in order, search in
+the order given by using $\cos(\alpha a_n)$ as the index.  Once we find a
+sum that is unique, we only have to search all smaller sums, again in
+this order.  
+
+\subsubsection{Large summands}
+
+We've studied the smaller summands a bit--now the question is: What
+about the large summands?
+
+We note first that if 2 or 3 is the small summand of $a_{n+1}$, then
+the large summand is necesarily $a_n$ (if 2 is the small summand and
+$a_n$ is not the large summand, then $a_{n+1}$ would be $a_n + 1$
+which is impossible since this is a duplicate sum with $a_n+a_1$.  If
+3 is the small summand and $a_n$ is not the large summand, then
+$a_{n+1}$ is either $a_n + 1$ or $a_n + 2$, both of which would be
+duplicates.)
+
+This means that over 50\% of the time, the large summand will be the
+last thing in the list so far.  When looking at the large summand,
+then, it seems more relevant to consider how many indices from the end
+it lives, rather than its actual value.  We compute these in
+experiment13, generating output [FILE] of the form:
+
+\begin{tabular}{|l|l|l|l|}
+$n$ 	&$a_n$	&$i$	&$n-j$ (with $a_i + a_j = a_n$ and $i < j$)\\
+2 	&1 	&0 	&1\\
+3 	&2 	&0 	&1\\
+4 	&3 	&1 	&1\\
+5 	&4 	&1 	&1\\
+6 	&6 	&2 	&1\\
+7 	&8 	&1 	&1\\
+8 	&11 	&2 	&1\\
+9 	&13 	&1 	&1\\
+10 	&16 	&5 	&1\\
+11 	&18 	&1 	&1
+\end{tabular}
+
+We can do some processing on these to figure out which $n-j$ are the
+most common:
+
+% \begin{verbatim}
+% cat data/indices_of_summands | cut -d ' ' -f 4 | sort -n|uniq -c|sort -n > data/n_minus_js
+% \end{verbatim}
+
+results [FILE].  Note in particular that there are only 159 of them
+and (as suggested above) that n-j = 1 accounts for over 50\% of them.
+This list seems to contain few surprises: Among all the values of $n-j$
+that appear more than 10 times, nothing bigger than 34 shows up.
+
+If we look at values that show up fewer than 10 times, then it looks
+like $n-j = 100$ and $185 < n-j < 205$ seem to be preferred, with many
+of these showing up 3 or more times, while all other values show up 2
+or fewer times.  This could be an artifact of not much data, however.
+
+We might instead take a look instead at enumerating $(i,n-j)$ pairs,
+rather than just values of $n-j$:
+
+% \begin{verbatim}
+% cat data/indices_of_summands | cut -d ' ' -f 3,4 | sort -n|uniq -c|sort -n > data/i_nmj
+% \end{verbatim}
+
+with results in [FILE].  Note in particular that there are
+only 312 distinct such pairs, meaning that technically, to compute the
+first 10000 Ulam numbers, we only have to check 312 possibilities for
+each.  If only there were a way of knowing ahead of time which 312 we
+had to check...
+
+
+\subsection{Distribution of complements}
+
+
+In the cases Steinerberger looks at, the resulting non-uniform
+distributions consist usually of multiple peaks.  In the case of the
+1,2 Ulam sequence one of these peaks looks a little misshapen, so we
+might reasonably wonder what each of these peaks actually is.
+
+To get a handle on this, we take the Ulam sequence mod 5422, and
+multiply it by 2219 ($5422/2219$ being a good rational approximation
+to $2\pi/\alpha$).  Of course, this gives rise to the usual
+distribution we've come to expect:
+
+\includegraphics[scale=0.5]{../figs/u1_2_mod5422.png}
+
+Supposing we look instead only at $a_n$'s for which 2, say is a summand.  Then we get this nice picture:
+
+\includegraphics[scale=0.5]{../figs/summands2.png}
+
+Likewise for 47:
+
+\includegraphics[scale=0.5]{../figs/summands47.png}
+
+These are relatively clean-looking distributions, by comparison.  If
+we plot these graphs for all of the top 25 most common summands all in
+one picture, we notice that these seem to be the components of the two
+observed peaks:
+
+\includegraphics[scale=0.5]{../figs/summands_mod_5422.png}
+
+Since each of these seems to be instances of the same distribution
+with different parameters, we might be interested in computing the
+parameters of each, starting with the means.  We do this with a crunchy bash script
+
+
+% for x in `ls`; do y=$(echo $x|sed 's/summands//'); z=$(echo '('$(cat $x|sed 's/\([0-9]\)[ \t]\+\([0-9]\)/\1*\2/' | tr '\n' '+' | sed 's/+$//;s/[ \t]//g')')/'$(cat $x|awk '{x
+  % +=$2} END {print x}')|bc -l);  echo -e "$y\t$(((y*2219)%5422))\t$z"; done|sort -n -k 2
+
+
+Which outputs the suqmmand $a_i$, the quantity $2219*a_i mod 5422$,
+and the calculated mean of the distribution of $2219*a_n mod 5422$ for
+which $a_i$ is a summand, we get:
+
+\begin{tabular}{lll}
+3	&1235	&3241.07886089813800657174\\
+47	&1275	&3288.00715563506261180679\\
+69	&1295	&3300.94546174403642482430\\
+8	&1486	&3431.55542168674698795180\\
+2581	&1607	&3485.87893462469733656174\\
+983	&1633	&3503.28070175438596491228\\
+206	&1666	&3518.47580645161290322580\\
+1308	&1682	&3525.95679012345679012345\\
+9193	&1703	&3541.35227272727272727272\\
+13	&1737	&3551.59183673469387755102\\
+23883	&1749	&3572.53333333333333333333\\
+30315	&3653	&1818.70000000000000000000\\
+13531	&3675	&1827.60000000000000000000\\
+14892	&3680	&1833.36363636363636363636\\
+10831	&3685	&1845.62962962962962962962\\
+53	&3745	&1872.41395348837209302325\\
+1155	&3761	&1883.37745098039215686274\\
+356	&3774	&1878.85087719298245614035\\
+97	&3785	&1891.29746835443037974683\\
+400	&3814	&1912.78585086042065009560\\
+273	&3945	&1984.79197207678883071553\\
+36	&3976	&1995.70821114369501466275\\
+339	&4005	&2013.33377814845704753961\\
+102	&4036	&2027.29907648591049017286\\
+2	&4438	&2319.24248003248950859618
+\end{tabular}
+
+Staring at this for a minute, we notice that if we subtract the second
+column from the third, we seen to get roughly 2000 for the first 11
+entries (those on the right end of the distribution).  Likewise, those
+on the left end (rows 12-25) seem to have a similar pattern.
+
+One possible source for this is that the distribution we're taking the
+mean of in the first row, say, is of $2219*a_n mod 5422$ where 3 is a
+summand of $a_n$ in the Ulam sequence.  Since 3 is a summand of $a_n$ in
+the sequence, we might instead look at the other summand of $a_n$,
+i.e. $a_n - 3$.  This would lead to us not plotting $2219*a_n mod 5422$,
+but rather $2219*(a_n-3) mod 5422$.  We can compute these quickly with
+another crunchy bash script [appendix A code 2]
+
+And if we plot these, we get: 
+
+\includegraphics[scale=0.5]{../figs/shifted_summands_mod_5422.png}
+
+That's more like it.  Running the same mean computation as above on this, we get:
+
+\begin{tabular}{lll}
+3    		&1235	&2006.0788\\
+47   		&1275	&2013.0071\\
+69   		&1295	&2005.9454\\
+8    		&1486	&1945.5554\\
+2581 		&1607	&1878.8789\\
+983  		&1633	&1870.2807\\
+206  		&1666	&1852.4758\\
+1308 		&1682	&1843.9567\\
+9193 		&1703	&1838.3522\\
+13   		&1737	&1814.5918\\
+23883		&1749	&1823.5333\\
+30315		&3653	&3587.7000\\
+13531		&3675	&3574.6000\\
+14892		&3680	&3575.3636\\
+10831		&3685	&3582.6296\\
+53  		&3745	&3549.4139\\
+1155 		&3761	&3544.3774\\
+356  		&3774	&3526.8508\\
+97   		&3785	&3528.2974\\
+400  		&3814	&3520.7858\\
+273  		&3945	&3461.7919\\
+36   		&3976	&3441.7082\\
+339  		&4005	&3430.3337\\
+102  		&4036	&3413.2990\\
+2    		&4438	&3303.2424\\
+\end{tabular}
+
+We note also that the picture kind of suggests a binomial distribution
+because of the variance that appears to grow as the mean gets closer
+to the middle.
+
+Indulging this hypothesis for just a moment, the actual graph (say for
+$a_i = 2$ specifically), is measuting "for each congruence class, how
+many complements of 2 in the sequence are in that congruence class?"
+The idea that this graph is a binomial distribution would be saying
+that we can perform 5422 independent trials (say one for each
+congruence class?)  with identical success probabilities (one possible
+such test is pick randomly from the 100000 $a_n$s in that congruence
+class and ask whether 2 is ever a complement of that $a_n$), and the
+proportion of times 2 shows up as a complement of k is equal to the
+proportion of times we get exactly k successes in our trials.
+
+
+\section{Theory}
+
+\subsection{Density}
+
+As we have said, it appears that the Ulam sequence has positive
+(upper) density around $0.07$.  
+
+\begin{conjecture}
+The Ulam sequence has positive upper density.
+\end{conjecture}
+
+
+\begin{conjecture}
+  For any decision sequence $S$ with a positive density of 1s, the
+  corresponding sum-free set $A = \theta(S)$ has positive upper density.
+\end{conjecture}
+
+For such sum-free sets $A$, there is kind of a battle: as we build $A$
+from the decision sequence, say we have built all elements up to some
+$N$, i.e. we have computed $A_N$.  If $A_N$ is very large, then
+$A_N+A_N$ will contain many elements and we will have to go far to
+find the next element of $A$.  If on the other hand, $A_N$ is not
+large, then $A_N + A_N$ will be sparse, which will make it easy to
+find the next few elements of $A$ relatively quickly.  
+
+A first try at formalising this might go: $|A_N + A_N| \leq |A_N|^2$,
+and so if for all $N$, $|A_N|^2 \leq cN$ for some constant $c$, then
+
+
+\subsection{Circle method}
+
+Being in the Ulam sequence is determined by one property: $x$ must be
+a sum of distinct Ulam numbers in exactly one way.  
+
+\begin{definition}Define the \textbf{representation counting function}
+  $r_{A+A}$ by $r_{A+A}(x)$ to be the number of solutions to $a+b = x$
+  for $a, b \in A$.  (Note that we do not necessarily require $a < b$
+  here.)
+\end{definition} 
+
+The point is that while this doesn't exactly capture the same notion
+as in the exact definition of the Ulam sequence, it is very close and
+has the advantage of being accessible from the Fourier-analytic
+perspective.  
+
+The main observation is that $r_{A+A} = 1_A \ast 1_A$, and so can be
+written as $\mathscr{F}\inv\mathscr{F} (1_A \ast 1_A) =
+\mathscr{F}\inv \widehat{1_A}^2$, or: 
+
+\[r_{A_{2N}+A_{2N}}(x) = \frac 1N \sum_{t=0}^{N-1} \widehat{1_A}(t)^2
+e(tx)\]
+
+So we can conclude, for example, that $x \notin A$ if, say,
+$r_{A_{2N}+A_{2N}}(x) > 3$.  
+
+\subsubsection{No Ulam numbers close to 0 mod $\lambda$}
+
+It appears that element in $[-\lambda/6,\lambda/6]$ are never in the
+Ulam sequence, and further, that the reason they have for not being in
+is that they are sums of smaller Ulam numbers in more than one way.
+We might take an $x \in \N$ with
+$x \mod{\lambda} \in [-\lambda/6,\lambda/6]$ and see what we can make
+of it.  
+
+[DATA]
+
+With the assumption that $x \mod{\lambda} \in [-\lambda/6,\lambda/6]$,
+we get that if $k/N$ is approximately $1/\lambda$, then $e_N(kx)$ will
+have argument between $-\pi/3$ and $\pi/3$.  In particular, the real
+part of $e_N(kx)$ will be at least $1/2$.  Thus if we compute: 
+
+\begin{eqnarray*}
+r_{A+A}(x) &=& \frac 1N \sum_{t=0}^{N-1} \widehat{1_A}(t)^2 e(tx)\\
+ &=& |A|/N + 2\Re(e(kx)\widehat{1_A}(k)^2) + \sum_{t\neq 0,k,N-k}
+ \widehat{1_A}(t)^2 e(tx)\\
+ &\geq& |A|/N + \Re(\widehat{1_A}(k)^2) + \sum_{t\neq 0,k,N-k}
+ \widehat{1_A}(t)^2 e(tx)\\
+\end{eqnarray*}
+
+And so if $\widehat{1_A}(k)$ is much larger than all the other Fourier
+coefficients, then we might be able to guarantee that this is
+positive.  For example: If we know that the only Fourier coefficients
+that are nonzero (in the large $N$ limit) are $k\alpha$, then we can
+write this as: 
+
+\begin{eqnarray*}
+r_{A+A}(x) &\geq& |A|/N + \Re(\widehat{1_A}(\alpha)^2) + \sum_{t > 1}
+ \Re(\widehat{1_A}(t \alpha)^2 e(tx))\\
+ &\geq& |A|/N + \Re(\widehat{1_A}(\alpha)^2) - \sum_{t > 1}
+ |\widehat{1_A}(t \alpha)|^2\\
+\end{eqnarray*}
+
+So if $|\widehat{1_A}(\alpha)|$ is large enough--say, $c$, and
+$|\widehat{1_A}(t \alpha)|$ decays appropriately as $t$ grows--say is
+less than $\frac{A}{t}$, then we get:
+
+% See, for example,
+% http://www-m7.ma.tum.de/foswiki/pub/M7/Analysis/Fourier13/lecture9.pdf
+
+
+\begin{eqnarray*}
+r_{A+A}(x) &\geq& |A|/N + c^2 - \sum_{t > 1}\frac{A^2}{t^2}\\
+&=& \delta + c^2 - A^2\left(\frac{\pi^2}{6}-1\right)\\
+&\geq& \delta + c^2 - 0.644 A^2\\
+\end{eqnarray*}
+
+So depending on the precise constants involved, we might end up with a
+conclusion that every such $x$ that lands close to 0 mod $\lambda$
+necessarily has many representations and is therefore disqualified
+from being an Ulam number for that reason.  
+
+\subsubsection{Few Ulam numbers outside middle third mod $\lambda$}
+
+A conjecture of Gibbs states...
+
+\subsubsection{Numbers that are not sums of Ulam numbers close to middle mod $\lambda$}
+
+Numbers $x$ that fail to be Ulam because in fact $r^*_{A+A}(x) = 0$
+all seem to lie within the middle third.  
+
+\subsubsection{Large Fourier coefficient}
+
+If instead of thinking about representations of any one element--that
+is, counting solutions to $x+y=z$ with $x,y \in A$ for a fixed $z$--we
+think about counting solutions to $x+y=z$ with $x,y,z \in A$ using the
+same Fourier analytic technique, then we can actually get a theorem: 
+
+\begin{theorem}If $A \subseteq \N$ is a sequence of positive integers
+  of density $\delta$ such that $T(A_N)$--the number of additive
+  triangles in $A_N$--is bounded by $c N^{2-\epsilon}$ for some
+  constants $c > 0, \epsilon > 0$, then there is an $\alpha \in \R/\Z$
+  such that $\widehat{1_A}(\alpha) \geq \delta^2$.\end{theorem}
+
+\begin{example}
+  For example, in the Ulam sequence we know by construction that
+  $T(A_N) \leq 3|A| \leq 3N$, and we believe that the Ulam sequence
+  has density around $0.07$, so this theorem would guarantee us a
+  non-zero Fourier coefficient of size at least $0.0049$.  This is a
+  bit off our numerical value of $0.8$, but it is a start.
+\end{example}
+
+Intuitively, this goes as follows: If this set had no large non-zero
+Fourier coefficient, then it would be in some sense ``random''.  A
+random set of density $\delta$ has of course $\delta^2 N^2$ pairs
+$(x,y)$ with $x,y \in A$.  Supposing these sums are randomly
+distributed, with probability $\delta$ they will themselves lie in
+$A$, so we expect to have $\delta^3 N^2$ of them being in $A$, giving
+$T(A_N) \cong \delta^3 N^2$.  If $T(A_N)$ grows more slowly than this,
+therefore, there must be a reason for it, in the form of a non-zero
+Fourier coefficient.  Put another way ``if a set is dense, then to
+avoid solutions to $x+y=z$ it needs to have some kind of pattern (such
+as being all odds).''  The statement we have here is a first version
+of precisely the kind of ``general regularity'' result that we are
+gunning for.
+
+\begin{proof}
+  As we've discussed many times,
+
+\[T(A_N) = (1/N) \sum_{t=0..N-1} \widehat{1_{A_N}}(t) \widehat{1_{A_N}}(t) \widehat{1_{A_N}}(-t)\]
+
+So by assumption, 
+
+\[cN^{2-\epsilon} \geq (1/N) \sum_{t=0..N-1} \widehat{1_{A_N}}(t) \widehat{1_{A_N}}(t) \widehat{1_{A_N}}(-t)\]
+
+We can pull out the $t = 0$ term which is $|A|^3$, which, for $N$
+large enough, is close to $\delta^3 N^3$.  Then we can bound the
+remaining sum by pulling out a $\widehat{1_A}(t)$ and replacing it
+with $-\max_{t\neq 0} \widehat{1_A}(t)$:
+
+\[cN^{2-\epsilon} \geq \delta^3 N^2 - \max_{t=1..N-1}(\widehat{1_A}(t)) (1/N) \sum_{t=1..N-1} |\widehat{1_A}(t)|^2\]
+
+Now, by Plancherel we know that,
+$(1/N) \sum_{t=0..N-1} |\widehat{1_A}(t)|^2 = \sum_{t=0..N-1} 1_A(t) =
+|A|$, so:
+
+\[cN^{2-\epsilon} \geq \delta^3 N^2 - \max_{t\neq 0}(\widehat{1_A}(t))
+|A| = \delta^3 N^2 - \max_{t=1..N-1}(\widehat{1_A}(t)) \delta N\]
+
+Thus if $\max_{t=1..N-1}(\widehat{1_A}(t)) \leq \epsilon N$, then 
+
+\[cN^{2-\epsilon} \geq N^2 (\delta^3 - \delta\epsilon)\]
+
+Or, rearranging, 
+
+\[\frac{c}{\delta} N^{-\epsilon} \geq \delta^2 - \epsilon\]
+
+But the left side goes to zero as $N \to \infty$, so
+$\epsilon \geq \delta^2$, i.e. for some $k$ in $\{1, \ldots, N-1\}$,
+we have
+
+\[|\widehat{1_{A_N}}(k)| > \delta^2 N\]
+
+Now, as we let $N$ grow, we get a sequence of values of $k_N$ with
+this property.  On $\R/\Z$, the sequence $\frac{k_N}{N}$ for
+increasing $N$ must have a convergent subsequence--say converging to
+some $\alpha$.  \end{proof}
+
+Some remarks: 
+
+\begin{remark}
+  As we mentioned before, this bound for the Ulam sequence, which
+  works out to around $0.0049$ is not anywhere near as good as the
+  computed estimate of $0.8$.  However, this finds a rational $k/N$
+  where the Fourier transform is large for \textit{every} $N$, whereas
+  experimentally the large value of around $0.8$ only occurs actually
+  at $\alpha$ and can only be observed at rational $k/N$ that are good
+  approximations to $\alpha$.  In particular, for some $N$, the
+  largest Fourier coefficient might honestly only be as large as
+  $\delta^2$.
+\end{remark}
+
+\begin{remark}
+  In the proof of Roth's theorem, the existence of a large Fourier
+  coefficient in $A$ is somehow used to deduce the existence of an
+  arithmetic progression $P$ such that $A$ intersected with $P$ has
+  higher density in $P$ than $A$ had in $\Z/N$.  Roth's theorem
+  concludes by making all this numerically precise to be able to say
+  "if we repeat this often enough, either we'll eventually have small
+  Fourier coefficient relative to the increased density, or we'll have
+  density 1 in an arithmetic progression at which point...well...we
+  will be guaranteed to contain an arithmetic progression!"  In our
+  case, we are always guaranteed a largeish Fourier coefficient by the
+  above argument, so maybe we can always perform this "density
+  increment" step until we are literally an arithmetic progression.
+  Precisely what this implies about the Fourier coefficients of the
+  original $1_A$ or whether this ensures us any global behaviour of
+  the sequence A depends on precisely how the density-increment step
+  goes.  This will be a another thing to investigate shortly.
+\end{remark}
+
+\begin{remark}
+  It is interesting to note that this argument does not provide an
+  obvious way to take advantage of the uniformity with which solutions
+  to $x+y=z$ occur in the Ulam case.  For example, it also applies to
+  a sequence where $a_{2^i+1}, \ldots, a_{2^(i+1)-1}$ have no
+  representations but $a_{2^i}$ has $2^{i-1}$ representations for each
+  $i$ (in which case the number of representations is not bounded
+  above, but is growing, albeit sort of slowly and non-uniformly).
+\end{remark}
+
+\subsubsection{Variants of Ulam problem}
+
+Circle method gets better with more variables.  For this reason, we
+might find it convenient to 
+
+\subsection{Arithmetic regularity}
+
+
+\subsection{Is there only one non-zero big Fourier coefficient?}
+
+\section{Appendix A: Code}
+
+Code 1: 
+
+\begin{lstlisting}[language=Python]% {../lll.py}
+from sage.libs.fplll.fplll import FP_LLL
+b2=2.57144749848
+b=N(2*pi/2.57144749848)
+
+def find_mp(x,deg=50,n=10^10):
+    M = []
+    for i in range(deg+1):
+        M.append([1 if v == i else 0 for v in range(deg+1)]+[int(n*(x^i)+.5)])
+    M = matrix(M)
+    F=FP_LLL(M)
+    F.LLL()
+    l=F._sage_()[0][:-1]
+
+    R = ZZ["X"]
+    X=R.gen()
+    fx = 0
+    for i in range(len(l)):
+        fx += X^i * l[i]
+    ans = N(fx(x),50)
+    return(fx, ans, fx.factor())
+
+ms = [find_mp(b,i) for i in range(2,10)]
+ms.sort(key=lambda x:abs(x[1]))
+for x in ms:
+    print(x)
+
+print("")
+ms = [find_mp(b2,i) for i in range(2,10)]
+ms.sort(key=lambda x:abs(x[1]))
+for x in ms:
+    print(x)
+\end{lstlisting}
+
+Code 2: 
+
+\begin{lstlisting}[language=Bash]
+cat data/indices_of_summands | cut -d " " -f 4 | sort -n|uniq -c|sort -n > data/n_minus_js
+cat data/indices_of_summands | cut -d " " -f 3,4 | sort -n|uniq -c|sort -n > data/i_nmj
+\end{lstlisting}
+
+\end{document}

@@ -626,6 +626,7 @@ u12_13 = read_seq("seqs/seq12,13")
 u1_2_3 = read_seq("seqs/seq1,2,3")
 sf01001 = read_seq("seqs/01001sf")
 sf10010 = read_seq("seqs/sf10010")
+linus = read_seq("seqs/1linus")
 alpha1_2 = 2.5714474995
 alpha1_4 = 0.506013502
 alpha1_2_3 = 0.23036348 # 0.23034156 #0.23034016
@@ -906,6 +907,11 @@ def experiment29(l,d,N):
     for x in range(N):
         print(x,x in l,s[x])
 
+def experiment30(l,a,N):
+    f1 = ft(a,l)
+    for k in range(1,N):
+        f = ft(k*a,l)/f1
+        print(k,f,k*f)
 
 def theta(seq,N):
     p = len(seq)
@@ -952,8 +958,20 @@ def thetainv(S,N):
     SS = {a+b for a in S if a <= N for b in S if b <= N}# and a < b}
     return [1 if n in S else 0 for n in range(1,N+1) if not n in SS]
 
+def experiment31(a,b,N):
+    l = []
+    for i in range(N):
+        r = real_mod(i,a)
+        s = real_mod(i,b)
+        if a/3 < r and r <= 2*a/3 and b/3 < s and 2*b/3 < s:
+            l += [i]
+    #print(l,len(l),l[-1],len(l)/l[-1])
+    return l
 #experiment22(u1_2[:253],2441,2219,5422)
 
+ll = experiment31(math.sqrt(2),math.sqrt(3),100000)
+print(len(ll),ll[-1])
+#find_alpha(ll)
 
 
 # m = 5422
@@ -1131,3 +1149,18 @@ beta01001 = 1.26594784
 # for x in ll:
 #     print(x,end="")
 # print("")
+
+# experiment30(u1_2,alpha1_2,50)
+# print("Asd")
+# experiment30(u1_4,alpha1_4,20)
+#experiment30(sf01001,alpha01001,50)
+
+# with open("seqs/linus") as f:
+#     s = f.read()
+# l = []
+# for i in range(len(s)):
+#     if(s[i] == "0"):
+#         l += [i+1]
+# print("\n".join([str(x) for x in l]))
+
+# find_alpha(linus)
