@@ -1,0 +1,41 @@
+* TODO Introduction
+** TODO Ulam sequence: Definition and background
+** TODO Regularity for Ulam-like sequences
+** TODO Questions
+*** TODO What is it that causes some initial conditions to be regular and not others (if indeed they are not)?
+*** TODO Is there any perhaps more general notion of regularity that even the irregular-looking sequences do satisfy?
+** TODO Review Fourier transform and Steinerberger's work
+*** TODO Density ~0.07
+*** TODO Support in middle third
+*** TODO Decomposition into simpler distributions
+* TODO Known regularity results
+** TODO Finch
+** TODO Schmerl-Speigel
+* Background
+** TODO Sum-free sets
+*** TODO Definition
+*** TODO Decision sequences
+*** TODO Regularity results for sum-free sets: Luczak
+*** TODO Non-regular sum-free sets (Cameron-Erdos)
+** TODO Arithmetic regularity
+** TODO Roth's theorem
+*** TODO Density increment
+*** TODO Via arithmetic regularity
+** TODO Green's triangle removal theorem
+** TODO Ellenberg-Gijswijt affine cap-sets
+* TODO Computations
+** TODO Computing lambda for other sequences
+** TODO Rationality of lambda
+** TODO Algebraicity of lambda
+** TODO Distribution of small summands
+** TODO Distribution of large summands
+** TODO Distribution of complements
+* TODO Results
+** TODO Density
+*** TODO Conjecture: Ulam numbers have positive density
+*** TODO Conjecture: Decision sequence for sum-free set has positive density implies sum-free set does also
+** TODO Circle method
+*** TODO Conjecture: No Ulam numbers close to 0 mod lambda
+** TODO Theorem: There is at least one large Fourier coefficient
+** TODO Variants of the Ulam problem
+* Appendix: Code
