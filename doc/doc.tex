@@ -97,7 +97,7 @@ We also know that if we use the same definition but start with
 different initial values, we can get sequences that we can analyse
 very easily indeed: If the $(u,v)$-Ulam sequence is the sequence with
 $a_1 = u, a_2 = v$, and $a_n$ (for $n > 3$) defined exactly as before,
-then by theorems of Finch [PAPER] and Schmerl and Speigel [PAPER], we
+then by theorems of Finch \cite{regularity_criterion_finch} and Schmerl and Speigel \cite{regularity_schmerl}, we
 know that the $(2,v)$-Ulam sequence, in the case where $v$ is odd and
 at least 5, is regular in the following sense:
 
@@ -115,7 +115,7 @@ would naively suggest.
 
 There are other initial values that are variously known to and
 believed to give rise to regular sequences, also.  See, for example,
-Finch's ``Patterns in 1-additive sequences'' [PAPER].  That said, many
+\cite{patterns_finch}.  That said, many
 Ulam-type sequences appear not to be regular, among them the $(1,2)$-
 and $(2,3)$-Ulam sequences.  So one might ask some questions:
 
@@ -129,7 +129,7 @@ and $(2,3)$-Ulam sequences.  So one might ask some questions:
 In looking for hidden regularity, one might take a signal processing
 approach to the sequence and try, for example, to Fourier transform
 the indicator function of the sequence and see if the spectrum has any
-interesting features.  In [PAPER], Stefan Steinerberger did exactly
+interesting features.  In \cite{ulam_steinerberger}, Stefan Steinerberger did exactly
 that and behold, the spectrum has a large spike exactly only at some
 $\alpha \in \R/\Z$ (and at its harmonics), and seemingly nowhere else.
 
@@ -141,14 +141,18 @@ More precisely:
 
 \[\widehat{f}(x) = \frac 1N \sum_{t=0}^{N-1} f(t) e(-tx)\]
 
-where $e(x) = e_N(x) = e^{2\pi i x / N}$ (where often, $N$ will be
-ommitted from the notation and understood from context).  Thus
-$\widehat{f}$ is a function defined on all of $\R/\Z$.  
+where $e(x) = e_N(x) = e^{2\pi i x / N}$.  Thus $\widehat{f}$ is a
+function defined on all of $\R/\Z$.
+
+$N$ will often be omitted from the notation and understood from
+context.  If we wish to make $N$ explicit in the notation for the
+Fourier transform itself, we will denote it as $\mathcal{F}_N f$
+rather than $\widehat{f}$.
 
 \end{definition}
 
 This definition satisfies many properties, which are standard from
-Fourier analysis and additive combinatorics [TAO/VU]:
+Fourier analysis and additive combinatorics \cite{additive_combinatorics_tao}:
 
 \begin{proposition}
 If $f : [N] \to \C$, then: 
@@ -170,14 +174,14 @@ If $f : [N] \to \C$, then:
 So if $A$ is a set of positive integers (say, the Ulam sequence), and
 $1_A$ is the indicator function of $A$, then we might define
 $\widehat{1_A}(x) = \lim_{N \to \infty} \widehat{1_{A_N}}(x)$, where
-as usual, $A_N = A \cap [N]$.  Then in the case of the Ulam sequence,
-what is observed numerically is that for one particular value of
-$\alpha \in \R/\Z$ (namely $\alpha = \ldots)$, that
-$\widehat{1_A}(\alpha) \approx 0.8$, and for $k \in \Z$,
-$\widehat{1_A}(k \alpha)$ is also some non-zero value that shrinks
-with $k$.  For example, for $N = 100000$, we compute this for a few
-values of $k$ (noting that of course the values for $-k$ are just the
-conjugates of these: 
+as usual, $A_N = A \cap [N]$ is the truncation of $A$ at $N$.  Then in
+the case of the Ulam sequence, what is observed numerically is that
+for one particular value of $\alpha \in \R/\Z$ (namely
+$\alpha = \ldots)$, that $\widehat{1_A}(\alpha) \approx 0.8$, and for
+$k \in \Z$, $\widehat{1_A}(k \alpha)$ is also some non-zero value that
+shrinks with $k$.  For example, for $N = 100000$, we compute this for
+a few values of $k$ (noting that of course the values for $-k$ are
+just the conjugates of these:
 
 \begin{tabular}{|llll|}
 \hline
@@ -209,12 +213,12 @@ This has many notable features:
 \item From the value of $\widehat{1_A}(0)$, it looks like the Ulam
   sequence has small but nonzero density (in fact, around $0.07$).
 
-\item As noted in [STEINERBERGER] it looks like as we increase $N$
+\item As noted in \cite{ulam_steinerberger} it looks like as we increase $N$
   that this is converging to an actually continuous distribution.
 
 \item It looks at a glance like this distribution is supported on the
   middle third of the interval $[0,\frac1\alpha]$.  This is not
-  literaly the case, but in [GIBBS] there is a conjecture in this
+  literaly the case, but in \cite{avoid_zero_gibbs} there is a conjecture in this
   direction.
 
 \item While the obvious peaks seem somewhat irregular, the major bumps
@@ -231,9 +235,9 @@ might help to understand existing proofs of regularity (i.e. that
 consecutive differences are eventually periodic).  A criterion for
 regularity, as well one example of a proof of regularity, are: 
 
-[PAPER] Finch's criterion for regularity
+\cite{regularity_criterion_finch} Finch's criterion for regularity
 
-[PAPER] Schmerl and Speigel prove of regularity for $U(2, 2n+1)$
+\cite{regularity_schmerl} Schmerl and Speigel prove of regularity for $U(2, 2n+3)$
 
 We'll go through these in turn.
 
@@ -346,7 +350,7 @@ of example, the set $\{x^n : x \in \Z, x > 1\}$ (for any fixed
 $n > 2$) is also sum-free by Fermat's last theorem.
 \end{example}
 
-\subsubsection{Construction}
+\subsubsection{Decision sequences}
 
 It turns out there is a construction that bijects sum-free sets of
 positive integers with infinite binary sequences.  In words, the
@@ -414,7 +418,7 @@ There are many questions about this construction.  For example, it is
 known that if a sum-free set $A$ is regular (as defined
 above--i.e. its sequence of successive differences is ultimately
 periodic), then its decision sequence $\theta\inv(A)$ must also be
-ultimately periodic [PAPER].  The converse is believed to be false,
+ultimately periodic \cite{sumfree_cameron}.  The converse is believed to be false,
 with one of the simplest apparent counterexamples being
 $\theta(\overline{01001})$ ($\overline{01001}$ meaning the binary
 sequence that repeats the pattern $01001$ forever).  This is a set
@@ -427,7 +431,7 @@ sum-free set is non-regular.
 
 Clearly the maximal density a sum-free set can have is $\frac12$,
 which is realised by the example of the odd positive integers.  Luczak
-has given a sort of converse to this example, proving in [PAPER] that
+has given a sort of converse to this example, proving in \cite{sumfree_regularity_luczak} that
 if a sum-free set contains an even number, then, remarkably, its
 density is automatically bounded above by $\frac25$.  The proof is
 short, but a little delicate, and we shall recall a version of it in
@@ -536,13 +540,44 @@ the claimed bound follows.
 
 \subsubsection{Irregular sum-free sets}
 
-A construction of Cameron and Erdos in [CAMERON ERDOS] supplies an
-example of a sum-free set with density $\frac13$ that has no
-periodicity, namely: Take $\alpha \in \R$ irrational, and let
-$A_\alpha$ be the set of integers $n$ such that $n \mod{\alpha}$ lies
-in $[\frac \alpha 3, \frac {2\alpha}{3}]$.  $A_\alpha$ is clearly
+A construction of Cameron and Erdos in
+\cite{irregular_sumfree_cameron} supplies an example of a sum-free set
+with density $\frac13$ that has no periodicity, namely: Take
+$\alpha \in \R$ irrational, and let $A_\alpha$ be the set of integers
+$n$ such that $n \mod{\alpha}$ lies in
+$[\frac \alpha 3, \frac {2\alpha}{3}]$.  $A_\alpha$ is clearly
 sum-free, since it is sum-free modulo $\alpha$, but they prove that
 for irrational $\alpha$, $A_\alpha$ is also not regular.
+
+\subsection{Abelian arithmetic regularity}
+
+If $A$ is any set, then an easy probablistic argument shows that there
+is a sum-free subset of $A$ of size $|A|/3$.  Indeed, if for any real $\alpha$,
+we define $A_\alpha$ to be set the set of elements $x$ of $A$ with
+
+\[A_\alpha = \{x \in A : 1/3 < \alpha x \mod{1} \leq 2/3\]
+
+then the expected size of $A_\alpha$ is $|A|/3$ as $\alpha$ varies
+over $[0,1]$, and so there must be at least one a for which $A_\alpha$
+has at least this size.
+
+In [this paper](https://arxiv.org/pdf/1301.4579v2.pdf), Eberhard,
+Green, and Manners prove that for every e > 0, there is a set A such
+that A has no sum-free set larger than $(1/3 + \epsilon)|A|$, so this
+bound is in fact sharp (to first order).  (Apropos of nothing, I find
+this paper's organisation and general exposition to be highly
+user-friendly and otherwise excellent.)
+
+In our case, if $A$ is the Ulam sequence up to N, then for any
+$\epsilon > 0$ we believe that for $N$ large enough, we could generate
+a sum-free subset of size $(1-\epsilon)|A|$--kind of the opposite
+extreme.
+
+Nevertheless, the argument follows a kind of local-to-global flow that
+might make it worth understanding, so we work through at least the
+basic idea here:
+
+...
 
 \subsection{Roth's theorem}
 
@@ -610,49 +645,19 @@ an arithmetic progression of length $L$ has density
 $\delta + \epsilon/2$, meaning we have increased the density,
 whereupon we can repeeat the argument.
 
-\subsubsection{Abelian arithmetic regularity}
+\subsubsection{Proof via the regularity theorem}
 
-If $A$ is any set, then an easy probablistic argument shows that there
-is a sum-free subset of $A$ of size $|A|/3$.  Indeed, if for any real $\alpha$,
-we define $A_\alpha$ to be set the set of elements $x$ of $A$ with
+\subsection{Green's arithmetic triangle removal theorem}
 
-\[A_\alpha = \{x \in A : 1/3 < \alpha x \mod{1} \leq 2/3\]
-
-then the expected size of $A_\alpha$ is $|A|/3$ as $\alpha$ varies
-over $[0,1]$, and so there must be at least one a for which $A_\alpha$
-has at least this size.
-
-In [this paper](https://arxiv.org/pdf/1301.4579v2.pdf), Eberhard,
-Green, and Manners prove that for every e > 0, there is a set A such
-that A has no sum-free set larger than $(1/3 + \epsilon)|A|$, so this
-bound is in fact sharp (to first order).  (Apropos of nothing, I find
-this paper's organisation and general exposition to be highly
-user-friendly and otherwise excellent.)
-
-In our case, if $A$ is the Ulam sequence up to N, then for any
-$\epsilon > 0$ we believe that for $N$ large enough, we could generate
-a sum-free subset of size $(1-\epsilon)|A|$--kind of the opposite
-extreme.
-
-Nevertheless, the argument follows a kind of local-to-global flow that
-might make it worth understanding, so we work through at least the
-basic idea here:
-
-...
-
-\subsubsection{Energy increment proof of Roth's theorem}
-
-\subsubsection{Green's triangle removal theorem}
-
-\subsubsection{Quantitative bounds in finite fields}
+\subsection{Quantitative bounds in finite fields}
 
 There have been several recent developments in a finite field setting
 on analogous problems (specifically, the work of Croot, Lev, and Pach
-on length-3 arithmetic progression-free sets in $\FF_4^n$ and
-subsequent work by others pushing it to $\FF_3^n$).  I will start by
-explaining this work to the best of my understanding, and follow by
-attempting to apply the methods used there to analogues of the
-problems of boundedly-additive sets in the integers.
+\cite{progressions_croot} on length-3 arithmetic progression-free sets
+in $\FF_4^n$ and subsequent work by others pushing it to $\FF_3^n$).
+I will start by explaining this work to the best of my understanding,
+and follow by attempting to apply the methods used there to analogues
+of the problems of boundedly-additive sets in the integers.
 
 The idea for arithmetic progression-free sets is as follows: Let $S^d$
 be the space of all polynomial functions on $\FF_q^n$ of degree $d$
@@ -1486,5 +1491,44 @@ Code 2:
 cat data/indices_of_summands | cut -d " " -f 4 | sort -n|uniq -c|sort -n > data/n_minus_js
 cat data/indices_of_summands | cut -d " " -f 3,4 | sort -n|uniq -c|sort -n > data/i_nmj
 \end{lstlisting}
+
+\begin{thebibliography}{9}
+\bibitem{ulam_steinerberger} 
+Stefan Steinerberger\\
+Hidden regularity
+
+\bibitem{patterns_finch} 
+Finch\\
+Patterns in 1-additive sequences
+ 
+\bibitem{regularity_criterion_finch} 
+Finch
+ 
+\bibitem{regularity_schmerl} 
+Schmerl, Speigel
+ 
+\bibitem{capset_ellenberg} 
+Ellenberg, Gijswijt
+
+\bibitem{progressions_croot} 
+Croot, Lev, Pach
+
+\bibitem{sumfree_cameron} 
+Cameron
+
+\bibitem{irregular_sumfree_cameron} 
+Cameron Erdos
+
+\bibitem{sumfree_regularity_luczak} 
+Luczak
+
+\bibitem{avoid_zero_gibbs} 
+Gibbs
+
+\bibitem{additive_combinatorics_tao} 
+Tao, Vu\\
+Additive Combinatorics
+
+\end{thebibliography}
 
 \end{document}

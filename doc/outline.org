@@ -8,10 +8,10 @@
 *** TODO Density ~0.07
 *** TODO Support in middle third
 *** TODO Decomposition into simpler distributions
-* TODO Known regularity results
-** TODO Finch
-** TODO Schmerl-Speigel
-* Background
+* TODO Background
+** TODO Known regularity results
+*** TODO Finch
+*** TODO Schmerl-Speigel
 ** TODO Sum-free sets
 *** TODO Definition
 *** TODO Decision sequences
