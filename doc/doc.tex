@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage[utf8]{inputenc}
 \usepackage{amsmath,amsthm,amssymb,graphicx,setspace,mathrsfs,mathstyle,listings,color}
 %\topmargin 0in
 %\headheight 0in
@@ -339,16 +340,22 @@ situation of sets with no solutions to this equation at all: So-called
 \end{definition}
 
 \begin{example}
-For example, the odd positive integers are sum-free.  More generally,
-if $A \subset \Z/m$ is sum-free, then the set of integers $x$ that
-reduce to an element of $A$ modulo $m$ is also sum-free.  In fact,
-even more generally, for any surjective homomorphism
-$\pi : \Z \to \R/\Z$, if $A$ is a sum-free subset of $\R/\Z$, then
-$\pi\inv(A)$ is a sum-free set of integers.  Clearly, any subset of a
-sum-free set is sum-free also.  For one final and very different sort
-of example, the set $\{x^n : x \in \Z, x > 1\}$ (for any fixed
-$n > 2$) is also sum-free by Fermat's last theorem.
+\begin{enumerate}
+\item The odd positive integers are sum-free.  
+\item More generally, if $A \subset \Z/m$ is sum-free, then the set of
+  integers $x$ that reduce to an element of $A$ modulo $m$ is also
+  sum-free.  
+\item Even more generally, for any homomorphism $\pi : \Z \to \R/\Z$,
+  if $A$ is a sum-free subset of $\R/\Z$, then $\pi\inv(A)$ is a
+  sum-free set of integers.
+\item Any subset of a sum-free set is sum-free also.
+\end{enumerate}
 \end{example}
+
+When we think about generalising the particular notion of
+``regularity'' above for the purpose of the Ulam sequence or for
+sum-free sets, the basic idea is that a set should be ``regular'' if
+it has some correlation with a set of the form in example 3.
 
 \subsubsection{Decision sequences}
 
@@ -429,57 +436,104 @@ sum-free set is non-regular.
 
 \subsubsection{Density and regularity}
 
-Clearly the maximal density a sum-free set can have is $\frac12$,
-which is realised by the example of the odd positive integers.  Luczak
-has given a sort of converse to this example, proving in \cite{sumfree_regularity_luczak} that
-if a sum-free set contains an even number, then, remarkably, its
-density is automatically bounded above by $\frac25$.  The proof is
-short, but a little delicate, and we shall recall a version of it in
-this section.
+We start with the observation that if $A$ is a sum-free set and
+$a \in A$, then $A$ and $A+a$ are disjoint sets of integers.  This
+automatically guarantees that a sum-free set cannot have density in
+the integers of more than $\frac12$.  Specifically: 
+
+\begin{definition}
+  A subset $A \subset \Z^+$ has \textbf{density} $\delta$ if
+  $\lim_{N \to \infty} \frac{|A_N|}{N}$ exists and is equal to
+  $\delta$.
+\end{definition}
+
+Since this may not always exist, we might work with another number
+that always will exist and that, in cases when the density does not
+exist, provides what should be thought of as at least an upper bound: 
+
+\begin{definition}
+  A subset $A \subset \Z^+$ has \textbf{upper density} $\delta$ if
+  $\limsup_{N \to \infty}\frac{|A_N|}{N} = \delta$.
+\end{definition}
+
+As we have noted, then, the maximal upper density a sum-free set can
+have is $\frac12$, which is realised by the example of the odd
+positive integers.  Luczak has given a sort of converse to this
+example, proving in \cite{sumfree_regularity_luczak} the following: 
+
+\begin{theorem}[Luczak]
+If $A$ is a sum-free set of positive integers and there is at least
+one even integer in $A$, then the upper density of $A$ is bounded
+above by $\frac25$.  
+\end{theorem}  
+
+The proof is short, but a
+little delicate, and we shall recall a version of it in this section.
 
 The basic idea of the proof is to find disjoint subsets of $[N]$ that
-are the same size as $A$, or of a size related to $A$.  For example,
-if $a \in A$ is any element, then because $A$ is sum-free, $A_N$ and
-$A_N+a$ are disjoint in $[N+a]$, and thus
-$2|A_N|/N <= 1 + \frac{a}{N}$, which is how we deduce our earlier
+are the same size as $A_N$, or of a size related to $A_N$.  For
+example, if $a \in A_N$ is any element, then because $A$ is sum-free,
+$A_N$ and $A_N+a$ are disjoint in $[N+a]$, but have the same size, and
+thus $2|A_N| \leq N+a$, i.e. $|A_N|/N \leq \frac12 + \frac{a}{2N}$.
+Taking the limit as $N \to \infty$, we again deduce our earlier
 statement about $A$ having density bounded by $\frac12$.
 
-The proof breaks up into two cases: Where $A$ has any run of
-consecutive elements and where it does not.
-
-In the case where $A$ has an even element but no two consecutive
-elements.  Note that if $A$ is all even elemenets, then $\frac12 A$ is
+\begin{proof}
+Note first that if $A$ is all even elemenets, then $\frac12 A$ is
 also sum-free, and therefore with density $\leq \frac12$, and so $A$
 has density $\leq \frac14$ and the result is automatic, so without
 loss we may assume $A$ has at least one odd element in addition to its
-at least one even element.  Then, let $t$ be the minimal odd
-difference (which does exist using the odd and even elements, and is
-not 1, since there are no consecutive elements).  Write $t = x-y$ for
-$x, y \in A$.  
+at least one even element.  
+
+With this in mind, the proof breaks up into two cases: Where $A$
+contains consecutive elements and where it does not.
+
+\textbf{Case 1: $A$ has no consecutive elements} In the case where $A$
+has an even element but no two consecutive elements, let $t$ be the
+minimal odd positive element of $A-A$ which does exist using the odd
+and even elements, and is not 1, since there are no consecutive
+elements.  Also fix $x, y \in A$ with $t = x-y$.
 
 This means that if $a \in A$, then $a+t-2$ cannot be in $A$ (else
-$t-2$ would be a smaller odd difference than the minimal odd
+$t-2$ would be a smaller odd positive difference than the minimal odd
 difference $t$).  Put another way, if $a$ and $a+2$ are both in $A$,
 then $a+t$ cannot be in $A$.  Put another way, if $B$ is the set of
 $a \in A$ with $a+2$ also in $A$, then $B+t$ and $A$ are disjoint.  Of
-course, finding two disjoint subsets of even size $|A|$ is already
-easy, however this lets us in fact find three: Since $t=x-y$, this
-means $B+x-y$ and $A$ are disjoint, meaning $B+x$ and $A+y$ are
-disjoint.  But both of these are contained in a set of the form $A+a$
-for some $a \in A$, so they are both also disjoint from $A$.  Thus we
-have $A$, $A+y$, and $B+x$ all disjoint.  If we truncate $A$ to $A_N$,
-then these are all disjoint subsets of $[N+x]$, and so
+course, we already know that finding two disjoint subsets of size even
+as large as $|A|$ is already easy, however this lets us in fact find
+three: Since $t=x-y$, this means $B+x-y$ and $A$ are disjoint, meaning
+$B+x$ and $A+y$ are disjoint.  But both of these are contained in
+$A+A$, so they are both also disjoint from $A$.  Thus we have $A$,
+$A+y$, and $B+x$ all disjoint.  If we truncate $A$ to $A_N$, then
+these are all disjoint subsets of $[N+x]$, and so
 
 \[2|A_N|+|B_N| \leq N+x\].
 
 So if we can relate $|B|$ to $|A|$ (for the moment using the shorthand
-$B = B_N$, $A = A_N$), then we are done.  But
-$B, B+1, A\setminus B, A\setminus B + 1, A\setminus B + 2$ are all
-disjoint in $[N+2]$, so $2|B| + 3|A| - 3|B| \leq N+2$, i.e.
+$B = B_N$, $A = A_N$), then we are done.  
+
+But by the definition of $B$, we have two cases for an element of $A$: 
+\begin{itemize}
+\item $a \in B$, in which case $a+1$ is not in $A$.  
+\item $a \in A\setminus B$, in which case we know $a+1$ is not in $A$
+  (since $A$ has no consecutive elements) and $a+2$ is not in $A$,
+  (since otherwise $a$ would be in $B$).
+\end{itemize}
+
+So we have the five sets:
+$B, B+1, A\setminus B, A\setminus B + 1, A\setminus B + 2$, and these
+are all pairwise disjoint in $[N+2]$.  (The only one that might not be
+clear is $B+1 \cap A \setminus B + 2$, but if $a \in A\setminus B$ and
+$b \in B$ with $a+2=b+1$, then $a + 1 = b$, giving two consecutive
+elements of $A$ which does not happen.)
+
+Thus $2|B_N| + 3(|A_N| - |B_N|) \leq N+2$, i.e.
 
 \[|B_N| \geq 3|A_N| - N - 2\]
 
-Putting these two inequalities together, we find:
+Now we have a relationship between $|B|$ and $|A|$, so we can pair
+this with our earlier inequality relating the two of them to $N$ and
+find:
 
 \[2|A_N| + 3|A_N| - N - 2 \leq N+x \]
 
@@ -487,47 +541,69 @@ or
  
 \[\frac{|A_N|}{N} \leq \frac25+o(1) \]
 
+as we wanted.
 
-In the case where $A$ has $d$ consecutive elements
-$a, a+1, \ldots, a+d-1$, say, the argument is similar in flavour but
-the technical details are all slightly different.  This time, we let
-$t$ be any difference for which $t+1, \ldots, t+d$ are all not
-differences.  (This does exist: $a, a+1 \in A$ means $1 \notin A$, so
-let $t$ be the maximum of $1, \ldots, a-1$ that is in $A-A$.  Then
-nothing from $t$ to $a-1$ is in $A-A$ (by definition), and nothing
-from $a$ to $a+d-1$ is either (since these are all in $A$), so at
-least $d$ elements (and possibly more) immediately after $t$ are not
-in $A-A$).  Again, say $t = x-y$ for $x, y \in A$.  
+\textbf{Case 2: $A$ has consecutive elements:} In the case where $A$
+has $d$ consecutive elements $a, a+1, \ldots, a+d-1$, say, the
+argument is similar in flavour to the above, but the technical details
+are all slightly different.  We will first need a $t$ to serve the
+role of our $t$ in case 1.  But now, the minimal odd difference is
+simply 1.  So we do something slightly different: This time, we let
+$t$ be any positive element of $A-A$ for which $t+1, \ldots, t+d$ are
+all not in $A-A$.  
 
-Then now if $B$ is the set of elements for which $b+1, \ldots, b+d-1$
-are all not in $A$, then certainly the sets $A, B+1, \ldots, B+d-1$,
-are all disjoint.  In fact, we can get one more than this: We can
-shift all these sets by $a$ and they are still disjoint: $A+a, B+a+j$
-($j=1, \ldots, d-1$).  But now since the $a+j$ are all in $A$, these
-sets are all themselves disjoint from $A$ (since they are subsets of
-$A+z$ for various $z \in A$.  Thus, again truncating at $N$, we have
-two sets of size $|A_N|$ and $d-1$ sets of size $|B_N|$ all disjoint
-and inside $[N+a+d-1]$.  Thus: 
+\begin{lemma}Such $t$ does exist\end{lemma}
 
-\[2|A_N|+(d-1)|B_N| \leq N+a+d-\]
+\begin{proof}Since $a, a+1 \in A$, we know $1 \in A-A$.  Then let $t$
+  be the maximum of $1, \ldots, a-1$ that is in $A-A$, so nothing from
+  $t$ to $a-1$ is in $A-A$ (by definition), and nothing from $a$ to
+  $a+d-1$ is in $A-A$ either (since these are all in $A$), so at least
+  $d$ elements (and possibly more) immediately after $t$ are not in
+  $A-A$).
+\end{proof}
 
-So again, we need control over the size of $|B_N|$ in terms of $|A_N|$
-and we will be done.  But this time, we note that if $z \in A$, $z+t$
-could be in $A$, but then because of the definition of $t$, none of
-$z+t+1, \ldots, z+t+(d-1)$ can be in $A$ (lest one of
-$t+1, \ldots, t+(d-1)$ lie in $A-A$).  Thus $A+t$, insofar as it
-intersects $A$, in fact only intesects $B$.  Put another way, $A+t$
-and $A \setminus B$ are disjoint.  Again, this is only two sets, but
-we can use the same trick as before to make it three: Since $t = x-y$,
-we can equally say $A+x$ and $(A \setminus B) + y$ are disjoint, at
-which point these are also disjoint from $A$ (again, being subsets of
-$A+z$ for various $z \in A$).  So we have three disjoint subsets of
-$[N+x]$, of sizes $|A_N|$, $|A_N|$, and $|A_N|-|B_N|$, meaning
-$3|A_N| - |B_N| \leq N+x$ or:
+Again, write $t = x-y$ for some fixed $x, y \in A$.
+
+We proceed broadly as before on the two-step plan: 
+
+\begin{enumerate}
+\item Find a set $B$ of elements that gives rise to many disjoint
+  subsets of $[N]$ and deduce a bound relating $|A_N|$ and $|B_N|$ to
+  $N$.
+\item Upper-bound $|B_N|$ in terms of $|A_N|$ and $N$, and plug this
+  into the previous bound to get a bound on $|A_N|$ in terms of $N$.
+\end{enumerate}
+
+\textbf{Step 1: }Let $B$ be the set of elements for which
+$b+1, \ldots, b+d-1$ are all not in $A$.  Then certainly the sets
+$A, B+1, \ldots, B+d-1$, are all disjoint.  In fact, we can get one
+more than this: We can shift all these sets by $a$ and they are still
+disjoint: $A+a, B+a+j$ ($j=1, \ldots, d-1$).  But now since the $a+j$
+are all in $A$, these sets are all themselves disjoint from $A$ (since
+they are all subsets of $A+A$).  Thus, again truncating at $N$, we
+have two sets of size $|A_N|$ and $d-1$ sets of size $|B_N|$ all
+disjoint and inside $[N+a+d-1]$.  Thus:
+
+\[2|A_N|+(d-1)|B_N| \leq N+a+d-1\]
+
+\textbf{Step 2: }So again, we need control over the size of $|B_N|$ in
+terms of $|A_N|$ and we will be done.  But this time, we note that if
+$z \in A$, it is possible that $z+t$ could be in $A$, but that then
+because of the definition of $t$, none of $z+t+1, \ldots, z+t+(d-1)$
+can be in $A$ (lest one of $t+1, \ldots, t+(d-1)$ lie in $A-A$).  Thus
+elements of $A+t$ that lie in $A$ in factmust lie in $B$.  Put another
+way, $A+t$ and $A \setminus B$ are disjoint.  Again, this is only two
+sets, but we can use the same trick as before to make it three: Since
+$t = x-y$, we can equally say $A+x$ and $(A \setminus B) + y$ are
+disjoint, at which point these are also disjoint from $A$ (again,
+being subsets of $A+A$).  So we have three disjoint subsets $A+x$,
+$A \setminus B + y$, and $A$ of $[N+x]$, wtih sizes $|A_N|$, $|A_N|$,
+and $|A_N|-|B_N|$, respectively.  This gives
+$|A_N| + |A_N| + (|A_N| - |B_N|) \leq N+x$ or:
 
 \[|B_N| \geq 3|A_N|-N-x\]
 
-Putting these two together, we get: 
+Dropping this into the first inequality and rearranging, we get:
 
 \[2|A_N|+(d-1)(3|A_N|-N-x) \leq N+a+d-\]
 
@@ -535,19 +611,20 @@ which simplifies to:
 
 \[\frac{|A_N|}{N} \leq \frac{d}{3d-1} + o(1)\]
 
-For $d \geq 2$, this is again bounded by $\frac25$ in the limit, so
-the claimed bound follows.
+Since $d \geq 2$ (as we are assuming we have at least two consecutive
+elements), this is again bounded by $\frac25$ in the limit, so the
+claimed bound follows.
+\end{proof}
 
-\subsubsection{Irregular sum-free sets}
+\subsubsection{Aperiodic sum-free sets}
 
-A construction of Cameron and Erdos in
-\cite{irregular_sumfree_cameron} supplies an example of a sum-free set
-with density $\frac13$ that has no periodicity, namely: Take
-$\alpha \in \R$ irrational, and let $A_\alpha$ be the set of integers
-$n$ such that $n \mod{\alpha}$ lies in
-$[\frac \alpha 3, \frac {2\alpha}{3}]$.  $A_\alpha$ is clearly
-sum-free, since it is sum-free modulo $\alpha$, but they prove that
-for irrational $\alpha$, $A_\alpha$ is also not regular.
+An old construction of Erdos in \cite{aperiodic_sumfree_erdos}
+supplies an example of a sum-free set with density $\frac13$ that has
+no periodicity, namely: Take $\alpha \in \R$ irrational, and let
+$A_\alpha$ be the set of integers $n$ such that $n \mod{\alpha}$ lies
+in $\left(\frac \alpha 3, \frac {2\alpha}{3}\right)$.  $A_\alpha$ is
+clearly sum-free, since it is sum-free modulo $\alpha$, but for
+irrational $\alpha$, $A_\alpha$ is also clearly not periodic.
 
 \subsection{Abelian arithmetic regularity}
 
@@ -823,7 +900,7 @@ Note, however, that while it looks like the bias starts falling off at
 40935, in fact we only know alpha to within $10^(-10)$ or so, and for
 $p/q$ convergents from the continued fraction,
 $|\alpha - p/q| < 1/q^2$.  So being confident about alpha to within
-$10^(-10)$ suggests that we should only trust convergents up to 5-6
+$10^{-10}$ suggests that we should only trust convergents up to 5-6
 digits.
 
 Moreover, we note that if we take fewer terms, then fewer of the terms
@@ -1516,8 +1593,8 @@ Croot, Lev, Pach
 \bibitem{sumfree_cameron} 
 Cameron
 
-\bibitem{irregular_sumfree_cameron} 
-Cameron Erdos
+\bibitem{aperiodic_sumfree_erdos} 
+Erdos65
 
 \bibitem{sumfree_regularity_luczak} 
 Luczak
