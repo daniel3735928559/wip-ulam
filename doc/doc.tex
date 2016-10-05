@@ -233,73 +233,173 @@ This has many notable features:
 
 If we want to prove this kind of generalised regularity statement, it
 might help to understand existing proofs of regularity (i.e. that
-consecutive differences are eventually periodic).  A criterion for
-regularity, as well one example of a proof of regularity, are: 
-
-\cite{regularity_criterion_finch} Finch's criterion for regularity
-
-\cite{regularity_schmerl} Schmerl and Speigel prove of regularity for $U(2, 2n+3)$
-
-We'll go through these in turn.
+consecutive differences are eventually periodic).  We discuss two such
+results in this section.
 
 \subsubsection{Finch's criterion for regularity}
 
-The criterion in the first paper is that finitely many evens implies
-regularity, and the proof is short and sweet.  The idea is that if
-there are finitely many evens, say $e_1 < ... < e_s$, then every term
-$n$ after the last even must be odd.  Since it can be written as sum of
-two earlier terms, and it is odd, one of its summands must be even.
-And since it can be written in such a sum in a unique way, this is
-saying that $n - e_i$ is in the sequence for a unique $i$ from 1 to $s$.
-This is finitely many things to check.
+In \cite{regularity_criterion_finch}, Finch proves:
 
-More precisely, if $x_n$ is the number of representations of $n$ as a sum
-of two elements of the sequence (and again, $n$ is odd), then we can
-write a finite recurrence:
+\begin{theorem}
+If $A = U(a,b)$ is a 1-additive set containing finitely many even
+elements, then $A$ is regular.  
+\end{theorem}
 
-\[x_n = \sum_i 1(x_{n-e_i})\]
+The idea of the proof is that if there are finitely many evens, say
+$e_1 < \ldots < e_s$, then every term $n$ after the last even must be
+odd.  Since it can be written as sum of two earlier terms, and it is
+odd, one of its summands must be even.  And since it can be written in
+such a sum in a unique way, this is saying that $n - e_i$ is in the
+sequence for a unique $i$ from 1 to $s$.  This is finitely many things
+to check.
 
-where $1(x)$ is 0 unless $x = 1$, in which case $1(x) = 1$.  In particular,
-$0 < x_n \leq s$ for all odd $n > e_s$.  Note also that $x_n$ depends on a
-finite range of earlier $x_i$'s: $x_{n-2}, ..., x_{n-e_s}$.  Call this
-sequence $B_n$.  Each of the $e_s/2$ values in $B_n$ is between 1 and $s$, so
-there are finitely many such sequences, so at some point $B_n = B_{n+N}$
-for some $n$ and $N$.  But since $x_n$ and $x_{n+N}$ only depend on $B_n$ and
-$B_{n+N}$ respectively, this means $x_n = x_{n+N}$.
+More precisely:
 
-And further, $x_{n+N+2}$ only depends on $B_{n+N+2}$, whose entries are
-the same as those of $B_{n+N}$, but shifted by 1 with $x_{n+N}$ added onto
-the beginning.  In particular, the entries of $B_{n+N+2}$ after the
-first all agree with those of $B_{n+2}$.  And the first entry of
-$B_{n+N+2}$ is $x_{n+N}$, which we just saw is $x_n$, which is the first
-entry in $B_{n+2}$.  So in fact $B_{n+N+2} = B_{n+2}$ and we can proceed
-by induction to show the $B_n$ are periodic with period $N$.  Since the
-$x_n$ are a function of the $B_n$, $x_n$ is therefore also periodic with
-period $N$.
+\begin{proof}
+
+  If $x_n$ is the number of representations of $n$ as a sum of two
+  elements of $A$ and $n$ is odd, then because an odd number that is a
+  sum of two smaller elements of $A$ must have an even summand and we
+  have only finitely many evens $e_1 < \ldots < e_s$, we can write a
+  finite recurrence:
+
+  \[x_n = \sum_{i=1}^s 1(x_{n-e_i})\]
+  
+  where $1(x)$ is 0 unless $x = 1$, in which case $1(x) = 1$.  In
+  particular, $0 < x_n \leq s$ for all odd $n > e_s$.  Note also that
+  $x_n$ depends on a finite range of earlier $x_i$'s:
+  $x_{n-2}, x_{n-4}, \ldots, x_{n-e_s}$.  Call this sequence $B_n$.
+  Each of the $e_s/2$ values in $B_n$ is between 1 and $s$, so there
+  are finitely many possible such sequences.  Thus, for some $N$ and
+  $n$, we must have $B_n = B_{n+N}$.  But since $x_n$ and $x_{n+N}$
+  only depend on $B_n$ and $B_{n+N}$ respectively, this means
+  $x_n = x_{n+N}$.
+
+  And further, $x_{n+2}$ and $x_{n+N+2}$ only depend on the sequences
+  $B_{n+2}$ and $B_{n+N+2}$, respectively.  But 
+
+  \begin{eqnarray*}
+    B_{n+N+2} &=& (x_{n+N}, x_{n+N-2}, \ldots, x_{n+N+2-e_s}) \text{
+    by definition}\\
+    &=& (x_{n+N}, x_{n-2}, \ldots, x_{n+2-e_s}) \text{ because $B_n
+                                                  = B_{n+N}$}\\
+    &=& (x_{n}, x_{n-2}, \ldots, x_{n+2-e_s}) \text{ as noted
+                                                above}\\
+              &=& B_{n+2}\\
+  \end{eqnarray*}
+
+  So in fact $B_{n+N+2} = B_{n+2}$ and we can proceed by induction to
+  show the $B_n$ are periodic with period $N$.  Since the $x_n$ are a
+  function of the $B_n$, $x_n$ is therefore also periodic with period
+  $N$.
+\end{proof}
 
 \subsubsection{Regularity of $U(2,2n+3)$}
 
-The claim here is that in the sequence $S$ starting with $2, v$ for $v$ odd
-and bigger than $3$, the only evens are $2$ and $2v+2$.
+Using the above criterion, Schmerl and Speigel in
+\cite{regularity_schmerl} prove: regularity for the 1-additive sets
+$U(2, 2n+3)$:
 
-The first step is to note that if we look at, say, the first n terms
-in the sequence and these are still the only evens seen up to then,
-then there cannot be a gap of odd numbers of length $2v$.  This is
-simply because for any odd number $r \in S$, then since 2 in $S$ also,
-the only way $r+2$ is not in $S$ is if $r+2 = a+b$ for some other
-$a,b \in S$.  But $r+2$ is odd, so one of its summands has to be even.
-The only other choice is $2+2v$, so this tells us
-$r+2-(2+2v) = r - 2v$ is in $S$.
+\begin{theorem}
+The 1-additive sets $U(2,v)$ for $v > 5$ and odd are regular.
+\end{theorem}
 
-So for any $r$ in $S$, either $r+2$ is in $S$ or $r-2v$ is in $S$.  
+Since they use Finch's criterion, this boils down to showing that each
+of these sets has finitely many evens.  Specifically: 
 
-This lets us find an element close to $x$ in the sequence, say between
-$x-3v$ and $x-v$.  Because we know all the small elements of the sequence,
-we can provably write $x = a+b$ for two reasonably explicit elements of
-the sequence.  Because $x$ is in the sequence, this must be the unique
-such representation.  However, using knowledge of the other small
-terms in the sequence, we can find a second representation of $x$ with
-some casework, leading to a contradiction of the existence of $x$.
+\begin{lemma}The only even elements in the 1-additive set $U(2,v)$
+  (with $v > 5$ odd) are 2 and $2v+2$.
+\end{lemma}
+
+
+\begin{proof}
+  The proof goes by supposing that $x$ is the next even element of
+  $U(2,v)$ after $2v+2$ and using an exhaustive knowledge of small
+  elements of the sequence (up to about $5v$) to write $x = a+b$ for
+  smaller $a, b \in U(2,v)$ in more than one way.  To do this, we have
+  to understand the small elements of the sequence and the elements
+  just before $x$.  
+
+  We leave out the computation of the small elements and simply state
+  the result: 
+
+  \begin{lemma}
+    The elements of $U(2,v)$ up to $5v+10$ are: 
+
+    \begin{itemize}
+      \item $2$
+      \item $2v+2$
+      \item All odds between $v$ and $3v$, inclusive.
+      \item $3v+4i$ for $0 < i \leq \frac{v+1}{2}$ (that is, every
+        other odd from $3v$ to $5v+2$ inclusive)
+      \item $5v+4$
+      \item $5v+10$
+    \end{itemize}
+  \end{lemma}
+
+  To use these to express our supposed next even element $x$ as a sum
+  of elements of $U(2,v)$ in multiple ways, we also need to understand
+  the elements immediately leading up to $x$.  
+
+  \begin{lemma}
+    There is no gap of length $2v$ in the odd numbers in the sequence
+    up to $x-2v$.  More precisely, if $r$ is any odd number less than
+    $x-2v$, then one of $r, r+2, \ldots, r+2v$ is in $U(2,v)$.  
+  \end{lemma}
+  \begin{proof}
+    If we take $r$ to be the minimal counterexample to this, then $r-2$
+    is in $U(2,v)$, else $r-2$ would be a smaller counterexample (note
+    that 1 is manifestly not a counterexample, so $r-2 > 0$).  
+
+    But then $r+2v = (r-2)+(2v+2)$ expresses $r+2v$ as a sum of
+    elements of $U(2,v)$, so the only way it can fail to be in
+    $U(2,v)$ is if there is another such expression.  But $r+2v$ is
+    odd, so any other expression of it as $a+b$ for $a, b \in U(2,v)$
+    requires that one of $a$ and $b$ be even.  And $r+2v < x$, so the
+    only choice other than $2v+2$ (which we have already used) is 2.
+    So this means $r+2v = 2+(r+2v-2)$ is the other such expression.
+    But for this to be such an expression, $r+2v-2$ must be in
+    $U(2,v)$, and we are done.
+  \end{proof}
+
+  \begin{corollary}
+    It follows from the proof that for any odd $r < x-2v$
+    $r \in U(2,v)$ if and only if exactly one of $r+2v+2$ and $r+2v$
+    is in $U(2,v)$.
+  \end{corollary}
+
+  This will allow us to, for example, find several elements of
+  $U(2,v)$ between $x-3v$ and $x$.  We already know that we have a lot
+  of elements between $v$ and $3v$, so this gives us a good chance of
+  expressing $x$ as a sum of elements of $U(2,v)$ in multiple ways.  
+
+  For example, the second lemma tells us that some odd between $x-3v$
+  and $x-v$, say $x-v-2i$ (for some $0 \leq i \leq v$) is in
+  $U(2,v)$.  But we know everything of the form $v+2i$ with $0 \leq i
+  \leq v$ is in $U(2,v)$ as well, so: 
+
+  \[x = (x-v-2i)+(v+2i)\]
+
+  is the qualifying expression for $x$ as a sum of smaller elements.
+  Since this expression must be unique, we also know that $x-v-2j$ for
+  $0 \leq j \leq v$ and $j \neq i$ cannot be in $U(2,v)$.  
+
+  To get a second such expression (and therefore a contradiction), we
+  will look also at the odd elements from $x-5v$ to $x-3v$, using our
+  knowledge of the odd elements of $U(2,v)$ from $3v$ to $5v$.  
+
+  After some casework, this will end up giving a second qualifying
+  expression for $x$, thereby disqualifying it.  We refer to
+  \cite{regularity_schmerl} for the details.
+  
+  % We shall look at these elements by considering
+  % $y_k = (x-v-2k) - (2v+2)$.  By the corrolary, $y_k$ is in $U(2,v)$
+  % if and only if exactly one of $y_k+2v+2 = x-v-2k$ and
+  % $y_k+2v = x-v-2(k+1)$ is in.  But this only happens if $k = i$ or
+  % $k+1=i$, so the only elements in $x-3v$ to $x-5v$ that are in
+  % $U(2,v)$ are $x-3v-2i-2$ and $x-3v-2i$.  
+
+  \end{proof}
 
 \subsection{Sum-free sets}
 
@@ -574,7 +674,7 @@ We proceed broadly as before on the two-step plan:
   into the previous bound to get a bound on $|A_N|$ in terms of $N$.
 \end{enumerate}
 
-\textbf{Step 1: }Let $B$ be the set of elements for which
+\textbf{Step 1: }Let $B$ be the set of elements $b$ for which
 $b+1, \ldots, b+d-1$ are all not in $A$.  Then certainly the sets
 $A, B+1, \ldots, B+d-1$, are all disjoint.  In fact, we can get one
 more than this: We can shift all these sets by $a$ and they are still
@@ -618,13 +718,15 @@ claimed bound follows.
 
 \subsubsection{Aperiodic sum-free sets}
 
-An old construction of Erdos in \cite{aperiodic_sumfree_erdos}
-supplies an example of a sum-free set with density $\frac13$ that has
-no periodicity, namely: Take $\alpha \in \R$ irrational, and let
+A construction of Erdos in \cite{aperiodic_sumfree_erdos} supplies an
+example of a sum-free set with density $\frac13$ that has no
+periodicity, namely: Take $\alpha \in \R$ irrational, and let
 $A_\alpha$ be the set of integers $n$ such that $n \mod{\alpha}$ lies
 in $\left(\frac \alpha 3, \frac {2\alpha}{3}\right)$.  $A_\alpha$ is
 clearly sum-free, since it is sum-free modulo $\alpha$, but for
 irrational $\alpha$, $A_\alpha$ is also clearly not periodic.
+
+
 
 \subsection{Abelian arithmetic regularity}
 
