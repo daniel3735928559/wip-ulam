@@ -184,16 +184,19 @@ shrinks with $k$.  For example, for $N = 100000$, we compute this for
 a few values of $k$ (noting that of course the values for $-k$ are
 just the conjugates of these:
 
-\begin{tabular}{|llll|}
+\begin{tabular}{|ll|}
 \hline
 $k$ & $\widehat{1_{A_N}}(k\alpha)$\\
 \hline
-0 & \ldots \\
-1 & \ldots \\
-2 & \ldots \\
-3 & \ldots \\
-4 & \ldots \\
-5 & \ldots \\
+1 & 0.7985467537954992\\
+2 & 0.32061814928309407\\
+3 & 0.30359418284609546\\
+4 & 0.6019015738751037\\
+5 & 0.6004862934665662\\
+6 & 0.3699258112430088\\
+7 & 0.1279822946231241 \\
+8 & 0.1443860719363926 \\
+9 & 0.14047291569572581\\
 \hline
 \end{tabular}
 
@@ -219,13 +222,17 @@ This has many notable features:
 
 \item It looks at a glance like this distribution is supported on the
   middle third of the interval $[0,\frac1\alpha]$.  This is not
-  literaly the case, but in \cite{avoid_zero_gibbs} there is a conjecture in this
-  direction.
+  literally the case, but in \cite{avoid_zero_gibbs} there is a
+  conjecture in this direction.
 
 \item While the obvious peaks seem somewhat irregular, the major bumps
   look kind of like they might be a sum of normal or other nice
   distributions.
 \end{itemize}
+
+\subsection{Results}
+
+TODO
 
 \section{Background}
 
@@ -393,7 +400,7 @@ of these sets has finitely many evens.  Specifically:
   \cite{regularity_schmerl} for the details.
   
   % We shall look at these elements by considering
-  % $y_k = (x-v-2k) - (2v+2)$.  By the corrolary, $y_k$ is in $U(2,v)$
+  % $y_k = (x-v-2k) - (2v+2)$.  By the corollary, $y_k$ is in $U(2,v)$
   % if and only if exactly one of $y_k+2v+2 = x-v-2k$ and
   % $y_k+2v = x-v-2(k+1)$ is in.  But this only happens if $k = i$ or
   % $k+1=i$, so the only elements in $x-3v$ to $x-5v$ that are in
@@ -468,14 +475,16 @@ could not be in the set if it is to be sum-free).  If tails, do not
 include that integer in the set.  Then move on to the next integer
 that has not been included, excluded, or disqualified.
 
-More formally: Define the function
-$\theta : \{0,1\}^\N \to \{f : \N \to \{0,1\}\}$ from binary sequences
-to sum-free sets of natural numbers (or, in this case, their indicator
-functions) as follows: If $s\in\{0,1\}$ is a binary sequence, then
-using $s$, we will actually define three disjoint sets that partition
-the natural numbers: The target set $A$, the excluded set $E$, and the
-disqualified set $D$.  For each $n \in \N$, iteratively select a set
-for $n$ as follows: 
+More formally: 
+
+\begin{definition}Define the function
+  $\theta : \{0,1\}^\N \to \{f : \N \to \{0,1\}\}$ from binary
+  sequences to sum-free sets of natural numbers (or, in this case,
+  their indicator functions) as follows: If $s\in\{0,1\}$ is a binary
+  sequence, then using $s$, we will actually define three disjoint
+  sets that partition the natural numbers: The target set $A$, the
+  excluded set $E$, and the disqualified set $D$.  For each
+  $n \in \N$, iteratively select a set for $n$ as follows:
 
 \[\begin{cases}
 n \in A+A &\implies n \in D\\
@@ -484,7 +493,11 @@ n \notin A+A \text{ and } s_k = 0 &\implies n \in E
 \end{cases}\]
 
 where, at each stage, $k = |A|+|E|+1$ is the index of the first
-element of $s$ that we have yet to consult.  
+element of $s$ that we have yet to consult. 
+
+If $S$ is a sequence and $A$ is a sum-free set with $\theta(S) = A$,
+then $S$ is called the \textbf{decision sequence} for $A$.
+\end{definition}
 
 \begin{example}
   For example, let us compute $\theta(111111111...)$: We start with 1
@@ -583,7 +596,7 @@ Taking the limit as $N \to \infty$, we again deduce our earlier
 statement about $A$ having density bounded by $\frac12$.
 
 \begin{proof}
-Note first that if $A$ is all even elemenets, then $\frac12 A$ is
+Note first that if $A$ is all even elements, then $\frac12 A$ is
 also sum-free, and therefore with density $\leq \frac12$, and so $A$
 has density $\leq \frac14$ and the result is automatic, so without
 loss we may assume $A$ has at least one odd element in addition to its
@@ -695,13 +708,13 @@ terms of $|A_N|$ and we will be done.  But this time, we note that if
 $z \in A$, it is possible that $z+t$ could be in $A$, but that then
 because of the definition of $t$, none of $z+t+1, \ldots, z+t+(d-1)$
 can be in $A$ (lest one of $t+1, \ldots, t+(d-1)$ lie in $A-A$).  Thus
-elements of $A+t$ that lie in $A$ in factmust lie in $B$.  Put another
+elements of $A+t$ that lie in $A$ in fact must lie in $B$.  Put another
 way, $A+t$ and $A \setminus B$ are disjoint.  Again, this is only two
 sets, but we can use the same trick as before to make it three: Since
 $t = x-y$, we can equally say $A+x$ and $(A \setminus B) + y$ are
 disjoint, at which point these are also disjoint from $A$ (again,
 being subsets of $A+A$).  So we have three disjoint subsets $A+x$,
-$A \setminus B + y$, and $A$ of $[N+x]$, wtih sizes $|A_N|$, $|A_N|$,
+$A \setminus B + y$, and $A$ of $[N+x]$, with sizes $|A_N|$, $|A_N|$,
 and $|A_N|-|B_N|$, respectively.  This gives
 $|A_N| + |A_N| + (|A_N| - |B_N|) \leq N+x$ or:
 
@@ -736,7 +749,7 @@ Indeed, equidistribution results for irrational numbers tell us that
 there the integers are equidistributed modulo any irrational.  For
 example, there is at least one $n$ that reduces to the interval
 $\left(\frac{\alpha}{3m}-k,\frac{2\alpha}{3m}-k\right)$ modulo the
-irradional number $\frac{\alpha}{m}$.  Then it is clear that $mn+k$
+irrational number $\frac{\alpha}{m}$.  Then it is clear that $mn+k$
 will reduce to $\left(\frac{\alpha}{3},\frac{2\alpha}{3}\right)$ mod
 $\alpha$, meaning that $mn+k \in A_\alpha$ as desired.
 
@@ -781,7 +794,7 @@ $x, y, z$ in a set $A \subseteq \Z^+$.  Specifically:
   progressions $a, a+d, a+2d$ of length 3.  
 \end{theorem}
 
-Equivalently, such an $A$ alwayshas at least one solution to $x+z=2y$
+Equivalently, such an $A$ always has at least one solution to $x+z=2y$
 (whereupon $x, y, z$ is an arithmetic progression of length $3$).  A
 sum-free set $A$ instead has are no solutions to $x+z=y$ (swapping
 around variable names to highlight the similarity), so if we have a
@@ -808,6 +821,22 @@ statement, which we make now:
   $N > N_0$, every $A \subseteq [N]$ with $|A| > \delta N$ contains a
   solution to $x+z=2y$.
 \end{theorem}
+
+One strategy of proof goes via Fourier analysis, saying that if $A$
+has no large Fourier coefficients, then $A$ is guaranteed to behave
+``pseudorandomly'' in some sense, and computes that such sets must
+automatically have many length-3 arithmetic progressions, and we are
+done already.  
+
+If, on the other hand, $A$ does have some large Fourier coefficient,
+then one can find a long arithmetic progression that has large
+intersection with $A$, and on which $A$ in fact has higher density
+than it had originally.  We can repeat this step (the ``density
+increment'') as often as needed until either our intersected $A$ has
+no large Fourier coefficient (in which case we are done as above) or
+else $A$'s density in the arithmetic progression increases to 1.  If
+we are careful about it, we can ensure that at least 3 elements will
+still remain by the time we get to this point.
 
 \begin{proof}[Proof of Roth's theorem via density increment]
 
@@ -838,17 +867,23 @@ statement, which we make now:
   lest one solution, as desired.  
   
   If, on the other hand, there is a $k$ such that
-  $|\hat 1_A(k)| \geq \delta^2 N$, then this argument does not guarantee
-  a solution.  However, in that case, if $P = d[1,L]$ is the arithmetic
-  progression length $\{d, 2d, \ldots ,Ld\}$, then we know that 
-  $Q(a) = |A \cap (P+a)| = 1_A \star 1_P(a)$ and so: 
+  $|\hat 1_A(k)| \geq \delta^2 N$, then this argument does not
+  guarantee a solution.  However, in that case, let $P = d[1,L]$ be
+  the arithmetic progression of length$L$ and difference $d$
+  $\{d, 2d, \ldots ,Ld\}$ ($d$ to be chosen later).  We want an
+  arithmetic progression in which $A$ has higher density than it has
+  in $\Z/N$ at large.  In other words, we want to find an $a$ that
+  makes $Q(a) = |A \cap (P+a)| = 1_A \star 1_P(a)$ large.  But this we
+  can analyse using Fourier analysis:
   
   \begin{eqnarray*}
     \hat Q(s) = \hat 1_A(s) \overline{\hat 1_P(s)}
   \end{eqnarray*}
   
-Further, we know that for all $s \neq 0$, $\sum_a Q(a) \geq |\hat
-Q(s)|$.  So in particular, for $s = k$: 
+  Further, we know that for all $s \neq 0$,
+  $\sum_a Q(a) \geq |\hat Q(s)|$ (looking at the definition of the
+  Fourier transform and using the triangle inequality).  So in
+  particular, for $s = k$ (the large Fourier coefficient):
 
 \begin{eqnarray*}
   \sum_a Q(a) &\geq& |\hat Q(k)| \\
@@ -861,11 +896,17 @@ select $d$ and $L$ such that $|\hat 1_P(k)| \geq L/2$, so for some
 $A$, $Q(a)/N \geq \epsilon L/2$.  In particular, $A$ intersected with
 an arithmetic progression of length $L$ has density
 $\delta + \epsilon/2$, meaning we have increased the density,
-whereupon we can repeeat the argument.
+whereupon we can repeat the argument.
+
+The details (such as actually selecting the correct $d$ and $L$, as
+well as properly transitioning from $\Z/N$ back to $\Z$), are covered
+in many places, for example \cite{lyall_roth}.
 
 \end{proof}
 
 \subsubsection{Proof via the regularity theorem}
+
+
 
 \begin{proof}[Proof of Roth's theorem via energy increment]
 
@@ -878,62 +919,76 @@ whereupon we can repeeat the argument.
 There have been several recent developments in a finite field setting
 on analogous problems (specifically, the work of Croot, Lev, and Pach
 \cite{progressions_croot} on length-3 arithmetic progression-free sets
-in $\FF_4^n$ and subsequent work by others pushing it to $\FF_3^n$).
-I will start by explaining this work to the best of my understanding,
-and follow by attempting to apply the methods used there to analogues
-of the problems of boundedly-additive sets in the integers.
+in $\FF_4^n$ and subsequent work by others \cite{capset_ellenberg}
+pushing it to $\FF_3^n$.
 
-The idea for arithmetic progression-free sets is as follows: Let $S^d$
-be the space of all polynomial functions on $\FF_q^n$ of degree $d$
-(that is, polynomials of total degree $d$ where each of the $n$
-variables shows up with degree less than $q$).  Let $m_d$ be the
-dimension of this space, and let $V_d$ be the subspace of polynomial
-functions vanishing on the complement of $2A$ (this is more or less a
-trick).  Then
+We will recall the method used here by outlining the proof in
+\cite{capset_ellenberg}, in view of the possibility of later asking
+about Ulam-like sequences in the same context.
 
-\[\dim(V_d) >= m_d - (q^n - |A|)\]
+\begin{theorem}[Ellenberg-Gijswijt]
+Let $\alpha, \beta, \gamma$ be elements of $\FF_q$ such that
+$\alpha+\beta+\gamma = 0$ and $\gamma \neq 0$.  Let $A$ be a subset of
+$\FF_q^n$ such that the equation $\alpha a_1 + \beta a_2 + \gamma a_3
+= 0$ has no solutions $(a_1, a_2, a_3) \in A^3$ apart from $a_1 = a_2
+= a_3$.  Then $|A| = o(2.756^n)$.
+\end{theorem}
 
-(since the requirement to vanish on the complement of $2A$ is at most
-$q^n - |A|$ conditions).
+\begin{proof}Let $S^d$ be the space of all polynomial functions on
+  $\FF_q^n$ of degree $d$ (that is, polynomials of total degree $d$
+  where each of the $n$ variables shows up with degree less than $q$).
+  Let $m_d$ be the dimension of this space, and let $V_d$ be the
+  subspace of polynomial functions vanishing on the complement of $2A$
+  (this is more or less a trick).  Then
 
-It turns out that we can actually get a polynomial $P_d$ in $V_d$ with
-support of size exactly $\dim(V_d)$, and so this polynomial has:
+  \[\dim(V_d) >= m_d - (q^n - |A|)\]
+  
+  (since the requirement to vanish on the complement of $2A$ is at most
+  $q^n - |A|$ conditions).
+  
+  It turns out that we can actually get a polynomial $P_d$ in $V_d$ with
+  support of size exactly $\dim(V_d)$, and so this polynomial has:
+  
+  \[|\supp(P_d)| >= m_d - q^n + |A|\]
+  
+  Now for the last bit: If we have a degree-d polynomial $P$
+  vanishing on the complement of $2A$, then we can form the $|A|$ by
+  $|A|$ matrix $M$ whose $i,j$ entry is $P(a_i + a_j)$ where $a_i$ are
+  the elements of $A$.  First of all, because for $i$ and $j$
+  different, $a_i+a_j$ is never in $2A$, the off-diagonal terms all
+  vanish, whereas because the diagonal terms are $P(2a_i)$, they may
+  or may not vanish.
+  
+  
+  We can brutally expand this polynomial into a sum of monomials:
+  
+  \[P(a_i + a_j) = \sum_{\text{monomials m,m' of degree d or less}} c_{m,m'} m(a_i) m'(a_j)\]
+  
+  Further, in each term at least one of m and m' has degree at most d/2, so we can sum over 
+  
+  \[P(a_i + a_j) = \displaystyle\sum_{\text{monomials m of degree d/2 or less}} c_{m} m(a_i) F_m(a_j) + c'_m m(a_j) G_m(a_i)\]
+  
+  So $M$ is a linear combiantion of $2 m_{d/2}$ matrices $(m(a_i)
+  F_m(a_j))$ each of which, as the exterior product of two vectors, has
+  rank 1.  Thus the rank of $M$ is at most $2 m_{d/2}$.  And since $M$ is
+  diagonal, this means that in fact on $2A$, $P$ has only $2 m_{d/2}$ non-zero
+  points.  So the support of $P$ is bounded above by $2 m_{d/2}$.  Since the
+  support of $P_d$ was already bounded below by $m_d - q^n + |A|$ we can
+  apply this argument to $P_d$ and conclude that
+  
+  \[2 m_{d/2} \geq m_d - q^n + |A|\]
+  
+  i.e.
+  
+  \[|A| \leq 2 m_{d/2} - m_d + q^n\]
 
-\[|\supp(P_d)| >= m_d - q^n + |A|\]
-
-Now for the last bit: If we have a degreee-d polynomial $P$ vanishing on
-the complement of $2A$, then we can form the $|A|$ by $|A|$ matrix $M$ whose
-$i,j$ entry is $P(a_i + a_j)$ where $a_i$ are the elements of $A$.  First of
-all, because for $i$ and $j$ different, $a_i+a_j$ is never in $2A$, the
-off-diagonal terms all vanish, whereas because the diagonal terms are
-$P(2a_i)$, they may or may not vanish.
-
-
-We can brutally expand this polynomial into a sum of monomials:
-
-\[P(a_i + a_j) = \sum_{\text{monomials m,m' of degree d or less}} c_{m,m'} m(a_i) m'(a_j)\]
-
-Further, in each term at least one of m and m' has degree at most d/2, so we can sum over 
-
-\[P(a_i + a_j) = \displaystyle\sum_{\text{monomials m of degree d/2 or less}} c_{m} m(a_i) F_m(a_j) + c'_m m(a_j) G_m(a_i)\]
-
-So $M$ is a linear combiantion of $2 m_{d/2}$ matrices $(m(a_i)
-F_m(a_j))$ each of which, as the exterior product of two vectors, has
-rank 1.  Thus the rank of $M$ is at most $2 m_{d/2}$.  And since $M$ is
-diagonal, this means that in fact on $2A$, $P$ has only $2 m_{d/2}$ non-zero
-points.  So the support of $P$ is bounded above by $2 m_{d/2}$.  Since the
-support of $P_d$ was already bounded below by $m_d - q^n + |A|$ we can
-apply this argument to $P_d$ and conclude that
-
-\[2 m_{d/2} \geq m_d - q^n + |A|\]
-
-i.e.
-
-\[|A| \leq 2 m_{d/2} - m_d + q^n\]
-
-Choosing a particular value of d and bounding these quantities is all
- that remains.
-
+  Choosing a particular value of d and bounding these quantities is
+  all that remains.  In \cite{capset_ellenberg} they take
+  $d = 2(q-1)n/3$ and use Cramer's theorem to bound $m_d$ and related
+  quantities in terms of the claimed exponential.  We refer to the
+  paper for details.
+\end{proof}
+  
 
 \section{Observations}
 
@@ -1021,10 +1076,10 @@ sequence.
 
 This is borne out in very crude measurement by taking the first
 100000 terms of the Ulam sequence and computing them mod, e.g. 540, and
-asking how often each confruence class mod 540 shows up and computing
+asking how often each congruence class mod 540 shows up and computing
 the standard deviation of all these numbers.
 
-For the first few moduli coming from the convergents of the confinued
+For the first few moduli coming from the convergents of the continued
 fraction, we get:
 
 \begin{tabular}{ll}
@@ -1326,7 +1381,7 @@ parameters of each, starting with the means.  We do this with a crunchy bash scr
   % +=$2} END {print x}')|bc -l);  echo -e "$y\t$(((y*2219)%5422))\t$z"; done|sort -n -k 2
 
 
-Which outputs the suqmmand $a_i$, the quantity $2219*a_i mod 5422$,
+Which outputs the summand $a_i$, the quantity $2219*a_i mod 5422$,
 and the calculated mean of the distribution of $2219*a_n mod 5422$ for
 which $a_i$ is a summand, we get:
 
@@ -1759,6 +1814,9 @@ Additive Combinatorics
 
 \bibitem{no_large_sumfree_subset_eberhard}
   https://arxiv.org/pdf/1301.4579v2.pdf Eberhard, Green, and Manners
+
+\bibitem{lyall_roth}
+  Niel Lyall: Roth's theorem 
 
 \end{thebibliography}
 
