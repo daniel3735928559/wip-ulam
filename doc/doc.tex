@@ -906,10 +906,35 @@ in many places, for example \cite{lyall_roth}.
 
 \subsubsection{Proof via the regularity theorem}
 
+The density increment proof embodies a kind of dichootomy between
+structure and randomness, in how it breaks up into the two cases:
+Where $A$ behaves pseudorandomly, in which density controls all the
+counting expressions, and where $A$ has structure, which we can use
+exploit to iterate the argument.  
 
+The pseudorandomness argument will carry over nicely to the sum-free
+and Ulam cases, but second part of the argument relies on the fact
+that the structure of interest--in the case of Roth, arithmetic
+progressions, and in our case, additive triangles--can be found
+equally in any arithmetic progression.  For progressions, this is
+clear, but for triangles, this is simply false: The very dense
+progression of all odd numbers already contains zero additive
+triangles.  
 
-\begin{proof}[Proof of Roth's theorem via energy increment]
+As this part of the proof seems unlikely to generalise to our
+situation, we explore a second avenue of proof for Roth's theorem,
+namely using the arithmetic regularity and counting lemmas of the
+earlier section.
 
+\begin{proof}[Proof of Roth's theorem via arithmetic regularity]
+  As in the statement of the regularity lemma, write
+  $1_A = f_{str} + f_{sml} + f_{unf}$.  For a function
+  $f : [N] \to \{0,1\}$, define
+  $T(f) = \sum_{x,y \in [N]} f(x)f(x+y)f(x+2y)$ to be the function
+  that counts 3-term progressions if $f$ is thought of as an indicator
+  function.  For $f : [N] \to [0,1]$ an arbitrary function, define
+  $T(f) = \int f(x)f(x+y)f(x+2y)dxdy$ using the usual measure on
+  $[0,1]$.  
 \end{proof}
 
 %\subsection{Green's arithmetic triangle removal theorem}
