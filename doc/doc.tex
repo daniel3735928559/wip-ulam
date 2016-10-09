@@ -13,6 +13,7 @@
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{question}[theorem]{Question}
 \newtheorem{corollary}{Corollary}[theorem]
 
 \theoremstyle{definition}
@@ -102,7 +103,7 @@ then by theorems of Finch \cite{regularity_criterion_finch} and Schmerl and Spei
 know that the $(2,v)$-Ulam sequence, in the case where $v$ is odd and
 at least 5, is regular in the following sense:
 
-\begin{definition}
+\begin{definition}\label{def:regularity}
   An increasing, infinite sequence $\{a_i\}$ of positive integers is
   \textbf{regular} if the sequence $\{b_i = a_i - a_{i-1} : i > 1\}$
   is eventually periodic.
@@ -211,7 +212,7 @@ distribution of $A_N$ for, say, $N = 100000$ modulo this number:
 
 \includegraphics[scale=0.5]{../figs/u1_2_mod5422.png}
 
-This has many notable features: 
+This has some notable features: 
 
 \begin{itemize}
 \item From the value of $\widehat{1_A}(0)$, it looks like the Ulam
@@ -225,16 +226,23 @@ This has many notable features:
   literally the case, but in \cite{avoid_zero_gibbs} there is a
   conjecture in this direction.
 
-\item While the obvious peaks seem somewhat irregular, the major bumps
-  look kind of like they might be a sum of normal or other nice
-  distributions.
 \end{itemize}
+
+{\color{red}
+
+TODO: More questions--do the easy-to-explain-now highlights of the
+later ``Questions'' section.
 
 \subsection{Results}
 
-TODO
+TODO: Highlight the major results (whatever those end up being)
 
+}
 \section{Background}
+
+We will start by giving an overview of some known results that should
+lead us in the right direction.  No arguments in this section are
+original unless noted otherwise.
 
 \subsection{Known regularity results}
 
@@ -752,35 +760,38 @@ $\left(\frac{\alpha}{3m}-k,\frac{2\alpha}{3m}-k\right)$ modulo the
 irrational number $\frac{\alpha}{m}$.  Then it is clear that $mn+k$
 will reduce to $\left(\frac{\alpha}{3},\frac{2\alpha}{3}\right)$ mod
 $\alpha$, meaning that $mn+k \in A_\alpha$ as desired.
+{\color{red}
 
 \subsection{Abelian arithmetic regularity}
 
-If $A$ is any set, then an easy probablistic argument shows that there
-is a sum-free subset of $A$ of size $|A|/3$.  Indeed, if for any real $\alpha$,
-we define $A_\alpha$ to be set the set of elements $x$ of $A$ with
+% If $A$ is any set, then an easy probablistic argument shows that there
+% is a sum-free subset of $A$ of size $|A|/3$.  Indeed, if for any real $\alpha$,
+% we define $A_\alpha$ to be set the set of elements $x$ of $A$ with
 
-\[A_\alpha = \{x \in A : 1/3 < \alpha x \mod{1} \leq 2/3\]
+% \[A_\alpha = \{x \in A : 1/3 < \alpha x \mod{1} \leq 2/3\]
 
-then the expected size of $A_\alpha$ is $|A|/3$ as $\alpha$ varies
-over $[0,1]$, and so there must be at least one a for which $A_\alpha$
-has at least this size.
+% then the expected size of $A_\alpha$ is $|A|/3$ as $\alpha$ varies
+% over $[0,1]$, and so there must be at least one a for which $A_\alpha$
+% has at least this size.
 
-In \cite{no_large_sumfree_subset_eberhard} prove that for every e > 0, there is a set A such
-that A has no sum-free set larger than $(1/3 + \epsilon)|A|$, so this
-bound is in fact sharp (to first order).  (Apropos of nothing, I find
-this paper's organisation and general exposition to be highly
-user-friendly and otherwise excellent.)
+% In \cite{no_large_sumfree_subset_eberhard} prove that for every e > 0, there is a set A such
+% that A has no sum-free set larger than $(1/3 + \epsilon)|A|$, so this
+% bound is in fact sharp (to first order).  (Apropos of nothing, I find
+% this paper's organisation and general exposition to be highly
+% user-friendly and otherwise excellent.)
 
-In our case, if $A$ is the Ulam sequence up to N, then for any
-$\epsilon > 0$ we believe that for $N$ large enough, we could generate
-a sum-free subset of size $(1-\epsilon)|A|$--kind of the opposite
-extreme.
+% In our case, if $A$ is the Ulam sequence up to N, then for any
+% $\epsilon > 0$ we believe that for $N$ large enough, we could generate
+% a sum-free subset of size $(1-\epsilon)|A|$--kind of the opposite
+% extreme.
 
-Nevertheless, the argument follows a kind of local-to-global flow that
-might make it worth understanding, so we work through at least the
-basic idea here:
+% Nevertheless, the argument follows a kind of local-to-global flow that
+% might make it worth understanding, so we work through at least the
+% basic idea here:
 
-...
+% ...
+
+}
 
 \subsection{Roth's theorem}
 
@@ -904,6 +915,8 @@ in many places, for example \cite{lyall_roth}.
 
 \end{proof}
 
+{\color{red}
+
 \subsubsection{Proof via the regularity theorem}
 
 The density increment proof embodies a kind of dichootomy between
@@ -924,21 +937,23 @@ triangles.
 As this part of the proof seems unlikely to generalise to our
 situation, we explore a second avenue of proof for Roth's theorem,
 namely using the arithmetic regularity and counting lemmas of the
-earlier section.
+earlier section.  This comes from \cite{higher_fourier_analysis_tao}
 
 \begin{proof}[Proof of Roth's theorem via arithmetic regularity]
-  As in the statement of the regularity lemma, write
-  $1_A = f_{str} + f_{sml} + f_{unf}$.  For a function
-  $f : [N] \to \{0,1\}$, define
+  For a function $f : [N] \to \{0,1\}$, define
   $T(f) = \sum_{x,y \in [N]} f(x)f(x+y)f(x+2y)$ to be the function
   that counts 3-term progressions if $f$ is thought of as an indicator
-  function.  For $f : [N] \to [0,1]$ an arbitrary function, define
-  $T(f) = \int f(x)f(x+y)f(x+2y)dxdy$ using the usual measure on
-  $[0,1]$.  
+  function.  So our goal is to prove that for $A \subseteq [N]$ of
+  density $\delta$ (for $N$ sufficiently large relative to $\delta$)
+  that $T(1_A) > 0$.  
+  
+  As in the statement of the regularity lemma, write
+  $1_A = f_{str} + f_{sml} + f_{unf}$ with parameters $M$ and
+  $\epsilon$.  .
 \end{proof}
 
 %\subsection{Green's arithmetic triangle removal theorem}
-
+}
 \subsection{Quantitative bounds in finite fields}
 
 There have been several recent developments in a finite field setting
@@ -1013,16 +1028,204 @@ $\FF_q^n$ such that the equation $\alpha a_1 + \beta a_2 + \gamma a_3
   quantities in terms of the claimed exponential.  We refer to the
   paper for details.
 \end{proof}
-  
 
-\section{Observations}
+\section{Questions}
 
-\subsection{Studying the large Fourier coefficient $\alpha$}
+Bearing in mind this landscape of ideas, theorems, and techniques, we
+now raise some questions is the context of the Ulam numbers
+specifically, and the various phenomena surrounding these and related
+sequences.  
+
+\subsection{Ulam numbers and other 1-additive sequences}
+
+One of the first questions that was asked by Ulam himself about the
+Ulam sequence $A$ was: 
+
+\begin{question}
+  Does the $A$ has positive uppper density in the positive integers?
+\end{question}
+
+For all examples of Ulam-like sequences where we know the answer to
+this question, the way we know is by first establishing a regularity
+result, at which point positive density is immediate.  Given the known
+regularity results concerning 1-additive sequences, a very basic
+question about the Ulam numbers then would be:
+
+\begin{question}
+  Can we prove the Ulam numbers are not regular (in the sense of
+  definition \ref{def:regularity})?
+\end{question}
+
+Supposing we could do so, we might then ask:
+
+\begin{question}
+  Is there a notion of ``regularity'' that generalises
+  \ref{def:regularity} and that captures the behaviour observed in
+  \cite{ulam_steinerberger} and that we can prove?
+\end{question}
+
+Supposing that in some way Steinerberger's constant $\alpha$ will come
+into this definition, we might wonder about what it is specifically:
+
+\begin{question}
+  Is $\alpha$ irrational?  Algebraic?  What about
+  $\frac{2\pi}{\alpha}$?
+\end{question}
+
+Beyond just asking about $\alpha$, we can ask about other features of
+the spectrum: 
+
+\begin{question}
+  Are there other nonzero Fourier coefficients not in $\alpha\Z$?
+\end{question}
+
+\begin{question}
+  How quickly does $\widehat{1_A}(k\alpha)$ decay with $k$?
+\end{question}
+
+Moving on from $U(1,2)$, we can also ask about similar sequences: 
+
+\begin{question}
+  How does $\alpha$ behave for other non-regular-looking Ulam-like
+  sequences?  For example, supposing $\alpha_n \in [0,\pi]$ is the maximal Fourier
+  coefficient associated with $U(1,n)$ (supposing there even is a
+  unique such Fourier coefficient), what is the behaviour of
+  $\alpha_n$ as $n$ grows?
+\end{question}
+
+Separately, in light of the triangle removal lemma, there is a set of
+questions we might ask regarding the additive structure of the Ulam
+sequence:
+
+\begin{question}
+  What is the minimal subset $X \subseteq A$ that we might remove so
+  that $A$ becomes sum-free?  (For example, the set such that $X_N$ is
+  minimal among all such possible $X$ for each $N$.)
+\end{question}
+
+A very similar question that gets more precisely at such a set $X$ in
+terms of the actual definition of $A$: We know that each element
+$a \in A$ is written uniquely as $x+y$ for $x < y$ elements of $A$.
+Certainly the set $S = \{x \in A : x + y \in A\text{ for some $y > x$
+  in $A$}\}$ of ``small summands'' is a candidate for such an $X$ in
+the previous question, but $S$ itself might be of interest even if it
+ends up not being minimal (though one might reasonably expect that it
+would be).
+
+\begin{question}
+  Can we characterise the elements of $S$?  What is the growth rate of
+  $|S_N|$ as $N$ grows?
+\end{question}
+
+Finally, we can ask about the distribution that Steinerberger observes
+for the Ulam sequence modulo $\frac{2\pi}{\alpha}$, starting with a
+question from \cite{ulam_steinerberger}: 
+
+\begin{question}
+  Does the distribution of $A_N$ mod $\frac{2\pi}{\alpha}$ converge to
+  a continuous distribution?  More precisely, let
+  $\lambda = \frac{2\pi}{\alpha}$.  Then if for each $M > 0$ we cut up
+  the interval $[0,\lambda]$ into $M$ equal intervals and define a
+  step function $f_{M,N}(x)$ to be the proportion of Ulam numbers up
+  to $N$ that lie in the same one of the $M$ intervals as $x$, then as
+  $M$ and $N$ go to infinity, does $f_{M,N}$ converge to a continuous
+  function on $\R/\lambda\Z$?
+\end{question}
+
+We can ask a lot more than just about the distribution's continuity,
+however.  The distributions particularly for other Ulam-like sequences
+such as $U(2,3)$ look like they have some further internal structure
+as a sum of perhaps smaller, more regular-looking peaks.  So we can
+ask somewhat broadly about this also: 
+
+\begin{question}
+  What gives this distribution its particular shape?  For example,
+  what about the shape of the distribution can be deduced from the
+  knowledge of the spectrum alone?
+\end{question}
+
+\subsection{Sum-free sets}
+
+We start noting the same dichotomy that existed with 1-additive sets
+seems present for sum-free sets as well: Many sum-free sets with
+easy-to-describe decision sequences (much as the procedure for
+generating Ulam numbers was in algorithmic) are provably regular, but
+for some we do not know.  For instance, we might start with the
+aforementioned ``smallest'' three examples: 
+
+\begin{question}
+  Are any of the sets $\theta(01001), \theta(01010)$, or
+  $\theta(10010)$ regular?
+\end{question}
+
+Supposing once again (as is suggested in
+\cite{difference_density_calkin}) that the answer is no, we might try
+to ask similar questions with the these sets:
+
+\begin{question}
+  What does the spectrum of these sets look like?  Is there a mapping
+  to $\R/\Z$ under which the indicator functions of these sets
+  approach continuous-looking distributions?
+\end{question}
+
+\begin{question}
+  Does whatever notion of regularity applies to the Ulam sequence
+  apply here as well?
+\end{question}
+
+\begin{question}
+  What is the density of these sets?  Is there a statement relating
+  the density of 1s in the decision sequence with the density of the
+  resulting sum-free set?
+\end{question}
+
+In the sum-free case, the work of Luczak outlined above gives some
+relationship between the regularity of a sum-free set and its density
+(saying in his case that a sum-free set that contained an even number
+(i.e. whose image mod 2 was everything) had density bounded by
+$\frac25$--a meaningful improvement from the automatic bound of
+$\frac12$ on the density of an arbitrary sum-free set.
+
+On the other hand, the construction of Erdos tells us that there exist
+sum-free sets with density $\frac13$ whose image mod $m$, for all $m$,
+is everything.  We might ask if there is any condition we can prove in
+the gap between $\frac13$ and $\frac25$.  
+
+\begin{question}
+  If $m$ is a positive integer, what is the maximal density $d_m$ of a
+  sum-free set that hits every congruence class modulo $m$?
+\end{question}
+
+For example, 
+
+\begin{itemize}
+\item $d_1 = \frac12$ (upper bound is by the argument $(A + a) \cap A =
+  \emptyset$ for any $a\in A$, and lower bound comes from the example
+  of the odd numbers).
+\item $d_2 = \frac25$ (upper bound is by
+  \cite{sumfree_regularity_luczak}, and the lower bound is established
+  by the example from the same paper of integers congruent to 2 or 3
+  mod 5)/
+\item $d_3 = \frac12$ using the same argument as for $d_1$.
+\item $d_4 = \frac25$ by the same argument as for $d_2$, since
+  $(5+2\Z) \cup (5+3\Z)$ covers every congruence class mod 4.
+\end{itemize}
+
+Lastly, thinking back on the arithmetic regularity lemma, we 
+
+{\color{red}
+
+\section{Computations}
+
+\subsection{The large Fourier coefficient $\alpha$}
+
+We noted above that if $A$ is the set of Ulam numbers, it appears that
+for some $\alpha \in \R$ it seems $\widehat{1_{A_N}}(\alpha) \approx
+0.8$, where $\alpha \approx 2.5716$.  
 
 \subsubsection{For other initial conditions}
 
 We compute these in experiment1 and experiment2
-
 
 \begin{tabular}{|llll|}
 \hline
@@ -1501,7 +1704,7 @@ proportion of times 2 shows up as a complement of k is equal to the
 proportion of times we get exactly k successes in our trials.
 
 
-\section{Theory}
+\section{Observations}
 
 \subsection{Density}
 
@@ -1843,6 +2046,9 @@ Additive Combinatorics
 \bibitem{lyall_roth}
   Niel Lyall: Roth's theorem 
 
-\end{thebibliography}
+\bibitem{higher_fourier_analysis_tao}
+  Tao, Higher Fourier Analysis
+
+\end{thebibliography}}
 
 \end{document}
