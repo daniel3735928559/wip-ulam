@@ -1164,3 +1164,6 @@ beta01001 = 1.26594784
 # print("\n".join([str(x) for x in l]))
 
 # find_alpha(linus)
+
+for i in range(10):
+    print(ft(i*alpha1_2, u1_2)/len(u1_2))

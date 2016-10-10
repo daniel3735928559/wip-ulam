@@ -309,6 +309,25 @@ More precisely:
   $N$.
 \end{proof}
 
+Using empirical computations inspired by this criterion, Finch
+conjectures \cite{patterns_finch} that the following is the complete
+list of $(a,b)$ with $U(a,b)$ regular:
+
+\begin{conjecture}[Finch]
+  $U(a,b)$ has only finitely many even terms if and only if $(a,b)$ is
+  in the following list:
+
+\begin{itemize}
+\item $(2,v)$ for $v \geq 5$ and odd.
+\item $(5,6)$.
+\item $(u,v)$ for $u \geq 4$ and even.
+\item $(u,v)$ for $u \geq 7$ and odd if $v$ is even.
+\end{itemize}
+\end{conjecture}
+
+In particular the conjecture implies that all of these sequences are
+regular, although it may not be the complete list of regular $U(a,b)$.
+
 \subsubsection{Regularity of $U(2,2n+3)$}
 
 Using the above criterion, Schmerl and Speigel in
@@ -531,16 +550,20 @@ $A$, but was excluded simply because of a coin flip, so we write down
 a 0.  
 
 Formally, we write down the sequence $s = \theta\inv(A)$ by writing
-down first the string: 
+down first the string $s'$ whose $n$th character is: 
 
 \[s'_n = \begin{cases}
-\text{"A" if }& n \in A\\
-\text{"D" if }& n \in A+A\\
-\text{"E" if }& n \notin A \cup A+A
+\text{`A'}& \text{if } n \in A\\
+\text{`D'}& \text{if } n \in A+A\\
+\text{`E'}& \text{if } n \notin A \cup (A+A)
 \end{cases}\]
 
-Then $s$ is got by deleting all $D$s, replacing all $A$s with 1, and
-$E$s with 0.  
+(So all the `A's are elements of $A$, all the `D's are automatically
+excluded from $A$ by being sums of prior elements of $A$, and all the
+`E's are things that are excluded from $A$ despite the fact that their
+inclusion would not violate the sum-free property.)  Then the decision
+sequence $s$ of $A$ is got by starting with $s'$ and deleting all
+$D$s, replacing all $A$s with 1, and replacing all $E$s with 0.
 
 There are many questions about this construction.  For example, it is
 known that if a sum-free set $A$ is regular (as defined
@@ -1041,7 +1064,7 @@ sequences.
 One of the first questions that was asked by Ulam himself about the
 Ulam sequence $A$ was: 
 
-\begin{question}
+\begin{question}\label{qn:density}
   Does $A$ have positive uppper density?
 \end{question}
 
@@ -1051,14 +1074,14 @@ result, at which point positive density is immediate.  Given the known
 regularity results concerning 1-additive sequences, a very basic
 question about the Ulam numbers then would be:
 
-\begin{question}
+\begin{question}\label{qn:irregular}
   Can we prove the Ulam numbers are not regular (in the sense of
   definition \ref{def:regularity})?
 \end{question}
 
 Supposing we could do so, we might then ask:
 
-\begin{question}
+\begin{question}\label{qn:regularity_def}
   Is there a notion of ``regularity'' that generalises
   \ref{def:regularity} and that captures the behaviour observed in
   \cite{ulam_steinerberger} and that we can prove?
@@ -1067,7 +1090,7 @@ Supposing we could do so, we might then ask:
 Supposing that in some way Steinerberger's constant $\alpha$ will come
 into this definition, we might wonder about what it is specifically:
 
-\begin{question}
+\begin{question}\label{qn:rationality}
   Is $\alpha$ irrational?  Algebraic?  What about
   $\frac{2\pi}{\alpha}$?
 \end{question}
@@ -1075,17 +1098,17 @@ into this definition, we might wonder about what it is specifically:
 Beyond just asking about $\alpha$, we can ask about other features of
 the spectrum: 
 
-\begin{question}
+\begin{question}\label{qn:spectrum}
   Are there other nonzero Fourier coefficients not in $\alpha\Z$?
 \end{question}
 
-\begin{question}
+\begin{question}\label{qn:decay}
   How quickly does $\widehat{1_A}(k\alpha)$ decay with $k$?
 \end{question}
 
 Moving on from $U(1,2)$, we can also ask about similar sequences: 
 
-\begin{question}
+\begin{question}\label{qn:other_alpha}
   How does $\alpha$ behave for other non-regular-looking Ulam-like
   sequences?  For example, supposing $\alpha_n \in [0,\pi]$ is the maximal Fourier
   coefficient associated with $U(1,n)$ (supposing there even is a
@@ -1097,7 +1120,7 @@ Separately, in light of the triangle removal lemma, there is a set of
 questions we might ask regarding the additive structure of the Ulam
 sequence:
 
-\begin{question}
+\begin{question}\label{qn:ulam_sumfree}
   What is the minimal subset $X \subseteq A$ that we might remove so
   that $A$ becomes sum-free?  (For example, the set such that $X_N$ is
   minimal among all such possible $X$ for each $N$.)
@@ -1112,7 +1135,7 @@ the previous question, but $S$ itself might be of interest even if it
 ends up not being minimal (though one might reasonably expect that it
 would be).
 
-\begin{question}
+\begin{question}\label{qn:fulcrum}
   Can we characterise the elements of $S$?  What is the growth rate of
   $|S_N|$ as $N$ grows?
 \end{question}
@@ -1121,7 +1144,7 @@ Finally, we can ask about the distribution that Steinerberger observes
 for the Ulam sequence modulo $\frac{2\pi}{\alpha}$, starting with a
 question from \cite{ulam_steinerberger}: 
 
-\begin{question}
+\begin{question}\label{qn:continuity}
   Does the distribution of $A_N$ mod $\frac{2\pi}{\alpha}$ converge to
   a continuous distribution?  More precisely, let
   $\lambda = \frac{2\pi}{\alpha}$.  Then if for each $M > 0$ we cut up
@@ -1138,7 +1161,7 @@ such as $U(2,3)$ look like they have some further internal structure
 as a sum of perhaps smaller, more regular-looking peaks.  So we can
 ask somewhat broadly about this also: 
 
-\begin{question}
+\begin{question}\label{qn:shape}
   What gives this distribution its particular shape?  For example,
   what about the shape of the distribution can be deduced from the
   knowledge of the spectrum alone?
@@ -1153,7 +1176,7 @@ generating Ulam numbers was in algorithmic) are provably regular, but
 for some we do not know.  For instance, we might start with the
 aforementioned ``smallest'' three examples: 
 
-\begin{question}
+\begin{question}\label{qn:sumfree_regularity}
   Are any of the sets $\theta(01001), \theta(01010)$, or
   $\theta(10010)$ regular?
 \end{question}
@@ -1162,18 +1185,18 @@ Supposing once again (as is suggested in
 \cite{difference_density_calkin}) that the answer is no, we might try
 to ask similar questions with the these sets:
 
-\begin{question}
+\begin{question}\label{qn:spectrum}
   What does the spectrum of these sets look like?  Is there a mapping
   to $\R/\Z$ under which the indicator functions of these sets
   approach continuous-looking distributions?
 \end{question}
 
-\begin{question}
+\begin{question}\label{qn:sumfree_regularity}
   Does whatever notion of regularity applies to the Ulam sequence
   apply here as well?
 \end{question}
 
-\begin{question}
+\begin{question}\label{qn:sumfree_density}
   What is the density of these sets?  Is there a statement relating
   the density of 1s in the decision sequence with the density of the
   resulting sum-free set?
@@ -1191,7 +1214,7 @@ sum-free sets with density $\frac13$ whose image mod $m$, for all $m$,
 is everything.  We might ask if there is any condition we can prove in
 the gap between $\frac13$ and $\frac25$.  
 
-\begin{question}
+\begin{question}\label{qn:irregularity_density}
   If $m$ is a positive integer, what is the maximal density $d_m$ of a
   sum-free set that hits every congruence class modulo $m$?
 \end{question}
@@ -1216,7 +1239,7 @@ the decpomosition $1_A = f_{str} + f_{sml} + f_{unf}$ for $A$ the
 various sum-free or nearly sum-free sets (e.g. the Ulam sequence)
 under consideration.  
 
-\begin{question}
+\begin{question}\label{qn:fourier_complexity_density}
   What can we deduce about the structured component from our knowledge
   of the structure of $A$?  For example, $f_{str}$ comes with bounded
   Fourier complexity.  How does the spectrum of $f_{str}$ relate to
@@ -1226,67 +1249,59 @@ under consideration.
   density of $A$?  
 \end{question}
 
-{\color{red}
-
 \section{Computations, Observations, and Results}
 
-Outline 
+In this section, we will begin our study of some of the questions in
+the prior section.  We will prove what we can and will use computer
+calculations to guide our thinking about what should be true in each
+case.  When we refer to computer computations, we will mostly be
+referring to various programs in the repository \cite{computations}.
+In most cases, we will be referring to the particular file
+\icode{/experiment.py}.  For example, when we talk about
+\icode{experiment17(2, 3)}, we mean the function \icode{experiment17}
+in the \icode{experiment.py} in that repository, called with the
+specified arguments.  Sometimes we will refer to code in other files
+as well from the same repository, and will mention where the code in
+question is located in each case.
 
-*****  Results
+We will discuss the questions first by discussing the maximal Fourier
+coefficients of the various sets we've been thinking about, then move
+on to the complete spectrum of these sets.  We will then study the
+apparent distributions of these sets modulo whatever their natural
+frequency appears to be and see what can be concluded about the
+frequency from the specturm. 
 
-******  What is lambda?
+\subsection{Maximal Fourier coefficient}
 
-*******  Computing lambda for other sequences
+The initial observation of \cite{ulam_steinerberger} is that the
+Fourier transform of the indicator function of $U(1,2)$ has takes a
+large value at some $\alpha$.  That is,
+$\frac1N \sum_{t=1}^N 1_A(t) e^{-it\alpha}$ is large.  This suggests
+that $t$ being in $A$ is correlated with some
+$t+\frac{2\pi}{\alpha} k$ being in $A$.  In other words,
+$\lambda_A = \frac{2\pi}{\alpha}$ behaves somewhat like a period for
+$A$.  
 
-*******  Rationality of lambda
+\subsubsection{Computing $\alpha$ for other $U(a,b)$}
 
-*******  Algebraicity of lambda
+We will start by computing this period for several $U(a,b)$ which are
+not believed to be mostly just odd numbers.  Specifically, we will
+look at: 
 
-******  What is the spectrum?
+\begin{itemize}
+\item $(1,v)$ for $v = 2, \ldots, 10$.
+\item $(2,3)$.
+\item $(3,v)$ for $v = 4, \ldots, 10$, $3 \nmid v$.
+\item $(4,v)$ for $v = 5, \ldots, 15$ odd.
+\item $(5,v)$ for $v = 7, \ldots, 9$.
+\end{itemize}
 
-*******  U(1,2) has spectrum alpha Z
+We do this in \code{experiment1}
 
-*******  Same for other Ulam sequences, sum-free sets
-
-*******  Construction of sum-free set with spectrum alpha Z, beta Z--connection between spectrum and density
-
-******  What is the distribution?
-
-*******  Distribution for sum-free sets as well
-
-*******  Circle method: No Ulam numbers close to 0 mod lambda?
-
-******  Density
-
-*******  Conjecture: Ulam numbers have positive density
-
-*******  Conjecture: Decision sequence for sum-free set has positive density implies sum-free set does also
-
-******  Difference between Ulam and sum-free
-
-*******  Distribution of small summands
-
-*******  Distribution of large summands
-
-*******  Distribution of complements
-
-******  Theorem: Almost sum-free implies at least one large Fourier coefficient
-
-******  Variants of the Ulam problem
-
-\subsection{The large Fourier coefficient $\alpha$}
-
-We noted above that if $A$ is the set of Ulam numbers, it appears that
-for some $\alpha \in \R$ it seems $\widehat{1_{A_N}}(\alpha) \approx
-0.8$, where $\alpha \approx 2.5716$.  
-
-\subsubsection{For other initial conditions}
-
-We compute these in experiment1 and experiment2
 
 \begin{tabular}{|llll|}
 \hline
-$a$ & $b$ & $\alpha_{a,b}$ & $|\widehat{1_A}(\alpha_{a,b})|^2$\\
+$a$ & $b$ & $\alpha_{a,b}$ & $\lambda_{a,b}$ & $|\widehat{1_A}(\alpha_{a,b})|^2$\\
 \hline
 1 & 2 &  2.5716 & 23348.35\\
 1 & 3 &  2.8334 & 24293.72\\
@@ -1330,13 +1345,57 @@ $a$ & $b$ & $\alpha_{a,b}$ & $|\widehat{1_A}(\alpha_{a,b})|^2$\\
 \end{tabular}
 
 So for example, when $a_1 = 12$, $a_2 = 13$, it looks like
-$\alpha = \pi$, which seems to be confirmed for this particular
-instance by computing more terms and searching with more
-precision. This is saying that the $a_i$ are very biased mod
-$2\pi/\pi = 2$, which seems experimentally to be very much the case
-even out to thousands of terms (for this particular example): the
-$a_i$ are over 80\% odd. Proving something in this direction seems
-accessible, but some first efforts were unfruitful.
+$\alpha = \pi$.  This is saying that the $a_i$ are very biased mod
+$2\pi/\pi = 2$
+
+
+\subsubsection{Computing $\alpha$ for various $\theta(s)$}
+\subsubsection{Is $\alpha$ rational?  Algebraic?}
+\subsubsection{Existence of $\alpha$}
+
+{\color{red}
+
+\subsection{Spectrum}
+
+\subsubsection{The complete spectrum of $U(a,b)$}
+\subsubsection{The complete spectrum of $\theta(s)$}
+
+\subsection{Distribution}
+
+\subsubsection{Distributions of $U(a,b)$ mod $\lambda$}
+\subsubsection{Distributions of various $\theta(s)$ mod $\lambda$}
+
+\subsection{Density}
+
+\subsection{Reducing Ulam-like sets to sum-free}
+
+\subsubsection{Via triangle removal}
+\subsubsection{Distribution of large summands}
+\subsubsection{Distribution of small summands}
+\subsubsection{Distribution of complements}
+
+\subsection{Variants of the Ulam problem}
+
+
+
+
+
+
+
+
+
+\subsection{The large Fourier coefficient $\alpha$}
+
+We noted above that if $A$ is the set of Ulam numbers, it appears that
+for some $\alpha \in \R$ it seems
+$\widehat{1_{A_N}}(\alpha) \approx 0.8$, where
+$\alpha \approx 2.5716$.
+
+\subsubsection{For other initial conditions}
+
+We compute these in experiment1 and experiment2
+
+
 
 \subsubsection{Rationality}
 
@@ -1364,21 +1423,6 @@ This is borne out in very crude measurement by taking the first
 asking how often each congruence class mod 540 shows up and computing
 the standard deviation of all these numbers.
 
-For the first few moduli coming from the convergents of the continued
-fraction, we get:
-
-\begin{tabular}{ll}
-5 & 139.9757121789348\\
-17 & 263.62138626089813\\
-22 & 298.6996058675916\\
-259 & 341.73231186554915\\
-281 & 274.8670335289345\\
-540 & 664.2715810068448\\
-2441 & 3022.3025069077416\\
-2981 & 3009.780526078754\\
-5422 & 2580.6984215609386\\
-40935 & 970.8607009744287\\
-87292 & 690.3748130781282\\
 215519 & 482.8027781782595\\
 1380406 & 304.5611017423058
 \end{tabular}
@@ -2105,6 +2149,9 @@ Additive Combinatorics
 
 \bibitem{higher_fourier_analysis_tao}
   Tao, Higher Fourier Analysis
+
+\bibitem{computations}
+  https://github.com/daniel373592559/wip-ulam/experiments.py
 
 \end{thebibliography}}
 
