@@ -1185,7 +1185,7 @@ Supposing once again (as is suggested in
 \cite{difference_density_calkin}) that the answer is no, we might try
 to ask similar questions with the these sets:
 
-\begin{question}\label{qn:spectrum}
+\begin{question}\label{qn:sumfree_spectrum}
   What does the spectrum of these sets look like?  Is there a mapping
   to $\R/\Z$ under which the indicator functions of these sets
   approach continuous-looking distributions?
@@ -1282,7 +1282,7 @@ $t+\frac{2\pi}{\alpha} k$ being in $A$.  In other words,
 $\lambda_A = \frac{2\pi}{\alpha}$ behaves somewhat like a period for
 $A$.  
 
-\subsubsection{Computing $\alpha$ for other $U(a,b)$}
+\subsubsection{Computing $\alpha$}
 
 We will start by computing this period for several $U(a,b)$ which are
 not believed to be mostly just odd numbers.  Specifically, we will
@@ -1296,109 +1296,72 @@ look at:
 \item $(5,v)$ for $v = 7, \ldots, 9$.
 \end{itemize}
 
-We do this in \code{experiment1}
+We do this by running \icode{experiment1()} and observe: 
 
-
-\begin{tabular}{|llll|}
+\begin{tabular}{|lllll|}
 \hline
 $a$ & $b$ & $\alpha_{a,b}$ & $\lambda_{a,b}$ & $|\widehat{1_A}(\alpha_{a,b})|^2$\\
-\hline
-1 & 2 &  2.5716 & 23348.35\\
-1 & 3 &  2.8334 & 24293.72\\
-1 & 4 &  2.0944 & 39007.46\\
-1 & 5 &  1.7648 & 26597.04\\
-1 & 6 &  4.8332 & 32338.77\\
-1 & 7 &  0.3266 & 24192.13\\
-1 & 8 &  0.2736 & 25928.99\\
-1 & 9 &  6.0380 & 26372.97\\
-1 & 10 & 6.0616 & 25717.80\\
-1 & 11 & 6.0832 & 25743.73\\
-1 & 12 & 6.1015 & 25737.80\\
-1 & 13 & 6.1154 & 25926.87\\
-1 & 14 & 6.1244 & 25983.88\\
-1 & 15 & 6.1356 & 25647.87\\
-1 & 16 & 6.1453 & 26048.46\\
-1 & 17 & 6.1550 & 26086.33\\
-1 & 18 & 6.1580 & 26167.08\\
-1 & 19 & 6.1660 & 26600.04\\
-1 & 20 & 6.1740 & 25678.08\\
-1 & 2 &  2.5716 & 23348.35\\
-2 & 3 &  1.1841 & 16192.09\\
-3 & 4 &  5.3809 & 26414.80\\
-4 & 5 &  5.6000 & 21640.56\\
-5 & 6 &  2.0588 & 22783.57\\
-6 & 7 &  2.6889 & 19502.05\\
-7 & 8 &  3.9426 & 23910.35\\
-8 & 9 &  3.4903 & 19172.22\\
-9 & 10 &  5.9557 & 13422.67\\
-10 & 11 & 3.4270 & 17537.29\\
-11 & 12 & 6.0091 & 14069.21\\
-12 & 13 & 3.1416 & 17955.65\\
-13 & 14 & 2.9106 & 18768.82\\
-14 & 15 & 3.1416 & 19043.70\\
-15 & 16 & 2.9401 & 15916.09\\
-16 & 17 & 3.1416 & 23103.74\\
-17 & 18 & 2.9634 & 17551.75\\
-18 & 19 & 3.1416 & 21903.76\\
-19 & 20 & 6.1231 & 15870.33\\
+% \hline
+% 1 & 2 &  2.5716 & 23348.35\\
+% 1 & 3 &  2.8334 & 24293.72\\
+% 1 & 4 &  2.0944 & 39007.46\\
+% 1 & 5 &  1.7648 & 26597.04\\
+% 1 & 6 &  4.8332 & 32338.77\\
+% 1 & 7 &  0.3266 & 24192.13\\
+% 1 & 8 &  0.2736 & 25928.99\\
+% 1 & 9 &  6.0380 & 26372.97\\
+% 1 & 10 & 6.0616 & 25717.80\\
+% 1 & 11 & 6.0832 & 25743.73\\
+% 1 & 12 & 6.1015 & 25737.80\\
+% 1 & 13 & 6.1154 & 25926.87\\
+% 1 & 14 & 6.1244 & 25983.88\\
+% 1 & 15 & 6.1356 & 25647.87\\
+% 1 & 16 & 6.1453 & 26048.46\\
+% 1 & 17 & 6.1550 & 26086.33\\
+% 1 & 18 & 6.1580 & 26167.08\\
+% 1 & 19 & 6.1660 & 26600.04\\
+% 1 & 20 & 6.1740 & 25678.08\\
+% 1 & 2 &  2.5716 & 23348.35\\
+% 2 & 3 &  1.1841 & 16192.09\\
+% 3 & 4 &  5.3809 & 26414.80\\
+% 4 & 5 &  5.6000 & 21640.56\\
+% 5 & 6 &  2.0588 & 22783.57\\
+% 6 & 7 &  2.6889 & 19502.05\\
+% 7 & 8 &  3.9426 & 23910.35\\
+% 8 & 9 &  3.4903 & 19172.22\\
+% 9 & 10 &  5.9557 & 13422.67\\
+% 10 & 11 & 3.4270 & 17537.29\\
+% 11 & 12 & 6.0091 & 14069.21\\
+% 12 & 13 & 3.1416 & 17955.65\\
+% 13 & 14 & 2.9106 & 18768.82\\
+% 14 & 15 & 3.1416 & 19043.70\\
+% 15 & 16 & 2.9401 & 15916.09\\
+% 16 & 17 & 3.1416 & 23103.74\\
+% 17 & 18 & 2.9634 & 17551.75\\
+% 18 & 19 & 3.1416 & 21903.76\\
+% 19 & 20 & 6.1231 & 15870.33\\
 \hline
 \end{tabular}
 
-So for example, when $a_1 = 12$, $a_2 = 13$, it looks like
-$\alpha = \pi$.  This is saying that the $a_i$ are very biased mod
-$2\pi/\pi = 2$
+Similarly, we can compute the $\alpha$ maximising
+$\widehat{1_A}(\alpha)$ for various sum-free sets $A$--for example,
+those that are believed to be non-periodic.  In particular, we will
+look at $s = 01001, s = 01010$, and $s = 10010$ by running
+\icode{experiment2}:
+
+\begin{tabular}{|llll|}
+\hline
+$A$ & $\alpha_{A}$ & $\lambda_{A}$ & $|\widehat{1_A}(\alpha_{A})|$\\
+\hline
+01001 & 2.5086344 & 2.504623 & 0.085768\\
+01010 & 1.8018269 & 3.487119 & 0.085079\\
+10010 & 1.9559294 & 3.212378 & 0.069306\\
+\hline
+\end{tabular}
 
 
-\subsubsection{Computing $\alpha$ for various $\theta(s)$}
+
 \subsubsection{Is $\alpha$ rational?  Algebraic?}
-\subsubsection{Existence of $\alpha$}
-
-{\color{red}
-
-\subsection{Spectrum}
-
-\subsubsection{The complete spectrum of $U(a,b)$}
-\subsubsection{The complete spectrum of $\theta(s)$}
-
-\subsection{Distribution}
-
-\subsubsection{Distributions of $U(a,b)$ mod $\lambda$}
-\subsubsection{Distributions of various $\theta(s)$ mod $\lambda$}
-
-\subsection{Density}
-
-\subsection{Reducing Ulam-like sets to sum-free}
-
-\subsubsection{Via triangle removal}
-\subsubsection{Distribution of large summands}
-\subsubsection{Distribution of small summands}
-\subsubsection{Distribution of complements}
-
-\subsection{Variants of the Ulam problem}
-
-
-
-
-
-
-
-
-
-\subsection{The large Fourier coefficient $\alpha$}
-
-We noted above that if $A$ is the set of Ulam numbers, it appears that
-for some $\alpha \in \R$ it seems
-$\widehat{1_{A_N}}(\alpha) \approx 0.8$, where
-$\alpha \approx 2.5716$.
-
-\subsubsection{For other initial conditions}
-
-We compute these in experiment1 and experiment2
-
-
-
-\subsubsection{Rationality}
-
 
 It is more likely that there is a sequence of m mod which the
 congruence classes of $a_i$ are increasingly clustered.  The continued
@@ -1414,6 +1377,9 @@ be true, except when there is a very small obvious modulus like 2.)
 This gives rational approximations: 
 \[5/2, 17/7, 22/9, 259/106, 281/115, 540/221, 2441/999, 2981/1220, 5422/2219, 40935/16753, 87292/35725\]
 
+% More possible arguing for irrationality: 
+
+
 These suggest, for example, that for $m = 540$, there should be
 substantial bias in which congruence classes show up in the Ulam
 sequence.
@@ -1423,9 +1389,9 @@ This is borne out in very crude measurement by taking the first
 asking how often each congruence class mod 540 shows up and computing
 the standard deviation of all these numbers.
 
-215519 & 482.8027781782595\\
-1380406 & 304.5611017423058
-\end{tabular}
+% 215519 & 482.8027781782595\\
+% 1380406 & 304.5611017423058
+% \end{tabular}
 
 Note, however, that while it looks like the bias starts falling off at
 40935, in fact we only know alpha to within $10^(-10)$ or so, and for
@@ -1491,8 +1457,7 @@ but I'm happy to try to treat the approximation to alpha as indicating
 an "at least some bias toward some congruence classes mod some fixed
 $m$" phenomenon.
 
-
-\subsubsection{Algebraicity}
+% end possible argument
 
 My guess is that since apparently alpha=pi sometimes, alpha should not
 be expected to be algebraic, but really $2pi/alpha$ is the relevant
@@ -1529,9 +1494,322 @@ Sage) found in appendix A, and with output:
 
 All told, both look like they don't have small degree if algebraic at all...
 
-\subsection{Distribution of summands}
 
-\subsubsection{Small summands}
+\subsubsection{Existence of $\alpha$}
+If instead of thinking about representations of any one element--that
+is, counting solutions to $x+y=z$ with $x,y \in A$ for a fixed $z$--we
+think about counting solutions to $x+y=z$ with $x,y,z \in A$ using the
+same Fourier analytic technique, then we can actually get a theorem: 
+
+\begin{theorem}If $A \subseteq \N$ is a sequence of positive integers
+  of density $\delta$ such that $T(A_N)$--the number of additive
+  triangles in $A_N$--is bounded by $c N^{2-\epsilon}$ for some
+  constants $c > 0, \epsilon > 0$, then there is an $\alpha \in \R/\Z$
+  such that $\widehat{1_A}(\alpha) \geq \delta^2$.\end{theorem}
+
+\begin{example}
+  For example, in the Ulam sequence we know by construction that
+  $T(A_N) \leq 3|A| \leq 3N$, and we believe that the Ulam sequence
+  has density around $0.07$, so this theorem would guarantee us a
+  non-zero Fourier coefficient of size at least $0.0049$.  This is a
+  bit off our numerical value of $0.8$, but it is a start.
+\end{example}
+
+Intuitively, this goes as follows: If this set had no large non-zero
+Fourier coefficient, then it would be in some sense ``random''.  A
+random set of density $\delta$ has of course $\delta^2 N^2$ pairs
+$(x,y)$ with $x,y \in A$.  Supposing these sums are randomly
+distributed, with probability $\delta$ they will themselves lie in
+$A$, so we expect to have $\delta^3 N^2$ of them being in $A$, giving
+$T(A_N) \cong \delta^3 N^2$.  If $T(A_N)$ grows more slowly than this,
+therefore, there must be a reason for it, in the form of a non-zero
+Fourier coefficient.  Put another way ``if a set is dense, then to
+avoid solutions to $x+y=z$ it needs to have some kind of pattern (such
+as being all odds).''  The statement we have here is a first version
+of precisely the kind of ``general regularity'' result that we are
+gunning for.
+
+\begin{proof}
+  As we've discussed many times,
+
+\[T(A_N) = (1/N) \sum_{t=0..N-1} \widehat{1_{A_N}}(t) \widehat{1_{A_N}}(t) \widehat{1_{A_N}}(-t)\]
+
+So by assumption, 
+
+\[cN^{2-\epsilon} \geq (1/N) \sum_{t=0..N-1} \widehat{1_{A_N}}(t) \widehat{1_{A_N}}(t) \widehat{1_{A_N}}(-t)\]
+
+We can pull out the $t = 0$ term which is $|A|^3$, which, for $N$
+large enough, is close to $\delta^3 N^3$.  Then we can bound the
+remaining sum by pulling out a $\widehat{1_A}(t)$ and replacing it
+with $-\max_{t\neq 0} \widehat{1_A}(t)$:
+
+\[cN^{2-\epsilon} \geq \delta^3 N^2 - \max_{t=1..N-1}(\widehat{1_A}(t)) (1/N) \sum_{t=1..N-1} |\widehat{1_A}(t)|^2\]
+
+Now, by Plancherel we know that,
+$(1/N) \sum_{t=0..N-1} |\widehat{1_A}(t)|^2 = \sum_{t=0..N-1} 1_A(t) =
+|A|$, so:
+
+\[cN^{2-\epsilon} \geq \delta^3 N^2 - \max_{t\neq 0}(\widehat{1_A}(t))
+|A| = \delta^3 N^2 - \max_{t=1..N-1}(\widehat{1_A}(t)) \delta N\]
+
+Thus if $\max_{t=1..N-1}(\widehat{1_A}(t)) \leq \epsilon N$, then 
+
+\[cN^{2-\epsilon} \geq N^2 (\delta^3 - \delta\epsilon)\]
+
+Or, rearranging, 
+
+\[\frac{c}{\delta} N^{-\epsilon} \geq \delta^2 - \epsilon\]
+
+But the left side goes to zero as $N \to \infty$, so
+$\epsilon \geq \delta^2$, i.e. for some $k$ in $\{1, \ldots, N-1\}$,
+we have
+
+\[|\widehat{1_{A_N}}(k)| > \delta^2 N\]
+
+Now, as we let $N$ grow, we get a sequence of values of $k_N$ with
+this property.  On $\R/\Z$, the sequence $\frac{k_N}{N}$ for
+increasing $N$ must have a convergent subsequence--say converging to
+some $\alpha$.  \end{proof}
+
+Some remarks: 
+
+\begin{remark}
+  As we mentioned before, this bound for the Ulam sequence, which
+  works out to around $0.0049$ is not anywhere near as good as the
+  computed estimate of $0.8$.  However, this finds a rational $k/N$
+  where the Fourier transform is large for \textit{every} $N$, whereas
+  experimentally the large value of around $0.8$ only occurs actually
+  at $\alpha$ and can only be observed at rational $k/N$ that are good
+  approximations to $\alpha$.  In particular, for some $N$, the
+  largest Fourier coefficient might honestly only be as large as
+  $\delta^2$.
+\end{remark}
+
+\begin{remark}
+  In the proof of Roth's theorem, the existence of a large Fourier
+  coefficient in $A$ is somehow used to deduce the existence of an
+  arithmetic progression $P$ such that $A$ intersected with $P$ has
+  higher density in $P$ than $A$ had in $\Z/N$.  Roth's theorem
+  concludes by making all this numerically precise to be able to say
+  "if we repeat this often enough, either we'll eventually have small
+  Fourier coefficient relative to the increased density, or we'll have
+  density 1 in an arithmetic progression at which point...well...we
+  will be guaranteed to contain an arithmetic progression!"  In our
+  case, we are always guaranteed a largeish Fourier coefficient by the
+  above argument, so maybe we can always perform this "density
+  increment" step until we are literally an arithmetic progression.
+  Precisely what this implies about the Fourier coefficients of the
+  original $1_A$ or whether this ensures us any global behaviour of
+  the sequence A depends on precisely how the density-increment step
+  goes.  This will be a another thing to investigate shortly.
+\end{remark}
+
+\begin{remark}
+  It is interesting to note that this argument does not provide an
+  obvious way to take advantage of the uniformity with which solutions
+  to $x+y=z$ occur in the Ulam case.  For example, it also applies to
+  a sequence where $a_{2^i+1}, \ldots, a_{2^(i+1)-1}$ have no
+  representations but $a_{2^i}$ has $2^{i-1}$ representations for each
+  $i$ (in which case the number of representations is not bounded
+  above, but is growing, albeit sort of slowly and non-uniformly).
+\end{remark}
+
+{\color{red}
+
+\subsection{Spectrum}
+
+\subsubsection{The complete spectrum of $U(a,b)$}
+\subsubsection{The complete spectrum of $\theta(s)$}
+
+\subsection{Distribution}
+
+\subsubsection{Distributions of $U(a,b)$ mod $\lambda$}
+
+\subsubsection{Distributions of various $\theta(s)$ mod $\lambda$}
+
+\subsubsection{Circle method}
+Being in the Ulam sequence is determined by one property: $x$ must be
+a sum of distinct Ulam numbers in exactly one way.  
+
+\begin{definition}Define the \textbf{representation counting function}
+  $r_{A+A}$ by $r_{A+A}(x)$ to be the number of solutions to $a+b = x$
+  for $a, b \in A$.  (Note that we do not necessarily require $a < b$
+  here.)
+\end{definition} 
+
+The point is that while this doesn't exactly capture the same notion
+as in the exact definition of the Ulam sequence, it is very close and
+has the advantage of being accessible from the Fourier-analytic
+perspective.  
+
+The main observation is that $r_{A+A} = 1_A \ast 1_A$, and so can be
+written as $\mathscr{F}\inv\mathscr{F} (1_A \ast 1_A) =
+\mathscr{F}\inv \widehat{1_A}^2$, or: 
+
+\[r_{A_{2N}+A_{2N}}(x) = \frac 1N \sum_{t=0}^{N-1} \widehat{1_A}(t)^2
+e(tx)\]
+
+So we can conclude, for example, that $x \notin A$ if, say,
+$r_{A_{2N}+A_{2N}}(x) > 3$.  
+
+\subsubsection{No Ulam numbers close to 0 mod $\lambda$}
+
+It appears that element in $[-\lambda/6,\lambda/6]$ are never in the
+Ulam sequence, and further, that the reason they have for not being in
+is that they are sums of smaller Ulam numbers in more than one way.
+We might take an $x \in \N$ with
+$x \mod{\lambda} \in [-\lambda/6,\lambda/6]$ and see what we can make
+of it.  
+
+[DATA]
+
+With the assumption that $x \mod{\lambda} \in [-\lambda/6,\lambda/6]$,
+we get that if $k/N$ is approximately $1/\lambda$, then $e_N(kx)$ will
+have argument between $-\pi/3$ and $\pi/3$.  In particular, the real
+part of $e_N(kx)$ will be at least $1/2$.  Thus if we compute: 
+
+\begin{eqnarray*}
+r_{A+A}(x) &=& \frac 1N \sum_{t=0}^{N-1} \widehat{1_A}(t)^2 e(tx)\\
+ &=& |A|/N + 2\Re(e(kx)\widehat{1_A}(k)^2) + \sum_{t\neq 0,k,N-k}
+ \widehat{1_A}(t)^2 e(tx)\\
+ &\geq& |A|/N + \Re(\widehat{1_A}(k)^2) + \sum_{t\neq 0,k,N-k}
+ \widehat{1_A}(t)^2 e(tx)\\
+\end{eqnarray*}
+
+And so if $\widehat{1_A}(k)$ is much larger than all the other Fourier
+coefficients, then we might be able to guarantee that this is
+positive.  For example: If we know that the only Fourier coefficients
+that are nonzero (in the large $N$ limit) are $k\alpha$, then we can
+write this as: 
+
+\begin{eqnarray*}
+r_{A+A}(x) &\geq& |A|/N + \Re(\widehat{1_A}(\alpha)^2) + \sum_{t > 1}
+ \Re(\widehat{1_A}(t \alpha)^2 e(tx))\\
+ &\geq& |A|/N + \Re(\widehat{1_A}(\alpha)^2) - \sum_{t > 1}
+ |\widehat{1_A}(t \alpha)|^2\\
+\end{eqnarray*}
+
+So if $|\widehat{1_A}(\alpha)|$ is large enough--say, $c$, and
+$|\widehat{1_A}(t \alpha)|$ decays appropriately as $t$ grows--say is
+less than $\frac{A}{t}$, then we get:
+
+% See, for example,
+% http://www-m7.ma.tum.de/foswiki/pub/M7/Analysis/Fourier13/lecture9.pdf
+
+
+\begin{eqnarray*}
+r_{A+A}(x) &\geq& |A|/N + c^2 - \sum_{t > 1}\frac{A^2}{t^2}\\
+&=& \delta + c^2 - A^2\left(\frac{\pi^2}{6}-1\right)\\
+&\geq& \delta + c^2 - 0.644 A^2\\
+\end{eqnarray*}
+
+So depending on the precise constants involved, we might end up with a
+conclusion that every such $x$ that lands close to 0 mod $\lambda$
+necessarily has many representations and is therefore disqualified
+from being an Ulam number for that reason.  
+
+\subsubsection{Few Ulam numbers outside middle third mod $\lambda$}
+
+A conjecture of Gibbs states...
+
+\subsubsection{Numbers that are not sums of Ulam numbers close to middle mod $\lambda$}
+
+Numbers $x$ that fail to be Ulam because in fact $r^*_{A+A}(x) = 0$
+all seem to lie within the middle third.  
+
+
+\subsection{Density}
+
+As we have said, it appears that the Ulam sequence has positive
+(upper) density around $0.07$.  
+
+\begin{conjecture}
+The Ulam sequence has positive upper density.
+\end{conjecture}
+
+
+\begin{conjecture}
+  For any decision sequence $S$ with a positive density of 1s, the
+  corresponding sum-free set $A = \theta(S)$ has positive upper density.
+\end{conjecture}
+
+For such sum-free sets $A$, there is kind of a battle: as we build $A$
+from the decision sequence, say we have built all elements up to some
+$N$, i.e. we have computed $A_N$.  If $A_N$ is very large, then
+$A_N+A_N$ will contain many elements and we will have to go far to
+find the next element of $A$.  If on the other hand, $A_N$ is not
+large, then $A_N + A_N$ will be sparse, which will make it easy to
+find the next few elements of $A$ relatively quickly.  
+
+A first try at formalising this might go: $|A_N + A_N| \leq |A_N|^2$,
+and so if for all $N$, $|A_N|^2 \leq cN$ for some constant $c$, then
+
+\subsection{Reducing Ulam-like sets to sum-free}
+
+\subsubsection{Via triangle removal}
+\subsubsection{Distribution of large summands}
+We've studied the smaller summands a bit--now the question is: What
+about the large summands?
+
+We note first that if 2 or 3 is the small summand of $a_{n+1}$, then
+the large summand is necesarily $a_n$ (if 2 is the small summand and
+$a_n$ is not the large summand, then $a_{n+1}$ would be $a_n + 1$
+which is impossible since this is a duplicate sum with $a_n+a_1$.  If
+3 is the small summand and $a_n$ is not the large summand, then
+$a_{n+1}$ is either $a_n + 1$ or $a_n + 2$, both of which would be
+duplicates.)
+
+This means that over 50\% of the time, the large summand will be the
+last thing in the list so far.  When looking at the large summand,
+then, it seems more relevant to consider how many indices from the end
+it lives, rather than its actual value.  We compute these in
+experiment13, generating output [FILE] of the form:
+
+\begin{tabular}{|l|l|l|l|}
+$n$ 	&$a_n$	&$i$	&$n-j$ (with $a_i + a_j = a_n$ and $i < j$)\\
+2 	&1 	&0 	&1\\
+3 	&2 	&0 	&1\\
+4 	&3 	&1 	&1\\
+5 	&4 	&1 	&1\\
+6 	&6 	&2 	&1\\
+7 	&8 	&1 	&1\\
+8 	&11 	&2 	&1\\
+9 	&13 	&1 	&1\\
+10 	&16 	&5 	&1\\
+11 	&18 	&1 	&1
+\end{tabular}
+
+We can do some processing on these to figure out which $n-j$ are the
+most common:
+
+% \begin{verbatim}
+% cat data/indices_of_summands | cut -d ' ' -f 4 | sort -n|uniq -c|sort -n > data/n_minus_js
+% \end{verbatim}
+
+results [FILE].  Note in particular that there are only 159 of them
+and (as suggested above) that n-j = 1 accounts for over 50\% of them.
+This list seems to contain few surprises: Among all the values of $n-j$
+that appear more than 10 times, nothing bigger than 34 shows up.
+
+If we look at values that show up fewer than 10 times, then it looks
+like $n-j = 100$ and $185 < n-j < 205$ seem to be preferred, with many
+of these showing up 3 or more times, while all other values show up 2
+or fewer times.  This could be an artifact of not much data, however.
+
+We might instead take a look instead at enumerating $(i,n-j)$ pairs,
+rather than just values of $n-j$:
+
+% \begin{verbatim}
+% cat data/indices_of_summands | cut -d ' ' -f 3,4 | sort -n|uniq -c|sort -n > data/i_nmj
+% \end{verbatim}
+
+with results in [FILE].  Note in particular that there are
+only 312 distinct such pairs, meaning that technically, to compute the
+first 10000 Ulam numbers, we only have to check 312 possibilities for
+each.  If only there were a way of knowing ahead of time which 312 we
+had to check...
+
+\subsubsection{Distribution of small summands}
 
 We note with interest the observation in the abstract of Steinerberger
 that $\cos(\alpha a_n) < 0$ for all $a_n$ other than 2, 3, 47, and 69.  In
@@ -1607,73 +1885,7 @@ the order given by using $\cos(\alpha a_n)$ as the index.  Once we find a
 sum that is unique, we only have to search all smaller sums, again in
 this order.  
 
-\subsubsection{Large summands}
-
-We've studied the smaller summands a bit--now the question is: What
-about the large summands?
-
-We note first that if 2 or 3 is the small summand of $a_{n+1}$, then
-the large summand is necesarily $a_n$ (if 2 is the small summand and
-$a_n$ is not the large summand, then $a_{n+1}$ would be $a_n + 1$
-which is impossible since this is a duplicate sum with $a_n+a_1$.  If
-3 is the small summand and $a_n$ is not the large summand, then
-$a_{n+1}$ is either $a_n + 1$ or $a_n + 2$, both of which would be
-duplicates.)
-
-This means that over 50\% of the time, the large summand will be the
-last thing in the list so far.  When looking at the large summand,
-then, it seems more relevant to consider how many indices from the end
-it lives, rather than its actual value.  We compute these in
-experiment13, generating output [FILE] of the form:
-
-\begin{tabular}{|l|l|l|l|}
-$n$ 	&$a_n$	&$i$	&$n-j$ (with $a_i + a_j = a_n$ and $i < j$)\\
-2 	&1 	&0 	&1\\
-3 	&2 	&0 	&1\\
-4 	&3 	&1 	&1\\
-5 	&4 	&1 	&1\\
-6 	&6 	&2 	&1\\
-7 	&8 	&1 	&1\\
-8 	&11 	&2 	&1\\
-9 	&13 	&1 	&1\\
-10 	&16 	&5 	&1\\
-11 	&18 	&1 	&1
-\end{tabular}
-
-We can do some processing on these to figure out which $n-j$ are the
-most common:
-
-% \begin{verbatim}
-% cat data/indices_of_summands | cut -d ' ' -f 4 | sort -n|uniq -c|sort -n > data/n_minus_js
-% \end{verbatim}
-
-results [FILE].  Note in particular that there are only 159 of them
-and (as suggested above) that n-j = 1 accounts for over 50\% of them.
-This list seems to contain few surprises: Among all the values of $n-j$
-that appear more than 10 times, nothing bigger than 34 shows up.
-
-If we look at values that show up fewer than 10 times, then it looks
-like $n-j = 100$ and $185 < n-j < 205$ seem to be preferred, with many
-of these showing up 3 or more times, while all other values show up 2
-or fewer times.  This could be an artifact of not much data, however.
-
-We might instead take a look instead at enumerating $(i,n-j)$ pairs,
-rather than just values of $n-j$:
-
-% \begin{verbatim}
-% cat data/indices_of_summands | cut -d ' ' -f 3,4 | sort -n|uniq -c|sort -n > data/i_nmj
-% \end{verbatim}
-
-with results in [FILE].  Note in particular that there are
-only 312 distinct such pairs, meaning that technically, to compute the
-first 10000 Ulam numbers, we only have to check 312 possibilities for
-each.  If only there were a way of knowing ahead of time which 312 we
-had to check...
-
-
-\subsection{Distribution of complements}
-
-
+\subsubsection{Distribution of complements}
 In the cases Steinerberger looks at, the resulting non-uniform
 distributions consist usually of multiple peaks.  In the case of the
 1,2 Ulam sequence one of these peaks looks a little misshapen, so we
@@ -1804,256 +2016,11 @@ class and ask whether 2 is ever a complement of that $a_n$), and the
 proportion of times 2 shows up as a complement of k is equal to the
 proportion of times we get exactly k successes in our trials.
 
+\subsection{Variants of the Ulam problem}
 
-\section{Observations}
-
-\subsection{Density}
-
-As we have said, it appears that the Ulam sequence has positive
-(upper) density around $0.07$.  
-
-\begin{conjecture}
-The Ulam sequence has positive upper density.
-\end{conjecture}
-
-
-\begin{conjecture}
-  For any decision sequence $S$ with a positive density of 1s, the
-  corresponding sum-free set $A = \theta(S)$ has positive upper density.
-\end{conjecture}
-
-For such sum-free sets $A$, there is kind of a battle: as we build $A$
-from the decision sequence, say we have built all elements up to some
-$N$, i.e. we have computed $A_N$.  If $A_N$ is very large, then
-$A_N+A_N$ will contain many elements and we will have to go far to
-find the next element of $A$.  If on the other hand, $A_N$ is not
-large, then $A_N + A_N$ will be sparse, which will make it easy to
-find the next few elements of $A$ relatively quickly.  
-
-A first try at formalising this might go: $|A_N + A_N| \leq |A_N|^2$,
-and so if for all $N$, $|A_N|^2 \leq cN$ for some constant $c$, then
-
-
-\subsection{Circle method}
-
-Being in the Ulam sequence is determined by one property: $x$ must be
-a sum of distinct Ulam numbers in exactly one way.  
-
-\begin{definition}Define the \textbf{representation counting function}
-  $r_{A+A}$ by $r_{A+A}(x)$ to be the number of solutions to $a+b = x$
-  for $a, b \in A$.  (Note that we do not necessarily require $a < b$
-  here.)
-\end{definition} 
-
-The point is that while this doesn't exactly capture the same notion
-as in the exact definition of the Ulam sequence, it is very close and
-has the advantage of being accessible from the Fourier-analytic
-perspective.  
-
-The main observation is that $r_{A+A} = 1_A \ast 1_A$, and so can be
-written as $\mathscr{F}\inv\mathscr{F} (1_A \ast 1_A) =
-\mathscr{F}\inv \widehat{1_A}^2$, or: 
-
-\[r_{A_{2N}+A_{2N}}(x) = \frac 1N \sum_{t=0}^{N-1} \widehat{1_A}(t)^2
-e(tx)\]
-
-So we can conclude, for example, that $x \notin A$ if, say,
-$r_{A_{2N}+A_{2N}}(x) > 3$.  
-
-\subsubsection{No Ulam numbers close to 0 mod $\lambda$}
-
-It appears that element in $[-\lambda/6,\lambda/6]$ are never in the
-Ulam sequence, and further, that the reason they have for not being in
-is that they are sums of smaller Ulam numbers in more than one way.
-We might take an $x \in \N$ with
-$x \mod{\lambda} \in [-\lambda/6,\lambda/6]$ and see what we can make
-of it.  
-
-[DATA]
-
-With the assumption that $x \mod{\lambda} \in [-\lambda/6,\lambda/6]$,
-we get that if $k/N$ is approximately $1/\lambda$, then $e_N(kx)$ will
-have argument between $-\pi/3$ and $\pi/3$.  In particular, the real
-part of $e_N(kx)$ will be at least $1/2$.  Thus if we compute: 
-
-\begin{eqnarray*}
-r_{A+A}(x) &=& \frac 1N \sum_{t=0}^{N-1} \widehat{1_A}(t)^2 e(tx)\\
- &=& |A|/N + 2\Re(e(kx)\widehat{1_A}(k)^2) + \sum_{t\neq 0,k,N-k}
- \widehat{1_A}(t)^2 e(tx)\\
- &\geq& |A|/N + \Re(\widehat{1_A}(k)^2) + \sum_{t\neq 0,k,N-k}
- \widehat{1_A}(t)^2 e(tx)\\
-\end{eqnarray*}
-
-And so if $\widehat{1_A}(k)$ is much larger than all the other Fourier
-coefficients, then we might be able to guarantee that this is
-positive.  For example: If we know that the only Fourier coefficients
-that are nonzero (in the large $N$ limit) are $k\alpha$, then we can
-write this as: 
-
-\begin{eqnarray*}
-r_{A+A}(x) &\geq& |A|/N + \Re(\widehat{1_A}(\alpha)^2) + \sum_{t > 1}
- \Re(\widehat{1_A}(t \alpha)^2 e(tx))\\
- &\geq& |A|/N + \Re(\widehat{1_A}(\alpha)^2) - \sum_{t > 1}
- |\widehat{1_A}(t \alpha)|^2\\
-\end{eqnarray*}
-
-So if $|\widehat{1_A}(\alpha)|$ is large enough--say, $c$, and
-$|\widehat{1_A}(t \alpha)|$ decays appropriately as $t$ grows--say is
-less than $\frac{A}{t}$, then we get:
-
-% See, for example,
-% http://www-m7.ma.tum.de/foswiki/pub/M7/Analysis/Fourier13/lecture9.pdf
-
-
-\begin{eqnarray*}
-r_{A+A}(x) &\geq& |A|/N + c^2 - \sum_{t > 1}\frac{A^2}{t^2}\\
-&=& \delta + c^2 - A^2\left(\frac{\pi^2}{6}-1\right)\\
-&\geq& \delta + c^2 - 0.644 A^2\\
-\end{eqnarray*}
-
-So depending on the precise constants involved, we might end up with a
-conclusion that every such $x$ that lands close to 0 mod $\lambda$
-necessarily has many representations and is therefore disqualified
-from being an Ulam number for that reason.  
-
-\subsubsection{Few Ulam numbers outside middle third mod $\lambda$}
-
-A conjecture of Gibbs states...
-
-\subsubsection{Numbers that are not sums of Ulam numbers close to middle mod $\lambda$}
-
-Numbers $x$ that fail to be Ulam because in fact $r^*_{A+A}(x) = 0$
-all seem to lie within the middle third.  
-
-\subsubsection{Large Fourier coefficient}
-
-If instead of thinking about representations of any one element--that
-is, counting solutions to $x+y=z$ with $x,y \in A$ for a fixed $z$--we
-think about counting solutions to $x+y=z$ with $x,y,z \in A$ using the
-same Fourier analytic technique, then we can actually get a theorem: 
-
-\begin{theorem}If $A \subseteq \N$ is a sequence of positive integers
-  of density $\delta$ such that $T(A_N)$--the number of additive
-  triangles in $A_N$--is bounded by $c N^{2-\epsilon}$ for some
-  constants $c > 0, \epsilon > 0$, then there is an $\alpha \in \R/\Z$
-  such that $\widehat{1_A}(\alpha) \geq \delta^2$.\end{theorem}
-
-\begin{example}
-  For example, in the Ulam sequence we know by construction that
-  $T(A_N) \leq 3|A| \leq 3N$, and we believe that the Ulam sequence
-  has density around $0.07$, so this theorem would guarantee us a
-  non-zero Fourier coefficient of size at least $0.0049$.  This is a
-  bit off our numerical value of $0.8$, but it is a start.
-\end{example}
-
-Intuitively, this goes as follows: If this set had no large non-zero
-Fourier coefficient, then it would be in some sense ``random''.  A
-random set of density $\delta$ has of course $\delta^2 N^2$ pairs
-$(x,y)$ with $x,y \in A$.  Supposing these sums are randomly
-distributed, with probability $\delta$ they will themselves lie in
-$A$, so we expect to have $\delta^3 N^2$ of them being in $A$, giving
-$T(A_N) \cong \delta^3 N^2$.  If $T(A_N)$ grows more slowly than this,
-therefore, there must be a reason for it, in the form of a non-zero
-Fourier coefficient.  Put another way ``if a set is dense, then to
-avoid solutions to $x+y=z$ it needs to have some kind of pattern (such
-as being all odds).''  The statement we have here is a first version
-of precisely the kind of ``general regularity'' result that we are
-gunning for.
-
-\begin{proof}
-  As we've discussed many times,
-
-\[T(A_N) = (1/N) \sum_{t=0..N-1} \widehat{1_{A_N}}(t) \widehat{1_{A_N}}(t) \widehat{1_{A_N}}(-t)\]
-
-So by assumption, 
-
-\[cN^{2-\epsilon} \geq (1/N) \sum_{t=0..N-1} \widehat{1_{A_N}}(t) \widehat{1_{A_N}}(t) \widehat{1_{A_N}}(-t)\]
-
-We can pull out the $t = 0$ term which is $|A|^3$, which, for $N$
-large enough, is close to $\delta^3 N^3$.  Then we can bound the
-remaining sum by pulling out a $\widehat{1_A}(t)$ and replacing it
-with $-\max_{t\neq 0} \widehat{1_A}(t)$:
-
-\[cN^{2-\epsilon} \geq \delta^3 N^2 - \max_{t=1..N-1}(\widehat{1_A}(t)) (1/N) \sum_{t=1..N-1} |\widehat{1_A}(t)|^2\]
-
-Now, by Plancherel we know that,
-$(1/N) \sum_{t=0..N-1} |\widehat{1_A}(t)|^2 = \sum_{t=0..N-1} 1_A(t) =
-|A|$, so:
-
-\[cN^{2-\epsilon} \geq \delta^3 N^2 - \max_{t\neq 0}(\widehat{1_A}(t))
-|A| = \delta^3 N^2 - \max_{t=1..N-1}(\widehat{1_A}(t)) \delta N\]
-
-Thus if $\max_{t=1..N-1}(\widehat{1_A}(t)) \leq \epsilon N$, then 
-
-\[cN^{2-\epsilon} \geq N^2 (\delta^3 - \delta\epsilon)\]
-
-Or, rearranging, 
-
-\[\frac{c}{\delta} N^{-\epsilon} \geq \delta^2 - \epsilon\]
-
-But the left side goes to zero as $N \to \infty$, so
-$\epsilon \geq \delta^2$, i.e. for some $k$ in $\{1, \ldots, N-1\}$,
-we have
-
-\[|\widehat{1_{A_N}}(k)| > \delta^2 N\]
-
-Now, as we let $N$ grow, we get a sequence of values of $k_N$ with
-this property.  On $\R/\Z$, the sequence $\frac{k_N}{N}$ for
-increasing $N$ must have a convergent subsequence--say converging to
-some $\alpha$.  \end{proof}
-
-Some remarks: 
-
-\begin{remark}
-  As we mentioned before, this bound for the Ulam sequence, which
-  works out to around $0.0049$ is not anywhere near as good as the
-  computed estimate of $0.8$.  However, this finds a rational $k/N$
-  where the Fourier transform is large for \textit{every} $N$, whereas
-  experimentally the large value of around $0.8$ only occurs actually
-  at $\alpha$ and can only be observed at rational $k/N$ that are good
-  approximations to $\alpha$.  In particular, for some $N$, the
-  largest Fourier coefficient might honestly only be as large as
-  $\delta^2$.
-\end{remark}
-
-\begin{remark}
-  In the proof of Roth's theorem, the existence of a large Fourier
-  coefficient in $A$ is somehow used to deduce the existence of an
-  arithmetic progression $P$ such that $A$ intersected with $P$ has
-  higher density in $P$ than $A$ had in $\Z/N$.  Roth's theorem
-  concludes by making all this numerically precise to be able to say
-  "if we repeat this often enough, either we'll eventually have small
-  Fourier coefficient relative to the increased density, or we'll have
-  density 1 in an arithmetic progression at which point...well...we
-  will be guaranteed to contain an arithmetic progression!"  In our
-  case, we are always guaranteed a largeish Fourier coefficient by the
-  above argument, so maybe we can always perform this "density
-  increment" step until we are literally an arithmetic progression.
-  Precisely what this implies about the Fourier coefficients of the
-  original $1_A$ or whether this ensures us any global behaviour of
-  the sequence A depends on precisely how the density-increment step
-  goes.  This will be a another thing to investigate shortly.
-\end{remark}
-
-\begin{remark}
-  It is interesting to note that this argument does not provide an
-  obvious way to take advantage of the uniformity with which solutions
-  to $x+y=z$ occur in the Ulam case.  For example, it also applies to
-  a sequence where $a_{2^i+1}, \ldots, a_{2^(i+1)-1}$ have no
-  representations but $a_{2^i}$ has $2^{i-1}$ representations for each
-  $i$ (in which case the number of representations is not bounded
-  above, but is growing, albeit sort of slowly and non-uniformly).
-\end{remark}
-
-\subsubsection{Variants of Ulam problem}
 
 Circle method gets better with more variables.  For this reason, we
 might find it convenient to 
-
-\subsection{Arithmetic regularity}
-
-
-\subsection{Is there only one non-zero big Fourier coefficient?}
 
 \section{Appendix A: Code}
 

@@ -9,7 +9,8 @@ u2_3 = read_seq("seqs/seq2,3")
 u2_5 = read_seq("seqs/seq2,5")
 u12_13 = read_seq("seqs/seq12,13")
 u1_2_3 = read_seq("seqs/seq1,2,3")
-sf01001 = read_seq("seqs/01001sf")
+sf01001 = read_seq("seqs/sf01001")
+sf01010 = read_seq("seqs/sf01010")
 sf10010 = read_seq("seqs/sf10010")
 linus = read_seq("seqs/1linus")
 alpha1_2 = 2.5714474995
@@ -33,8 +34,8 @@ def experiment0(l,a,n):
         
 def experiment1():
     """Compute alpha_{a,b} for various a,b"""
-    n = 200
-    s = 0.001
+    n = 500
+    s = 0.0001
     l = [(1,i) for i in range(2,16)]
     l += [(2,3)]
     l += [(3,i) for i in range(4,11) if i % 3 != 0]
@@ -42,8 +43,17 @@ def experiment1():
     l += [(5,i) for i in range(7,10)]
     for x in l:
         a,b=x
-        alpha,f = find_alpha(ulam(a,b,n),s,debug=False)
-        print(a,b,alpha,f,2*math.pi/alpha)
+        u = ulam(a,b,n)
+        alpha,f = find_alpha(u,s,debug=False)
+        print(a,b,alpha,f/u[-1],2*math.pi/alpha)
+
+def experiment2():
+    """Compute alpha_{a,b} for various a,b"""
+    l = {"01001":sf01001,"01010":sf01010,"10010":sf10010}
+    for s in l:
+        A = l[s][:1000]
+        alpha,f = find_alpha(A,0.001,debug=True)
+        print(s,alpha,f/A[-1],2*math.pi/alpha)
 
 def experiment5():
     l = u1_2
@@ -419,4 +429,11 @@ def experiment31(a,b,N):
             l += [i]
     return l
 
-experiment1()
+if len(sys.argv) < 2:
+    print("Specify an experiment number")
+else:
+    exp = 'experiment'+sys.argv[1]
+    if exp in locals():
+        locals()[exp]()
+    else:
+        print("Invalid experiment: {}".format(exp))
