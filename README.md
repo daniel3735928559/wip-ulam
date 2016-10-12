@@ -2838,3 +2838,82 @@ Some remarks:
 
 These start of these last two steps is perhaps somewhat adumbrated in
 the previous two posts.
+
+### 20160602 Positive density musings
+
+We would very much like a kind of statement of the form "any sum-free
+set whose decision sequence has a positive density of 1s has positive
+density".  This essentially requires (I think) that the complement of
+A+A be positive density.
+
+
+
+### 20160603 Versions of the problem in different groups
+
+There have been several recent developments in a finite field setting
+on analogous problems (specifically, the work of Croot, Lev, and Pach
+on length-3 arithmetic progression-free sets in `(F_4)^n` and
+subsequent work by others pushing it to `(F_3)^n`).  I will start by
+explaining this work to the best of my understanding, and follow by
+attempting to apply the methods used there to analogues of the
+problems of boundedly-additive sets in the integers.
+
+The idea for a.p.-free sets is as follows: Let S^d be the space of all
+polynomial functions on F_q^n of degree d (that is, polynomials of
+total degree d where each of the n variables shows up with degree less
+than q).  Let m_d be the dimension of this space, and let V_d be the
+subspace of polynomial functions vanishing on the complement of 2A
+(this is more or less a trick).  Then
+
+```
+dim(V_d) >= m_d - (q^n - |A|)
+```
+
+(since the requirement to vanish on the complement of 2A is at most
+`q^n - |A|` conditions).
+
+It turns out that we can actually get a polynomial P_d in V_d with
+support of size exactly dim(V_d), and so this polynomial has:
+
+```
+|supp(P_d)| >= m_d - q^n + |A|
+```
+
+Now for the last bit: If we have a degreee-d polynomial P vanishing on
+the complement of 2A, then we can form the |A| by |A| matrix M whose
+ij entry is `P(a_i + a_j)` where a_i are the elements of A.  First of
+all, because for i and j different, a_i+a_j is never in 2A, the
+off-diagonal terms all vanish, whereas because the diagonal terms are
+`P(2a_i)`, they may or may not vanish.
+
+
+We can brutally expand this polynomial into a sum of monomials:
+
+```P(a_i + a_j) = sum_{monomials m,m' of degree d or less} c_{m,m'} m(a_i) m'(a_j)```
+
+Further, in each term at least one of m and m' has degree at most d/2, so we can sum over 
+
+```
+P(a_i + a_j) = sum_{monomials m of degree d/2 or less} c_{m} m(a_i) F_m(a_j) + c'_m m(a_j) G_m(a_i)
+```
+
+So M is a linear combiantion of `2 m_{d/2}` matrices `(m(a_i)
+F_m(a_j))` each of which, as the exterior product of two vectors, has
+rank 1.  Thus the rank of M is at most `2 m_{d/2}`.  And since M is
+diagonal, this means that in fact on 2A, P has only 2 m_{d/2} non-zero
+points.  So the support of P is bounded above by 2 m_{d/2}.  Since the
+support of P_d was already bounded below by `m_d - q^n + |A|` we can
+apply this argument to P_d and conclude that
+
+```2 m_{d/2} >= m_d - q^n + |A|```
+
+i.e.
+
+```|A| <= 2 m_{d/2} - m_d + q^n```
+
+Choosing a particular value of d and bounding these quantities
+somewhat by hand is all that remains.
+
+
+
+### 20160607
