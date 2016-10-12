@@ -1278,9 +1278,9 @@ Fourier transform of the indicator function of $U(1,2)$ has takes a
 large value at some $\alpha$.  That is,
 $\frac1N \sum_{t=1}^N 1_A(t) e^{-it\alpha}$ is large.  This suggests
 that $t$ being in $A$ is correlated with some
-$t+\frac{2\pi}{\alpha} k$ being in $A$.  In other words,
-$\lambda_A = \frac{2\pi}{\alpha}$ behaves somewhat like a period for
-$A$.  
+$t+\frac{2\pi}{\alpha} k$ being in $A$ for various integer $k$.  In
+other words, $\lambda_A = \frac{2\pi}{\alpha}$ behaves somewhat like a
+period for $A$.
 
 \subsubsection{Computing $\alpha$}
 
@@ -1359,8 +1359,7 @@ $A$ & $\alpha_{A}$ & $\lambda_{A}$ & $|\widehat{1_A}(\alpha_{A})|$\\
 \hline
 \end{tabular}
 
-
-
+{\color{red}
 \subsubsection{Is $\alpha$ rational?  Algebraic?}
 
 It is more likely that there is a sequence of m mod which the
@@ -1493,19 +1492,48 @@ Sage) found in appendix A, and with output:
 \end{tabular}
 
 All told, both look like they don't have small degree if algebraic at all...
-
+}
 
 \subsubsection{Existence of $\alpha$}
-If instead of thinking about representations of any one element--that
-is, counting solutions to $x+y=z$ with $x,y \in A$ for a fixed $z$--we
-think about counting solutions to $x+y=z$ with $x,y,z \in A$ using the
-same Fourier analytic technique, then we can actually get a theorem: 
 
-\begin{theorem}If $A \subseteq \N$ is a sequence of positive integers
-  of density $\delta$ such that $T(A_N)$--the number of additive
-  triangles in $A_N$--is bounded by $c N^{2-\epsilon}$ for some
-  constants $c > 0, \epsilon > 0$, then there is an $\alpha \in \R/\Z$
-  such that $\widehat{1_A}(\alpha) \geq \delta^2$.\end{theorem}
+The common thread with all these sets is that they have few solutions
+to $x+y=z$ in them.  As we talk about why this gives us large Fourier
+coefficients, the following definition will be helpful: 
+
+\begin{definition}
+  For $A \subseteq [N]$, define
+  
+  \[T(A) = \left|\{(x,y,z) \in A^3 : x+y=z\}\right|\]
+
+  More generally, for $f : [N] \to [0,1]$, define
+
+  \[T(f) = \sum_{x,y \in [N]} f(x)f(y)f(x+y)\]
+
+  (So $T(A) = T(1_A)$, in particular.)
+\end{definition}
+
+The fact that there always seems to be a large Fourier coefficient
+$\alpha$ for each of these sets boils down, at least intuitively, to
+an observation we have already made earlier: If a we pick randomly
+from $\Z$ (say, including each element with probability $\delta$) to
+make a set $A$, then we expect $T(A_N) = O(N^2)$.  
+
+The statement that the set if chosen in this way should be thought of
+as analogous to having only one large Fourier coefficient: Namely
+$\widehat{1_{A_N}}(0) = pN$, with all the others being small.  So we
+would hope to deduce more generally that this situation always implies
+we have many solutions to $x+y=z$, giving that all the sets we have
+been looking at cannot have only small Fourier coefficients.  Put
+another way ``if a set is dense, then to avoid solutions to $x+y=z$ it
+needs to have some kind of pattern (such as being all odds).''
+
+
+\begin{theorem}\label{thm:alpha}
+  If $A \subseteq \N$ is a sequence of positive integers of density
+  $\delta$ such that $T(A_N)$ is bounded by $c N^{2-\epsilon}$ for
+  some constants $c > 0, \epsilon > 0$, then there is an
+  $\alpha \in \R/\Z$ such that $\widehat{1_A}(\alpha) \geq \delta^2$.
+\end{theorem}
 
 \begin{example}
   For example, in the Ulam sequence we know by construction that
@@ -1515,22 +1543,8 @@ same Fourier analytic technique, then we can actually get a theorem:
   bit off our numerical value of $0.8$, but it is a start.
 \end{example}
 
-Intuitively, this goes as follows: If this set had no large non-zero
-Fourier coefficient, then it would be in some sense ``random''.  A
-random set of density $\delta$ has of course $\delta^2 N^2$ pairs
-$(x,y)$ with $x,y \in A$.  Supposing these sums are randomly
-distributed, with probability $\delta$ they will themselves lie in
-$A$, so we expect to have $\delta^3 N^2$ of them being in $A$, giving
-$T(A_N) \cong \delta^3 N^2$.  If $T(A_N)$ grows more slowly than this,
-therefore, there must be a reason for it, in the form of a non-zero
-Fourier coefficient.  Put another way ``if a set is dense, then to
-avoid solutions to $x+y=z$ it needs to have some kind of pattern (such
-as being all odds).''  The statement we have here is a first version
-of precisely the kind of ``general regularity'' result that we are
-gunning for.
-
 \begin{proof}
-  As we've discussed many times,
+  As we've discussed earlier,
 
 \[T(A_N) = (1/N) \sum_{t=0..N-1} \widehat{1_{A_N}}(t) \widehat{1_{A_N}}(t) \widehat{1_{A_N}}(-t)\]
 
@@ -1618,95 +1632,228 @@ Some remarks:
 
 \subsection{Spectrum}
 
-\subsubsection{The complete spectrum of $U(a,b)$}
-\subsubsection{The complete spectrum of $\theta(s)$}
+\subsubsection{The complete spectrum of $A$}
+
+\subsubsection{Decay of Fourier coefficients}
+
+\begin{theorem}\label{thm:decay}
+  If $f : [N] \to \{0,1\}$ is a function with spectrum $\alpha\Z$, then
+
+  \[\widehat{f}(k\alpha) \leq \frac{C}{k}\]
+
+  for constant $C$, namely $C = ???$.  
+\end{theorem}
+
+}
+
+
+\subsubsection{Spectral complexity and density}
+
+% Try here to establish relationship between density and how many
+% truly distinct nonzero Fourier coefficients there are
 
 \subsection{Distribution}
 
-\subsubsection{Distributions of $U(a,b)$ mod $\lambda$}
+{\color{red}
 
-\subsubsection{Distributions of various $\theta(s)$ mod $\lambda$}
+\subsubsection{Distributions of sets mod $\lambda$}
 
-\subsubsection{Circle method}
-Being in the Ulam sequence is determined by one property: $x$ must be
-a sum of distinct Ulam numbers in exactly one way.  
+Now we compute the distributions of various $U(a,b)$ and $\theta(s)$
+modulo their respective $\lambda$s.
+
+}
+
+\subsubsection{No Ulam numbers close to 0 mod $\lambda$}
+
+Having observed the distributions, there is a common theme: They all
+appear to be at least approximately supported on the interval
+$[\lambda/3, 2\lambda/3]$, and all appear to be actually supported on
+$[\lambda/6, 5\lambda/6]$.  We will study this phenomenon in this
+section.
+
+As a useful piece of notation for expressing the idea of these
+intervals modulo $\lambda$, we will define as usual:
+
+\begin{definition}
+For $x \in \R$, define $\normrz{x}$ to be the minimal distance between
+$x$ and an integer: $\normrz{x} = \min_{n \in \Z} |x-n|$.
+\end{definition}
+
+Thus $\normrz{x} \leq \frac12$ always, and $x$ is in $[-\lambda/6,
+\lambda/6]$ precisely if $\normrz{x/\lambda} \leq \frac16$.
+
+First, to understand why an element might be in one of these sets, we
+need to understand what determines its inclusion.  For all the sets we
+are considering, if a number is expressable as a sum of elements of
+the set in many ways, then that number is excluded from the set.  So
+we define: 
 
 \begin{definition}Define the \textbf{representation counting function}
-  $r_{A+A}$ by $r_{A+A}(x)$ to be the number of solutions to $a+b = x$
-  for $a, b \in A$.  (Note that we do not necessarily require $a < b$
-  here.)
+  $r_{A+A}$ by 
+
+  \[r_{A+A}(x) = \left|\{(a,b) \in A^2 : a+b = x\}\right|\]
+  
+
+  (Note that we do not necessarily require $a < b$ here.)
 \end{definition} 
 
 The point is that while this doesn't exactly capture the same notion
 as in the exact definition of the Ulam sequence, it is very close and
 has the advantage of being accessible from the Fourier-analytic
-perspective.  
+perspective.  The main observation is that $r_{A+A}$, can be written
+as a convolution $r_{A+A} = 1_A \ast 1_A$, and so if we look at the
+finite version, replacing $A$ by $A_N$, we can use Fourier analysis to
+examine this:
 
-The main observation is that $r_{A+A} = 1_A \ast 1_A$, and so can be
-written as $\mathscr{F}\inv\mathscr{F} (1_A \ast 1_A) =
-\mathscr{F}\inv \widehat{1_A}^2$, or: 
+\[r_{A_N+A_N} = \mathscr{F}\inv\mathscr{F} (1_A \ast 1_A) =
+\mathscr{F}\inv \widehat{1_A}^2\]
 
-\[r_{A_{2N}+A_{2N}}(x) = \frac 1N \sum_{t=0}^{N-1} \widehat{1_A}(t)^2
-e(tx)\]
+or:
 
-So we can conclude, for example, that $x \notin A$ if, say,
-$r_{A_{2N}+A_{2N}}(x) > 3$.  
+\[r_{A_N+A_N}(x) = \frac 1N \sum_{t=0}^{N-1} \widehat{1_A}(t)^2
+  e(tx)\]
 
-\subsubsection{No Ulam numbers close to 0 mod $\lambda$}
+So we can conclude, for example, that $x \notin U(1,2)$ if, say,
+$r_{A_{N}+A_{N}}(x) > 3$.  
 
-It appears that element in $[-\lambda/6,\lambda/6]$ are never in the
-Ulam sequence, and further, that the reason they have for not being in
-is that they are sums of smaller Ulam numbers in more than one way.
-We might take an $x \in \N$ with
-$x \mod{\lambda} \in [-\lambda/6,\lambda/6]$ and see what we can make
-of it.  
+It appears that integers that lie in $\normrz{x/\lambda} \leq 1/6$ are
+never in any of these sequences, and further that the reason that they
+are excluded is that they are sums of smaller elements of the set in
+many ways: {\color{red}
 
 [DATA]
 
-With the assumption that $x \mod{\lambda} \in [-\lambda/6,\lambda/6]$,
-we get that if $k/N$ is approximately $1/\lambda$, then $e_N(kx)$ will
-have argument between $-\pi/3$ and $\pi/3$.  In particular, the real
-part of $e_N(kx)$ will be at least $1/2$.  Thus if we compute: 
+}
+
+So we might take an $x \in \N$ with $\normrz{x/\lambda} \leq 1/6$ and
+see what we can make of it.  Certainly, if
+$\alpha = \frac{2\pi}{\lambda}$, we get that for such $x$,
+$e(\alpha x)$ will be in the arc from $e^{-2\pi/6}$ to $e^{2\pi/6}$,
+and so will have argument between $-\pi/3$ and $\pi/3$.  In
+particular, the real part of $e(\alpha x)$ will be at least $1/2$.
+
+Intuitively, since the number of representations of $x$ is given by a
+sum like the one above:
+
+\[r_{A_N+A_N}(x) = \frac 1N \sum_{t=0}^{N-1} \widehat{1_A}(t)^2
+  e_N(tx)\]
+
+then the idea is if $2\pi k/N$ is close to our large Fourier
+coefficient $\alpha$, then $\widehat{1_A}(k)$ will be very large.  And
+if we chose $x$ with $\normrz{x/\lambda} \leq 1/6$, then $e_N(kx)$
+will have a large real part, and so the terms $t = k$ and $t = -k$
+will together contribute a large amount to the sum, which the
+remainder of the summands should not be able to counteract.  This
+would guarantee that for such $x$, $r_{A_N+A_N}(x) >> 0$, which will
+in turn guarantee that such $x$ are not in $A$.
+
+More precisely, with $k$ as above:
 
 \begin{eqnarray*}
-r_{A+A}(x) &=& \frac 1N \sum_{t=0}^{N-1} \widehat{1_A}(t)^2 e(tx)\\
- &=& |A|/N + 2\Re(e(kx)\widehat{1_A}(k)^2) + \sum_{t\neq 0,k,N-k}
+r_{A_N+A_N}(x) &=& \frac 1N \sum_{t=0}^{N-1} \widehat{1_A}(t)^2 e(tx)\\
+ &=& \delta + 2\Re(e(kx)\widehat{1_A}(k)^2) + \sum_{t\neq 0,k,N-k}
  \widehat{1_A}(t)^2 e(tx)\\
- &\geq& |A|/N + \Re(\widehat{1_A}(k)^2) + \sum_{t\neq 0,k,N-k}
+ &\geq& \delta + \Re(\widehat{1_A}(k)^2) + \sum_{t\neq 0,k,N-k}
  \widehat{1_A}(t)^2 e(tx)\\
 \end{eqnarray*}
 
-And so if $\widehat{1_A}(k)$ is much larger than all the other Fourier
-coefficients, then we might be able to guarantee that this is
-positive.  For example: If we know that the only Fourier coefficients
-that are nonzero (in the large $N$ limit) are $k\alpha$, then we can
-write this as: 
+Continuing this idea with the notion that $2\alpha$ will give the next
+largest Fourier coefficient, we can ensure that this also contributes
+positively (or at least contributes not-too-negatively) to the sum by,
+for example, making $\normrz{x/\lambda}$ even smaller.  Continuing
+this idea, we can prove some results of which the simplest is: 
 
-\begin{eqnarray*}
-r_{A+A}(x) &\geq& |A|/N + \Re(\widehat{1_A}(\alpha)^2) + \sum_{t > 1}
- \Re(\widehat{1_A}(t \alpha)^2 e(tx))\\
- &\geq& |A|/N + \Re(\widehat{1_A}(\alpha)^2) - \sum_{t > 1}
- |\widehat{1_A}(t \alpha)|^2\\
-\end{eqnarray*}
+\begin{theorem}\label{thm:hole1}
+  If $A$ is a set for which $r_{A+A}(x) > c$ implies $x \notin A$ for
+  some constant $c$, and further, $A$ has spectrum $\alpha\Z$, then
+  for some $\eta > 0$, $\norm{x/\lambda} < \eta$ implies $x \notin A$
+  for $x$ large enough.
+\end{theorem}
 
-So if $|\widehat{1_A}(\alpha)|$ is large enough--say, $c$, and
-$|\widehat{1_A}(t \alpha)|$ decays appropriately as $t$ grows--say is
-less than $\frac{A}{t}$, then we get:
+\begin{proof}
+  Take $x$ with $\normrz{x/\lambda} < \eta$ for $\eta$ to be chosen
+  later.  let $|\widehat{1_A}(\alpha)| = \rho N$.  Finally, let $t_0$
+  be such that 
 
-% See, for example,
-% http://www-m7.ma.tum.de/foswiki/pub/M7/Analysis/Fourier13/lecture9.pdf
+  \[\sum_{t=t_0}^\infty \frac{1}{t^2} \leq \frac{\delta^2 + \rho^2 + \epsilon}{C^2}\]
+
+  for some $\epsilon > 0$.  Then if we guarantee that
+  $\normrz{t_0 x/\lambda} < \frac14$ (so that $\Re(e(tx)) > 0$ for all
+  $t < t_0$), then for $N$ large enough, we have:
+{\color{red}
+  \begin{eqnarray*}
+    r_{A_N - A_N}(x) &=& \frac{1}{N} \sum_{t=0}^{N-1} |\widehat{1_A}(t)|^2 e_N(tx)\\
+                     &=& \delta^2 N + \frac{1}{N} |\widehat{1_A}(t)|^2 \Re(e_N(kx)) + \frac{1}{N} \sum_{t\neq 0,\pm k} |\widehat{1_A}(t)|^2 e_N(tx)\\
+                     &\geq& \delta^2 N + \frac{2}{N} |\widehat{1_A}(t)|^2 \Re(e_N(\alpha x)) -
+                            \frac{1}{N} \sum_{t=1}^\infty |\widehat{1_A}(t \alpha)|^2\\
+                     &\geq& \delta^2 N + \rho^2 N -
+                            N C^2 \sum_{t=2}^\infty \frac{1}{t^2}\\
+                     &=& N\left(\delta^2 + \rho^2 - C^2 \sum_{t=t_0}^\infty \frac{1}{t^2}\right)\\
+                     &\geq& \epsilon N\\
+  \end{eqnarray*}
+  
+  (Using theorem \ref{thm:decay}, to conclude
+  $|\widehat{1_A}(t\alpha)| \leq \frac{C}{t}$.)
+
+  Thus for $x$ large enough and $N$ large enough, we get $O(N)$
+  representations of $x$ in $A+A$.  
+
+}
+\end{proof}
+
+This gives us that there must be some hole of some size near to
+multiples of $\lambda$.  Looking at the constants in the proof, we can
+compute what the size of this hole should be: /
+
+{\color{red}
+
+[COMPUTATION]
+
+Also, one will note that the bound we used on the tail sum in the
+above proof was very crude--simply the triangle inequality.  In fact,
+as $N$ gets large this approaches something like
+
+\[N \int_{\frac{t_0}{N}}^{2\pi} \frac{e^{it}}{t^2}\]
+
+Which is related to standard exponential integrals.  So we can use
+facts about such integrals to bound this particular one analytically
+in terms of $t_0$ and $N$ and get a better result.
+
+}
+
+% And so if $\widehat{1_A}(k)$ is much larger than all the other Fourier
+% coefficients, then we might be able to guarantee that this is
+% positive.  For example: If we know that the only Fourier coefficients
+% that are nonzero (in the large $N$ limit) are $k\alpha$, then we can
+% write this as: 
+
+% \begin{eqnarray*}
+% r_{A+A}(x) &\geq& |A|/N + \Re(\widehat{1_A}(\alpha)^2) + \sum_{t > 1}
+%  \Re(\widehat{1_A}(t \alpha)^2 e(tx))\\
+%  &\geq& |A|/N + \Re(\widehat{1_A}(\alpha)^2) - \sum_{t > 1}
+%  |\widehat{1_A}(t \alpha)|^2\\
+% \end{eqnarray*}
+
+% So if $|\widehat{1_A}(\alpha)|$ is large enough--say, $c$, and
+% $|\widehat{1_A}(t \alpha)|$ decays appropriately as $t$ grows--say is
+% less than $\frac{A}{t}$, then we get:
+
+% % See, for example,
+% % http://www-m7.ma.tum.de/foswiki/pub/M7/Analysis/Fourier13/lecture9.pdf
 
 
-\begin{eqnarray*}
-r_{A+A}(x) &\geq& |A|/N + c^2 - \sum_{t > 1}\frac{A^2}{t^2}\\
-&=& \delta + c^2 - A^2\left(\frac{\pi^2}{6}-1\right)\\
-&\geq& \delta + c^2 - 0.644 A^2\\
-\end{eqnarray*}
+% \begin{eqnarray*}
+% r_{A+A}(x) &\geq& |A|/N + c^2 - \sum_{t > 1}\frac{A^2}{t^2}\\
+% &=& \delta + c^2 - A^2\left(\frac{\pi^2}{6}-1\right)\\
+% &\geq& \delta + c^2 - 0.644 A^2\\
+% \end{eqnarray*}
 
-So depending on the precise constants involved, we might end up with a
-conclusion that every such $x$ that lands close to 0 mod $\lambda$
-necessarily has many representations and is therefore disqualified
-from being an Ulam number for that reason.  
+% So depending on the precise constants involved, we might end up with a
+% conclusion that every such $x$ that lands close to 0 mod $\lambda$
+% necessarily has many representations and is therefore disqualified
+% from being an Ulam number for that reason.  
+
+{\color{red}
 
 \subsubsection{Few Ulam numbers outside middle third mod $\lambda$}
 
@@ -2022,50 +2169,50 @@ proportion of times we get exactly k successes in our trials.
 Circle method gets better with more variables.  For this reason, we
 might find it convenient to 
 
-\section{Appendix A: Code}
+% \section{Appendix A: Code}
 
-Code 1: 
+% Code 1: 
 
-\begin{lstlisting}[language=Python]% {../lll.py}
-from sage.libs.fplll.fplll import FP_LLL
-b2=2.57144749848
-b=N(2*pi/2.57144749848)
+% \begin{lstlisting}[language=Python]% {../lll.py}
+% from sage.libs.fplll.fplll import FP_LLL
+% b2=2.57144749848
+% b=N(2*pi/2.57144749848)
 
-def find_mp(x,deg=50,n=10^10):
-    M = []
-    for i in range(deg+1):
-        M.append([1 if v == i else 0 for v in range(deg+1)]+[int(n*(x^i)+.5)])
-    M = matrix(M)
-    F=FP_LLL(M)
-    F.LLL()
-    l=F._sage_()[0][:-1]
+% def find_mp(x,deg=50,n=10^10):
+%     M = []
+%     for i in range(deg+1):
+%         M.append([1 if v == i else 0 for v in range(deg+1)]+[int(n*(x^i)+.5)])
+%     M = matrix(M)
+%     F=FP_LLL(M)
+%     F.LLL()
+%     l=F._sage_()[0][:-1]
 
-    R = ZZ["X"]
-    X=R.gen()
-    fx = 0
-    for i in range(len(l)):
-        fx += X^i * l[i]
-    ans = N(fx(x),50)
-    return(fx, ans, fx.factor())
+%     R = ZZ["X"]
+%     X=R.gen()
+%     fx = 0
+%     for i in range(len(l)):
+%         fx += X^i * l[i]
+%     ans = N(fx(x),50)
+%     return(fx, ans, fx.factor())
 
-ms = [find_mp(b,i) for i in range(2,10)]
-ms.sort(key=lambda x:abs(x[1]))
-for x in ms:
-    print(x)
+% ms = [find_mp(b,i) for i in range(2,10)]
+% ms.sort(key=lambda x:abs(x[1]))
+% for x in ms:
+%     print(x)
 
-print("")
-ms = [find_mp(b2,i) for i in range(2,10)]
-ms.sort(key=lambda x:abs(x[1]))
-for x in ms:
-    print(x)
-\end{lstlisting}
+% print("")
+% ms = [find_mp(b2,i) for i in range(2,10)]
+% ms.sort(key=lambda x:abs(x[1]))
+% for x in ms:
+%     print(x)
+% \end{lstlisting}
 
-Code 2: 
+% Code 2: 
 
-\begin{lstlisting}[language=Bash]
-cat data/indices_of_summands | cut -d " " -f 4 | sort -n|uniq -c|sort -n > data/n_minus_js
-cat data/indices_of_summands | cut -d " " -f 3,4 | sort -n|uniq -c|sort -n > data/i_nmj
-\end{lstlisting}
+% \begin{lstlisting}[language=Bash]
+% cat data/indices_of_summands | cut -d " " -f 4 | sort -n|uniq -c|sort -n > data/n_minus_js
+% cat data/indices_of_summands | cut -d " " -f 3,4 | sort -n|uniq -c|sort -n > data/i_nmj
+% \end{lstlisting}
 
 \begin{thebibliography}{9}
 \bibitem{ulam_steinerberger} 
@@ -2120,6 +2267,8 @@ Additive Combinatorics
 \bibitem{computations}
   https://github.com/daniel373592559/wip-ulam/experiments.py
 
-\end{thebibliography}}
+\end{thebibliography}
+
+}
 
 \end{document}
