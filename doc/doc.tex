@@ -942,11 +942,11 @@ in many places, for example \cite{lyall_roth}.
 
 \subsubsection{Proof via the regularity theorem}
 
-The density increment proof embodies a kind of dichootomy between
-structure and randomness, in how it breaks up into the two cases:
-Where $A$ behaves pseudorandomly, in which density controls all the
-counting expressions, and where $A$ has structure, which we can use
-exploit to iterate the argument.  
+The density increment proof exemplifies a kind of dichootomy between
+structure and randomness in its two cases: Where $A$ behaves
+pseudorandomly, in which density controls all the counting
+expressions, and where $A$ has structure, which we can use exploit to
+iterate the argument.
 
 The pseudorandomness argument will carry over nicely to the sum-free
 and Ulam cases, but second part of the argument relies on the fact
@@ -1228,10 +1228,10 @@ For example,
 \item $d_2 = \frac25$ (upper bound is by
   \cite{sumfree_regularity_luczak}, and the lower bound is established
   by the example from the same paper of integers congruent to 2 or 3
-  mod 5)/
+  mod 5).
 \item $d_3 = \frac12$ using the same argument as for $d_1$.
 \item $d_4 = \frac25$ by the same argument as for $d_2$, since
-  $(5+2\Z) \cup (5+3\Z)$ covers every congruence class mod 4.
+  $(2+5\Z) \cup (3+5\Z)$ covers every congruence class mod 4.
 \end{itemize}
 
 Lastly, thinking back on the arithmetic regularity lemma, we consider
@@ -1518,19 +1518,19 @@ an observation we have already made earlier: If a we pick randomly
 from $\Z$ (say, including each element with probability $\delta$) to
 make a set $A$, then we expect $T(A_N) = O(N^2)$.  
 
-The statement that the set if chosen in this way should be thought of
-as analogous to having only one large Fourier coefficient: Namely
-$\widehat{1_{A_N}}(0) = pN$, with all the others being small.  So we
-would hope to deduce more generally that this situation always implies
-we have many solutions to $x+y=z$, giving that all the sets we have
-been looking at cannot have only small Fourier coefficients.  Put
-another way ``if a set is dense, then to avoid solutions to $x+y=z$ it
-needs to have some kind of pattern (such as being all odds).''
+We think of a set chosen in this way as analogous to a set having only
+one large Fourier coefficient: Namely $\widehat{1_{A_N}}(0) = pN$,
+with all the others being small.  So we would hope to deduce more
+generally that this situation always implies we have many solutions to
+$x+y=z$, giving that all the sets we have been looking at cannot have
+only small Fourier coefficients.  Put another way ``if a set is dense,
+then to avoid solutions to $x+y=z$ it needs to have some kind of
+pattern (such as being all odds).''
 
 
 \begin{theorem}\label{thm:alpha}
   If $A \subseteq \N$ is a sequence of positive integers of density
-  $\delta$ such that $T(A_N)$ is bounded by $c N^{2-\epsilon}$ for
+  $\delta > 0$ such that $T(A_N)$ is bounded by $c N^{2-\epsilon}$ for
   some constants $c > 0, \epsilon > 0$, then there is an
   $\alpha \in \R/\Z$ such that $\widehat{1_A}(\alpha) \geq \delta^2$.
 \end{theorem}
