@@ -1764,46 +1764,74 @@ for example, making $\normrz{x/\lambda}$ even smaller.  Continuing
 this idea, we can prove some results of which the simplest is: 
 
 \begin{theorem}\label{thm:hole1}
-  If $A$ is a set for which $r_{A+A}(x) > c$ implies $x \notin A$ for
-  some constant $c$, and further, $A$ has spectrum $\alpha\Z$, then
-  for some $\eta > 0$, $\norm{x/\lambda} < \eta$ implies $x \notin A$
-  for $x$ large enough.
+  If $A$ is a sum-free set of positive integers with upper density
+  $\delta > 0$, and further, $A$ has spectrum $\alpha\Z$, then for
+  some $\eta > 0$, $\norm{x/\lambda} < \eta$ implies $x \notin A$.
 \end{theorem}
 
 \begin{proof}
   Take $x$ with $\normrz{x/\lambda} < \eta$ for $\eta$ to be chosen
-  later.  let $|\widehat{1_A}(\alpha)| = \rho N$.  Finally, let $t_0$
-  be such that 
+  later.  Note first that since $A$ is sum-free,
+  $x \in A+A \implies x \notin A$ by definition, but also
+  $x \in A-A \implies x \notin A$.  So it suffices to show that
+  $x \in A-A$.  To check this at a finite level, we consider $A_N$ as
+  a subset of $\Z/2N$, at which point $x \in A_N - A_N$ viewed inside
+  $\Z/2N$ iff $x \in A_N - A_N$ in $\Z$.  So we want that
+  $r_{A_N-A_N,2N}(x) > 0$.  But this we can compute by Fourier
+  analytic techniques as described above.
 
-  \[\sum_{t=t_0}^\infty \frac{1}{t^2} \leq \frac{\delta^2 + \rho^2 + \epsilon}{C^2}\]
+  In preparation for doing this, let
+  $|\widehat{1_A}(\alpha)| = \rho N$ (we know $\rho > 0$ by
+  \ref{thm:alpha}).  Finally, let $k_0$ be such that
 
-  for some $\epsilon > 0$.  Then if we guarantee that
-  $\normrz{t_0 x/\lambda} < \frac14$ (so that $\Re(e(tx)) > 0$ for all
-  $t < t_0$), then for $N$ large enough, we have:
-{\color{red}
+  \[\delta^2 + \rho^2 - C^2 \sum_{k=k_0}^\infty \frac{1}{k^2} > 0\]
+
+  (which we know is possible since $\delta > 0, \rho > 0$, and since
+  the the sum converges, and so approaches 0 as $k_0 \to 0$).  Then if
+  we guarantee that $\normrz{k_0 x/\lambda} < \frac14$ (so that
+  $\Re(e(k\alpha x)) > 0$ for all $k < k_0$), then as $N$ gets large, we
+  have:
+
   \begin{eqnarray*}
-    r_{A_N - A_N}(x) &=& \frac{1}{N} \sum_{t=0}^{N-1} |\widehat{1_A}(t)|^2 e_N(tx)\\
-                     &=& \delta^2 N + \frac{1}{N} |\widehat{1_A}(t)|^2 \Re(e_N(kx)) + \frac{1}{N} \sum_{t\neq 0,\pm k} |\widehat{1_A}(t)|^2 e_N(tx)\\
-                     &\geq& \delta^2 N + \frac{2}{N} |\widehat{1_A}(t)|^2 \Re(e_N(\alpha x)) -
-                            \frac{1}{N} \sum_{t=1}^\infty |\widehat{1_A}(t \alpha)|^2\\
-                     &\geq& \delta^2 N + \rho^2 N -
-                            N C^2 \sum_{t=2}^\infty \frac{1}{t^2}\\
-                     &=& N\left(\delta^2 + \rho^2 - C^2 \sum_{t=t_0}^\infty \frac{1}{t^2}\right)\\
-                     &\geq& \epsilon N\\
+    r_{A_N - A_N,2N}(x) &=& \frac{1}{2N} \sum_{t=0}^{2N-1} |\widehat{1_A}(t)|^2 e_{2N}(tx)\\
+                        &\geq& \frac{\delta^2}{2} N + \frac{1}{N} |\widehat{1_A}(\alpha)|^2 \Re(e_N(\alpha x))
+                               - \frac{1}{2N} \sum_{|k| \geq k_0}
+                               |\widehat{1_A}(k\alpha)|^2\\
+  \end{eqnarray*}
+
+  where here, we are using that
+  $\Re(|\widehat{1_A}(k\alpha)|^2 e(k\alpha x)) > 0$ for $k < k_0$ by
+  choice of $\eta$, and that
+  $\Re(|\widehat{1_A}(k\alpha)|^2 e(k\alpha x)) >
+  -|\widehat{1_A}(k\alpha)|^2$ for $k \geq k_0$.
+
+  \begin{eqnarray*}
+                        &\geq& \frac{\delta^2}{2} N + \frac{\rho^2}{2} N
+                               - \frac{C^2 N}{2} \sum_{|k| \geq k_0} |\widehat{1_A}(k\alpha)|^2\\
+                        &\geq& \frac{\delta^2}{2} N + \frac{\rho^2}{2} N
+                               - \frac{C^2 N}{2} \sum_{|k| \geq k_0}
+                               \frac{1}{k^2}\\
+  \end{eqnarray*}
+
+
+  Using theorem \ref{thm:decay} to conclude
+  $|\widehat{1_A}(k\alpha)| \leq \frac{C}{k}$.
+
+  \begin{eqnarray*}
+                        &\geq& \frac{N}{2}\left(\delta^2 + \rho^2 - C^2 \sum_{|k| \geq k_0} \frac{1}{k^2}\right)\\
+                        &=& N\left(\delta^2 + \rho^2 - C^2 \sum_{t=t_0}^\infty \frac{1}{t^2}\right)\\
   \end{eqnarray*}
   
-  (Using theorem \ref{thm:decay}, to conclude
-  $|\widehat{1_A}(t\alpha)| \leq \frac{C}{t}$.)
+  Which we know by choice of $k_0$ is $O(N)$, and therefore larger
+  than 0.
 
-  Thus for $x$ large enough and $N$ large enough, we get $O(N)$
-  representations of $x$ in $A+A$.  
-
-}
+  Thus we have $x \in A - A$ (and in fact has many representations as
+  such), which means $x$ cannot be in $A$, as $A$ is sum-free.
 \end{proof}
 
 This gives us that there must be some hole of some size near to
 multiples of $\lambda$.  Looking at the constants in the proof, we can
-compute what the size of this hole should be: /
+compute what the size of this hole should be: 
 
 {\color{red}
 
@@ -1813,11 +1841,11 @@ Also, one will note that the bound we used on the tail sum in the
 above proof was very crude--simply the triangle inequality.  In fact,
 as $N$ gets large this approaches something like
 
-\[N \int_{\frac{t_0}{N}}^{2\pi} \frac{e^{it}}{t^2}\]
+\[N \int_{\frac{k_0}{N}}^{2\pi} \frac{e^{it}}{t^2}dt\]
 
 Which is related to standard exponential integrals.  So we can use
 facts about such integrals to bound this particular one analytically
-in terms of $t_0$ and $N$ and get a better result.
+in terms of $k_0$ and $N$ and get a better result.
 
 }
 
