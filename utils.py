@@ -15,6 +15,20 @@ def real_mod(x,m):
 def red(x,a=2*math.pi):
     return abs(x - a*math.floor(x/a)-(a/2))
 
+def extend_few_reps(l,N,p=1):
+    ans = l
+    reps = {i:0 for i in range(1,2*N+1)}
+    for x in l:
+        for y in l:
+            reps[x+y] += 1
+    for n in range(max(l)+1,N):
+        r = random.random()
+        if reps[n] == 0 or r < p/reps[n]:
+            for x in ans:
+                reps[x+n] += 1
+            ans += [n]
+    return ans
+
 def extend_with_storage(l,N,debug=True):
     ans = l
     top = l[-1]

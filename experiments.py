@@ -55,6 +55,23 @@ def experiment2():
         alpha,f = find_alpha(A,0.001,debug=True)
         print(s,alpha,f/A[-1],2*math.pi/alpha)
 
+def experiment3():
+    x = 10
+    for p in [i/x for i in range(x+1)]:
+        print(p)
+        y = 200
+        ll = [len(extend_few_reps([1,2],1000,0.5)) for xx in range(y)]
+        mu = sum(ll)/y
+        print(sum([(mu - xx)**2 for xx in ll])/y)
+    #s = 0.001
+    #print(find_alpha(l,s,debug=False))
+
+def experiment4():
+    l = u1_2[:1000000]
+    a = alpha1_2
+    for i in range(1,10):
+        print(i,i*ft(a*i,l)/len(l))
+        
 def experiment5():
     l = u1_2
     a = 2.5714474995

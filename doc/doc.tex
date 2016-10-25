@@ -887,7 +887,7 @@ still remain by the time we get to this point.
     S &=& \frac1N |A|^3 + \frac1N \sum_{t=1}^{N-1} \hat 1_A(t)\hat 1_gA(t)\hat 1_A(-2t) \\
       &=& \delta^3 N^2 + \frac1N \sum_{t=0}^{N-1} \hat 1_A(t)^2\hat 1_A(-2t) \\
       &\geq& \delta^3 N^2 - \sup_t |\hat 1_A(-2t)| \frac1N \sum_{t=0}^{N-1} |\hat 1_A(t)|^2 \\
-      &=& \delta^3 N^2 - \sup_t |\hat 1_A(-2t)| \frac1N \sum_{t=0}^{N-1} |\hat 1_A(t)|^2 \\
+      &=& \delta^3 N^2 - \sup_t |\hat 1_A(-2t)| \frac1N \sum_{t=0}^{N-1} |1_A(t)|^2 \\
       &=& \delta^3 N^2 - \sup_t |\hat 1_A(-2t)| |A|\\
       &=& \delta^3 N^2 - \sup_k |\hat 1_A(k)| \delta N
   \end{eqnarray*}
@@ -1210,7 +1210,7 @@ $\frac25$--a meaningful improvement from the automatic bound of
 $\frac12$ on the density of an arbitrary sum-free set.
 
 On the other hand, the construction of Erdos tells us that there exist
-sum-free sets with density $\frac13$ whose image mod $m$, for all $m$,
+-sum-free sets with density $\frac13$ whose image mod $m$, for all $m$,
 is everything.  We might ask if there is any condition we can prove in
 the gap between $\frac13$ and $\frac25$.  
 
@@ -1270,6 +1270,31 @@ on to the complete spectrum of these sets.  We will then study the
 apparent distributions of these sets modulo whatever their natural
 frequency appears to be and see what can be concluded about the
 frequency from the specturm. 
+
+\subsection{Strategy}
+
+In this section we do not supply a complete understanding of the
+observed phenomena.  We do, however, propose a strategy that we hope
+will lead to such an understanding, and we partially execute certain
+components of that strategy.
+
+Broadly, we will first try to understand the Fourier spectrum, and
+then determine what this says about the distrubution.  This happens in
+five steps: 
+
+\begin{enumerate}
+  \item Understand the density of $A$.
+  \item Prove the existence of a large Fourier coefficient at
+    some $\alpha$.
+  \item Prove that the spectrum of $A$ is supported in $\alpha \Z$.  
+  \item Prove that the Fourier coefficients $\widehat{A}(k\alpha)$
+    decay fast enough as $k \to \infty$.  
+  \item Use the circle method to deduce features of the distribution
+    of $A$ modulo $2\pi/\alpha$.
+\end{enumerate}
+
+Of this programme, we will provide results in the direction of steps 2
+and 5, and computational evidence in favour of the others.
 
 \subsection{Maximal Fourier coefficient}
 
@@ -1641,9 +1666,33 @@ Some remarks:
 
   \[\widehat{f}(k\alpha) \leq \frac{C}{k}\]
 
-  for constant $C$, namely $C = ???$.  
+  for constant $C$.  
 \end{theorem}
 
+\begin{proof}
+Recall $\widehat{f}(k) =
+\frac{1}{N}\displaystyle\sum_{t=0}^{N-1}f(t)e(-kt) =
+\frac{1}{N}\displaystyle\sum_{t=0}^{N-1}f(t)e^{-2\pi i k t/N}$.  Using
+summation by parts, this is: 
+
+\begin{eqnarray*}
+\widehat{f}(k\alpha) &=& \frac{1}{N}\sum_{t=0}^{N-1}f(t)e^{-2\pi i k\alpha t/N}\\
+               &=& \frac{1}{N}\sum_{t=0}^{N-2}(f(t+1)-f(t))\sum_{x=t}^{N-1}e^{-2\pi i k\alpha x/N}\\
+               &\leq& \frac{1}{N}\sum_{t=0}^{N-2}(f(t+1)-f(t))\sum_{x=t}^{N-1}e^{-2\pi i k\alpha x/N}\\
+\end{eqnarray*}
+
+But $\frac 1N \sum_{x=t}^{N-1}e^{-2\pi i k\alpha x/N}$ is approximately
+\[\frac 1N \sum_{x=t}^{N-1}e^{-2\pi i k\alpha x/N} \approx \int_{x=t/N}^1 e^{-2\pi i k\alpha x} = \frac{1}{-2\pi i k\alpha} (0-e^{-2\pi i k\alpha
+  t/N}) = \frac{e^{-2\pi i k\alpha
+  t/N}}{2\pi i k\alpha}\]
+\end{proof}
+
+Thus 
+
+\[\widehat{f}(k\alpha) \leq \frac{1}{2\pi k\alpha}\sum_{t=0}^{N-2}(f(t+1)-f(t))e^{-2\pi i k\alpha
+      t/N} \]
+
+But if $f$ is an indicator function, then 
 }
 
 
@@ -1806,20 +1855,19 @@ this idea, we can prove some results of which the simplest is:
   -|\widehat{1_A}(k\alpha)|^2$ for $k \geq k_0$.
 
   \begin{eqnarray*}
-                        &\geq& \frac{\delta^2}{2} N + \frac{\rho^2}{2} N
-                               - \frac{C^2 N}{2} \sum_{|k| \geq k_0} |\widehat{1_A}(k\alpha)|^2\\
-                        &\geq& \frac{\delta^2}{2} N + \frac{\rho^2}{2} N
-                               - \frac{C^2 N}{2} \sum_{|k| \geq k_0}
-                               \frac{1}{k^2}\\
+    &\geq& \frac{\delta^2}{2} N + \frac{\rho^2}{2} N
+           - \frac{1}{2N} \sum_{|k| \geq k_0} |\widehat{1_A}(k\alpha)|^2\\
+    &\geq& \frac{\delta^2}{2} N + \frac{\rho^2}{2} N
+           - \frac{C^2 N}{2} \sum_{|k| \geq k_0}
+           \frac{1}{k^2}\\
   \end{eqnarray*}
 
 
   Using theorem \ref{thm:decay} to conclude
-  $|\widehat{1_A}(k\alpha)| \leq \frac{C}{k}$.
+  $|\widehat{1_A}(k\alpha)| \leq \frac{C}{k}$ for some constant $C$.
 
   \begin{eqnarray*}
-                        &\geq& \frac{N}{2}\left(\delta^2 + \rho^2 - C^2 \sum_{|k| \geq k_0} \frac{1}{k^2}\right)\\
-                        &=& N\left(\delta^2 + \rho^2 - C^2 \sum_{t=t_0}^\infty \frac{1}{t^2}\right)\\
+    &\geq& \frac{N}{2}\left(\delta^2 + \rho^2 - C^2 \sum_{|k| \geq k_0} \frac{1}{k^2}\right)\\
   \end{eqnarray*}
   
   Which we know by choice of $k_0$ is $O(N)$, and therefore larger
@@ -1918,6 +1966,16 @@ find the next few elements of $A$ relatively quickly.
 
 A first try at formalising this might go: $|A_N + A_N| \leq |A_N|^2$,
 and so if for all $N$, $|A_N|^2 \leq cN$ for some constant $c$, then
+
+
+\subsection{Regularity}
+
+\begin{definition}$A \subseteq \N$ is \textbf{$\epsilon, \beta$ regular}
+  if there is a subset $S \subseteq \R/\Z$ such that
+  $\abr{A^c, \pi_\beta\inv(S)} < \epsilon$, where $\pi_\beta$ is the
+  composition $\Z \to \beta\Z \to \R/\Z$, where the first map is
+  multiplication by $\beta$ and the second is reduction modulo $\Z$.
+\end{definition}
 
 \subsection{Reducing Ulam-like sets to sum-free}
 
