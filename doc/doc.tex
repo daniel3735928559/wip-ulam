@@ -1670,31 +1670,28 @@ Some remarks:
 \end{theorem}
 
 \begin{proof}
-Recall $\widehat{f}(k) =
-\frac{1}{N}\displaystyle\sum_{t=0}^{N-1}f(t)e(-kt) =
-\frac{1}{N}\displaystyle\sum_{t=0}^{N-1}f(t)e^{-2\pi i k t/N}$.  Using
-summation by parts, this is: 
+
+
+Recall $\widehat{f}(k\alpha) =
+\frac{1}{N}\displaystyle\sum_{t=0}^{N-1}f(t)e(-k\alpha t) =
+\frac{1}{N}\displaystyle\sum_{t=0}^{N-1}f(t)e^{-i k\alpha t/N}$.
+Since we have some kind of periodicity mod $\lambda = \frac{2\pi}{\alpha}$,
+we can break up this sum and then use summation by parts and the
+triangle inequality to get:
 
 \begin{eqnarray*}
-\widehat{f}(k\alpha) &=& \frac{1}{N}\sum_{t=0}^{N-1}f(t)e^{-2\pi i k\alpha t/N}\\
-               &=& \frac{1}{N}\sum_{t=0}^{N-2}(f(t+1)-f(t))\sum_{x=t}^{N-1}e^{-2\pi i k\alpha x/N}\\
-               &\leq& \frac{1}{N}\sum_{t=0}^{N-2}(f(t+1)-f(t))\sum_{x=t}^{N-1}e^{-2\pi i k\alpha x/N}\\
+  \widehat{f}(k\alpha) &=& \frac{1}{N}\sum_{x=0}^{\lambda}\sum_{y=0}^{(N-1)/\lambda}f(x+\lambda y)e^{-i k\alpha (x+\lambda y)/N}\\
+                       &=& \frac{1}{N}\sum_{x=0}^{\lambda} e^{-i k\alpha x/N} \sum_{y=0}^{(N-1)/\lambda}f(x+\lambda y)\\
+                       &\leq& \frac{2}{N}\sum_{x=0}^{\lambda} e^{-i k\alpha x/N} \frac{N}{\lambda} f(x)\\
+                       &=& \frac{2}{\lambda}\sum_{x=0}^{\lambda} e^{-i k\alpha x/N} f(x)\\
+                       &=& \frac{2}{\lambda}\sum_{x=0}^{\lambda-1} (f(x+1)-f(x))\sum_{y=x+1}^\lambda e^{-i k\alpha y/N}\\
+                       &\leq& \frac{4}{\lambda}\sum_{x=0}^{\lambda-1} (f(x+1)-f(x)) \lambda \int_{x+1}^\lambda e^{-i k\alpha y}dy\\
+                       &\leq& \frac{4}{\lambda}\sum_{x=0}^{\lambda-1} (f(x+1)-f(x)) \frac{-i\lambda}{k\alpha}(1-e^{-i k\alpha (x+1)})\\
+                       &\leq& \frac{4\lambda}{k}\sum_{t=0}^{N-2}(f(t+1)-f(t))(e^{-i k\alpha (x+1)}-1)i\\
+                       &\leq& \frac{8\lambda^2}{k}\\
 \end{eqnarray*}
 
-But $\frac 1N \sum_{x=t}^{N-1}e^{-2\pi i k\alpha x/N}$ is approximately
-\[\frac 1N \sum_{x=t}^{N-1}e^{-2\pi i k\alpha x/N} \approx \int_{x=t/N}^1 e^{-2\pi i k\alpha x} = \frac{1}{-2\pi i k\alpha} (0-e^{-2\pi i k\alpha
-  t/N}) = \frac{e^{-2\pi i k\alpha
-  t/N}}{2\pi i k\alpha}\]
 \end{proof}
-
-Thus 
-
-\[\widehat{f}(k\alpha) \leq \frac{1}{2\pi k\alpha}\sum_{t=0}^{N-2}(f(t+1)-f(t))e^{-2\pi i k\alpha
-      t/N} \]
-
-But if $f$ is an indicator function, then 
-}
-
 
 \subsubsection{Spectral complexity and density}
 
@@ -1702,8 +1699,6 @@ But if $f$ is an indicator function, then
 % truly distinct nonzero Fourier coefficients there are
 
 \subsection{Distribution}
-
-{\color{red}
 
 \subsubsection{Distributions of sets mod $\lambda$}
 

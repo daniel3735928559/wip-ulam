@@ -70,7 +70,7 @@ def experiment4():
     l = u1_2[:1000000]
     a = alpha1_2
     for i in range(1,10):
-        print(i,i*ft(a*i,l)/len(l))
+        print[(i,i*ft(a*i,l)/len(l))
         
 def experiment5():
     l = u1_2
