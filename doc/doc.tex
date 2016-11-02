@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amsthm,amssymb,graphicx,setspace,mathrsfs,mathstyle,listings,color}
+\usepackage{csvsimple}
 %\topmargin 0in
 %\headheight 0in
 %\headsep .2in
@@ -185,20 +186,12 @@ shrinks with $k$.  For example, for $N = 100000$, we compute this for
 a few values of $k$ (noting that of course the values for $-k$ are
 just the conjugates of these:
 
-\begin{tabular}{|ll|}
+\begin{tabular}{|l|l|}
 \hline
-$k$ & $\widehat{1_{A_N}}(k\alpha)$\\
-\hline
-1 & 0.7985467537954992\\
-2 & 0.32061814928309407\\
-3 & 0.30359418284609546\\
-4 & 0.6019015738751037\\
-5 & 0.6004862934665662\\
-6 & 0.3699258112430088\\
-7 & 0.1279822946231241 \\
-8 & 0.1443860719363926 \\
-9 & 0.14047291569572581\\
-\hline
+  $k$ & $\widehat{A}(k\alpha)$
+  \csvreader{datafiles/harmonics_u1_2.csv}{}
+  {\\\csvcoli & \csvcolii}
+\\\hline
 \end{tabular}
 
 and as $N$ gets large, it appears that
@@ -1258,11 +1251,10 @@ case.  When we refer to computer computations, we will mostly be
 referring to various programs in the repository \cite{computations}.
 In most cases, we will be referring to the particular file
 \icode{/experiment.py}.  For example, when we talk about
-\icode{experiment17(2, 3)}, we mean the function \icode{experiment17}
-in the \icode{experiment.py} in that repository, called with the
-specified arguments.  Sometimes we will refer to code in other files
-as well from the same repository, and will mention where the code in
-question is located in each case.
+\icode{experiment17}, we mean the function \icode{experiment17} in the
+\icode{experiment.py} file in that repository.  Sometimes we will
+refer to code in other files as well from the same repository, and
+will mention where the code in question is located in each case.
 
 We will discuss the questions first by discussing the maximal Fourier
 coefficients of the various sets we've been thinking about, then move
@@ -1296,7 +1288,35 @@ five steps:
 Of this programme, we will provide results in the direction of steps 2
 and 5, and computational evidence in favour of the others.
 
-\subsection{Maximal Fourier coefficient}
+
+\subsection{Density}
+
+As we have said, it appears that the Ulam sequence has positive
+(upper) density around $0.07$.  
+
+\begin{conjecture}
+The Ulam sequence has positive upper density.
+\end{conjecture}
+
+
+\begin{conjecture}
+  For any decision sequence $S$ with a positive density of 1s, the
+  corresponding sum-free set $A = \theta(S)$ has positive upper density.
+\end{conjecture}
+
+For such sum-free sets $A$, there is kind of a battle: as we build $A$
+from the decision sequence, say we have built all elements up to some
+$N$, i.e. we have computed $A_N$.  If $A_N$ is very large, then
+$A_N+A_N$ will contain many elements and we will have to go far to
+find the next element of $A$.  If on the other hand, $A_N$ is not
+large, then $A_N + A_N$ will be sparse, which will make it easy to
+find the next few elements of $A$ relatively quickly.  
+
+A first try at formalising this might go: $|A_N + A_N| \leq |A_N|^2$,
+and so if for all $N$, $|A_N|^2 \leq cN$ for some constant $c$, then
+
+
+\subsection{Large Fourier coefficient}
 
 The initial observation of \cite{ulam_steinerberger} is that the
 Fourier transform of the indicator function of $U(1,2)$ has takes a
@@ -1935,33 +1955,25 @@ A conjecture of Gibbs states...
 Numbers $x$ that fail to be Ulam because in fact $r^*_{A+A}(x) = 0$
 all seem to lie within the middle third.  
 
+\subsection{Uniformity}
 
-\subsection{Density}
+We might ask whether we can at least guarantee some kind of
+non-uniformity.  For example, can we find a set $E$ and constant $c$
+such that $|A_N \cap E|/N \geq \frac{|A_N|}{N}\frac{|E_N|}{N}$?  In
+fact, we can do slightly better: 
 
-As we have said, it appears that the Ulam sequence has positive
-(upper) density around $0.07$.  
+\begin{theorem}
+  For $A$ a nearly sum-freeset of densite $\delta$, let $\alpha$ be
+  the maximal Fourier coefficient, and define
+  $E_{t} = \{n \in [N] : \Re(e(\alpha n)) \leq t\}$ (roughly, the set
+  of integers that land in an interval of radius $t$ centred at
+  $\lambda/2$ modulo $\lambda$.  Then there is a $t$ such that
+  $\abr{A,E_t} \geq \delta^2/8 + \delta |E_t \cap [N]|$.  
+\end{theorem}
 
-\begin{conjecture}
-The Ulam sequence has positive upper density.
-\end{conjecture}
+\begin{proof}
 
-
-\begin{conjecture}
-  For any decision sequence $S$ with a positive density of 1s, the
-  corresponding sum-free set $A = \theta(S)$ has positive upper density.
-\end{conjecture}
-
-For such sum-free sets $A$, there is kind of a battle: as we build $A$
-from the decision sequence, say we have built all elements up to some
-$N$, i.e. we have computed $A_N$.  If $A_N$ is very large, then
-$A_N+A_N$ will contain many elements and we will have to go far to
-find the next element of $A$.  If on the other hand, $A_N$ is not
-large, then $A_N + A_N$ will be sparse, which will make it easy to
-find the next few elements of $A$ relatively quickly.  
-
-A first try at formalising this might go: $|A_N + A_N| \leq |A_N|^2$,
-and so if for all $N$, $|A_N|^2 \leq cN$ for some constant $c$, then
-
+\end{proof}
 
 \subsection{Regularity}
 
