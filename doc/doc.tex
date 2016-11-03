@@ -1708,6 +1708,7 @@ triangle inequality to get:
                        &\leq& \frac{4}{\lambda}\sum_{x=0}^{\lambda-1} (f(x+1)-f(x)) \lambda \int_{x+1}^\lambda e^{-i k\alpha y}dy\\
                        &\leq& \frac{4}{\lambda}\sum_{x=0}^{\lambda-1} (f(x+1)-f(x)) \frac{-i\lambda}{k\alpha}(1-e^{-i k\alpha (x+1)})\\
                        &\leq& \frac{4\lambda}{k}\sum_{t=0}^{N-2}(f(t+1)-f(t))(e^{-i k\alpha (x+1)}-1)i\\
+                       &\leq& \frac{4\lambda}{k}\sum_{t=0}^{N-2}|(f(t+1)-f(t))(e^{-i k\alpha (x+1)}-1)i|\\
                        &\leq& \frac{8\lambda^2}{k}\\
 \end{eqnarray*}
 
@@ -1955,7 +1956,16 @@ A conjecture of Gibbs states...
 Numbers $x$ that fail to be Ulam because in fact $r^*_{A+A}(x) = 0$
 all seem to lie within the middle third.  
 
-\subsection{Uniformity}
+\subsubsection{Non-uniformity/Regularity}
+
+
+\begin{definition}$A \subseteq \N$ is \textbf{$\epsilon, \beta$ regular}
+  if there is a subset $S \subseteq \R/\Z$ such that
+  $\abr{A^c, \pi_\beta\inv(S)} < \epsilon$, where $\pi_\beta$ is the
+  composition $\Z \to \beta\Z \to \R/\Z$, where the first map is
+  multiplication by $\beta$ and the second is reduction modulo $\Z$.
+\end{definition}
+
 
 We might ask whether we can at least guarantee some kind of
 non-uniformity.  For example, can we find a set $E$ and constant $c$
@@ -1975,18 +1985,6 @@ fact, we can do slightly better:
 
 \end{proof}
 
-\subsection{Regularity}
-
-\begin{definition}$A \subseteq \N$ is \textbf{$\epsilon, \beta$ regular}
-  if there is a subset $S \subseteq \R/\Z$ such that
-  $\abr{A^c, \pi_\beta\inv(S)} < \epsilon$, where $\pi_\beta$ is the
-  composition $\Z \to \beta\Z \to \R/\Z$, where the first map is
-  multiplication by $\beta$ and the second is reduction modulo $\Z$.
-\end{definition}
-
-\subsection{Reducing Ulam-like sets to sum-free}
-
-\subsubsection{Via triangle removal}
 \subsubsection{Distribution of large summands}
 We've studied the smaller summands a bit--now the question is: What
 about the large summands?
@@ -2255,6 +2253,10 @@ such test is pick randomly from the 100000 $a_n$s in that congruence
 class and ask whether 2 is ever a complement of that $a_n$), and the
 proportion of times 2 shows up as a complement of k is equal to the
 proportion of times we get exactly k successes in our trials.
+
+\subsection{Reducing Ulam-like sets to sum-free}
+
+\subsubsection{Via triangle removal}
 
 \subsection{Variants of the Ulam problem}
 

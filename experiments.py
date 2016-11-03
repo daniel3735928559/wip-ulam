@@ -17,6 +17,8 @@ alpha1_2 = 2.5714474995
 alpha1_4 = 0.506013502
 alpha1_2_3 = 0.23036348 # 0.23034156 #0.23034016
 alpha01001 = 2.5086204384047996 #2.508619
+lambda1_2 = 5422,2219
+lambda01001 = 1350,539
 beta01001 = 1.26594784
 
 def experiment0(l,a,n):
@@ -51,8 +53,8 @@ def experiment2():
     """Compute alpha_{a,b} for various a,b"""
     l = {"01001":sf01001,"01010":sf01010,"10010":sf10010}
     for s in l:
-        A = l[s][:1000]
-        alpha,f = find_alpha(A,0.001,debug=True)
+        A = l[s][:10000]
+        alpha,f = find_alpha(A,0.001,prec=4,debug=False)
         print(s,alpha,f/A[-1],2*math.pi/alpha)
 
 def experiment3():
@@ -70,7 +72,7 @@ def experiment4():
     l = u1_2[:1000000]
     a = alpha1_2
     for i in range(1,10):
-        print[(i,i*ft(a*i,l)/len(l))
+        print(i,i*ft(a*i,l)/len(l))
         
 def experiment5():
     l = u1_2
@@ -78,10 +80,29 @@ def experiment5():
     for k in range(100000):
         d = k*a-2*math.pi*math.floor(k*a/(2*math.pi))
         f = ft(k*a,l)
-        if(abs(d) > 0.1 and abs(2*math.pi - d) > 0.1 and f > 1000):
+        if abs(d) > 0.1 and abs(2*math.pi - d) > 0.1 and f > 1000:
             print(k,d,f)
 
-def experiment6(us,ms):
+def experiment6():
+    #l,m,k = u1_2[:10000],5422,2219
+    l,m,k = sf01001[:10000],1350,539
+    N = l[-1] - (l[-1]%m)
+    rAA = {i:0 for i in range(N)}
+    for x in l:
+        for y in l:
+            if y > x or x+y >= N:
+                break
+            rAA[x+y] += 1
+    rAA_dist = [0 for i in range(m)]
+    for x in range(N):
+        rAA_dist[x%m] += rAA[x]
+    for x in range(m):
+        rAA_dist[x] /= N/m
+    for x in range(m):
+        print((x*k)%m,rAA_dist[x])
+        
+        
+def experiment60(us,ms):
     """Try to measure the bias in the 'us' mod each m in ms by computing the std dev of the number of times each residue class mod m shows up"""
     m = 1
     for x in ms:
