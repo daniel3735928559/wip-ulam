@@ -18,6 +18,8 @@ alpha1_4 = 0.506013502
 alpha1_2_3 = 0.23036348 # 0.23034156 #0.23034016
 alpha01001 = 2.5086204384047996 #2.508619
 lambda1_2 = 5422,2219
+lambda1_3 = 6424,2897
+lambda01010 = 3923,1125
 lambda01001 = 1350,539
 beta01001 = 1.26594784
 
@@ -41,7 +43,7 @@ def experiment1():
     l = [(1,i) for i in range(2,16)]
     l += [(2,3)]
     l += [(3,i) for i in range(4,11) if i % 3 != 0]
-    l += [(4,i) for i in range(4,16) if i % 2 != 0]
+    #l += [(4,i) for i in range(4,16) if i % 2 != 0]
     l += [(5,i) for i in range(7,10)]
     for x in l:
         a,b=x
@@ -84,8 +86,15 @@ def experiment5():
             print(k,d,f)
 
 def experiment6():
-    #l,m,k = u1_2[:10000],5422,2219
-    l,m,k = sf01001[:10000],1350,539
+    #l = u1_2[:10000]
+    #m,k = lambda1_2
+    #l = sf01001[:10000]
+    #m,k = lambda01001
+    #l = sf01010[:10000]
+    #m,k = lambda01010
+    l = u1_3[:10000]
+    m,k = lambda1_3
+    
     N = l[-1] - (l[-1]%m)
     rAA = {i:0 for i in range(N)}
     for x in l:
