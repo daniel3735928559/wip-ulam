@@ -124,11 +124,16 @@ def experiment60(us,ms):
         print(m,sigma)
 
 def experiment7():
-    """Approximate alpha for a few precomputed sequences"""
-    print("1,2",find_alpha(u1_2[:2000]))
-    print("1,3",find_alpha(u1_3[:2000]))
-    print("2,3",find_alpha(u2_3[:2000]))
-    print("12,13",find_alpha(u12_13[:2000]))
+    l = u1_2[:10000]
+    ll = set(l)
+    lm = 2*math.pi/alpha1_2
+    for i in range(5000):
+        s = 0
+        for j in range(i):
+            if l[i] - l[j] in ll:
+                s = l[j]
+                break
+        print(i+1,real_mod(l[i],lm),l[i],s)
             
 def experiment8(l):
     """Compute the summands of each element of l"""

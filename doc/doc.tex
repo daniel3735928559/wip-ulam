@@ -83,18 +83,18 @@ Thus the first few terms can be computed:
 69, \ldots\]
 
 In particular, there are two ways a number could fail to be Ulam:
-Either it has a representation as a sum of two distinct previous
-smaller Ulam numbers in more than one way (such as $5 = 4+1 = 2+3$),
-or it has no representations as a sum of distinct smaller Ulam numbers
-at all (such as 23).
+Either it has a representation as a sum of two distinct smaller Ulam
+numbers in more than one way (such as $5 = 4+1 = 2+3$), or it has no
+representations as a sum of distinct smaller Ulam numbers at all (such
+as 23).
 
 One thing that makes the sequence interesting is that it seems
 historically to have been very difficult to prove anything about it.
 We know, for example, that it must be infinite, since, given the first
 $n$ elements $a_1, \ldots, a_n$, we can always find at least one
-number that satisfies both the criteria above, namely $a_{n-1} +
-a_n$.  Thus there must be a smallest such number, which is the next
-Ulam number.  
+number that satisfies both the criteria above, namely $a_{n-1} + a_n$.
+Thus there must be a smallest such number, which is therefore the next
+Ulam number.
 
 We also know that if we use the same definition but start with
 different initial values, we can get sequences that we can analyse
@@ -1045,20 +1045,33 @@ $\FF_q^n$ such that the equation $\alpha a_1 + \beta a_2 + \gamma a_3
   paper for details.
 \end{proof}
 
-\section{Questions}
+\section{Questions and Definitions}
 
 Bearing in mind this landscape of ideas, theorems, and techniques, we
-now raise some questions is the context of the Ulam numbers
-specifically, and the various phenomena surrounding these and related
-sequences.  
+now raise some questions in the particular context of the Ulam numbers
+and related sequences, and the various phenomena that we observe
+around them.  In addition, we shall give definitions in this section
+to allow us to formulate our questions precisely.
 
 \subsection{Ulam numbers and other 1-additive sequences}
 
+\begin{definition}\label{def:ulam}
+  The \textbf{Ulam sequence} starting with positive integers $a$, $b$
+  is denoted $\ulam{a}{b}$ and is the sequence with $a_1 = a$,
+  $a_2 = b$, and, for $n > 2$, $a_n > a_{n-1}$ is the integer satisfying:
+  \begin{enumerate}
+  \item 1-additivity: There is exactly one pair of $0 < i < j < n$ with $a_i + a_j = a_n$.
+  \item Greediness: $a_n$ is the smallest positive integer with the above two
+    properties.
+\end{enumerate}
+
+\end{definition}
+
 One of the first questions that was asked by Ulam himself about the
-Ulam sequence $A$ was: 
+Ulam sequence $\ulam{1}{2}$ was: 
 
 \begin{question}\label{qn:density}
-  Does $A$ have positive uppper density?
+  Does $\ulam{1}{2}$ have positive uppper density?
 \end{question}
 
 For all examples of Ulam-like sequences where we know the answer to
@@ -1099,14 +1112,14 @@ the spectrum:
   How quickly does $\widehat{1_A}(k\alpha)$ decay with $k$?
 \end{question}
 
-Moving on from $U(1,2)$, we can also ask about similar sequences: 
+Moving on from $\ulam{1}{2}$, we can also ask about similar sequences: 
 
 \begin{question}\label{qn:other_alpha}
   How does $\alpha$ behave for other non-regular-looking Ulam-like
-  sequences?  For example, supposing $\alpha_n \in [0,\pi]$ is the maximal Fourier
-  coefficient associated with $U(1,n)$ (supposing there even is a
-  unique such Fourier coefficient), what is the behaviour of
-  $\alpha_n$ as $n$ grows?
+  sequences?  For example, supposing $\alpha_n \in (0,\pi]$ is the
+  maximal Fourier coefficient associated with $\ulam{1}{n}$ (supposing
+  there even is a unique such Fourier coefficient), what is the
+  behaviour of $\alpha_n$ as $n$ grows?
 \end{question}
 
 Separately, in light of the triangle removal lemma, there is a set of
@@ -1184,7 +1197,7 @@ to ask similar questions with the these sets:
   approach continuous-looking distributions?
 \end{question}
 
-\begin{question}\label{qn:sumfree_regularity}
+\begin{question}\label{qn:sumfree_new_regularity}
   Does whatever notion of regularity applies to the Ulam sequence
   apply here as well?
 \end{question}
@@ -1292,12 +1305,120 @@ and 5, and computational evidence in favour of the others.
 \subsection{Density}
 
 As we have said, it appears that the Ulam sequence has positive
-(upper) density around $0.07$.  
+(upper) density around $0.07$.  This might suggest for us the
+conjecture:
 
 \begin{conjecture}
-The Ulam sequence has positive upper density.
+  The Ulam sequence $\ulam{1}{2}$ has positive upper density.
 \end{conjecture}
 
+Considering this is step 1 in our strategy, we might wonder whether
+what reasons there are for believing this.  After all, the only reason
+we know other Ulam sequences such as $\ulam{2}{5}$ have positive
+density is that we know they are regular.  So in trying to get a
+handle on the distribution of $\ulam{1}{2}$, it might be backwards to
+start with an assertion of positive density and then deduce
+regularity.
+
+Even so, it is already non-obvious that positive density implies all
+the rest of what we want to know, and so if this is all we can prove
+at the moment, it still seems worthwhile to record.  
+
+But beyond that, we will give some reason to believe this conjecture.
+Recall an Ulam sequence is an increasing sequence of positive integers
+that starts with some $a$ and $b$ and that continues by choosing
+integers according to the requirements of 1-additivity (``every
+element is uniquely a sum of previous elements'') and greediness
+(``always choose the smallest such element available'').  In some
+ways, it is the greediness that makes Ulam sequences hard to analyse.
+If we drop this condition, then we get a general class of sequences to
+which belong the Ulam sequences, but also many others:
+
+\begin{definition}\label{def:1additive}
+  For $S \subseteq \Z^+$ a finite set (say of size $k$), a
+  \textbf{1-additive sequence with base $S$} is an infinite sequence
+  of positive integers $a_i$ such that $a_1 < \ldots < a_k$ are the
+  elements of $S$, and, for $n > k$, $a_n$ is greater than $a_{n-1}$
+  and has a unique pair of integers $i, j$ with $0 < i < j < n$ such
+  that $a_n = a_i + a_j$.
+
+  We may talk of simply a \textbf{1-additive sequence}, by which we
+  will mean a sequence of integers that is a 1-additive sequence with
+  base $S$ for some $S$.
+\end{definition}
+
+\begin{example}
+  \begin{enumerate}
+  \item Any Ulam sequence $U(a,b)$ is 1-additive with base $a, b$.  
+  \item The Fibonacci numbers $1, 2, 3, 5, 8, \ldots$ are a 1-additive
+    sequence with base $1, 2$.  
+  \item The set $\{2, 3, 5, 7, 9, \ldots\} = 2, 2+3\Z^+$ is 1-additive
+    with base $2, 3$.  
+  \item More generally, for any $a < b$, the set $a, b, b+a, b+2a,
+    \ldots$ is 1-additive provided $b \neq 0 \mod{a}$.  
+  \end{enumerate}
+\end{example}
+
+The last example gives plenty of examples of regular 1-additive
+sequences.  Recall also that for sum-free sets, (where we similarly
+had many regular sum-free sets, such as the odd numbers), we could
+easily generate examples of irregular sum-free sets as well, such as
+the $A_\lambda$ from earlier (for any irrational $\lambda$), where
+recall $A_\lambda$ was the set of integers that, when reduced (in
+$\R$) modulo $\lambda$, land in the interval
+$(\frac{\lambda}{3}, \frac{2\lambda}{3})$.
+
+One might wonder whether we can similarly generate irregular
+1-additive sets (such as $U(1,2)$ appears to be).  It turns out that
+one can do this using the basic idea behind the $A_\lambda$
+construction, but being more careful about it:
+
+\begin{theorem}
+  There exists an irregular 1-additive set of positive density.
+\end{theorem}
+
+\begin{proof}
+  The basic idea will be the following ``ping-pong mod $\lambda$''
+  construction: Take an irrational $\lambda$.  Take $a$ (the ``left
+  bat'') just above $0$ mod $\lambda$, and $b$ (the ``right bat'')
+  just below 0 mod $\lambda$, and a $c$ (the ``ball'') just above
+  $\lambda/3$ mod $\lambda$.  The game will be to keep the ball in the
+  set $T = (\frac{\lambda}{3}, \frac{2\lambda}{3})$ (the ``table'')
+  mod $\lambda$ by adding $a$ to it until it reaches the right side,
+  then adding $b$ to it until it reaches the left side, and repeating
+  indefinitely.
+
+  Supposing we are a little careful about our choices of $a, b, c$,
+  and $\lambda$, we should be able to show that this construction
+  satisfies the required properties.
+
+  More precisely: Start with an irrational $\lambda$, an $a$ with
+  $a \mod{\lambda}$ lying in $(0, \frac{\lambda}{12})$, and a $b$ with
+  $b \mod{\lambda}$ in $(\frac{11\lambda}{12},\lambda)$, and a $c$ with
+  $c \mod{\lambda}$ in $(\frac\lambda 3, \frac\lambda 2)$.  
+
+  Then we will define a sequence of sets $A_n$ which will comprise the
+  sequence $A$, as follows: Let $c_1 = c$.  For $n \geq 1$, let
+  $A_n = \{c_n + ka : k \in \Z^+, c+ka\mod{\lambda} \in T\}$, and let
+  $c_{n+1}$ be the largest element of this set (allowing the
+  definition of $A_{n+1}$ to make sense).  
+
+  Then let $S = \{a, b, c\}$ and $A = S \cup \bigcup_{i=1}^\infty
+  A_i$.  
+
+  Now let us check the definition: Our base set is $S$.  Every element
+  $a_i$ has $a_i < a_{i-1} + a + b$, so the set is has positive
+  density.  This set is not dense mod $\lambda$, but any regular set
+  would have to be (since $\lambda$ is irrational), so $A$ cannot be
+  regular.  It remains to check 1-additivity.  
+
+  By construction, every element $a_n > c$ is either $a_{n-1} + a$ or
+  $a_{n-1}+b$, so every element not in $S$ is a sum of smaller
+  elements in at least one way.  Now suppose $a_n$ is a sum of smaller
+  elements in another way also.  Then because $a_n$ is in the middle
+  third, it cannot be a sum of two other elements in the middle
+  third.  
+\end{proof}
 
 \begin{conjecture}
   For any decision sequence $S$ with a positive density of 1s, the
