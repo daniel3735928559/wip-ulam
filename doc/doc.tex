@@ -1393,9 +1393,11 @@ construction, but being more careful about it:
   satisfies the required properties.
 
   More precisely: Start with an irrational $\lambda$, an $a$ with
-  $a \mod{\lambda}$ lying in $(0, \frac{\lambda}{12})$, and a $b$ with
-  $b \mod{\lambda}$ in $(\frac{11\lambda}{12},\lambda)$, and a $c$ with
-  $c \mod{\lambda}$ in $(\frac\lambda 3, \frac\lambda 2)$.  
+  $a \mod{\lambda}$ lying in $(0, \frac{\lambda}{12})$, and a $b > a$
+  with $b \mod{\lambda}$ in $(\frac{11\lambda}{12},\lambda)$, and a
+  $c$ with $c \mod{\lambda}$ in $(\frac\lambda 3, \frac\lambda 2)$,
+  and say further that $a \nmid b$ (for reasons that will become
+  apparent later).
 
   Then we will define a sequence of sets $A_n$ which will comprise the
   sequence $A$, as follows: Let $c_1 = c$.  For $n \geq 1$, let
@@ -1416,8 +1418,27 @@ construction, but being more careful about it:
   $a_{n-1}+b$, so every element not in $S$ is a sum of smaller
   elements in at least one way.  Now suppose $a_n$ is a sum of smaller
   elements in another way also.  Then because $a_n$ is in the middle
-  third, it cannot be a sum of two other elements in the middle
-  third.  
+  third, it cannot be a sum of two other elements in the middle third.
+  Thus the only for $a_n$ to be a sum of other elements of $A$ in two
+  different ways is if $a_n - a$ and $a_n - b$ are both in $A$.  
+
+  But now, say $a_n = c + ax + by$, for some $x \geq 0, y \geq 0$.
+  We know either $a_n - a \in A$ or $a_n - b \in A$.  If $a_n - b \in
+  A$, Then by definition, the next element of $A$ will be $a_n$, and
+  $a_n - b < a_n - a < a_n$, so $a_n - a$ cannot be in $A$.  
+
+  If instead $a_n - a \in A$, then say the place where we started
+  adding $a$s (before $a_n$) was $r$ steps back ($r \geq 1$ since
+  $a_n - a \in A$), i.e. at $c + a(x-r) + by$.  Then the element
+  before this in $A$ would be $c + a(x-r) + b(y-1) < a_n - b$.  Thus
+  for $a_n - b$ to be in $A$, it would have to be an element after
+  $c + a(x-r) + b(y-1)$, i.e. an element of the form
+  $c + a(x-s) + by$.  But $c + a(x-s) + by = c + ax + by - b$ implies
+  $as = b$, which contradicts $a \nmid b$, which was our condition on
+  $a$ and $b$.  
+
+  Thus $a_n - a$ and $a_n - b$ can never both be in $A$, making $A$
+  also 1-additive.
 \end{proof}
 
 \begin{conjecture}
