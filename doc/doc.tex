@@ -1441,6 +1441,39 @@ construction, but being more careful about it:
   also 1-additive.
 \end{proof}
 
+We note, however, that this construction necessarily gives a
+1-additive set with a base of size 3, whereas the Ulam numbers have a
+base of size 2.  So we might wonder whether there is a similar (if
+more complicated) construction of this sort.  
+
+The following construction, we believe should work: 
+
+\begin{conjecture}
+  There is an irregular, positive density 1-additive set with a base
+  of size 2.
+\end{conjecture}
+
+\begin{proof}[Idea]
+  We will play the same game of ping-pong, but now we are only allowed
+  to use two elements.  We will again start with an irrational
+  $\lambda$ and $a$ a ``left bat'' in the range
+  $(\frac{\lambda}{6}, \frac{\lambda}{3})$.  But now we will start
+  with $c$ being the ``ball'' inside the ``table''
+  $T = (\frac{\lambda}{3}, \frac{2\lambda}{3})$.
+
+  Then we will add $a$ to $c$ until it comes out on the right side as
+  some $b \in (\frac{2\lambda}{3}, \frac{5\lambda}{6})$, and that will
+  be our ``right bat''.  Then we will do roughly the same thing as
+  before, except now $a$ and $b$ have larger magnitude mod $\lambda$,
+  so they may occasionally hit the ball off the table slightly.  This
+  will give us further bats with which to hit the ball--usually bats
+  with even greater magnitude mod $\lambda$.  The idea, then, will be
+  to always hit the ball with the largest available bat that doesn't
+  send it off the table (when possible), so that there is the most
+  flexibility for the other side to ensure they are also able to hit
+  the ball back onto the table.  
+\end{proof}
+
 \begin{conjecture}
   For any decision sequence $S$ with a positive density of 1s, the
   corresponding sum-free set $A = \theta(S)$ has positive upper density.
