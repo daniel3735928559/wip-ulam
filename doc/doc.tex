@@ -1304,6 +1304,57 @@ and 5, and computational evidence in favour of the others.
 
 \subsection{Density}
 
+The first step in our strategy is to establish positive density
+results for sum-free and Ulam sequences.  In this paper, we will not
+actually establish these, but give conjectures in this direction.
+However, one may note that the only reason we know other Ulam
+sequences such as $\ulam{2}{5}$ have positive density is that we know
+they are regular.  So in trying to get a handle on the distribution
+of, say, $\ulam{1}{2}$, it might seem backwards to start with an
+assertion of positive density and then deduce regularity.
+
+There are three things: 
+
+\begin{enumerate}
+\item First, it is already non-obvious that positive density in fact
+  implies all the rest of what we want to know, and so even if this is
+  all we can prove at the moment, it still seems worthwhile to record.
+\item Second, beyond that, there is some reason for believing
+  conjectures of this form, which generally takes the form: ``There
+  are many positive-density sets of the right sort (1-additive,
+  sum-free, etc.), and the procedures for constructing the sum-free
+  and Ulam sets that we are looking at are in some way `as greedy as
+  possible', so what other sets could we get from those constructions
+  if not some version of the positive-density ones we can construct?''
+  We will suggest some possible more precise versions of this in what
+  follows.
+\item Finally, while literal positive-density makes the arguments
+  reasonably straightforward, many of the arguments could possibly go
+  through without it (mostly by changing ``large'' from meaning
+  ``large relative to $N$'' to ``large relative to $|A_N|$''), as we
+  shall discuss later.
+\end{enumerate}
+
+\subsubsection{Sum-free sets}
+
+\begin{conjecture}
+  For any decision sequence $S$ with a positive density of 1s, the
+  corresponding sum-free set $A = \theta(S)$ has positive upper density.
+\end{conjecture}
+
+For such sum-free sets $A$, there is kind of a battle: as we build $A$
+from the decision sequence, say we have built all elements up to some
+$N$, i.e. we have computed $A_N$.  If $A_N$ is very large, then
+$A_N+A_N$ will contain many elements and we will have to go far to
+find the next element of $A$.  If on the other hand, $A_N$ is not
+large, then $A_N + A_N$ will be sparse, which will make it easy to
+find the next few elements of $A$ relatively quickly.  
+
+A first try at formalising this might go: $|A_N + A_N| \leq |A_N|^2$,
+and so if for all $N$, $|A_N|^2 \leq cN$ for some constant $c$, then
+
+\subsubsection{Ulam sequences}
+
 As we have said, it appears that the Ulam sequence has positive
 (upper) density around $0.07$.  This might suggest for us the
 conjecture:
@@ -1312,19 +1363,8 @@ conjecture:
   The Ulam sequence $\ulam{1}{2}$ has positive upper density.
 \end{conjecture}
 
-Considering this is step 1 in our strategy, we might wonder whether
-what reasons there are for believing this.  After all, the only reason
-we know other Ulam sequences such as $\ulam{2}{5}$ have positive
-density is that we know they are regular.  So in trying to get a
-handle on the distribution of $\ulam{1}{2}$, it might be backwards to
-start with an assertion of positive density and then deduce
-regularity.
+\subsubsection{1-additive sequences}
 
-Even so, it is already non-obvious that positive density implies all
-the rest of what we want to know, and so if this is all we can prove
-at the moment, it still seems worthwhile to record.  
-
-But beyond that, we will give some reason to believe this conjecture.
 Recall an Ulam sequence is an increasing sequence of positive integers
 that starts with some $a$ and $b$ and that continues by choosing
 integers according to the requirements of 1-additivity (``every
@@ -1473,23 +1513,6 @@ The following construction, we believe should work:
   flexibility for the other side to ensure they are also able to hit
   the ball back onto the table.  
 \end{proof}
-
-\begin{conjecture}
-  For any decision sequence $S$ with a positive density of 1s, the
-  corresponding sum-free set $A = \theta(S)$ has positive upper density.
-\end{conjecture}
-
-For such sum-free sets $A$, there is kind of a battle: as we build $A$
-from the decision sequence, say we have built all elements up to some
-$N$, i.e. we have computed $A_N$.  If $A_N$ is very large, then
-$A_N+A_N$ will contain many elements and we will have to go far to
-find the next element of $A$.  If on the other hand, $A_N$ is not
-large, then $A_N + A_N$ will be sparse, which will make it easy to
-find the next few elements of $A$ relatively quickly.  
-
-A first try at formalising this might go: $|A_N + A_N| \leq |A_N|^2$,
-and so if for all $N$, $|A_N|^2 \leq cN$ for some constant $c$, then
-
 
 \subsection{Large Fourier coefficient}
 

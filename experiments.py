@@ -134,8 +134,53 @@ def experiment7():
                 s = l[j]
                 break
         print(i+1,real_mod(l[i],lm),l[i],s)
+
+def experiment8():
+    n = 500
+    m = math.sqrt(2)
+    a,b,c = 0,0,0
+    for i in range(1,1000):
+        r = real_mod(i,m)
+        if r < m/12:
+            a = i
+        elif a != 0 and r > 11*m/12 and i % a != 0:
+            b = i
+        elif a != 0 and b != 0 and r > m/3 and r < m/2:
+            c = i
+        if a != 0 and b != 0 and c != 0:
+            break
+    print(a,b,c)
+    A = [a,b,c]
+    x = c
+    bat = a
+    for i in range(n):
+        if bat == a:
+            if real_mod(x+bat,m) < 2*m/3:
+                x += bat
+                A += [x]
+            else:
+                bat = b
+        else:
+            if real_mod(x+bat,m) > m/3:
+                x += bat
+                A += [x]
+            else:
+                bat = a
+    for x in A:
+        print(x)
+    S = {x:0 for x in A}
+    for x in A:
+        for y in A:
+            if y >= x:
+                break
+            if x+y in S:
+                S[x+y] += 1
+
+    for x in A:
+        print(x,S[x])
             
-def experiment8(l):
+
+def experiment80(l):
     """Compute the summands of each element of l"""
     s = {x : (0, x) for x in l}
     for i in range(2,len(l)):
