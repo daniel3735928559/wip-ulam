@@ -15,6 +15,32 @@ def real_mod(x,m):
 def red(x,a=2*math.pi):
     return abs(x - a*math.floor(x/a)-(a/2))
 
+def extend_lambda(l,m,k,N):
+    am = {i:set([]) for i in range(m)}
+    A = l
+    for x in l:
+        am[(k*x)%m].add(x)
+    x = l[-1]+1
+    while(len(A)) < N:
+        reps = 0
+        for i in range(m//2):
+            breaking1 = False
+            for a in am[(k*(x-i))%m]:
+                if a >= x/2:
+                    continue
+                if x-a in am[(k*i)%m]:
+                    reps += 1
+                    if(reps > 1):
+                        breaking1 = True
+                        break
+            if breaking1:
+                break
+        if reps == 1:
+            am[(k*x)%m].add(x)
+            A.append(x)
+        x += 1
+    return A
+
 def extend_few_reps(l,N,p=1):
     ans = l
     reps = {i:0 for i in range(1,2*N+1)}

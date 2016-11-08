@@ -1320,50 +1320,111 @@ There are three things:
   implies all the rest of what we want to know, and so even if this is
   all we can prove at the moment, it still seems worthwhile to record.
 \item Second, beyond that, there is some reason for believing
-  conjectures of this form, which generally takes the form: ``There
-  are many positive-density sets of the right sort (1-additive,
-  sum-free, etc.), and the procedures for constructing the sum-free
-  and Ulam sets that we are looking at are in some way `as greedy as
-  possible', so what other sets could we get from those constructions
-  if not some version of the positive-density ones we can construct?''
-  We will suggest some possible more precise versions of this in what
-  follows.
+  conjectures of this form.  Combined with a lot of experimental
+  computations, one suggestive sort of argument takes the shape:
+  ``There are many positive-density sets of the right sort
+  (1-additive, sum-free, etc.), and the procedures for constructing
+  the sum-free and Ulam sets that we are looking at are in some way
+  `as greedy as possible', so what other sets could we get from those
+  constructions if not some version of the positive-density ones we
+  can construct?''  We will suggest some possible more precise
+  versions of this in what follows.
 \item Finally, while literal positive-density makes the arguments
-  reasonably straightforward, many of the arguments could possibly go
-  through without it (mostly by changing ``large'' from meaning
-  ``large relative to $N$'' to ``large relative to $|A_N|$''), as we
-  shall discuss later.
+  nicer, Many of the statements we wish to make later do have versions
+  that make sense without it (mostly by changing ``large'' from
+  meaning ``large relative to $N$'' to ``large relative to $|A_N|$''),
+  as we shall discuss later.
 \end{enumerate}
 
-\subsubsection{Sum-free sets}
+\subsubsection{Computations}
 
-\begin{conjecture}
-  For any decision sequence $S$ with a positive density of 1s, the
-  corresponding sum-free set $A = \theta(S)$ has positive upper density.
-\end{conjecture}
+The first question is to attempt to compute the density of the various
+sum-free sets and Ulam sequences that we are studying.  
 
-For such sum-free sets $A$, there is kind of a battle: as we build $A$
-from the decision sequence, say we have built all elements up to some
-$N$, i.e. we have computed $A_N$.  If $A_N$ is very large, then
-$A_N+A_N$ will contain many elements and we will have to go far to
-find the next element of $A$.  If on the other hand, $A_N$ is not
-large, then $A_N + A_N$ will be sparse, which will make it easy to
-find the next few elements of $A$ relatively quickly.  
+The prescribed method for computing sum-free sets from a decision
+sequence is already decently fast, provided we keep track of the data
+appropriately.  Recall, the approach is to track three sets: $A$, the
+actual sum-free set we are constructing, $D$, the set $A+A$ of things
+that are ``disqualified'' from appearing in $A$, and $E$, the set of
+things that are not disqualified by virtue of being sums but that,
+according to the decision sequence, we are nevertheless to exclude.
 
-A first try at formalising this might go: $|A_N + A_N| \leq |A_N|^2$,
-and so if for all $N$, $|A_N|^2 \leq cN$ for some constant $c$, then
+We thus store $A$ as a list and $D$ as a hashset, (and need not keep
+track of $E$).  So the algorithm is to, for each $x$ starting from 1
+until we get bored:
 
-\subsubsection{Ulam sequences}
+\begin{enumerate}
+\item Check if $x \in D$ (very fast, as $D$ is a hashset).  
+\item If not, pop an item off the decision sequence.  
+\item If 1, append $x$ in $A$ and add $x + A$ to $D$ ($|A|$ steps).
+\end{enumerate}
 
-As we have said, it appears that the Ulam sequence has positive
-(upper) density around $0.07$.  This might suggest for us the
-conjecture:
+So this algorithm to compute the first $N$ items will be roughly
+$O(N \cdot |A_N|)$
 
-\begin{conjecture}
-  The Ulam sequence $\ulam{1}{2}$ has positive upper density.
-\end{conjecture}
+A similar algorithm can be implemented for the Ulam sequence, in fact:
+Now, we track the set $A$ as a list, the hashset $D$ of disqualified
+items (i.e. $x$ for which $r^*_{A+A}(x) > 1$), the sorted list $C$ of
+candidates (i.e. $x$ bigger than every element of $A$ with
+$r^*_{A+A}(x) = 1$), and a hashset $C'$ that also contains the candidates.  Then the algorithm is to initialise the
+following: 
 
-\subsubsection{1-additive sequences}
+\begin{enumerate}
+\item $A = [a,b]$
+\item $C = [a+b]$
+\item $C' = \{a+b\}$
+\end{enumerate}
+
+And proceed thus: 
+
+\begin{enumerate}
+\item Delete any inital elements of $C$ that are smaller than the
+  largest element of $A$.  As we go, delete these elements from $C'$
+  also.
+\item Let $x$ be the first element of $C$, and append $x$ to $A$.
+\item For each $a \in A$: Compute $x + a$ and, if it is in $C'$,
+  delete it from $C'$ (fast, since $C'$ is a hashset) and from $C$
+  (where we can find it by bisection, since $C$ is sorted).
+\end{enumerate}
+
+There is a more advanced algorithm that leverages the apparent
+regularity of such sequences as well, implemented in
+\cite{knuth_algorithm}, which speed this basic algorithm up by, among
+other things, noting that if we track which elements of $A$ are
+outside the middle third mod $\lambda$ for a $\lambda$ where there are
+few such elements, then when we're testing whether any new $x$ within
+the middle third is actually a sum of smaller elements of $A$, we only
+have to look at whether $x - a$ is in $A$ where $a$ is one of the
+(hopefully few) elements of $A$ outside the middle third.  In fact,
+one can be even more careful about it, which is done in
+\cite{knuth_algorithm}.
+
+In any case, the results of our computations give the following
+estimates for the densities of these sets: 
+
+{\color{red}[COMPUTATIONS]}
+
+\subsubsection{Constructions}
+
+We first start by noting that positive-density sum-free sets are
+abundant, as a result of the abundance of sum-free sets
+$A \subseteq \R/\Z$, coupled with the fact that if
+$\pi_\lambda : \Z^+ \to \R/\Z$ by
+$x \mapsto \frac{x}{\lambda} \mod{1}$, the inverse image
+$\pi_\lambda\inv(A)$ is sum-free in the integers.  For example, the
+set $A = \{1/2\}$ is sum-free in $\R/\Z$, and $\pi_2(A)$ is the odd
+positive integers, which is sum-free.  Likewise, the $A_\lambda$ from
+earlier (for any irrational $\lambda$), where recall $A_\lambda$ was
+the set of integers that, when reduced (in $\R$) modulo $\lambda$,
+land in the interval $(\frac{\lambda}{3}, \frac{2\lambda}{3})$, are
+also of this form.  So this kind of example gives many sum-free sets,
+both regular and irregular, that all have positive density.
+
+One might wonder whether we can similarly generate examples of
+Ulam-like sets of positive density.  It turns out that one can do this
+using the basic idea behind the $A_\lambda$ construction, but being
+more careful about it.  But first, we will make precise what we mean
+by ``Ulam-like'': 
 
 Recall an Ulam sequence is an increasing sequence of positive integers
 that starts with some $a$ and $b$ and that continues by choosing
@@ -1400,24 +1461,17 @@ which belong the Ulam sequences, but also many others:
 \end{example}
 
 The last example gives plenty of examples of regular 1-additive
-sequences.  Recall also that for sum-free sets, (where we similarly
-had many regular sum-free sets, such as the odd numbers), we could
-easily generate examples of irregular sum-free sets as well, such as
-the $A_\lambda$ from earlier (for any irrational $\lambda$), where
-recall $A_\lambda$ was the set of integers that, when reduced (in
-$\R$) modulo $\lambda$, land in the interval
-$(\frac{\lambda}{3}, \frac{2\lambda}{3})$.
+sequences.  But we might wonder what the analogue of $A_\lambda$ (for
+irrational $\lambda$ would be for 1-additive sets.  Indeed, these were
+our first examples of irregular sum-free sets of positive density, so
+we might first ask whether there even is such a thing for 1-additive
+sets.  It turns out that there is: 
 
-One might wonder whether we can similarly generate irregular
-1-additive sets (such as $U(1,2)$ appears to be).  It turns out that
-one can do this using the basic idea behind the $A_\lambda$
-construction, but being more careful about it:
-
-\begin{theorem}
+\begin{proposition}
   There exists an irregular 1-additive set of positive density.
-\end{theorem}
+\end{proposition}
 
-\begin{proof}
+\begin{proof}[Idea of proof]
   The basic idea will be the following ``ping-pong mod $\lambda$''
   construction: Take an irrational $\lambda$.  Take $a$ (the ``left
   bat'') just above $0$ mod $\lambda$, and $b$ (the ``right bat'')
@@ -1431,8 +1485,10 @@ construction, but being more careful about it:
   Supposing we are a little careful about our choices of $a, b, c$,
   and $\lambda$, we should be able to show that this construction
   satisfies the required properties.
+\end{proof}
 
-  More precisely: Start with an irrational $\lambda$, an $a$ with
+\begin{proof}
+  More precisely: start with an irrational $\lambda$, an $a$ with
   $a \mod{\lambda}$ lying in $(0, \frac{\lambda}{12})$, and a $b > a$
   with $b \mod{\lambda}$ in $(\frac{11\lambda}{12},\lambda)$, and a
   $c$ with $c \mod{\lambda}$ in $(\frac\lambda 3, \frac\lambda 2)$,
@@ -1481,10 +1537,10 @@ construction, but being more careful about it:
   also 1-additive.
 \end{proof}
 
-We note, however, that this construction necessarily gives a
-1-additive set with a base of size 3, whereas the Ulam numbers have a
-base of size 2.  So we might wonder whether there is a similar (if
-more complicated) construction of this sort.  
+We note, however, that this construction gives us a 1-additive set
+with a base of size 3, whereas the Ulam numbers are a 1-additive set
+with a base of size 2.  So we might wonder whether there is a similar
+(if more complicated) construction of this sort.
 
 The following construction, we believe should work: 
 
@@ -1514,6 +1570,35 @@ The following construction, we believe should work:
   the ball back onto the table.  
 \end{proof}
 
+\subsubsection{Conjectures}
+
+Recall that sum-free sets of positive integers correspond bijectively
+with binary ``decision'' sequences.  We know also that there are many
+sum-free sets of positive density.  Further, we can easily see that if
+the 1s have zero density in the decision sequence, then the resulting
+sum-free set has zero density.  So all the positive-density sum-free
+sets must have decision sequences with positive density.  
+
+\begin{question}
+  For any decision sequence $S$ with a positive density of 1s, the
+  corresponding sum-free set $A = \theta(S)$ has positive upper density.
+\end{question}
+
+\begin{conjecture}
+  For any decision sequence $S$ that is eventually periodic and for
+  which the repeating pattern has at least one 1, then the
+  corresponding sum-free set $A = \theta(S)$ has positive upper
+  density.
+\end{conjecture}
+
+As we have said, it appears that the Ulam sequence has positive
+(upper) density around $0.07$.  This, together with the ultimate
+greediness of the Ulam sequence suggests for us the conjecture:
+
+\begin{conjecture}
+  The Ulam sequence $\ulam{1}{2}$ has positive upper density.
+\end{conjecture}
+
 \subsection{Large Fourier coefficient}
 
 The initial observation of \cite{ulam_steinerberger} is that the
@@ -1539,7 +1624,7 @@ look at:
 \item $(5,v)$ for $v = 7, \ldots, 9$.
 \end{itemize}
 
-We do this by running \icode{experiment1()} and observe: 
+We do this by running \icode{experiment1} and observe: 
 
 \begin{tabular}{|lllll|}
 \hline
@@ -2475,6 +2560,10 @@ might find it convenient to
 Stefan Steinerberger\\
 Hidden regularity
 
+\bibitem{knuth_algorithm} 
+Knuth\\
+Algorithm for computing Ulam numbers
+ 
 \bibitem{patterns_finch} 
 Finch\\
 Patterns in 1-additive sequences

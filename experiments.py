@@ -1,4 +1,4 @@
-import math,sys,random,bisect,copy
+import math,sys,random,bisect,copy,time
 
 from utils import *
         
@@ -180,6 +180,30 @@ def experiment8():
         print(x,S[x])
             
 
+def experiment9():
+    ls = {"u12":u1_2,"u13":u1_3,"01001":sf01001,"01010":sf01010}
+    for s in ls:
+        print(s)
+        l = ls[s]
+        n = len(l)
+        while n > 0:
+            print(n,':',l[n-1]/n)
+            n //= 10
+    
+def experiment10():
+    n = 1000
+    t1 = time.time()
+    l = extend_lambda([1,2],lambda1_2[0],lambda1_2[1],n)
+    t2 = time.time()
+    c,dq,ans = extend_with_storage_careful([1,2],{3},{},n)
+    t3 = time.time()
+    
+    for x in l:
+        print(x)
+    for x in ans:
+        print(x)
+    print(t2-t1,t3-t2)
+    
 def experiment80(l):
     """Compute the summands of each element of l"""
     s = {x : (0, x) for x in l}
@@ -193,7 +217,7 @@ def experiment80(l):
     for x in s:
         print("{} = {} + {}".format(x,s[x][0],s[x][1]))
 
-def experiment9(l,m):
+def experiment90(l,m):
     """Compute how many times a_n lies in each additive subgroup mod m:"""
     s = {x:0 for x in range(1,m+1) if m%x == 0}
     for i in l:
@@ -202,7 +226,7 @@ def experiment9(l,m):
     for x in s:
         print("{} : {} =? {}".format(x,s[x],int((len(l)/m)*len([t for t in gcds if t[1] == x]))))
 
-def experiment10(l,k,m,N):
+def experiment10_old(l,k,m,N):
     """Evolve the mod m distribution on the elements of l (multiplied by k) by selecting new summands randomly according to the existing distribution"""
     s = {x:0 for x in range(m)}
     for i in l:
