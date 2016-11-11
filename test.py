@@ -624,7 +624,7 @@ u2_3 = read_seq("seqs/seq2,3")
 u2_5 = read_seq("seqs/seq2,5")
 u12_13 = read_seq("seqs/seq12,13")
 u1_2_3 = read_seq("seqs/seq1,2,3")
-sf01001 = read_seq("seqs/01001sf")
+sf01001 = read_seq("seqs/sf01001")
 sf10010 = read_seq("seqs/sf10010")
 linus = read_seq("seqs/1linus")
 alpha1_2 = 2.5714474995
@@ -969,8 +969,8 @@ def experiment31(a,b,N):
     return l
 #experiment22(u1_2[:253],2441,2219,5422)
 
-ll = experiment31(math.sqrt(2),math.sqrt(3),100000)
-print(len(ll),ll[-1])
+# ll = experiment31(math.sqrt(2),math.sqrt(3),100000)
+# print(len(ll),ll[-1])
 #find_alpha(ll)
 
 
@@ -1165,5 +1165,8 @@ beta01001 = 1.26594784
 
 # find_alpha(linus)
 
-for i in range(10):
-    print(ft(i*alpha1_2, u1_2)/len(u1_2))
+# for i in range(10):
+#     print(ft(i*alpha1_2, u1_2)/len(u1_2))
+
+for x in ulam(3,4,20):
+    print(x,x%3)

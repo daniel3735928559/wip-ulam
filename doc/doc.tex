@@ -1255,7 +1255,76 @@ under consideration.
   density of $A$?  
 \end{question}
 
-\section{Computations, Observations, and Results}
+\section{Strategy}
+
+\subsection{Overview}
+
+In this document we shall unfortunately not answer all these
+questions, nor supply a complete understanding of the observed
+phenomena.  We do, however, propose a strategy that we hope will lead
+to such an understanding, and we shall partially execute certain
+components of that strategy.
+
+Broadly, we will first try to understand the Fourier spectrum, and
+then determine what this says about the distrubution.  This happens in
+four steps:
+
+\begin{enumerate}
+  \item Prove the existence of a large Fourier coefficient at
+    some $\alpha$.
+  \item Prove that the spectrum of $A$ is supported in $\alpha \Z$.  
+  \item Prove that the Fourier coefficients $\widehat{A}(k\alpha)$
+    decay fast enough as $k \to \infty$.  
+  \item Deduce features of the distribution of $A$ modulo
+    $2\pi/\alpha$.
+\end{enumerate}
+
+Of this programme, we will provide results in the direction of steps 1
+and 4, and computational evidence in favour of the others.  Before 
+
+\subsection{Outline}
+
+More specifically: 
+
+\begin{enumerate}
+\item We study the large Fourier coefficient $\alpha$ and
+  corresponding period $\lambda = \frac{2\pi}{\alpha}$ of various Ulam
+  sequences $U(a,b)$ and sum-free $\theta(s)$.  Specifically:
+  \begin{enumerate}
+  \item We use a computer program to estimate the maximal Fourier
+    coefficient of many such sequences.
+  \item We use a computer program to compute continued fraction
+    convergents and to attempt to compute minimal polynomials for
+    certain $\lambda$ to understand whether they are rational or at
+    least algebraic.  
+  \item We study the constraints that would be imposed on a
+    $\ulam{a}{b}$ if the corresponding $\lambda$ were to be rational
+    with numerator 3. 
+  \item We prove the existence of an $\alpha$ for \relevant sets $A$
+    (truncated at $N$) at which the Fourier transform has size
+    comparable to $|A_N|$.  In fact, we show that the real part of the
+    Fourier transform itself must be large compared to $|A_N|$.
+  \end{enumerate}
+\item We then study the complete spectrum of \relevant sets $A$,
+  computing via computer program 
+
+Prove the existence of a large Fourier coefficient at
+    some $\alpha$.
+  \item Prove that the spectrum of $A$ is supported in $\alpha \Z$.  
+  \item Prove that the Fourier coefficients $\widehat{A}(k\alpha)$
+    decay fast enough as $k \to \infty$.  
+  \item Deduce features of the distribution of $A$ modulo
+    $2\pi/\alpha$.
+\end{enumerate}
+
+We will discuss the questions first by discussing the maximal Fourier
+coefficients of the various sets we've been thinking about, then move
+on to the complete spectrum of these sets.  We will then study the
+apparent distributions of these sets modulo whatever their natural
+frequency appears to be and see what can be concluded about the
+frequency from the specturm. 
+
+\subsection{About the computations}
 
 In this section, we will begin our study of some of the questions in
 the prior section.  We will prove what we can and will use computer
@@ -1269,335 +1338,10 @@ In most cases, we will be referring to the particular file
 refer to code in other files as well from the same repository, and
 will mention where the code in question is located in each case.
 
-We will discuss the questions first by discussing the maximal Fourier
-coefficients of the various sets we've been thinking about, then move
-on to the complete spectrum of these sets.  We will then study the
-apparent distributions of these sets modulo whatever their natural
-frequency appears to be and see what can be concluded about the
-frequency from the specturm. 
+\section{Spectrum}
 
-\subsection{Strategy}
-
-In this section we do not supply a complete understanding of the
-observed phenomena.  We do, however, propose a strategy that we hope
-will lead to such an understanding, and we partially execute certain
-components of that strategy.
-
-Broadly, we will first try to understand the Fourier spectrum, and
-then determine what this says about the distrubution.  This happens in
-five steps: 
-
-\begin{enumerate}
-  \item Understand the density of $A$.
-  \item Prove the existence of a large Fourier coefficient at
-    some $\alpha$.
-  \item Prove that the spectrum of $A$ is supported in $\alpha \Z$.  
-  \item Prove that the Fourier coefficients $\widehat{A}(k\alpha)$
-    decay fast enough as $k \to \infty$.  
-  \item Use the circle method to deduce features of the distribution
-    of $A$ modulo $2\pi/\alpha$.
-\end{enumerate}
-
-Of this programme, we will provide results in the direction of steps 2
-and 5, and computational evidence in favour of the others.
-
-
-\subsection{Density}
-
-The first step in our strategy is to establish positive density
-results for sum-free and Ulam sequences.  In this paper, we will not
-actually establish these, but give conjectures in this direction.
-However, one may note that the only reason we know other Ulam
-sequences such as $\ulam{2}{5}$ have positive density is that we know
-they are regular.  So in trying to get a handle on the distribution
-of, say, $\ulam{1}{2}$, it might seem backwards to start with an
-assertion of positive density and then deduce regularity.
-
-There are three things: 
-
-\begin{enumerate}
-\item First, it is already non-obvious that positive density in fact
-  implies all the rest of what we want to know, and so even if this is
-  all we can prove at the moment, it still seems worthwhile to record.
-\item Second, beyond that, there is some reason for believing
-  conjectures of this form.  Combined with a lot of experimental
-  computations, one suggestive sort of argument takes the shape:
-  ``There are many positive-density sets of the right sort
-  (1-additive, sum-free, etc.), and the procedures for constructing
-  the sum-free and Ulam sets that we are looking at are in some way
-  `as greedy as possible', so what other sets could we get from those
-  constructions if not some version of the positive-density ones we
-  can construct?''  We will suggest some possible more precise
-  versions of this in what follows.
-\item Finally, while literal positive-density makes the arguments
-  nicer, Many of the statements we wish to make later do have versions
-  that make sense without it (mostly by changing ``large'' from
-  meaning ``large relative to $N$'' to ``large relative to $|A_N|$''),
-  as we shall discuss later.
-\end{enumerate}
-
-\subsubsection{Computations}
-
-The first question is to attempt to compute the density of the various
-sum-free sets and Ulam sequences that we are studying.  
-
-The prescribed method for computing sum-free sets from a decision
-sequence is already decently fast, provided we keep track of the data
-appropriately.  Recall, the approach is to track three sets: $A$, the
-actual sum-free set we are constructing, $D$, the set $A+A$ of things
-that are ``disqualified'' from appearing in $A$, and $E$, the set of
-things that are not disqualified by virtue of being sums but that,
-according to the decision sequence, we are nevertheless to exclude.
-
-We thus store $A$ as a list and $D$ as a hashset, (and need not keep
-track of $E$).  So the algorithm is to, for each $x$ starting from 1
-until we get bored:
-
-\begin{enumerate}
-\item Check if $x \in D$ (very fast, as $D$ is a hashset).  
-\item If not, pop an item off the decision sequence.  
-\item If 1, append $x$ in $A$ and add $x + A$ to $D$ ($|A|$ steps).
-\end{enumerate}
-
-So this algorithm to compute the first $N$ items will be roughly
-$O(N \cdot |A_N|)$
-
-A similar algorithm can be implemented for the Ulam sequence, in fact:
-Now, we track the set $A$ as a list, the hashset $D$ of disqualified
-items (i.e. $x$ for which $r^*_{A+A}(x) > 1$), the sorted list $C$ of
-candidates (i.e. $x$ bigger than every element of $A$ with
-$r^*_{A+A}(x) = 1$), and a hashset $C'$ that also contains the candidates.  Then the algorithm is to initialise the
-following: 
-
-\begin{enumerate}
-\item $A = [a,b]$
-\item $C = [a+b]$
-\item $C' = \{a+b\}$
-\end{enumerate}
-
-And proceed thus: 
-
-\begin{enumerate}
-\item Delete any inital elements of $C$ that are smaller than the
-  largest element of $A$.  As we go, delete these elements from $C'$
-  also.
-\item Let $x$ be the first element of $C$, and append $x$ to $A$.
-\item For each $a \in A$: Compute $x + a$ and, if it is in $C'$,
-  delete it from $C'$ (fast, since $C'$ is a hashset) and from $C$
-  (where we can find it by bisection, since $C$ is sorted).
-\end{enumerate}
-
-There is a more advanced algorithm that leverages the apparent
-regularity of such sequences as well, implemented in
-\cite{knuth_algorithm}, which speed this basic algorithm up by, among
-other things, noting that if we track which elements of $A$ are
-outside the middle third mod $\lambda$ for a $\lambda$ where there are
-few such elements, then when we're testing whether any new $x$ within
-the middle third is actually a sum of smaller elements of $A$, we only
-have to look at whether $x - a$ is in $A$ where $a$ is one of the
-(hopefully few) elements of $A$ outside the middle third.  In fact,
-one can be even more careful about it, which is done in
-\cite{knuth_algorithm}.
-
-In any case, the results of our computations give the following
-estimates for the densities of these sets: 
-
-{\color{red}[COMPUTATIONS]}
-
-\subsubsection{Constructions}
-
-We first start by noting that positive-density sum-free sets are
-abundant, as a result of the abundance of sum-free sets
-$A \subseteq \R/\Z$, coupled with the fact that if
-$\pi_\lambda : \Z^+ \to \R/\Z$ by
-$x \mapsto \frac{x}{\lambda} \mod{1}$, the inverse image
-$\pi_\lambda\inv(A)$ is sum-free in the integers.  For example, the
-set $A = \{1/2\}$ is sum-free in $\R/\Z$, and $\pi_2(A)$ is the odd
-positive integers, which is sum-free.  Likewise, the $A_\lambda$ from
-earlier (for any irrational $\lambda$), where recall $A_\lambda$ was
-the set of integers that, when reduced (in $\R$) modulo $\lambda$,
-land in the interval $(\frac{\lambda}{3}, \frac{2\lambda}{3})$, are
-also of this form.  So this kind of example gives many sum-free sets,
-both regular and irregular, that all have positive density.
-
-One might wonder whether we can similarly generate examples of
-Ulam-like sets of positive density.  It turns out that one can do this
-using the basic idea behind the $A_\lambda$ construction, but being
-more careful about it.  But first, we will make precise what we mean
-by ``Ulam-like'': 
-
-Recall an Ulam sequence is an increasing sequence of positive integers
-that starts with some $a$ and $b$ and that continues by choosing
-integers according to the requirements of 1-additivity (``every
-element is uniquely a sum of previous elements'') and greediness
-(``always choose the smallest such element available'').  In some
-ways, it is the greediness that makes Ulam sequences hard to analyse.
-If we drop this condition, then we get a general class of sequences to
-which belong the Ulam sequences, but also many others:
-
-\begin{definition}\label{def:1additive}
-  For $S \subseteq \Z^+$ a finite set (say of size $k$), a
-  \textbf{1-additive sequence with base $S$} is an infinite sequence
-  of positive integers $a_i$ such that $a_1 < \ldots < a_k$ are the
-  elements of $S$, and, for $n > k$, $a_n$ is greater than $a_{n-1}$
-  and has a unique pair of integers $i, j$ with $0 < i < j < n$ such
-  that $a_n = a_i + a_j$.
-
-  We may talk of simply a \textbf{1-additive sequence}, by which we
-  will mean a sequence of integers that is a 1-additive sequence with
-  base $S$ for some $S$.
-\end{definition}
-
-\begin{example}
-  \begin{enumerate}
-  \item Any Ulam sequence $U(a,b)$ is 1-additive with base $a, b$.  
-  \item The Fibonacci numbers $1, 2, 3, 5, 8, \ldots$ are a 1-additive
-    sequence with base $1, 2$.  
-  \item The set $\{2, 3, 5, 7, 9, \ldots\} = 2, 2+3\Z^+$ is 1-additive
-    with base $2, 3$.  
-  \item More generally, for any $a < b$, the set $a, b, b+a, b+2a,
-    \ldots$ is 1-additive provided $b \neq 0 \mod{a}$.  
-  \end{enumerate}
-\end{example}
-
-The last example gives plenty of examples of regular 1-additive
-sequences.  But we might wonder what the analogue of $A_\lambda$ (for
-irrational $\lambda$ would be for 1-additive sets.  Indeed, these were
-our first examples of irregular sum-free sets of positive density, so
-we might first ask whether there even is such a thing for 1-additive
-sets.  It turns out that there is: 
-
-\begin{proposition}
-  There exists an irregular 1-additive set of positive density.
-\end{proposition}
-
-\begin{proof}[Idea of proof]
-  The basic idea will be the following ``ping-pong mod $\lambda$''
-  construction: Take an irrational $\lambda$.  Take $a$ (the ``left
-  bat'') just above $0$ mod $\lambda$, and $b$ (the ``right bat'')
-  just below 0 mod $\lambda$, and a $c$ (the ``ball'') just above
-  $\lambda/3$ mod $\lambda$.  The game will be to keep the ball in the
-  set $T = (\frac{\lambda}{3}, \frac{2\lambda}{3})$ (the ``table'')
-  mod $\lambda$ by adding $a$ to it until it reaches the right side,
-  then adding $b$ to it until it reaches the left side, and repeating
-  indefinitely.
-
-  Supposing we are a little careful about our choices of $a, b, c$,
-  and $\lambda$, we should be able to show that this construction
-  satisfies the required properties.
-\end{proof}
-
-\begin{proof}
-  More precisely: start with an irrational $\lambda$, an $a$ with
-  $a \mod{\lambda}$ lying in $(0, \frac{\lambda}{12})$, and a $b > a$
-  with $b \mod{\lambda}$ in $(\frac{11\lambda}{12},\lambda)$, and a
-  $c$ with $c \mod{\lambda}$ in $(\frac\lambda 3, \frac\lambda 2)$,
-  and say further that $a \nmid b$ (for reasons that will become
-  apparent later).
-
-  Then we will define a sequence of sets $A_n$ which will comprise the
-  sequence $A$, as follows: Let $c_1 = c$.  For $n \geq 1$, let
-  $A_n = \{c_n + ka : k \in \Z^+, c+ka\mod{\lambda} \in T\}$, and let
-  $c_{n+1}$ be the largest element of this set (allowing the
-  definition of $A_{n+1}$ to make sense).  
-
-  Then let $S = \{a, b, c\}$ and $A = S \cup \bigcup_{i=1}^\infty
-  A_i$.  
-
-  Now let us check the definition: Our base set is $S$.  Every element
-  $a_i$ has $a_i < a_{i-1} + a + b$, so the set is has positive
-  density.  This set is not dense mod $\lambda$, but any regular set
-  would have to be (since $\lambda$ is irrational), so $A$ cannot be
-  regular.  It remains to check 1-additivity.  
-
-  By construction, every element $a_n > c$ is either $a_{n-1} + a$ or
-  $a_{n-1}+b$, so every element not in $S$ is a sum of smaller
-  elements in at least one way.  Now suppose $a_n$ is a sum of smaller
-  elements in another way also.  Then because $a_n$ is in the middle
-  third, it cannot be a sum of two other elements in the middle third.
-  Thus the only for $a_n$ to be a sum of other elements of $A$ in two
-  different ways is if $a_n - a$ and $a_n - b$ are both in $A$.  
-
-  But now, say $a_n = c + ax + by$, for some $x \geq 0, y \geq 0$.
-  We know either $a_n - a \in A$ or $a_n - b \in A$.  If $a_n - b \in
-  A$, Then by definition, the next element of $A$ will be $a_n$, and
-  $a_n - b < a_n - a < a_n$, so $a_n - a$ cannot be in $A$.  
-
-  If instead $a_n - a \in A$, then say the place where we started
-  adding $a$s (before $a_n$) was $r$ steps back ($r \geq 1$ since
-  $a_n - a \in A$), i.e. at $c + a(x-r) + by$.  Then the element
-  before this in $A$ would be $c + a(x-r) + b(y-1) < a_n - b$.  Thus
-  for $a_n - b$ to be in $A$, it would have to be an element after
-  $c + a(x-r) + b(y-1)$, i.e. an element of the form
-  $c + a(x-s) + by$.  But $c + a(x-s) + by = c + ax + by - b$ implies
-  $as = b$, which contradicts $a \nmid b$, which was our condition on
-  $a$ and $b$.  
-
-  Thus $a_n - a$ and $a_n - b$ can never both be in $A$, making $A$
-  also 1-additive.
-\end{proof}
-
-We note, however, that this construction gives us a 1-additive set
-with a base of size 3, whereas the Ulam numbers are a 1-additive set
-with a base of size 2.  So we might wonder whether there is a similar
-(if more complicated) construction of this sort.
-
-The following construction, we believe should work: 
-
-\begin{conjecture}
-  There is an irregular, positive density 1-additive set with a base
-  of size 2.
-\end{conjecture}
-
-\begin{proof}[Idea]
-  We will play the same game of ping-pong, but now we are only allowed
-  to use two elements.  We will again start with an irrational
-  $\lambda$ and $a$ a ``left bat'' in the range
-  $(\frac{\lambda}{6}, \frac{\lambda}{3})$.  But now we will start
-  with $c$ being the ``ball'' inside the ``table''
-  $T = (\frac{\lambda}{3}, \frac{2\lambda}{3})$.
-
-  Then we will add $a$ to $c$ until it comes out on the right side as
-  some $b \in (\frac{2\lambda}{3}, \frac{5\lambda}{6})$, and that will
-  be our ``right bat''.  Then we will do roughly the same thing as
-  before, except now $a$ and $b$ have larger magnitude mod $\lambda$,
-  so they may occasionally hit the ball off the table slightly.  This
-  will give us further bats with which to hit the ball--usually bats
-  with even greater magnitude mod $\lambda$.  The idea, then, will be
-  to always hit the ball with the largest available bat that doesn't
-  send it off the table (when possible), so that there is the most
-  flexibility for the other side to ensure they are also able to hit
-  the ball back onto the table.  
-\end{proof}
-
-\subsubsection{Conjectures}
-
-Recall that sum-free sets of positive integers correspond bijectively
-with binary ``decision'' sequences.  We know also that there are many
-sum-free sets of positive density.  Further, we can easily see that if
-the 1s have zero density in the decision sequence, then the resulting
-sum-free set has zero density.  So all the positive-density sum-free
-sets must have decision sequences with positive density.  
-
-\begin{question}
-  For any decision sequence $S$ with a positive density of 1s, the
-  corresponding sum-free set $A = \theta(S)$ has positive upper density.
-\end{question}
-
-\begin{conjecture}
-  For any decision sequence $S$ that is eventually periodic and for
-  which the repeating pattern has at least one 1, then the
-  corresponding sum-free set $A = \theta(S)$ has positive upper
-  density.
-\end{conjecture}
-
-As we have said, it appears that the Ulam sequence has positive
-(upper) density around $0.07$.  This, together with the ultimate
-greediness of the Ulam sequence suggests for us the conjecture:
-
-\begin{conjecture}
-  The Ulam sequence $\ulam{1}{2}$ has positive upper density.
-\end{conjecture}
+The first three steps of our strategy are about understanding the
+Fourier spectrum of the various \relevant sets under consideration.
 
 \subsection{Large Fourier coefficient}
 
@@ -1613,14 +1357,13 @@ period for $A$.
 \subsubsection{Computing $\alpha$}
 
 We will start by computing this period for several $U(a,b)$ which are
-not believed to be mostly just odd numbers.  Specifically, we will
-look at: 
+not believed to be regular by virtue of having only finitely many even
+numbers.  Specifically, we will look at:
 
 \begin{itemize}
 \item $(1,v)$ for $v = 2, \ldots, 10$.
 \item $(2,3)$.
 \item $(3,v)$ for $v = 4, \ldots, 10$, $3 \nmid v$.
-\item $(4,v)$ for $v = 5, \ldots, 15$ odd.
 \item $(5,v)$ for $v = 7, \ldots, 9$.
 \end{itemize}
 
@@ -1642,12 +1385,11 @@ look at $s = 01001, s = 01010$, and $s = 10010$ by running
 
 \begin{tabular}{|llll|}
 \hline
-$s$ & $\alpha_{s}$ & $\lambda_{s}$ & $|\widehat{1_s}(\alpha_{s})|$\\
-\hline
-01001 & 2.5086344 & 2.504623 & 0.085768\\
-01010 & 1.8018269 & 3.487119 & 0.085079\\
-10010 & 1.9559294 & 3.212378 & 0.069306\\
-\hline
+$s$ & $\alpha_{s}$ & $\lambda_{s}$ & $|\widehat{1_s}(\alpha_{s})|$
+\\\hline
+  \csvreader{datafiles/sumfree_alphas.csv}{}
+  {\\\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
+\\\hline
 \end{tabular}
 
 {\color{red}
@@ -1921,9 +1663,12 @@ Some remarks:
 
 {\color{red}
 
-\subsection{Spectrum}
+\subsection{The complete spectrum of $A$}
 
-\subsubsection{The complete spectrum of $A$}
+\subsubsection{Spectral complexity and density}
+
+% Try here to establish relationship between density and how many
+% truly distinct nonzero Fourier coefficients there are
 
 \subsubsection{Decay of Fourier coefficients}
 
@@ -1960,14 +1705,15 @@ triangle inequality to get:
 
 \end{proof}
 
-\subsubsection{Spectral complexity and density}
+\section{Distribution}
 
-% Try here to establish relationship between density and how many
-% truly distinct nonzero Fourier coefficients there are
 
-\subsection{Distribution}
 
-\subsubsection{Distributions of sets mod $\lambda$}
+\subsection{Distrubution of $r_{A+A}$}
+
+
+
+\subsection{Distrubution mod $\lambda$}
 
 Now we compute the distributions of various $U(a,b)$ and $\theta(s)$
 modulo their respective $\lambda$s.
@@ -2202,7 +1948,7 @@ A conjecture of Gibbs states...
 Numbers $x$ that fail to be Ulam because in fact $r^*_{A+A}(x) = 0$
 all seem to lie within the middle third.  
 
-\subsubsection{Non-uniformity/Regularity}
+\subsection{Non-uniformity/Regularity}
 
 
 \begin{definition}$A \subseteq \N$ is \textbf{$\epsilon, \beta$ regular}
@@ -2230,6 +1976,8 @@ fact, we can do slightly better:
 \begin{proof}
 
 \end{proof}
+
+\subsection{Structure of $\ulam{1}{2}$}
 
 \subsubsection{Distribution of large summands}
 We've studied the smaller summands a bit--now the question is: What
@@ -2500,11 +2248,311 @@ class and ask whether 2 is ever a complement of that $a_n$), and the
 proportion of times 2 shows up as a complement of k is equal to the
 proportion of times we get exactly k successes in our trials.
 
+
+\subsection{Density}
+
+The first step in our strategy is to establish positive density
+results for sum-free and Ulam sequences.  In this paper, we will not
+actually establish these, but give conjectures in this direction.
+However, one may note that the only reason we know other Ulam
+sequences such as $\ulam{2}{5}$ have positive density is that we know
+they are regular.  So in trying to get a handle on the distribution
+of, say, $\ulam{1}{2}$, it might seem backwards to start with an
+assertion of positive density and then deduce regularity.
+
+There are three things: 
+
+\begin{enumerate}
+\item First, it is already non-obvious that positive density in fact
+  implies all the rest of what we want to know, and so even if this is
+  all we can prove at the moment, it still seems worthwhile to record.
+\item Second, beyond that, there is some reason for believing
+  conjectures of this form.  Combined with a lot of experimental
+  computations, one suggestive sort of argument takes the shape:
+  ``There are many positive-density sets of the right sort
+  (1-additive, sum-free, etc.), and the procedures for constructing
+  the sum-free and Ulam sets that we are looking at are in some way
+  `as greedy as possible', so what other sets could we get from those
+  constructions if not some version of the positive-density ones we
+  can construct?''  We will suggest some possible more precise
+  versions of this in what follows.
+\item Finally, while literal positive-density makes the arguments
+  nicer, Many of the statements we wish to make later do have versions
+  that make sense without it (mostly by changing ``large'' from
+  meaning ``large relative to $N$'' to ``large relative to $|A_N|$''),
+  as we shall discuss later.
+\end{enumerate}
+
+The first question is to attempt to compute the density of the various
+sum-free sets and Ulam sequences that we are studying.  
+
+\subsubsection{Computations}
+
+The prescribed method for computing sum-free sets from a decision
+sequence is already decently fast, provided we keep track of the data
+appropriately.  Recall, the approach is to track three sets: $A$, the
+actual sum-free set we are constructing, $D$, the set $A+A$ of things
+that are ``disqualified'' from appearing in $A$, and $E$, the set of
+things that are not disqualified by virtue of being sums but that,
+according to the decision sequence, we are nevertheless to exclude.
+
+We thus store $A$ as a list and $D$ as a hashset, (and need not keep
+track of $E$).  So the algorithm is to, for each $x$ starting from 1
+until we get bored:
+
+\begin{enumerate}
+\item Check if $x \in D$ (very fast, as $D$ is a hashset).  
+\item If not, pop an item off the decision sequence.  
+\item If 1, append $x$ in $A$ and add $x + A$ to $D$ ($|A|$ steps).
+\end{enumerate}
+
+So this algorithm to compute the first $N$ items will be roughly
+$O(N \cdot |A_N|)$
+
+A similar algorithm can be implemented for the Ulam sequence, in fact:
+Now, we track the set $A$ as a list, the hashset $D$ of disqualified
+items (i.e. $x$ for which $r^*_{A+A}(x) > 1$), the sorted list $C$ of
+candidates (i.e. $x$ bigger than every element of $A$ with
+$r^*_{A+A}(x) = 1$), and a hashset $C'$ that also contains the candidates.  Then the algorithm is to initialise the
+following: 
+
+\begin{enumerate}
+\item $A = [a,b]$
+\item $C = [a+b]$
+\item $C' = \{a+b\}$
+\end{enumerate}
+
+And proceed thus: 
+
+\begin{enumerate}
+\item Delete any inital elements of $C$ that are smaller than the
+  largest element of $A$.  As we go, delete these elements from $C'$
+  also.
+\item Let $x$ be the first element of $C$, and append $x$ to $A$.
+\item For each $a \in A$: Compute $x + a$ and, if it is in $C'$,
+  delete it from $C'$ (fast, since $C'$ is a hashset) and from $C$
+  (where we can find it by bisection, since $C$ is sorted).
+\end{enumerate}
+
+There is a more advanced algorithm that leverages the apparent
+regularity of such sequences as well, implemented in
+\cite{knuth_algorithm}, which speed this basic algorithm up by, among
+other things, noting that if we track which elements of $A$ are
+outside the middle third mod $\lambda$ for a $\lambda$ where there are
+few such elements, then when we're testing whether any new $x$ within
+the middle third is actually a sum of smaller elements of $A$, we only
+have to look at whether $x - a$ is in $A$ where $a$ is one of the
+(hopefully few) elements of $A$ outside the middle third.  In fact,
+one can be even more careful about it, which is done in
+\cite{knuth_algorithm}.
+
+In any case, the results of our computations give the following
+estimates for the densities of these sets: 
+
+{\color{red}[COMPUTATIONS]}
+
+\subsubsection{Constructions}
+
+We first start by noting that positive-density sum-free sets are
+abundant, as a result of the abundance of sum-free sets
+$A \subseteq \R/\Z$, coupled with the fact that if
+$\pi_\lambda : \Z^+ \to \R/\Z$ by
+$x \mapsto \frac{x}{\lambda} \mod{1}$, the inverse image
+$\pi_\lambda\inv(A)$ is sum-free in the integers.  For example, the
+set $A = \{1/2\}$ is sum-free in $\R/\Z$, and $\pi_2(A)$ is the odd
+positive integers, which is sum-free.  Likewise, the $A_\lambda$ from
+earlier (for any irrational $\lambda$), where recall $A_\lambda$ was
+the set of integers that, when reduced (in $\R$) modulo $\lambda$,
+land in the interval $(\frac{\lambda}{3}, \frac{2\lambda}{3})$, are
+also of this form.  So this kind of example gives many sum-free sets,
+both regular and irregular, that all have positive density.
+
+One might wonder whether we can similarly generate examples of
+Ulam-like sets of positive density.  It turns out that one can do this
+using the basic idea behind the $A_\lambda$ construction, but being
+more careful about it.  But first, we will make precise what we mean
+by ``Ulam-like'': 
+
+Recall an Ulam sequence is an increasing sequence of positive integers
+that starts with some $a$ and $b$ and that continues by choosing
+integers according to the requirements of 1-additivity (``every
+element is uniquely a sum of previous elements'') and greediness
+(``always choose the smallest such element available'').  In some
+ways, it is the greediness that makes Ulam sequences hard to analyse.
+If we drop this condition, then we get a general class of sequences to
+which belong the Ulam sequences, but also many others:
+
+\begin{definition}\label{def:1additive}
+  For $S \subseteq \Z^+$ a finite set (say of size $k$), a
+  \textbf{1-additive sequence with base $S$} is an infinite sequence
+  of positive integers $a_i$ such that $a_1 < \ldots < a_k$ are the
+  elements of $S$, and, for $n > k$, $a_n$ is greater than $a_{n-1}$
+  and has a unique pair of integers $i, j$ with $0 < i < j < n$ such
+  that $a_n = a_i + a_j$.
+
+  We may talk of simply a \textbf{1-additive sequence}, by which we
+  will mean a sequence of integers that is a 1-additive sequence with
+  base $S$ for some $S$.
+\end{definition}
+
+\begin{example}
+  \begin{enumerate}
+  \item Any Ulam sequence $U(a,b)$ is 1-additive with base $a, b$.  
+  \item The Fibonacci numbers $1, 2, 3, 5, 8, \ldots$ are a 1-additive
+    sequence with base $1, 2$.  
+  \item The set $\{2, 3, 5, 7, 9, \ldots\} = 2, 2+3\Z^+$ is 1-additive
+    with base $2, 3$.  
+  \item More generally, for any $a < b$, the set $a, b, b+a, b+2a,
+    \ldots$ is 1-additive provided $b \neq 0 \mod{a}$.  
+  \end{enumerate}
+\end{example}
+
+The last example gives plenty of examples of regular 1-additive
+sequences.  But we might wonder what the analogue of $A_\lambda$ (for
+irrational $\lambda$ would be for 1-additive sets.  Indeed, these were
+our first examples of irregular sum-free sets of positive density, so
+we might first ask whether there even is such a thing for 1-additive
+sets.  It turns out that there is: 
+
+\begin{proposition}
+  There exists an irregular 1-additive set of positive density.
+\end{proposition}
+
+\begin{proof}[Idea of proof]
+  The basic idea will be the following ``ping-pong mod $\lambda$''
+  construction: Take an irrational $\lambda$.  Take $a$ (the ``left
+  bat'') just above $0$ mod $\lambda$, and $b$ (the ``right bat'')
+  just below 0 mod $\lambda$, and a $c$ (the ``ball'') just above
+  $\lambda/3$ mod $\lambda$.  The game will be to keep the ball in the
+  set $T = (\frac{\lambda}{3}, \frac{2\lambda}{3})$ (the ``table'')
+  mod $\lambda$ by adding $a$ to it until it reaches the right side,
+  then adding $b$ to it until it reaches the left side, and repeating
+  indefinitely.
+
+  Supposing we are a little careful about our choices of $a, b, c$,
+  and $\lambda$, we should be able to show that this construction
+  satisfies the required properties.
+\end{proof}
+
+\begin{proof}
+  More precisely: start with an irrational $\lambda$, an $a$ with
+  $a \mod{\lambda}$ lying in $(0, \frac{\lambda}{12})$, and a $b > a$
+  with $b \mod{\lambda}$ in $(\frac{11\lambda}{12},\lambda)$, and a
+  $c$ with $c \mod{\lambda}$ in $(\frac\lambda 3, \frac\lambda 2)$,
+  and say further that $a \nmid b$ (for reasons that will become
+  apparent later).
+
+  Then we will define a sequence of sets $A_n$ which will comprise the
+  sequence $A$, as follows: Let $c_1 = c$.  For $n \geq 1$, let
+  $A_n = \{c_n + ka : k \in \Z^+, c+ka\mod{\lambda} \in T\}$, and let
+  $c_{n+1}$ be the largest element of this set (allowing the
+  definition of $A_{n+1}$ to make sense).  
+
+  Then let $S = \{a, b, c\}$ and $A = S \cup \bigcup_{i=1}^\infty
+  A_i$.  
+
+  Now let us check the definition: Our base set is $S$.  Every element
+  $a_i$ has $a_i < a_{i-1} + a + b$, so the set is has positive
+  density.  This set is not dense mod $\lambda$, but any regular set
+  would have to be (since $\lambda$ is irrational), so $A$ cannot be
+  regular.  It remains to check 1-additivity.  
+
+  By construction, every element $a_n > c$ is either $a_{n-1} + a$ or
+  $a_{n-1}+b$, so every element not in $S$ is a sum of smaller
+  elements in at least one way.  Now suppose $a_n$ is a sum of smaller
+  elements in another way also.  Then because $a_n$ is in the middle
+  third, it cannot be a sum of two other elements in the middle third.
+  Thus the only for $a_n$ to be a sum of other elements of $A$ in two
+  different ways is if $a_n - a$ and $a_n - b$ are both in $A$.  
+
+  But now, say $a_n = c + ax + by$, for some $x \geq 0, y \geq 0$.
+  We know either $a_n - a \in A$ or $a_n - b \in A$.  If $a_n - b \in
+  A$, Then by definition, the next element of $A$ will be $a_n$, and
+  $a_n - b < a_n - a < a_n$, so $a_n - a$ cannot be in $A$.  
+
+  If instead $a_n - a \in A$, then say the place where we started
+  adding $a$s (before $a_n$) was $r$ steps back ($r \geq 1$ since
+  $a_n - a \in A$), i.e. at $c + a(x-r) + by$.  Then the element
+  before this in $A$ would be $c + a(x-r) + b(y-1) < a_n - b$.  Thus
+  for $a_n - b$ to be in $A$, it would have to be an element after
+  $c + a(x-r) + b(y-1)$, i.e. an element of the form
+  $c + a(x-s) + by$.  But $c + a(x-s) + by = c + ax + by - b$ implies
+  $as = b$, which contradicts $a \nmid b$, which was our condition on
+  $a$ and $b$.  
+
+  Thus $a_n - a$ and $a_n - b$ can never both be in $A$, making $A$
+  also 1-additive.
+\end{proof}
+
+We note, however, that this construction gives us a 1-additive set
+with a base of size 3, whereas the Ulam numbers are a 1-additive set
+with a base of size 2.  So we might wonder whether there is a similar
+(if more complicated) construction of this sort.
+
+The following construction, we believe should work: 
+
+\begin{conjecture}
+  There is an irregular, positive density 1-additive set with a base
+  of size 2.
+\end{conjecture}
+
+\begin{proof}[Idea]
+  We will play the same game of ping-pong, but now we are only allowed
+  to use two elements.  We will again start with an irrational
+  $\lambda$ and $a \in \Z^+$ the ``left bat'' in the range
+  $(\frac{\lambda}{6}, \frac{\lambda}{3})$ mod $\lambda$.  But now we
+  will start with $c$ being the ``ball'' inside the ``table''
+  $T = (\frac{\lambda}{3}, \frac{2\lambda}{3})$.
+
+  Then we will add $a$ to $c$ until it comes out on the right side as
+  some $b \in (\frac{2\lambda}{3}, \frac{5\lambda}{6})$, and that will
+  be our ``right bat''.  Then we will do roughly the same thing as
+  before, except now $a$ and $b$ have larger magnitude mod $\lambda$,
+  so they may occasionally hit the ball off the table slightly.  This
+  will give us further bats with which to hit the ball--usually bats
+  with even greater magnitude mod $\lambda$.  The idea, then, will be
+  to always hit the ball with the largest available bat that doesn't
+  send it off the table (when possible), so that there is the most
+  flexibility for the other side to ensure they are also able to hit
+  the ball back onto the table.  
+\end{proof}
+
+\subsubsection{Conjectures}
+
+Recall that sum-free sets of positive integers correspond bijectively
+with binary ``decision'' sequences.  We know also that there are many
+sum-free sets of positive density.  Further, we can easily see that if
+the 1s have zero density in the decision sequence, then the resulting
+sum-free set has zero density.  So all the positive-density sum-free
+sets must have decision sequences with positive density.  
+
+\begin{question}
+  For any decision sequence $S$ with a positive density of 1s, the
+  corresponding sum-free set $A = \theta(S)$ has positive upper density.
+\end{question}
+
+\begin{conjecture}
+  For any decision sequence $S$ that is eventually periodic and for
+  which the repeating pattern has at least one 1, then the
+  corresponding sum-free set $A = \theta(S)$ has positive upper
+  density.
+\end{conjecture}
+
+As we have said, it appears that the Ulam sequence has positive
+(upper) density around $0.07$.  This, together with the ultimate
+greediness of the Ulam sequence suggests for us the conjecture:
+
+\begin{conjecture}
+  The Ulam sequence $\ulam{1}{2}$ has positive upper density.
+\end{conjecture}
+
+\section{Other}
+
 \subsection{Reducing Ulam-like sets to sum-free}
 
 \subsubsection{Via triangle removal}
 
-\subsection{Variants of the Ulam problem}
+\subsubsection{Variants of the Ulam problem}
 
 
 Circle method gets better with more variables.  For this reason, we
