@@ -1280,63 +1280,104 @@ four steps:
 \end{enumerate}
 
 Of this programme, we will provide results in the direction of steps 1
-and 4, and computational evidence in favour of the others.  Before 
+and 4, and computational and heuristic evidence in favour of the
+others.
 
 \subsection{Outline}
 
-More specifically: 
+Before we embark on this journey, we provide a little fuller picture
+of what we intend to actually do towards each of the steps and in the
+remainder of this document: 
 
 \begin{enumerate}
-\item We study the large Fourier coefficient $\alpha$ and
+\item First, we study the large Fourier coefficient $\alpha$ and
   corresponding period $\lambda = \frac{2\pi}{\alpha}$ of various Ulam
-  sequences $U(a,b)$ and sum-free $\theta(s)$.  Specifically:
+  sequences $U(a,b)$ and sum-free $\theta(s)$ (collectively,
+  ``\relevant sets'').  Specifically:
   \begin{enumerate}
   \item We use a computer program to estimate the maximal Fourier
     coefficient of many such sequences.
   \item We use a computer program to compute continued fraction
     convergents and to attempt to compute minimal polynomials for
     certain $\lambda$ to understand whether they are rational or at
-    least algebraic.  
-  \item We study the constraints that would be imposed on a
-    $\ulam{a}{b}$ if the corresponding $\lambda$ were to be rational
-    with numerator 3. 
+    least algebraic.  We also study the constraints that would be
+    imposed on a $\ulam{a}{b}$ if the corresponding $\lambda$ were to
+    be rational with numerator 3.
   \item We prove the existence of an $\alpha$ for \relevant sets $A$
     (truncated at $N$) at which the Fourier transform has size
     comparable to $|A_N|$.  In fact, we show that the real part of the
     Fourier transform itself must be large compared to $|A_N|$.
   \end{enumerate}
-\item We then study the complete spectrum of \relevant sets $A$,
-  computing via computer program 
 
-Prove the existence of a large Fourier coefficient at
-    some $\alpha$.
-  \item Prove that the spectrum of $A$ is supported in $\alpha \Z$.  
-  \item Prove that the Fourier coefficients $\widehat{A}(k\alpha)$
-    decay fast enough as $k \to \infty$.  
-  \item Deduce features of the distribution of $A$ modulo
-    $2\pi/\alpha$.
+\item We then study the complete spectrum of various \relevant sets,
+  specifically:
+  \begin{enumerate}
+  \item We then study the complete spectrum of \relevant sets $A$,
+    computing via computer program any other nonzero values of the
+    respective Fourier transforms.  We will find that the Fourier
+    transform for the sets we consider appears to be supported only on
+    $\alpha\Z$.
+  \item We construct an example of a sum-free set with a Fourier
+    spectrum not supported only on some $\alpha\Z$.
+  \item For some \relevant sets with spectrum $\alpha\Z$, we use a
+    computer to enumerate the values of $\widehat{f}(k\alpha)$ as $k$
+    grows and see how these evolve.
+  \item We give an argument that suggests how one might prove the
+    observed decay of these values.
+  \end{enumerate}
+
+\item Having some picture of the spectrum, we will then study the
+  distribution of $A$ modulo $\lambda$ and see what information we can
+  deduce from the definition as well as from the spectral information
+  we have gathered in the previous steps.  Specifically:
+  \begin{enumerate}
+  \item First the definition of such $A$ means that whether a given
+    $x$ is in $A$ is controlled largely by $r_{A+A}(x)$--the number of
+    representations of $x$ as a sum of elements of $A$.  So we start
+    by studying the distribution of this.  We use a computer to
+    generate plots of this that suggest a high degree of regularity in
+    the behaviour of this function, and we show that an estimate of
+    the function using the ``major arcs'' coming from the Fourier
+    spectrum bear this out, which will give us at least a very
+    plausible conjecture about the behaviour of this function.
+  \item Having come to some understanding of $r_{A+A}$ using the
+    Fourier spectrum, we will use this to attempt to deduce features
+    of the distribution itself, ultimately proving a mild theorem that
+    the distribution is at least non-uniform.
+  \end{enumerate}
+
+\item Finally, we will focus specifically on $\ulam{1}{2}$ and turn to
+  more combinatorial analysis of the structure of the sequence.
+  Specifically: 
+  \begin{enumerate}
+  \item By the definition of $\ulam{1}{2}$, every element of the
+    sequence has a unique expression $x+y$ for $x, y \in \ulam12$,
+    $x < y$.  So we might ask which $x$'s actually show up in the Ulam
+    sequence.  For the provably regular Ulam sequences, the analogous
+    consideration reveals that there are only finitely many values of
+    $x$ that are used in forming the sequence.  In the case of
+    $\ulam{1}{2}$, we observe a highly skewed distribution of the
+    ``small summands'' $x$, and make similar observations about the
+    distribution of $y$ that show up and about the pairs $(x, y)$ as
+    well.
+  \item From these observations, we will start to get a picture of
+    what combinatorial phenomenon might underlie the Ulam sequence, and
+    will consider the implications in particular for the density of
+    the $\ulam{1}{2}$.
+  \end{enumerate}
 \end{enumerate}
-
-We will discuss the questions first by discussing the maximal Fourier
-coefficients of the various sets we've been thinking about, then move
-on to the complete spectrum of these sets.  We will then study the
-apparent distributions of these sets modulo whatever their natural
-frequency appears to be and see what can be concluded about the
-frequency from the specturm. 
 
 \subsection{About the computations}
 
-In this section, we will begin our study of some of the questions in
-the prior section.  We will prove what we can and will use computer
-calculations to guide our thinking about what should be true in each
-case.  When we refer to computer computations, we will mostly be
-referring to various programs in the repository \cite{computations}.
-In most cases, we will be referring to the particular file
-\icode{/experiment.py}.  For example, when we talk about
-\icode{experiment17}, we mean the function \icode{experiment17} in the
-\icode{experiment.py} file in that repository.  Sometimes we will
-refer to code in other files as well from the same repository, and
-will mention where the code in question is located in each case.
+When we refer to computations done by computer, we will mention the
+code that was use to execute them by referring to various programs in
+the repository \cite{computations}.  In most cases, we will be
+referring to the particular file \icode{/experiments.py}.  For example,
+when we talk about \icode{experiment17}, we mean the function
+\icode{experiment17()} in the \icode{experiments.py} file in that
+repository.  Sometimes we will refer to code in other files as well
+from the same repository, and will mention where the code in question
+is located in each case.
 
 \section{Spectrum}
 
@@ -1348,11 +1389,11 @@ Fourier spectrum of the various \relevant sets under consideration.
 The initial observation of \cite{ulam_steinerberger} is that the
 Fourier transform of the indicator function of $U(1,2)$ has takes a
 large value at some $\alpha$.  That is,
-$\frac1N \sum_{t=1}^N 1_A(t) e^{-it\alpha}$ is large.  This suggests
-that $t$ being in $A$ is correlated with some
-$t+\frac{2\pi}{\alpha} k$ being in $A$ for various integer $k$.  In
-other words, $\lambda_A = \frac{2\pi}{\alpha}$ behaves somewhat like a
-period for $A$.
+$\widehat{A_N}(\alpha) = \frac1N \sum_{t=1}^N A(t) e^{-it\alpha}$ is
+large relative to $|A_N|$.  This suggests that $t$ being in $A$ is
+correlated with $t+\frac{2\pi}{\alpha} k$ being in $A$ for various
+integer $k$.  In other words, $\lambda = \frac{2\pi}{\alpha}$ behaves
+somewhat like a period for $A$.
 
 \subsubsection{Computing $\alpha$}
 
@@ -1529,9 +1570,9 @@ All told, both look like they don't have small degree if algebraic at all...
 
 \subsubsection{Existence of $\alpha$}
 
-The common thread with all these sets is that they have few solutions
-to $x+y=z$ in them.  As we talk about why this gives us large Fourier
-coefficients, the following definition will be helpful: 
+The common thread with all these \relevant sets is that they have few
+solutions to $x+y=z$ in them.  As we talk about why this gives us
+large Fourier coefficients, the following definition will be helpful:
 
 \begin{definition}
   For $A \subseteq [N]$, define
@@ -1542,81 +1583,153 @@ coefficients, the following definition will be helpful:
 
   \[T(f) = \sum_{x,y \in [N]} f(x)f(y)f(x+y)\]
 
-  (So $T(A) = T(1_A)$, in particular.)
+  (So in particular, $T(A) = T(1_A)$.)
 \end{definition}
 
-The fact that there always seems to be a large Fourier coefficient
-$\alpha$ for each of these sets boils down, at least intuitively, to
-an observation we have already made earlier: If a we pick randomly
-from $\Z$ (say, including each element with probability $\delta$) to
-make a set $A$, then we expect $T(A_N) = O(N^2)$.  
+Now, the statement that $A$ has a Large Fourier coefficient could be
+thought of conceptually as saying that $A$ cannot be too random.  To
+get a heuristic for what this would mean, suppose $A$ were random in
+the sense that we construct it by going through each element of $[N]$
+and including it in $A$ with some probability $p$.  Then we expect to
+have $(pN)^2$ pairs $(x, y) \in A^2$.  For any such pair, $x+y$ will
+be in $A$ with probability $p$, so the number of pairs
+$(x, y, x+y) \in A^3$ will be around $p^3 N^2$ as $N$ grows.  So for a
+random set of density $\delta$, we might then expect
+$T(A_N) \approx \delta^3 N^2$ as $N$ grows.  
 
-We think of a set chosen in this way as analogous to a set having only
-one large Fourier coefficient: Namely $\widehat{1_{A_N}}(0) = pN$,
-with all the others being small.  So we would hope to deduce more
-generally that this situation always implies we have many solutions to
-$x+y=z$, giving that all the sets we have been looking at cannot have
-only small Fourier coefficients.  Put another way ``if a set is dense,
-then to avoid solutions to $x+y=z$ it needs to have some kind of
-pattern (such as being all odds).''
+But by definition, if $A$ is sum-free, $T(A_N) = 0$ for all $N$, and
+$T(\ulam{a,b}_N) \leq 3N$ (since each $z \in \ulam{a,b}$ has at most 3
+representations as $z = x+y$ for $x,y \in A$, namely, the one with
+$x < y$ that qualifies it to be in $\ulam{a,b}$, the same one in
+reverse ($z = y+x$), and possibly $z = \frac{z}{2} + \frac{z}{2}$ if
+$\frac{z}{2} \in \ulam{a,b}$ (since the definition does not exclude
+that possibiility).  In particular, these sets do not behave like
+truly random sets would be expected to.  
 
+We give a result in this direction saying that if $T(A_N)$ is small
+relative to $N$ (i.e. is less than $N^2$), but the set itself is
+reasonably large, then there must be a Fourier coefficient that
+explains this: 
 
-\begin{theorem}\label{thm:alpha}
-  If $A \subseteq \N$ is a sequence of positive integers of density
-  $\delta > 0$ such that $T(A_N)$ is bounded by $c N^{2-\epsilon}$ for
-  some constants $c > 0, \epsilon > 0$, then there is an
-  $\alpha \in \R/\Z$ such that $\widehat{1_A}(\alpha) \geq \delta^2$.
+\begin{theorem}\label{thm:alpha_finitary}
+  If $A \subseteq [N]$ is a set of size $\delta N$ such that $T(A)$ is
+  bounded by $c N^{2-\epsilon}$ for some constants
+  $c > 0, \epsilon > 0$, then there is an $k \in [2N]$ such that
+  $\widehat{A}(\frac{2\pi k}{2N}) \geq \delta^2 - \frac{c}{2\delta
+    N^\epsilon}$.
 \end{theorem}
+
+\begin{proof}
+  Denote the discrete Fourier transform by
+  $(\dft_N A)(k) = \sum_{t=0}^{N-1} A(t) e(\frac{-2\pi k t}{N})$.
+  Note that this really is a function on $\Z/N$, rather than just
+  $[N]$.  Since we want to relate $\dft A$ to $T(A)$, we would like to
+  compute $T(A)$ in terms of $\dft A$.  The following standard trick
+  allows us to do this: 
+
+  \[T(A) = \sum_{x, y, z = 0}^{N-1} A(x)A(y)A(z)\delta_{x+y-z}\]
+
+  Where $\delta_0 = 1$ and $\delta_x = 0$ for $x \neq 0$.  Then the
+  trick is to write 
+
+  \[\delta_x = \frac{1}{N} \sum_{t=0}^{N-1} e(\frac{2\pi x t}{N}) = \dft_N 1\]
+
+  However, we note that this only tests for $x = 0 \mod{N}$.  Thus if
+  we substitute this into our expression for $T(A)$, then we will only
+  be counting solutions to $x+y=z$ modulo $N$.  However, because
+  $A \subseteq [N]$, solving $x+y=z$ in $\Z$ is the same as solving it
+  modulo $mN$ for any integer $m \geq 2$ (which we will fix later).
+  Thus we can use the formula: 
+
+  \[\delta_x = \frac{1}{mN} \sum_{t=0}^{mN-1} e(\frac{2\pi x t}{mN}) = \dft_{mN} 1\]
+
+  to compute: 
+
+  \begin{eqnarray*}
+    T(A) &=& \frac{1}{mN}\sum_{x, y, z = 0}^{N-1} A(x)A(y)A(z)\sum_{t=0}^{mN-1}
+             e(\frac{2\pi (x+y-z) t}{2N})\\
+         &=& \frac{1}{mN}\sum_{x, y, z = 0}^{mN-1} A(x)A(y)A(z)\sum_{t=0}^{mN-1}
+             e(\frac{2\pi (x+y-z) t}{2N})\\
+         &=& m^2N^2 \sum_{t=0}^{mN-1}
+             \sum_{x=0}^{mN-1} \frac{1}{mN} A(x)e(\frac{2\pi x t}{mN}) 
+             \sum_{y=0}^{mN-1} \frac{1}{mN} A(y)e(\frac{2\pi y t}{mN}) 
+             \sum_{z=0}^{mN-1} \frac{1}{mN} A(z)e(\frac{-2\pi z t}{mN})\\
+         &=& m^2 N^2 \sum_{t=0}^{mN-1} (\dft_{mN}A)(-t)(\dft_{mN}A)(-t)(\dft_{mN}A)(t)\\
+         &=& m^2 N^2 \sum_{t=0}^{mN-1} |(\dft_{mN}A)(t)|^2(\dft_{mN}A)(-t)
+  \end{eqnarray*}
+  
+  where the second equality we get by extending $A$ by zero.  
+  
+  So by assumption, 
+
+  \[cN^{2-\epsilon} \geq m^2 N^2 \sum_{t=0}^{mN-1} |(\dft_{mN}A)(t)|^2(\dft_{mN}A)(-t)\]
+
+  We can pull out the $t = 0$ term which is $\frac{\delta^3}{m^3}$.  Then we can
+  bound the remaining sum from below by replacing one of the three
+  $(\dft_{mN} A)(t)$ terms inside the sum with
+  $-\max_{t\neq 0} |(\dft_{mN} A)(t)| = -\eta_m = -\eta$:
+  
+  \[cN^{2-\epsilon} \geq N^2 \frac{\delta^3}{m} - \eta m^2 N^2 \sum_{t=1}^{mN-1} |(\dft_{mN} A)(t)|^2\]
+
+  Now, by Plancherel we know that,
+  $\sum_{t=0}^{mN-1} |(\dft_{mN}A)(t)|^2 =
+  \frac{1}{mN} \sum_{t=0}^{mN-1} |A(t)|^2 = \frac{1}{mN} |A| = \frac{\delta}{m}$, so:
+
+  \[\sum_{t=1}^{mN-1} |(\dft_{mN}A)(t)|^2 = \frac{\delta}{m} - \frac{\delta^2}{m^2}\]
+
+  which we can plug into our bound to get: 
+
+  \[cN^{2-\epsilon} \geq \frac{\delta^3}{m} N^2 - \eta m^2 N^2 
+    \left(\frac{\delta}{m} - \frac{\delta^2}{m^2}\right)  =
+    N^2\left(\frac{\delta^3}{m} - \eta\left(m\delta - \delta^2\right)\right)\]
+
+  Or, rearranging, 
+
+  \[\eta \geq \frac{\delta^3}{m^2 \delta - m\delta^2} - \frac{c}{(m\delta - \delta^2) N^\epsilon}\]
+
+Thus for if $k$ is the value of $t$ that realises the maximum, then we
+have shown that: 
+
+\[\left|\frac{1}{2N} \sum_{t=0}^{2N-1} A(t) e(\frac{-2\pi k
+      t}{2N})\right| \geq \frac{\delta^2}{2} - \frac{c}{\delta N^\epsilon}\]
+
+But comparing the left side to 
+
+\[\widehat{A_N}(\frac{2\pi k}{2N}) = \frac{1}{N}\sum_{t=0}^{N-1} A_N(t) e(\frac{-2\pi k
+      t}{2N}) = \frac{1}{N}\sum_{t=0}^{2N-1} A_N(t) e(\frac{-2\pi k
+      t}{2N})\]
+
+we get that for some $k \neq 0$
+
+\[|\widehat{A_N}(\frac{2\pi k}{2N})| \geq \delta^2 - \frac{c}{2\delta
+    N^\epsilon}\]
+
+as claimed.
+\end{proof}
+
+\begin{corollary}\label{thm:alpha}
+  If $A \subseteq \N$ is a sequence of positive integers of density
+  $\delta > 0$ such that for all $N$, $T(A_N)$ is bounded by
+  $c N^{2-\epsilon}$ for some constants $c > 0, \epsilon > 0$, then
+  there is an $\alpha \in \R/\Z$ such that
+  $\widehat{1_A}(\alpha) \geq \delta^2$.
+\end{corollary}
 
 \begin{example}
   For example, in the Ulam sequence we know by construction that
   $T(A_N) \leq 3|A| \leq 3N$, and we believe that the Ulam sequence
   has density around $0.07$, so this theorem would guarantee us a
   non-zero Fourier coefficient of size at least $0.0049$.  This is a
-  bit off our numerical value of $0.8$, but it is a start.
+  bit off our numerical value of $0.8 \times 0.07 = 0.056$, but it is
+  a start.
 \end{example}
 
 \begin{proof}
-  As we've discussed earlier,
-
-\[T(A_N) = (1/N) \sum_{t=0..N-1} \widehat{1_{A_N}}(t) \widehat{1_{A_N}}(t) \widehat{1_{A_N}}(-t)\]
-
-So by assumption, 
-
-\[cN^{2-\epsilon} \geq (1/N) \sum_{t=0..N-1} \widehat{1_{A_N}}(t) \widehat{1_{A_N}}(t) \widehat{1_{A_N}}(-t)\]
-
-We can pull out the $t = 0$ term which is $|A|^3$, which, for $N$
-large enough, is close to $\delta^3 N^3$.  Then we can bound the
-remaining sum by pulling out a $\widehat{1_A}(t)$ and replacing it
-with $-\max_{t\neq 0} \widehat{1_A}(t)$:
-
-\[cN^{2-\epsilon} \geq \delta^3 N^2 - \max_{t=1..N-1}(\widehat{1_A}(t)) (1/N) \sum_{t=1..N-1} |\widehat{1_A}(t)|^2\]
-
-Now, by Plancherel we know that,
-$(1/N) \sum_{t=0..N-1} |\widehat{1_A}(t)|^2 = \sum_{t=0..N-1} 1_A(t) =
-|A|$, so:
-
-\[cN^{2-\epsilon} \geq \delta^3 N^2 - \max_{t\neq 0}(\widehat{1_A}(t))
-|A| = \delta^3 N^2 - \max_{t=1..N-1}(\widehat{1_A}(t)) \delta N\]
-
-Thus if $\max_{t=1..N-1}(\widehat{1_A}(t)) \leq \epsilon N$, then 
-
-\[cN^{2-\epsilon} \geq N^2 (\delta^3 - \delta\epsilon)\]
-
-Or, rearranging, 
-
-\[\frac{c}{\delta} N^{-\epsilon} \geq \delta^2 - \epsilon\]
-
-But the left side goes to zero as $N \to \infty$, so
-$\epsilon \geq \delta^2$, i.e. for some $k$ in $\{1, \ldots, N-1\}$,
-we have
-
-\[|\widehat{1_{A_N}}(k)| > \delta^2 N\]
-
 Now, as we let $N$ grow, we get a sequence of values of $k_N$ with
 this property.  On $\R/\Z$, the sequence $\frac{k_N}{N}$ for
 increasing $N$ must have a convergent subsequence--say converging to
-some $\alpha$.  \end{proof}
+some $\alpha$.  
+\end{proof}
 
 Some remarks: 
 
@@ -1977,7 +2090,9 @@ fact, we can do slightly better:
 
 \end{proof}
 
-\subsection{Structure of $\ulam{1}{2}$}
+\section{Structure of $\ulam{1}{2}$}
+
+\subsection{Distribution of summands}
 
 \subsubsection{Distribution of large summands}
 We've studied the smaller summands a bit--now the question is: What
@@ -2546,17 +2661,27 @@ greediness of the Ulam sequence suggests for us the conjecture:
   The Ulam sequence $\ulam{1}{2}$ has positive upper density.
 \end{conjecture}
 
-\section{Other}
+\section{Future Directions}
 
-\subsection{Reducing Ulam-like sets to sum-free}
+\subsection{Reducing 1-additive sets to sum-free sets}
 
 \subsubsection{Via triangle removal}
 
-\subsubsection{Variants of the Ulam problem}
+\subsection{Technology}
 
+\subsubsection{Arithmetic regularity}
+
+\subsubsection{Ultralimits}
+
+\subsection{Variants of the Ulam problem}
+\subsubsection{Larger seed sets}
+\subsubsection{Sums of more than two previous elements}
 
 Circle method gets better with more variables.  For this reason, we
 might find it convenient to 
+
+\subsubsection{Probabilistic versions}
+
 
 % \section{Appendix A: Code}
 
