@@ -1615,7 +1615,7 @@ explains this:
   If $A \subseteq [N]$ is a set of size $\delta N$ such that $T(A)$ is
   bounded by $c N^{2-\epsilon}$ for some constants
   $c > 0, \epsilon > 0$, then there is an $k \in [2N]$ such that
-  $\widehat{A}(\frac{2\pi k}{2N}) \geq \delta^2 - \frac{c}{2\delta
+  $\widehat{A}(\frac{2\pi k}{2N}) \geq \frac{\delta^2}{2} - \frac{c}{\delta
     N^\epsilon}$.
 \end{theorem}
 
@@ -1638,60 +1638,56 @@ explains this:
   we substitute this into our expression for $T(A)$, then we will only
   be counting solutions to $x+y=z$ modulo $N$.  However, because
   $A \subseteq [N]$, solving $x+y=z$ in $\Z$ is the same as solving it
-  modulo $mN$ for any integer $m \geq 2$ (which we will fix later).
-  Thus we can use the formula: 
+  modulo $2N$ (which we will fix later).  Thus we can use the formula:
 
-  \[\delta_x = \frac{1}{mN} \sum_{t=0}^{mN-1} e(\frac{2\pi x t}{mN}) = \dft_{mN} 1\]
+  \[\delta_x = \frac{1}{2N} \sum_{t=0}^{2N-1} e(\frac{2\pi x t}{2N}) = \dft_{2N} 1\]
 
   to compute: 
 
   \begin{eqnarray*}
-    T(A) &=& \frac{1}{mN}\sum_{x, y, z = 0}^{N-1} A(x)A(y)A(z)\sum_{t=0}^{mN-1}
+    T(A) &=& \frac{1}{2N}\sum_{x, y, z = 0}^{N-1} A(x)A(y)A(z)\sum_{t=0}^{2N-1}
              e(\frac{2\pi (x+y-z) t}{2N})\\
-         &=& \frac{1}{mN}\sum_{x, y, z = 0}^{mN-1} A(x)A(y)A(z)\sum_{t=0}^{mN-1}
+         &=& \frac{1}{2N}\sum_{x, y, z = 0}^{2N-1} A(x)A(y)A(z)\sum_{t=0}^{2N-1}
              e(\frac{2\pi (x+y-z) t}{2N})\\
-         &=& m^2N^2 \sum_{t=0}^{mN-1}
-             \sum_{x=0}^{mN-1} \frac{1}{mN} A(x)e(\frac{2\pi x t}{mN}) 
-             \sum_{y=0}^{mN-1} \frac{1}{mN} A(y)e(\frac{2\pi y t}{mN}) 
-             \sum_{z=0}^{mN-1} \frac{1}{mN} A(z)e(\frac{-2\pi z t}{mN})\\
-         &=& m^2 N^2 \sum_{t=0}^{mN-1} (\dft_{mN}A)(-t)(\dft_{mN}A)(-t)(\dft_{mN}A)(t)\\
-         &=& m^2 N^2 \sum_{t=0}^{mN-1} |(\dft_{mN}A)(t)|^2(\dft_{mN}A)(-t)
+         &=& 4N^2 \sum_{t=0}^{2N-1}
+             \sum_{x=0}^{2N-1} \frac{1}{2N} A(x)e(\frac{2\pi x t}{2N}) 
+             \sum_{y=0}^{2N-1} \frac{1}{2N} A(y)e(\frac{2\pi y t}{2N}) 
+             \sum_{z=0}^{2N-1} \frac{1}{2N} A(z)e(\frac{-2\pi z t}{2N})\\
+         &=& 4 N^2 \sum_{t=0}^{2N-1} (\dft_{2N}A)(-t)(\dft_{2N}A)(-t)(\dft_{2N}A)(t)\\
+         &=& 4 N^2 \sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2(\dft_{2N}A)(-t)
   \end{eqnarray*}
   
   where the second equality we get by extending $A$ by zero.  
   
   So by assumption, 
 
-  \[cN^{2-\epsilon} \geq m^2 N^2 \sum_{t=0}^{mN-1} |(\dft_{mN}A)(t)|^2(\dft_{mN}A)(-t)\]
+  \[cN^{2-\epsilon} \geq 4 N^2 \sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2(\dft_{2N}A)(-t)\]
 
-  We can pull out the $t = 0$ term which is $\frac{\delta^3}{m^3}$.  Then we can
+  We can pull out the $t = 0$ term which is $\frac{\delta^3}{8}$.  Then we can
   bound the remaining sum from below by replacing one of the three
-  $(\dft_{mN} A)(t)$ terms inside the sum with
-  $-\max_{t\neq 0} |(\dft_{mN} A)(t)| = -\eta_m = -\eta$:
+  $(\dft_{2N} A)(t)$ terms inside the sum with
+  $-\max_{t\neq 0} |(\dft_{2N} A)(t)| = -\eta$:
   
-  \[cN^{2-\epsilon} \geq N^2 \frac{\delta^3}{m} - \eta m^2 N^2 \sum_{t=1}^{mN-1} |(\dft_{mN} A)(t)|^2\]
+  \[cN^{2-\epsilon} \geq N^2 \frac{\delta^3}{2} - \eta 4 N^2 \sum_{t=1}^{2N-1} |(\dft_{2N} A)(t)|^2\]
 
   Now, by Plancherel we know that,
-  $\sum_{t=0}^{mN-1} |(\dft_{mN}A)(t)|^2 =
-  \frac{1}{mN} \sum_{t=0}^{mN-1} |A(t)|^2 = \frac{1}{mN} |A| = \frac{\delta}{m}$, so:
+  $\sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2 = \frac{1}{2N}
+  \sum_{t=0}^{2N-1} |A(t)|^2 = \frac{1}{2N} |A| = \frac{\delta}{2}$,
+  so:
 
-  \[\sum_{t=1}^{mN-1} |(\dft_{mN}A)(t)|^2 = \frac{\delta}{m} - \frac{\delta^2}{m^2}\]
-
-  which we can plug into our bound to get: 
-
-  \[cN^{2-\epsilon} \geq \frac{\delta^3}{m} N^2 - \eta m^2 N^2 
-    \left(\frac{\delta}{m} - \frac{\delta^2}{m^2}\right)  =
-    N^2\left(\frac{\delta^3}{m} - \eta\left(m\delta - \delta^2\right)\right)\]
+  \[cN^{2-\epsilon} \geq N^2 \frac{\delta^3}{2} - \eta \cdot 4N^2
+    \frac{\delta}{2} = N^2\left(\frac{\delta^3}{2} - \eta\cdot 2
+      \delta \right)\]
 
   Or, rearranging, 
 
-  \[\eta \geq \frac{\delta^3}{m^2 \delta - m\delta^2} - \frac{c}{(m\delta - \delta^2) N^\epsilon}\]
+  \[\eta \geq \frac{\delta^2}{4} - \frac{c}{2\delta N^\epsilon}\]
 
   Thus for if $k$ is the value of $t$ that realises the maximum, then we
   have shown that: 
   
   \[\left|\frac{1}{2N} \sum_{t=0}^{2N-1} A(t) e(\frac{-2\pi k
-        t}{2N})\right| \geq \frac{\delta^2}{2} - \frac{c}{\delta N^\epsilon}\]
+        t}{2N})\right| \geq \frac{\delta^2}{4} - \frac{c}{2\delta N^\epsilon}\]
   
   But comparing the left side to 
   
@@ -1701,7 +1697,7 @@ explains this:
   
   we get that for some $k \neq 0$
 
-\[|\widehat{A_N}(\frac{2\pi k}{2N})| \geq \delta^2 - \frac{c}{2\delta
+\[|\widehat{A_N}(\frac{2\pi k}{2N})| \geq \frac{\delta^2}{2} - \frac{c}{\delta
     N^\epsilon}\]
 
 as claimed.
