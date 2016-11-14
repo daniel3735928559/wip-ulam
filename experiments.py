@@ -38,8 +38,7 @@ def experiment0(l,a,n):
         
 def experiment1():
     """Compute alpha_{a,b} for various a,b"""
-    n = 500
-    s = 0.0001
+    n = 10000
     l = [(1,i) for i in range(2,16)]
     l += [(2,3)]
     l += [(3,i) for i in range(4,11) if i % 3 != 0]
@@ -48,16 +47,16 @@ def experiment1():
     for x in l:
         a,b=x
         u = ulam(a,b,n)
-        alpha,f = find_alpha(u,s,debug=False)
-        print(a,b,alpha,f/u[-1],2*math.pi/alpha)
+        alpha,f = find_alpha_fast(u,debug=False)
+        print(a,b,alpha,f/u[-1],2*math.pi/alpha,len(u)/u[-1])
 
 def experiment2():
     """Compute alpha_{a,b} for various a,b"""
     l = {"01001":sf01001,"01010":sf01010,"10010":sf10010}
     for s in l:
         A = l[s][:10000]
-        alpha,f = find_alpha(A,0.001,prec=4,debug=False)
-        print(s,alpha,f/A[-1],2*math.pi/alpha)
+        alpha,f = find_alpha_fast(A,debug=False)
+        print(s,alpha,f/A[-1],2*math.pi/alpha,len(A)/A[-1])
 
 def experiment3():
     x = 10

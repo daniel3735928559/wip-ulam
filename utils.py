@@ -311,6 +311,32 @@ def evolve_random(d,m,total,N):
         total += 1
     return d
 
+def find_alpha_search(l,t,s,N,debug=False):
+    if debug: print('search',t,s,N)
+    L = abs(ft(t,l))
+    for i in range(1,N):
+        M = 4
+        Fs = [(abs(ft(t-s+(i/M)*2*s,l)),t-s+(i/M)*2*s) for i in range(M)]
+        L,t = max(Fs,key=lambda x:x[0])
+        s /= 2
+    return t,L
+
+def find_alpha_fast(l,prec=10,debug=False):
+    a = 0.2
+    s = 0.005
+    prec = 4
+    winner = a
+    curmax = 0
+    for i in range(int(math.pi/s+1)):
+        a = 0.2+i*s
+        if debug: print('around',a)
+        rwinner,rmax = find_alpha_search(l,a,s/2,3*prec,debug)
+        if debug: print('found',rwinner,rmax,curmax)
+        if(rmax > curmax):
+            winner = rwinner
+            curmax = rmax
+    return winner,curmax
+
 def find_alpha(l,s=.02,prec=2,ft=ft,candidates=None,debug=True):
     a = 0.2
     winner = a

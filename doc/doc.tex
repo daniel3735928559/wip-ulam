@@ -1427,7 +1427,6 @@ look at $s = 01001, s = 01010$, and $s = 10010$ by running
 \begin{tabular}{|llll|}
 \hline
 $s$ & $\alpha_{s}$ & $\lambda_{s}$ & $|\widehat{1_s}(\alpha_{s})|$
-\\\hline
   \csvreader{datafiles/sumfree_alphas.csv}{}
   {\\\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
 \\\hline
@@ -1697,48 +1696,133 @@ explains this:
   
   we get that for some $k \neq 0$
 
-\[|\widehat{A_N}(\frac{2\pi k}{2N})| \geq \frac{\delta^2}{2} - \frac{c}{\delta
-    N^\epsilon}\]
+  \[|\widehat{A_N}(\frac{2\pi k}{2N})| \geq \frac{\delta^2}{2} - \frac{c}{\delta
+      N^\epsilon}\]
 
-as claimed.
+  as claimed.
 \end{proof}
 
+In particular, it follows that if ultimately the upper density of any
+of the \relevant sequences is positive, then we are guaranteed a
+non-zero Fourier coefficient in $\R/\Z$:
+
 \begin{corollary}\label{thm:alpha}
-  If $A \subseteq \N$ is a sequence of positive integers of density
-  $\delta > 0$ such that for all $N$, $T(A_N)$ is bounded by
-  $c N^{2-\epsilon}$ for some constants $c > 0, \epsilon > 0$, then
-  there is an $\alpha \in \R/\Z$ such that
-  $\widehat{1_A}(\alpha) \geq \delta^2$.
+  If $A \subseteq \N$ is a sequence of positive integers of upper
+  density density $\delta > 0$ such that for all $N$, $T(A_N)$ is
+  bounded by $c N^{2-\epsilon}$ for some constants
+  $c > 0, \epsilon > 0$, then there is an $\alpha \in \R/2\pi\Z$ with
+  $\alpha \neq 0$ such that
+  $\widehat{A}(\alpha) \geq \frac{\delta^2}{2}$.
 \end{corollary}
 
 \begin{example}
   For example, in the Ulam sequence we know by construction that
   $T(A_N) \leq 3|A| \leq 3N$, and we believe that the Ulam sequence
   has density around $0.07$, so this theorem would guarantee us a
-  non-zero Fourier coefficient of size at least $0.0049$.  This is a
-  bit off our numerical value of $0.8 \times 0.07 = 0.056$, but it is
-  a start.
+  non-zero Fourier coefficient of size at least $0.00245$.  This is a
+  bit off our numerical value of
+  $0.8\delta \approx 0.8 \times 0.07 = 0.056$, but it is a start.
 \end{example}
 
-\begin{proof}
-Now, as we let $N$ grow, we get a sequence of values of $k_N$ with
-this property.  On $\R/\Z$, the sequence $\frac{k_N}{N}$ for
-increasing $N$ must have a convergent subsequence--say converging to
-some $\alpha$.  
+\begin{proof}Since $A$ has upper density $\delta$, for any
+  $\epsilon > 0$, there is an $N > 0$ with
+  $\frac{|A_N|}{N} > \delta-\epsilon$.  So as $j \to \infty$, for each
+  $j$ we can find $N_j$ with
+  $\frac{|A_{N_j}|}{N_j} > \delta-\frac{1}{j}$.
+
+  Thus, by the theorem, there is an $\alpha_j = \frac{2\pi k_j}{2N}$
+  with
+  $\widehat{A_{N_j}}(\alpha_j) \geq
+  \frac{\delta^2}{2}-\frac{\delta}{j} - \frac{1}{2j^2}$.
+
+  Now, the $\alpha_j \in [0,2\pi]$ necessarily have a convergent
+  subsequence.  Replacing the sequence by this subsequence, we can say
+  $\alpha_j$ converges to some $\alpha$ as $j \to \infty$, and the
+  limiting value of $\widehat{A_{N_j}}(\alpha_j)$ is greater than
+  $\frac{\delta^2}{2}$ (or, if there is no limiting value, take a
+  convergent subsequence of these values).  So then we would like to
+  conclude that $\alpha \neq 0$ in $\R/2\pi\Z$ and that
+  $\widehat{A}(\alpha) \geq \frac{\delta^2}{2}$, the former claim is
+  requires some work and the latter involves swapping some limits, so
+  let us be more careful:
+
+  First, why is $\alpha \neq 0$: 
+
+  ...
+
+  Now, why does it follow that
+  $\widehat{A}(\alpha) \geq \frac{\delta^2}{2}$?  That is, we have
+  that
+  $\lim_{j \to \infty} \widehat{A_{N_j}}(\alpha_j) \geq
+  \frac{\delta^2}{2}$, but we need to show that in fact the same is
+  true for $\lim_{j \to \infty} \widehat{A_{N_j}}(\alpha)$.
+
+  For any $j$, say $\alpha = \alpha_j + \epsilon_j$, with
+  $\epsilon_j \to 0$ as $j \to \infty$.  We want to show that in fact
+  $\widehat{A_{N_j}}(\alpha) \geq \frac{\delta^2}{2} - o(j) -
+  O(\epsilon_j)$.  But now we can compute using Taylor's theorem, with
+  some$\beta_j$ between $\alpha_j$ and $\alpha$, and using the fact
+  that
+  $\left|\sum_{t=0}^{N-1} t e(-tx)\right| =
+  \left|\frac{d}{dx}\sum_{t=0}^{N-1} e(-tx)\right| =
+  \left|\frac{d}{dx} \frac{e(-Nx) -1}{e(-x)-1}\right| \leq
+  \frac{2+2N}{C^2} \leq \frac{3N}{C^2}$ if $|e(-x)-1| \geq C$ and if
+  $N \geq 2$:
+
+  \begin{eqnarray*}
+    \widehat{A_{N_j}}(\alpha) &=& \frac{1}{N_j} \sum_{t=0}^{N-1} A(t)
+                                  e(-t(\alpha_j+\epsilon_j))\\
+                              &=& \frac{1}{N_j} \sum_{t=0}^{N-1} A(t)
+                                  (e(-t\alpha_j)-t\epsilon_je(-t\beta_j))\\
+                              &\geq& \frac{\delta^2}{2} - \frac{1}{j}
+                                     - \frac{\epsilon_j}{N_j} \sum_{t=0}^{N-1}
+                                     t e(-t\beta_j)\\
+                              &\geq& \frac{\delta^2}{2} - \frac{1}{j}
+                                     - \frac{\epsilon_j}{N_j} \frac{3N_j}{C^2}\\
+                              &=& \frac{\delta^2}{2} - \frac{1}{j}
+                                  - \frac{3\epsilon_j}{C^2}\\
+  \end{eqnarray*}
+
+  Provided $|e(\alpha_j) - 1| \geq C$ for all $j$ (which is possible
+  provided $\alpha \neq 0$ and we take $j$ large enough).
+
+  Thus indeed,
+  $\lim_{j \to \infty} \widehat{A_{N_j}}(\alpha) \geq
+  \frac{\delta^2}{2}$, which means exactly that
+  $\widehat{A}(\alpha) \geq \frac{\delta^2}{2}$, as desired.
 \end{proof}
+
+If we look at the proof of the theorem, we notice that we can use the
+fact that $(\dft_{2N}A)(t) = \overline{(\dft_{2N}A)(2N-t)}$ to
+rewrite: 
+
+\begin{eqnarray*}
+T(A) &=& 4 N^2 \sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2(\dft_{2N}A)(-t)\\
+ &=& 4 N^2 \sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2\Re((\dft_{2N}A)(t))
+\end{eqnarray*}
+
+Then we can use the same exact proof as before, letting instead
+\[\eta = \max_{t \neq 0} |\Re((\dft_{2N}A)(t))|\] to conclude:
+
+\begin{corollary}\label{thm:alpha_real}
+  If $A$ is as in the theorem, then there is a $k \in [2N]$ such that
+  $|\Re(\widehat{A}(\frac{2\pi k}{2N}))| \geq \frac{\delta^2}{2} -
+  \frac{c}{\delta N^\epsilon}$.
+\end{corollary}
 
 Some remarks: 
 
 \begin{remark}
   As we mentioned before, this bound for the Ulam sequence, which
-  works out to around $0.0049$ is not anywhere near as good as the
-  computed estimate of $0.8$.  However, this finds a rational $k/N$
+  works out to around $0.00245$ is not anywhere near as good as the
+  computed estimate of $0.056$.  However, this finds a rational $k/N$
   where the Fourier transform is large for \textit{every} $N$, whereas
-  experimentally the large value of around $0.8$ only occurs actually
-  at $\alpha$ and can only be observed at rational $k/N$ that are good
-  approximations to $\alpha$.  In particular, for some $N$, the
-  largest Fourier coefficient might honestly only be as large as
-  $\delta^2$.
+  experimentally the large value of around $0.056$ only occurs
+  actually at $\alpha$ and can only be observed at rational $k/N$ that
+  are good approximations to $\alpha$.  In particular, we also observe
+  that for some $N$, the largest Fourier coefficient might honestly
+  only be as large as $\frac{\delta^2}{2}$.  In particular, an
+  approach that gives a large Fourier coefficient for all.
 \end{remark}
 
 \begin{remark}
