@@ -1456,7 +1456,7 @@ $s$ & $\alpha_{s}$ & $\lambda_{s}$ & $|\widehat{1_s}(\alpha_{s})|$ &
                                                                      $\delta_s$
   & $|\widehat{1_s}(\alpha_{s})|/\delta_s$ & $\widehat{1_s}(\alpha_{s})$
   \csvreader{datafiles/sumfree_alphas.csv}{}
-  {\\\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi}
+  {\\\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii}
 \\\hline
 \end{tabular}
 
@@ -1870,49 +1870,132 @@ Some remarks:
   above, but is growing, albeit sort of slowly and non-uniformly).
 \end{remark}
 
-{\color{red}
-
 \subsection{The complete spectrum of $A$}
 
-\subsubsection{Spectral complexity and density}
+Knowing that the spectrum of $A$ has some nonzero $\alpha$, this
+suggests at least that $\widehat{A}(n\alpha)$ would also be nonzero
+for $n \in \Z$.  
 
-% Try here to establish relationship between density and how many
-% truly distinct nonzero Fourier coefficients there are
+Further, we also have the theorem of Weyl from \cite{weyl:ann1916}
+that tells us that for any infinite sequence $a_n$, the set of
+$x \in \R/\Z$ with $\widehat{A}(x) \neq 0$ has measure zero.  We have
+found one such set of $x$, namely $\alpha\Z$.  We now investigate
+whether for our particular \relevant sets there are any others.
+
+\subsubsection{Spectral complexity}
+
+There are two pieces of computational evidence that suggest that the
+spectrum of $\ulam{1}{2}$ should consist only of $\alpha\Z$: First, we
+can brute-force compute $\widehat{A_N}(t)$ for many values of $t$
+between 0 and $\pi$, and the only time we find values larger than
+$\sqrt{N}$ are: 
+
+[COMPUTATION]
+
+Similar observations can be made for other \relevant sets, such as our
+various $\theta(s)$ and $\ulam{2}{3}$ and $\ulam{1}{3}$.  
+
+Secondly, Plancherel tells us that 
+
+[COMPUTATION]
+
+We should point out, however, that simply being \relevant is not enough
+to guarantee the spectrum is of the form $\alpha\Z$ only.  For
+example, take two irrational numbers $\alpha$ and $\beta$ that are not
+rational multiples of each other (such as $\sqrt2$ and $\sqrt3$) and
+let $A = A_\alpha \cap A_\beta$.  Then because $A \subseteq A_\alpha$,
+e.g., $A$ is certainly sumfree, however it will not be equidistributed
+modulo either $\frac{2\pi}{\alpha}$ or $\frac{2\pi}{\beta}$, giving it
+nonzero Fourier coefficients on $\alpha\Z$ and on $\beta\Z$.  
 
 \subsubsection{Decay of Fourier coefficients}
 
-\begin{theorem}\label{thm:decay}
-  If $f : [N] \to \{0,1\}$ is a function with spectrum $\alpha\Z$, then
+Recall from the background section our intuition on why smoother
+functions have better decay in their Fourier coefficients: The Fourier
+coefficient $\widehat{f}(\xi) = \int_0^1 f(t) e^{2\pi i t \xi} dt$ can
+be integrated by parts, which will replace $f(t)$ with $f'(t)$ (which
+if $f$ is well-behaved should be bounded or otherwise controlled), and
+$e^{2\pi i t \xi}$ with the integral of this, which as $\xi$ grows,
+will wind faster and faster around the unit circle, giving this
+integral more and more cancellation and therefore making it smaller.
+In particular, the antiderivative of $e^{2\pi i t \xi}$ involves a
+$\frac{1}{\xi}$, so the decay should go like $\frac{1}{\xi}$.
 
-  \[\widehat{f}(k\alpha) \leq \frac{C}{k}\]
+Though turning this intuition into a proof in our context has not yet
+succeeded, we give a conjecture in this direction and some
+computational evidence in its favour: 
 
-  for constant $C$.  
-\end{theorem}
+\begin{conjecture}\label{conj:decay} 
+  If $A$ is a \relevant set of positive integers, and
+  $\widehat{A}(\alpha) \neq 0$, then for $d \in \Z$ with $d \neq 0$,
+  we have
 
-\begin{proof}
+  \[\widehat{f}(d\alpha) \leq \frac{C}{d}\]
 
+  for some constant $C$.  
+\end{conjecture}
 
-Recall $\widehat{f}(k\alpha) =
-\frac{1}{N}\displaystyle\sum_{t=0}^{N-1}f(t)e(-k\alpha t) =
-\frac{1}{N}\displaystyle\sum_{t=0}^{N-1}f(t)e^{-i k\alpha t/N}$.
-Since we have some kind of periodicity mod $\lambda = \frac{2\pi}{\alpha}$,
-we can break up this sum and then use summation by parts and the
-triangle inequality to get:
+% \begin{proof}[Idea]
 
-\begin{eqnarray*}
-  \widehat{f}(k\alpha) &=& \frac{1}{N}\sum_{x=0}^{\lambda}\sum_{y=0}^{(N-1)/\lambda}f(x+\lambda y)e^{-i k\alpha (x+\lambda y)/N}\\
-                       &=& \frac{1}{N}\sum_{x=0}^{\lambda} e^{-i k\alpha x/N} \sum_{y=0}^{(N-1)/\lambda}f(x+\lambda y)\\
-                       &\leq& \frac{2}{N}\sum_{x=0}^{\lambda} e^{-i k\alpha x/N} \frac{N}{\lambda} f(x)\\
-                       &=& \frac{2}{\lambda}\sum_{x=0}^{\lambda} e^{-i k\alpha x/N} f(x)\\
-                       &=& \frac{2}{\lambda}\sum_{x=0}^{\lambda-1} (f(x+1)-f(x))\sum_{y=x+1}^\lambda e^{-i k\alpha y/N}\\
-                       &\leq& \frac{4}{\lambda}\sum_{x=0}^{\lambda-1} (f(x+1)-f(x)) \lambda \int_{x+1}^\lambda e^{-i k\alpha y}dy\\
-                       &\leq& \frac{4}{\lambda}\sum_{x=0}^{\lambda-1} (f(x+1)-f(x)) \frac{-i\lambda}{k\alpha}(1-e^{-i k\alpha (x+1)})\\
-                       &\leq& \frac{4\lambda}{k}\sum_{t=0}^{N-2}(f(t+1)-f(t))(e^{-i k\alpha (x+1)}-1)i\\
-                       &\leq& \frac{4\lambda}{k}\sum_{t=0}^{N-2}|(f(t+1)-f(t))(e^{-i k\alpha (x+1)}-1)i|\\
-                       &\leq& \frac{8\lambda^2}{k}\\
-\end{eqnarray*}
+%   Approximate $\alpha$ by $\frac{2\pi k}{m}$ for $k, m \in \Z$.  Let
+%   $N = cm$.  So increasing $m$ increases the accuracy of our
+%   approximation, and increasing $c$ sends $N \to \infty$.  The idea
+%   will be to break up the sum expressing $\widehat{A_N}(d\alpha)$ as a
+%   sum over congruence classes $x$ modulo $m$.  Let $C_{A_N,m}(x)$
+%   denote the proportion of integers up to $N$ that are congruent to
+%   $x$ mod $m$ and that live in $A$.  That is: 
 
-\end{proof}
+%   \[C_{A_N,m}(x) = \frac{1}{c}\sum_{y=0}^{c-1}A(x+m y)\]
+
+%   Then we can rewrite the sum thus: 
+
+% \begin{eqnarray*}
+%   |\widehat{A_N}(d\alpha)| &=& \left|\frac{1}{N}\sum_{t=0}^{N-1}A(t)e^{-i d(2\pi k/m)t}\right|\\
+%                            &=& \left|\frac{1}{cm}\sum_{x=0}^{m-1}\sum_{y=0}^{c-1}A(x+m
+%                                y)e^{-i d(2\pi k/m) (x+my)}\right|\\
+%                            &=& \left|\frac{1}{m}\sum_{x=0}^{m-1} \left(e^{-i d(2\pi k/m) x}\frac{1}{c}\sum_{y=0}^{c-1}A(x+m
+%                                y)\right)\right|\\
+%                            &=& \left|\frac{1}{m}\sum_{x=0}^{m-1} e^{-i d(2\pi
+%                                k/m) x} C_{A_N,m}(x)\right|\\
+% \end{eqnarray*}
+
+% Finally, recall from the background section our intuition on why
+% smoother functions have better decay in their Fourier coefficients:
+% The Fourier coefficient
+% $\widehat{f}(\xi) = \int_0^1 f(t) e^{2\pi i t \xi} dt$ can be
+% integrated by parts, which will replace $f(t)$ with $f'(t)$ (which if
+% $f$ is well-behaved should be bounded or otherwise controlled), and
+% $e^{2\pi i t \xi}$ with the integral of this, which as $\xi$ grows,
+% will wind faster and faster around the unit circle, giving this
+% integral more and more cancellation and therefore making it smaller.
+
+% We realise that story here, by doing summation by parts on the sum
+% above and approximating the sum over the exponential terms with an
+% integral (an approximation which will improve as $m$ grows): 
+
+% \begin{eqnarray*}
+%   |\widehat{A_N}(d\alpha)| &=& \left|\sum_{x=0}^{m-2}(C_{A_N,m}(x+1) - C_{A_N,m}(x)) \frac{1}{m} \sum_{y=x+1}^{m-1}e^{-i d(2\pi k/m) y}\right|\\
+%                            &=& \left|\sum_{x=0}^{m-2}(C_{A_N,m}(x+1) - C_{A_N,m}(x)) \int_{\frac{x+1}{m}}^1 e^{-i d (2\pi k) y} dy\right|\\ % THIS IS WRONG
+%                            &=& \left|\sum_{x=0}^{m-2}(C_{A_N,m}(x+1) - C_{A_N,m}(x)) \frac{i}{2\pi kd} (1-e^{-i d (2\pi k) \frac{x+1}{m}})\right|\\
+% \end{eqnarray*}
+
+% Finally, we note that $0 \leq C_{A_N,m}(x) \leq 1$, and
+% $|1-e^{-i d (2\pi k) \frac{x+1}{m}}| \leq 2$, so we can use the
+% triangle ineequality to bound: 
+
+% \begin{eqnarray*}
+%   |\widehat{A_N}(d\alpha)| &\leq& \frac{1}{2\pi kd}\sum_{x=0}^{m-2} 2\\
+%                            &\leq& \frac{2m}{2\pi kd}\\
+%                            &\approx& \frac{2}{\alpha d}\\
+% \end{eqnarray*}
+
+% \end{proof}
+
+To support this conjecture, we compute $d \widehat{A_N}(d\alpha)$ for
+$d$ up to $\sqrt{N}$ and observe that in all cases, $d$ appears to be
+bounded by 4.  
+
+{\color{red}
 
 \section{Distribution}
 
@@ -2081,7 +2164,7 @@ this idea, we can prove some results of which the simplest is:
   \end{eqnarray*}
 
 
-  Using theorem \ref{thm:decay} to conclude
+  Using theorem \ref{conj:decay} to conclude
   $|\widehat{1_A}(k\alpha)| \leq \frac{C}{k}$ for some constant $C$.
 
   \begin{eqnarray*}

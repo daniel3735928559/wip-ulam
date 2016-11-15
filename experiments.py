@@ -67,6 +67,17 @@ def experiment2():
         print(s,alpha,f/A[-1],2*math.pi/alpha,len(A)/A[-1],f/len(A),"{} + {}i".format(*F))
 
 def experiment3():
+    """ """
+    ls = {"u1_2":(u1_2[:1000],alpha1_2)}
+    for s in ls:
+        l,alpha = ls[s]
+        N = l[-1]
+        tot = 0
+        for k in range(int(N/2)):
+            tot += ft(alpha*k,l)**2
+        print(s,tot/N)
+
+def experiment30():
     x = 10
     for p in [i/x for i in range(x+1)]:
         print(p)
