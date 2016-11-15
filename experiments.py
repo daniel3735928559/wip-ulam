@@ -48,7 +48,14 @@ def experiment1():
         a,b=x
         u = ulam(a,b,n)
         alpha,f = find_alpha_fast(u,debug=False)
-        print(a,b,alpha,f/u[-1],2*math.pi/alpha,len(u)/u[-1])
+        F = ft_complex(alpha,u)
+        print(a,b,alpha,f/u[-1],2*math.pi/alpha,len(u)/u[-1],f/len(u),"{} + {}i".format(*F))
+
+def experiment1A():
+    """Compute alpha_{2,5}"""
+    u = ulam(2,5,1000)
+    alpha,f = find_alpha_fast(u,debug=False)
+    print(a,b,alpha,f/u[-1],2*math.pi/alpha,len(u)/u[-1],f)
 
 def experiment2():
     """Compute alpha_{a,b} for various a,b"""

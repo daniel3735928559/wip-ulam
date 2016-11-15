@@ -100,9 +100,10 @@ We also know that if we use the same definition but start with
 different initial values, we can get sequences that we can analyse
 very easily indeed: If the $(u,v)$-Ulam sequence is the sequence with
 $a_1 = u, a_2 = v$, and $a_n$ (for $n > 3$) defined exactly as before,
-then by theorems of Finch \cite{regularity_criterion_finch} and Schmerl and Speigel \cite{regularity_schmerl}, we
-know that the $(2,v)$-Ulam sequence, in the case where $v$ is odd and
-at least 5, is regular in the following sense:
+then by theorems of Finch \cite{cassaigne:em1995} and Schmerl and Speigel
+\cite{schmerl:jct1994}, we know that the $(2,v)$-Ulam sequence, in the
+case where $v$ is odd and at least 5, is regular in the following
+sense:
 
 \begin{definition}\label{def:regularity}
   An increasing, infinite sequence $\{a_i\}$ of positive integers is
@@ -118,7 +119,7 @@ would naively suggest.
 
 There are other initial values that are variously known to and
 believed to give rise to regular sequences, also.  See, for example,
-\cite{patterns_finch}.  That said, many
+\cite{finch:em1992}.  That said, many
 Ulam-type sequences appear not to be regular, among them the $(1,2)$-
 and $(2,3)$-Ulam sequences.  So one might ask some questions:
 
@@ -132,7 +133,7 @@ and $(2,3)$-Ulam sequences.  So one might ask some questions:
 In looking for hidden regularity, one might take a signal processing
 approach to the sequence and try, for example, to Fourier transform
 the indicator function of the sequence and see if the spectrum has any
-interesting features.  In \cite{ulam_steinerberger}, Stefan Steinerberger did exactly
+interesting features.  In \cite{steinerberger:preprint}, Stefan Steinerberger did exactly
 that and behold, the spectrum has a large spike exactly only at some
 $\alpha \in \R/\Z$ (and at its harmonics), and seemingly nowhere else.
 
@@ -155,7 +156,7 @@ rather than $\widehat{f}$.
 \end{definition}
 
 This definition satisfies many properties, which are standard from
-Fourier analysis and additive combinatorics \cite{additive_combinatorics_tao}:
+Fourier analysis and additive combinatorics \cite{tao:cup2006}:
 
 \begin{proposition}
 If $f : [N] \to \C$, then: 
@@ -211,12 +212,12 @@ This has some notable features:
 \item From the value of $\widehat{1_A}(0)$, it looks like the Ulam
   sequence has small but nonzero density (in fact, around $0.07$).
 
-\item As noted in \cite{ulam_steinerberger} it looks like as we increase $N$
+\item As noted in \cite{steinerberger:preprint} it looks like as we increase $N$
   that this is converging to an actually continuous distribution.
 
 \item It looks at a glance like this distribution is supported on the
   middle third of the interval $[0,\frac1\alpha]$.  This is not
-  literally the case, but in \cite{avoid_zero_gibbs} there is a
+  literally the case, but in \cite{gibbs:preprint} there is a
   conjecture in this direction.
 
 \end{itemize}
@@ -246,7 +247,7 @@ results in this section.
 
 \subsubsection{Finch's criterion for regularity}
 
-In \cite{regularity_criterion_finch}, Finch proves:
+In \cite{finch:em1992}, Finch proves:
 
 \begin{theorem}
 If $A = U(a,b)$ is a 1-additive set containing finitely many even
@@ -303,7 +304,7 @@ More precisely:
 \end{proof}
 
 Using empirical computations inspired by this criterion, Finch
-conjectures \cite{patterns_finch} that the following is the complete
+conjectures \cite{finch:em1992} that the following is the complete
 list of $(a,b)$ with $U(a,b)$ regular:
 
 \begin{conjecture}[Finch]
@@ -324,7 +325,7 @@ regular, although it may not be the complete list of regular $U(a,b)$.
 \subsubsection{Regularity of $U(2,2n+3)$}
 
 Using the above criterion, Schmerl and Speigel in
-\cite{regularity_schmerl} prove: regularity for the 1-additive sets
+\cite{schmerl:jct1994} prove: regularity for the 1-additive sets
 $U(2, 2n+3)$:
 
 \begin{theorem}
@@ -417,7 +418,7 @@ of these sets has finitely many evens.  Specifically:
 
   After some casework, this will end up giving a second qualifying
   expression for $x$, thereby disqualifying it.  We refer to
-  \cite{regularity_schmerl} for the details.
+  \cite{schmerl:jct1994} for the details.
   
   % We shall look at these elements by considering
   % $y_k = (x-v-2k) - (2v+2)$.  By the corollary, $y_k$ is in $U(2,v)$
@@ -562,7 +563,7 @@ There are many questions about this construction.  For example, it is
 known that if a sum-free set $A$ is regular (as defined
 above--i.e. its sequence of successive differences is ultimately
 periodic), then its decision sequence $\theta\inv(A)$ must also be
-ultimately periodic \cite{sumfree_cameron}.  The converse is believed
+ultimately periodic \cite{cameron:sc1987}.  The converse is believed
 to be false, with one of the simplest apparent counterexamples being
 $\theta(\overline{01001})$ ($\overline{01001}$ meaning the binary
 sequence that repeats the pattern $01001$ forever).  This is a set
@@ -570,7 +571,7 @@ $\{2, 6, 9, 14, 19, 26, 29, 36, 39, 47, 54, 64, 69, 79, 84, 91, 96,
 \ldots\}$ that has been computed extensively and for which no period
 has been identified.  There is other computational evidence that this
 sequence may not be periodic beyond just brute force attempts to
-compute a period found in \cite{difference_density_calkin}.
+compute a period found in \cite{calkin:int2005}.
 Nevertheless, there is no known example of an ultimately periodic
 decision sequence for which we can prove its corresponding sum-free
 set is non-regular.
@@ -600,7 +601,7 @@ exist, provides what should be thought of as at least an upper bound:
 As we have noted, then, the maximal upper density a sum-free set can
 have is $\frac12$, which is realised by the example of the odd
 positive integers.  Luczak has given a sort of converse to this
-example, proving in \cite{sumfree_regularity_luczak} the following: 
+example, proving in \cite{luczak:jct1995} the following: 
 
 \begin{theorem}[Luczak]
 If $A$ is a sum-free set of positive integers and there is at least
@@ -759,7 +760,7 @@ claimed bound follows.
 
 \subsubsection{Aperiodic sum-free sets}
 
-A construction of Erdos in \cite{aperiodic_sumfree_erdos} supplies an
+A construction of Erdos in \cite{erdos:spm1965} supplies an
 example of a sum-free set with density $\frac13$ that has no
 periodicity, namely: Take $\alpha \in \R$ irrational, and let
 $A_\alpha$ be the set of integers $n$ such that $n \mod{\alpha}$ lies
@@ -927,7 +928,7 @@ whereupon we can repeat the argument.
 
 The details (such as actually selecting the correct $d$ and $L$, as
 well as properly transitioning from $\Z/N$ back to $\Z$), are covered
-in many places, for example \cite{lyall_roth}.
+in many places, for example \cite{roth:jlm1953}.
 
 \end{proof}
 
@@ -953,7 +954,7 @@ triangles.
 As this part of the proof seems unlikely to generalise to our
 situation, we explore a second avenue of proof for Roth's theorem,
 namely using the arithmetic regularity and counting lemmas of the
-earlier section.  This comes from \cite{higher_fourier_analysis_tao}
+earlier section.  This comes from \cite{tao:ams2012}
 
 \begin{proof}[Proof of Roth's theorem via arithmetic regularity]
   For a function $f : [N] \to \{0,1\}$, define
@@ -974,12 +975,12 @@ earlier section.  This comes from \cite{higher_fourier_analysis_tao}
 
 There have been several recent developments in a finite field setting
 on analogous problems (specifically, the work of Croot, Lev, and Pach
-\cite{progressions_croot} on length-3 arithmetic progression-free sets
-in $\FF_4^n$ and subsequent work by others \cite{capset_ellenberg}
+\cite{croot:preprint} on length-3 arithmetic progression-free sets
+in $\FF_4^n$ and subsequent work by others \cite{ellenberg:preprint}
 pushing it to $\FF_3^n$.
 
 We will recall the method used here by outlining the proof in
-\cite{capset_ellenberg}, in view of the possibility of later asking
+\cite{ellenberg:preprint}, in view of the possibility of later asking
 about Ulam-like sequences in the same context.
 
 \begin{theorem}[Ellenberg-Gijswijt]
@@ -1039,7 +1040,7 @@ $\FF_q^n$ such that the equation $\alpha a_1 + \beta a_2 + \gamma a_3
   \[|A| \leq 2 m_{d/2} - m_d + q^n\]
 
   Choosing a particular value of d and bounding these quantities is
-  all that remains.  In \cite{capset_ellenberg} they take
+  all that remains.  In \cite{ellenberg:preprint} they take
   $d = 2(q-1)n/3$ and use Cramer's theorem to bound $m_d$ and related
   quantities in terms of the claimed exponential.  We refer to the
   paper for details.
@@ -1090,7 +1091,7 @@ Supposing we could do so, we might then ask:
 \begin{question}\label{qn:regularity_def}
   Is there a notion of ``regularity'' that generalises
   \ref{def:regularity} and that captures the behaviour observed in
-  \cite{ulam_steinerberger} and that we can prove?
+  \cite{steinerberger:preprint} and that we can prove?
 \end{question}
 
 Supposing that in some way Steinerberger's constant $\alpha$ will come
@@ -1148,7 +1149,7 @@ would be).
 
 Finally, we can ask about the distribution that Steinerberger observes
 for the Ulam sequence modulo $\frac{2\pi}{\alpha}$, starting with a
-question from \cite{ulam_steinerberger}: 
+question from \cite{steinerberger:preprint}: 
 
 \begin{question}\label{qn:continuity}
   Does the distribution of $A_N$ mod $\frac{2\pi}{\alpha}$ converge to
@@ -1188,7 +1189,7 @@ aforementioned ``smallest'' three examples:
 \end{question}
 
 Supposing once again (as is suggested in
-\cite{difference_density_calkin}) that the answer is no, we might try
+\cite{calkin:int2005}) that the answer is no, we might try
 to ask similar questions with the these sets:
 
 \begin{question}\label{qn:sumfree_spectrum}
@@ -1232,7 +1233,7 @@ For example,
   \emptyset$ for any $a\in A$, and lower bound comes from the example
   of the odd numbers).
 \item $d_2 = \frac25$ (upper bound is by
-  \cite{sumfree_regularity_luczak}, and the lower bound is established
+  \cite{luczak:jct1995}, and the lower bound is established
   by the example from the same paper of integers congruent to 2 or 3
   mod 5).
 \item $d_3 = \frac12$ using the same argument as for $d_1$.
@@ -1371,7 +1372,7 @@ remainder of this document:
 
 When we refer to computations done by computer, we will mention the
 code that was use to execute them by referring to various programs in
-the repository \cite{computations}.  In most cases, we will be
+the repository \cite{ross:gh2016}.  In most cases, we will be
 referring to the particular file \icode{/experiments.py}.  For example,
 when we talk about \icode{experiment17}, we mean the function
 \icode{experiment17()} in the \icode{experiments.py} file in that
@@ -1386,7 +1387,7 @@ Fourier spectrum of the various \relevant sets under consideration.
 
 \subsection{Large Fourier coefficient}
 
-The initial observation of \cite{ulam_steinerberger} is that the
+The initial observation of \cite{steinerberger:preprint} is that the
 Fourier transform of the indicator function of $U(1,2)$ has takes a
 large value at some $\alpha$.  That is,
 $\widehat{A_N}(\alpha) = \frac1N \sum_{t=1}^N A(t) e^{-it\alpha}$ is
@@ -1408,15 +1409,40 @@ numbers.  Specifically, we will look at:
 \item $(5,v)$ for $v = 7, \ldots, 9$.
 \end{itemize}
 
-We do this by running \icode{experiment1} and observe: 
+We do this by running \icode{experiment1}, which computes
+$\alpha_{a,b}$ to around 6 decimal places using the first $10^5$
+elements of each of these sequences.  We get:
 
-\begin{tabular}{|lllll|}
-\hline
-$a$ & $b$ & $\alpha_{a,b}$ & $\lambda_{a,b}$ & $|\widehat{1_{a,b}}(\alpha_{a,b})|$
-  \csvreader{datafiles/1additive_alphas.csv}{}
-  {\\\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv}
-\\\hline
+\begin{tabular}{|llllllll|}
+  \hline
+  $a$ & $b$ & $\alpha_{a,b}$ & $\lambda_{a,b}$ &
+                                                 $|\widehat{1_{a,b}}(\alpha_{a,b})|$
+  & $\delta_{a,b}$ & 
+                     $|\widehat{1_{a,b}}(\alpha_{a,b})|/\delta_{a,b}$
+  & $\widehat{1_{a,b}}(\alpha_{a,b})$
+    \csvreader{datafiles/1additive_alphas.csv}{}
+    {\\\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi}
+  \\\hline
 \end{tabular}
+
+There are a few possible patterns here: 
+
+\begin{enumerate}
+\item The fractional part of $\lambda_{1,n}$ remains roughly constant
+  at around $0.416$ for $4 \leq n \leq 10$, and then alternates
+  between $0.708$ and $0.208$ thereafter.  We also note that $2 \times
+  0.708 = 1.416$.  
+\item Indeed, there is a marked change in the value of the maximal
+  Fourier coefficient for $\ulam{1}{n}$ between $4 \leq n \leq 10$ and
+  $n > 10$.
+\item None of the $\lambda$s we have computed appear to be obviously
+  rational.  (By contrast, when we repeat this in \icode{experiment1A}
+  with a known regular Ulam sequence such as $\ulam{2}{5}$, we get
+  $\lambda$ that is within $10^{-6}$ of 2).
+\item Though we have only a small amount of data, the first few
+  $\lambda_{3,n}$ look like they might alternate around and converge
+  to some value close to 3.
+\end{enumerate}
 
 Similarly, we can compute the $\alpha$ maximising
 $\widehat{1_A}(\alpha)$ for various sum-free sets $A$--for example,
@@ -1424,123 +1450,109 @@ those that are believed to be non-periodic.  In particular, we will
 look at $s = 01001, s = 01010$, and $s = 10010$ by running
 \icode{experiment2}:
 
-\begin{tabular}{|llll|}
+\begin{tabular}{|lllllll|}
 \hline
-$s$ & $\alpha_{s}$ & $\lambda_{s}$ & $|\widehat{1_s}(\alpha_{s})|$
+$s$ & $\alpha_{s}$ & $\lambda_{s}$ & $|\widehat{1_s}(\alpha_{s})|$ &
+                                                                     $\delta_s$
+  & $|\widehat{1_s}(\alpha_{s})|/\delta_s$ & $\widehat{1_s}(\alpha_{s})$
   \csvreader{datafiles/sumfree_alphas.csv}{}
-  {\\\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
+  {\\\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi}
 \\\hline
 \end{tabular}
 
-{\color{red}
-\subsubsection{Is $\alpha$ rational?  Algebraic?}
+\subsubsection{Is $\lambda$ rational?  Algebraic?}
 
-It is more likely that there is a sequence of m mod which the
-congruence classes of $a_i$ are increasingly clustered.  The continued
-fraction of $2\pi/\alpha$, which we're imagining is $m/k$, doesn't have some
-really large coefficient where we would obviously truncate it.
-Instead, for $2\pi/\alpha_{1,2}$ it is just
-\[[2; 2, 3, 1, 11, 1, 1, 4, 1, 1, 7, 2, 2, 6, 5, 3, 1, 3, 1, 2, 1, 3, 2, 1, 14, 2, 5, 3, 2, 3, 1, 2, 13, 2]\]
+As mentioned earlier, the existence of a large Fourier coefficient
+$\alpha$ for one of these sets $A$ sugggests some kind of pattern or
+bias modulo $\lambda = \frac{2\pi}{\alpha}$.  If this $\lambda$ were
+rational, say $\frac{m}{k}$, then this would mean that $kA$ is very
+non-uniformly distributed modulo $m$.  In particular, we might wonder
+whether $\lambda$ is well-approximated by a rational number or, if
+not, whether it is at least annihilated by some low-complexity
+polynomial.  
 
-(For most of the $\alpha_{a,b}$ that we computed to any meaningful
-precision, either this "not obviously a rational number" continues to
-be true, except when there is a very small obvious modulus like 2.)
+To get rational approximations for $\lambda$, we run the program
+\icode{cf\_alpha.py} in SAGE to compute continued fractions and
+convergents:
 
-This gives rational approximations: 
-\[5/2, 17/7, 22/9, 259/106, 281/115, 540/221, 2441/999, 2981/1220, 5422/2219, 40935/16753, 87292/35725\]
+[TABLE]
 
-% More possible arguing for irrationality: 
+(Since we only have believe our $\lambda$ up to $10^{-6}$, we have
+reason to mistrust convergents with denominator larger than $10^6$, so
+we have left these out.)
 
+One indicator that $\lambda$ might be quite near a rational number
+would be if the continued fraction had a single anomalously large
+coefficient.  This is not observed in any of these examples.  Further,
+if we examine the non-uniformity of, say, $\ulam{1}{2}$ modulo $m$
+where $m$ runs through the numerators of the convergents (where we
+measure non-uniformity simply by the variance $\sigma_m$ in the number
+of elements that lie in each congruence class modulo $m$, as computed
+in \icode{experiment2}:
 
-These suggest, for example, that for $m = 540$, there should be
-substantial bias in which congruence classes show up in the Ulam
-sequence.
+[TABLE]
 
-This is borne out in very crude measurement by taking the first
-100000 terms of the Ulam sequence and computing them mod, e.g. 540, and
-asking how often each congruence class mod 540 shows up and computing
-the standard deviation of all these numbers.
+Indeed, the variance is quite large for these moduli, but for nearby
+moduli tends to be far less pronounced, as we compute in
+\icode{experiment2A}:
 
-% 215519 & 482.8027781782595\\
-% 1380406 & 304.5611017423058
-% \end{tabular}
+[TABLE]
 
-Note, however, that while it looks like the bias starts falling off at
-40935, in fact we only know alpha to within $10^(-10)$ or so, and for
-$p/q$ convergents from the continued fraction,
-$|\alpha - p/q| < 1/q^2$.  So being confident about alpha to within
-$10^{-10}$ suggests that we should only trust convergents up to 5-6
-digits.
+We might wonder: All of the known regularity results that we mentioned
+earlier were showed that various $\ulam{a}{b}$ were biased modulo 2.
+However there are no such results even for modulo 3, and we do not see
+any examples of sequences that appear to be heavily biased modulo 3.
+We leave exploration of why this might be to the future, but we do
+consider one special case: What would happen if we had an Ulam
+sequence $\ulam{a}{b}$ whose elements were eventually all $1 \mod{3}$?
 
-Moreover, we note that if we take fewer terms, then fewer of the terms
-will be less than the modulus, so we may see less of the bias even if
-there is some.  For example, the same calculation with only the first
-10000 terms looks like:
+We suspect such sequences might be rare as a consequence of the
+greediness of the definition of Ulam sequences.  For example, the
+sequence $3, 4, 7, 10, 13, \ldots$ is a sequence that is eventually
+all congruent to $1\mod 3$ and that is Ulam-like in that every element
+bigger than 4 is a sum of distinct smaller elements in a unique way.
+It fails however to be an actual Ulam sequence because it is not
+``greedy'' in the way that the definition requires.  For example,
+$\ulam{3}{4}$ would indeed start $3, 4, 7, 10$, but then $4+7 = 11$
+would be next, since that is the smallest number with only one such
+representation.  
 
-\begin{tabular}{ll}
-5 & 21.633307652783937\\
-17 & 61.68515885956209\\
-22 & 72.60478321332931\\
-259 & 89.57462754381896\\
-281 & 193.62880436289325\\
-540 & 682.2864609640275\\
-2441 & 382.62668898244124\\
-2981 & 348.9472882781135\\
-5422 & 263.99360062887\\
-40935 & 122.81328398767178\\
-87292 & 105.0829179694691\\
-215519 & 97.65246431214172\\
-1380406 & 99.63712935143478
-\end{tabular}
+In general, the greediness condition on Ulam numbers means that if
+$x < y$ are in $\ulam{a}{b}$, then either $x+y \in \ulam{a}{b}$ or
+else there exist $x' < y'$ in $\ulam{a}{b}$ with $x'+y' = x+y$.  Thus,
+if we were to have such a sequence $A$ with only elements that are 1
+mod 3, say all elements above some $M$ are $x_1, x_2, \ldots$, then if
+these are an arithmetic progression, say, then they can ensure that
+excepting $x_1 + x_2$, every sum of thes elements $x_i + x_j$ can also
+be expressed as either $x_{i-1} + x_{j+1}$ or $x_{i+1}+x_{j-1}$ so
+that all these sums are excluded from the sequence.  To additionally
+exclude $x_1 + x_2$, we will need some further elements of the
+sequence that sum to this quantity as well (which is why the above
+example failed).
 
-Also of note is that if we repeat the computation with $N=100000$ with
-other random moduli, then we don't see numbers of that magnitude at
-all:
+But now, to ensure that $x_i$ are all in $A$, we will need some
+elements that are 0 mod 3 to be the small summands of the $x_i$.  Say
+$y_1, \ldots, y_n$ are all the elements of $A$ that are 0 mod 3, say
+in increasing order.  But then $y_i + y_n$ must not be in the sequence
+for any $i$, whcih this means that we need some further elements
+$a_i, b_i$ that are 1 and 2 mod 3 respectively to be in the sequence
+and with $a_i+b_i = y_i + y_n$.  And we can continue like this, where
+the more elements that we find must be in the set, the more elements
+we have to add to the set in order to exclude certain sums of these
+elements.  Perhaps this process does terminate, for some $x_i$ in an
+actual set $A$ of the form $\ulam{a}{b}$, or perhaps if one follows it
+to its conclusion as in \cite{schmerl:jct1994}, one might find
+there is in fact no such set.  We do not pursue this project here,
+however.  
 
-\begin{tabular}{ll}
-...&...\\
-538 & 266.52186279126255\\
-539 & 255.35109519675422\\
-540 & 664.2715810068448\\
-541 & 258.6315258698218\\
-542 & 263.9800814357665\\
-...&...\\
-2439 & 264.9962194257936\\
-2440 & 255.43572224088751\\
-2441 & 3022.3025069077416\\
-2442 & 258.0622079927702\\
-2443 & 255.08506362547774\\
-...&...\\
-\end{tabular}
-
-One takeaway from this study of increasing moduli is the following:
-earlier we discussed the possibility of the behaviour indicting bias
-mod some m.  In fact, there may not be a single m with the most bias,
-but an increasing sequence of m's with progressively more bias.  For
-example, one could imagine a sequence that is slightly biased to being
-odd, say 60\% are 1 mod 2.  But then in fact it turns out that mod 4,
-it is more strongly biased, with 65\% being only 2 or 3 mod 4.  And
-maybe in fact mod 12, 80\% of terms are only ever 2, 3, 6, or 8 mod 12,
-and maybe in fact 99\% are 2, 3, 6, 8, or 1 mod 48, and maybe you can
-catch more and more of the sequence with a slowly expanding set of
-congruence classes modulo quickly growing modulus.  If there is a
-"bias mod $m$" thing happening, this is probably the flavour it takes,
-but I'm happy to try to treat the approximation to alpha as indicating
-an "at least some bias toward some congruence classes mod some fixed
-$m$" phenomenon.
-
-% end possible argument
-
-My guess is that since apparently alpha=pi sometimes, alpha should not
-be expected to be algebraic, but really $2pi/alpha$ is the relevant
-quantity anyways. At any rate, we tried some tests on both using LLL
-to hunt for the minimal polynomial of $b = 2pi/alpha$ and b = alpha. It
-should be noted that $f(b) << 10^(-10)$ is what is needed to be
-convincing that f(b) is actually zero. Also, I am not sure what
-effects result from the lack of precision in our knowledge of alpha.
-
-For what it's worth, then, here is the basic computation (done in
-Sage) found in appendix A, and with output: 
+Leaving aside the question of rationality for the moment, even if
+$\lambda$ is irrational, we might still wonder whether it is
+algebraic.  We can use LLL to hunt for the minimal polynomial for
+various $\lambda$.  In our case, we use SAGE's LLL code in
+\icode{alg\_lambda.py} to compute.  It should be noted that
+$f(\lambda) << 10^{-10}$ experimentally computed is what is needed to
+be convincing that $f(\lambda)$ might be actually zero is actually
+zero, since that is the chosen precision for our lattice reduction.
 
 \begin{tabular}{ll}
 -4.8860471224543e-11 & $5*X^7 - 9*X^6 - 8*X^5 - 4*X^4 + 6*X^3 + 6*X^2 + 3*X + 24)$\\
@@ -1564,8 +1576,8 @@ Sage) found in appendix A, and with output:
 -1.7553418274474e-8 & $(-1) * (7*X - 18)^2)$
 \end{tabular}
 
-All told, both look like they don't have small degree if algebraic at all...
-}
+In particular, there is no indication that an of these $\lambda$ has
+small degree, if they are algebraic at all.
 
 \subsubsection{Existence of $\alpha$}
 
@@ -2531,7 +2543,7 @@ And proceed thus:
 
 There is a more advanced algorithm that leverages the apparent
 regularity of such sequences as well, implemented in
-\cite{knuth_algorithm}, which speed this basic algorithm up by, among
+\cite{knuth:note}, which speed this basic algorithm up by, among
 other things, noting that if we track which elements of $A$ are
 outside the middle third mod $\lambda$ for a $\lambda$ where there are
 few such elements, then when we're testing whether any new $x$ within
@@ -2539,7 +2551,7 @@ the middle third is actually a sum of smaller elements of $A$, we only
 have to look at whether $x - a$ is in $A$ where $a$ is one of the
 (hopefully few) elements of $A$ outside the middle third.  In fact,
 one can be even more careful about it, which is done in
-\cite{knuth_algorithm}.
+\cite{knuth:note}.
 
 In any case, the results of our computations give the following
 estimates for the densities of these sets: 
@@ -2762,111 +2774,9 @@ might find it convenient to
 
 \subsubsection{Probabilistic versions}
 
-
-% \section{Appendix A: Code}
-
-% Code 1: 
-
-% \begin{lstlisting}[language=Python]% {../lll.py}
-% from sage.libs.fplll.fplll import FP_LLL
-% b2=2.57144749848
-% b=N(2*pi/2.57144749848)
-
-% def find_mp(x,deg=50,n=10^10):
-%     M = []
-%     for i in range(deg+1):
-%         M.append([1 if v == i else 0 for v in range(deg+1)]+[int(n*(x^i)+.5)])
-%     M = matrix(M)
-%     F=FP_LLL(M)
-%     F.LLL()
-%     l=F._sage_()[0][:-1]
-
-%     R = ZZ["X"]
-%     X=R.gen()
-%     fx = 0
-%     for i in range(len(l)):
-%         fx += X^i * l[i]
-%     ans = N(fx(x),50)
-%     return(fx, ans, fx.factor())
-
-% ms = [find_mp(b,i) for i in range(2,10)]
-% ms.sort(key=lambda x:abs(x[1]))
-% for x in ms:
-%     print(x)
-
-% print("")
-% ms = [find_mp(b2,i) for i in range(2,10)]
-% ms.sort(key=lambda x:abs(x[1]))
-% for x in ms:
-%     print(x)
-% \end{lstlisting}
-
-% Code 2: 
-
-% \begin{lstlisting}[language=Bash]
-% cat data/indices_of_summands | cut -d " " -f 4 | sort -n|uniq -c|sort -n > data/n_minus_js
-% cat data/indices_of_summands | cut -d " " -f 3,4 | sort -n|uniq -c|sort -n > data/i_nmj
-% \end{lstlisting}
-
-\begin{thebibliography}{9}
-\bibitem{ulam_steinerberger} 
-Stefan Steinerberger\\
-Hidden regularity
-
-\bibitem{knuth_algorithm} 
-Knuth\\
-Algorithm for computing Ulam numbers
- 
-\bibitem{patterns_finch} 
-Finch\\
-Patterns in 1-additive sequences
- 
-\bibitem{regularity_criterion_finch} 
-Finch
- 
-\bibitem{regularity_schmerl} 
-Schmerl, Speigel
- 
-\bibitem{capset_ellenberg} 
-Ellenberg, Gijswijt
-
-\bibitem{progressions_croot} 
-Croot, Lev, Pach
-
-\bibitem{sumfree_cameron} 
-Cameron
-
-\bibitem{aperiodic_sumfree_erdos} 
-Erdos65
-
-\bibitem{sumfree_regularity_luczak} 
-Luczak
-
-\bibitem{avoid_zero_gibbs} 
-Gibbs
-
-\bibitem{difference_density_calkin} 
-Calkin, Finch, Flowers\\
-Difference Density and Aperiodic Sum-Free Sets 
-
-\bibitem{additive_combinatorics_tao} 
-Tao, Vu\\
-Additive Combinatorics
-
-\bibitem{no_large_sumfree_subset_eberhard}
-  https://arxiv.org/pdf/1301.4579v2.pdf Eberhard, Green, and Manners
-
-\bibitem{lyall_roth}
-  Niel Lyall: Roth's theorem 
-
-\bibitem{higher_fourier_analysis_tao}
-  Tao, Higher Fourier Analysis
-
-\bibitem{computations}
-  https://github.com/daniel373592559/wip-ulam/experiments.py
-
-\end{thebibliography}
-
 }
+
+\bibliography{doc}{}
+\bibliographystyle{plain}
 
 \end{document}

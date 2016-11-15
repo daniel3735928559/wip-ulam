@@ -52,25 +52,19 @@
 \newcommand{\half}{\frac{1}{2}}
 \newcommand{\negone}[1]{(-1)^{#1}}
 %\renewcommand{\choose}[2]{^{#1}C_{#2}}
-\renewcommand{\choose}[2]{\bm #1 \\ #2\em}
-\renewcommand{\mod}[1]{\ (\text{mod}~#1)}
+\newcommand{\nchoose}[2]{\begin{matrix} #1 \\ #2\end{matrix}}
+\newcommand{\modn}[1]{\ (\text{mod}~#1)}
 \newcommand{\RS}{\C \union \{\infty\}}
 \newcommand{\nullset}{\emptyset}
 \newcommand{\union}{\cup}
 \newcommand{\dsum}{\displaystyle\sum}
 \newcommand{\ang}[1]{\langle #1 \rangle}
-\renewcommand{\a}{\alpha}
 \newcommand{\s}{\sigma}
-\newcommand{\bm}{\left(\begin{matrix}}
-\renewcommand{\em}{\end{matrix}\right)}
-\renewcommand{\t}{\tau}
 \newcommand{\g}{\gamma}
-\renewcommand{\b}{\beta}
 \newcommand{\aut}{\text{Aut}}
 %\newcommand{\aut}[1]{\text{Aut}\left(#1\right)}
 %\newcommand{\gal}[1]{\text{Gal}\left(#1\right)}
 \newcommand{\gal}{\text{Gal}}
-\renewcommand{\char}{\text{char}}
 \newcommand{\sym}{\text{Sym}}
 \newcommand{\nsubgp}{\trianglelefteq}
 \newcommand{\ldate}[1]{\begin{flushright}\tiny #1 \end{flushright}\normalsize}
@@ -78,34 +72,28 @@
 \newcommand{\ns}[1]{\Delta^{#1}}
 \newcommand{\rel}{\text{rel}}
 \newcommand{\SL}[2]{\text{SL}_{#1}(#2)}
-\newcommand{\abcd}{\bm a&b\\c&d\em}
 \newcommand{\z}{\zeta}
 \newcommand{\abs}[1]{\left|#1\right|}
 \newcommand{\oo}[1]{\frac{1}{#1}}
-\renewcommand{\th}{\theta}
 \newcommand{\re}{\text{Re}}
 \newcommand{\supp}{\text{supp}}
 \newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
 \newcommand{\isum}[1]{\dsum_{#1 = 0}^{\infty}}
-\renewcommand{\dint}{\displaystyle\int}
+%\renewcommand{\dint}{\displaystyle\int}
 \newcommand{\defeq}{\stackrel{\text{def}}{=}}
-\renewcommand{\L}{\Lambda}
 \newcommand{\gms}{\mathcal{G}}
 \newcommand{\F}{\mathcal{F}}
 \newcommand{\cnvg}[1]{\frac{P_{#1}}{Q_{#1}}}
-\renewcommand{\l}{\lambda}
 \newcommand{\uc}[1]{\widetilde{#1}}
 \newcommand{\psl}{\text{PSL}}
 \newcommand{\res}{\text{res}}
 \newcommand{\intr}{\text{int}}
 \newcommand{\lcm}{\text{lcm}}
-\renewcommand{\O}{\mathscr{O}}
 \newcommand{\ri}{ \mathcal{O}}
 \newcommand{\inj}{\hookrightarrow}
 \newcommand{\Tr}[2]{\text{Tr}^{#1}_{#2}}
 \newcommand{\tr}{\text{tr}}
 \newcommand{\ffrac}{\text{Frac}}
-\renewcommand{\o}{\omega}
 \newcommand{\mgm}{\mathfrak{m}}
 \newcommand{\mgp}{\mathfrak{p}}
 \newcommand{\implied}{\Longleftarrow}
@@ -114,15 +102,13 @@
 \newcommand{\covol}{\text{covol}}
 \newcommand{\disc}{\text{Disc}}
 \newcommand{\df}{\text{d}f}
-\renewcommand{\d}{\text{d}}
 \newcommand{\intersect}{\cap}
 \newcommand{\transversal}{\pitchfork}
 \newcommand{\cl}{\text{cl}}
 \newcommand{\ot}[1]{\widetilde{#1}}
-\renewcommand{\bar}[1]{\overline{#1}}
 \newcommand{\area}{\text{Area}}
-\renewcommand{\hom}{\text{Hom}}
-\renewcommand{\k}{\kappa}
+%\renewcommand{\hom}{\text{Hom}}
+%\renewcommand{\k}{\kappa}
 \newcommand{\pdr}[2]{\frac{\pd #1}{\pd #2}}
 \newcommand{\ddr}[2]{\frac{d #1}{d #2}}
 \newcommand{\chris}[2]{\Gamma_{#1}^{#2}}
@@ -134,7 +120,7 @@
 \newcommand{\SLnZ}[1]{\text{SL}_{#1}(\Z)}
 \newcommand{\Stab}{\text{Stab}}
 \newcommand{\Cl}{\text{Cl}}
-\renewcommand{\Im}{\text{Im}}
+%\renewcommand{\Im}{\text{Im}}
 \newcommand{\w}{\omega}
 \newcommand{\Frac}{\text{Frac}}
 \newcommand{\spec}{\text{Spec}}
@@ -156,7 +142,6 @@
 \newcommand{\Ad}{\text{Ad}}
 \newcommand{\mfg}{\mathfrak{g}}
 \newcommand{\GL}{\text{GL}}
-\renewcommand{\pic}{\text{Pic}}
 \newcommand{\picz}{\text{Pic}^0}
 \newcommand{\mcL}{\mathcal{L}}
 \newcommand{\Fq}{\mathbb{F}_q}
