@@ -53,7 +53,7 @@ def experiment1():
 
 def experiment1A():
     """Compute alpha_{2,5}"""
-    u = ulam(2,5,1000)
+    u = ulam(2,5,10000)
     alpha,f = find_alpha_fast(u,debug=False)
     print(a,b,alpha,f/u[-1],2*math.pi/alpha,len(u)/u[-1],f)
 
@@ -63,7 +63,8 @@ def experiment2():
     for s in l:
         A = l[s][:10000]
         alpha,f = find_alpha_fast(A,debug=False)
-        print(s,alpha,f/A[-1],2*math.pi/alpha,len(A)/A[-1])
+        F = ft_complex(alpha,u)
+        print(s,alpha,f/A[-1],2*math.pi/alpha,len(A)/A[-1],f/len(A),"{} + {}i".format(*F))
 
 def experiment3():
     x = 10

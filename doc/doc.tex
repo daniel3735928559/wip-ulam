@@ -1411,17 +1411,17 @@ numbers.  Specifically, we will look at:
 
 We do this by running \icode{experiment1}, which computes
 $\alpha_{a,b}$ to around 6 decimal places using the first $10^5$
-elements of each of these sequences.  We get:
+elements of each of these sequences.  We get, letting $\eta_{a,b} = \widehat{1_{a,b}}(\alpha_{a,b})$:
 
 \begin{tabular}{|llllllll|}
   \hline
   $a$ & $b$ & $\alpha_{a,b}$ & $\lambda_{a,b}$ &
-                                                 $|\widehat{1_{a,b}}(\alpha_{a,b})|$
+                                                 $|\eta_{a,b}|$
   & $\delta_{a,b}$ & 
-                     $|\widehat{1_{a,b}}(\alpha_{a,b})|/\delta_{a,b}$
-  & $\widehat{1_{a,b}}(\alpha_{a,b})$
+                     $|\eta_{a,b}|/\delta_{a,b}$
+  & $\eta_{a,b}$
     \csvreader{datafiles/1additive_alphas.csv}{}
-    {\\\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi}
+    {\\\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii}
   \\\hline
 \end{tabular}
 
@@ -1609,11 +1609,11 @@ random set of density $\delta$, we might then expect
 $T(A_N) \approx \delta^3 N^2$ as $N$ grows.  
 
 But by definition, if $A$ is sum-free, $T(A_N) = 0$ for all $N$, and
-$T(\ulam{a,b}_N) \leq 3N$ (since each $z \in \ulam{a,b}$ has at most 3
+$T(\ulam{a}{b}_N) \leq 3N$ (since each $z \in \ulam{a}{b}$ has at most 3
 representations as $z = x+y$ for $x,y \in A$, namely, the one with
-$x < y$ that qualifies it to be in $\ulam{a,b}$, the same one in
+$x < y$ that qualifies it to be in $\ulam{a}{b}$, the same one in
 reverse ($z = y+x$), and possibly $z = \frac{z}{2} + \frac{z}{2}$ if
-$\frac{z}{2} \in \ulam{a,b}$ (since the definition does not exclude
+$\frac{z}{2} \in \ulam{a}{b}$ (since the definition does not exclude
 that possibiility).  In particular, these sets do not behave like
 truly random sets would be expected to.  
 
@@ -1804,9 +1804,11 @@ non-zero Fourier coefficient in $\R/\Z$:
   $\widehat{A}(\alpha) \geq \frac{\delta^2}{2}$, as desired.
 \end{proof}
 
-If we look at the proof of the theorem, we notice that we can use the
-fact that $(\dft_{2N}A)(t) = \overline{(\dft_{2N}A)(2N-t)}$ to
-rewrite: 
+We noticed earlier that the actual complex value of the Fourier
+transform of $A$ for most of the $A$ had large real part and small
+imaginary part.  If we look at the proof of the theorem, we notice
+that we can use the fact that
+$(\dft_{2N}A)(t) = \overline{(\dft_{2N}A)(2N-t)}$ to rewrite:
 
 \begin{eqnarray*}
 T(A) &=& 4 N^2 \sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2(\dft_{2N}A)(-t)\\
@@ -1814,7 +1816,9 @@ T(A) &=& 4 N^2 \sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2(\dft_{2N}A)(-t)\\
 \end{eqnarray*}
 
 Then we can use the same exact proof as before, letting instead
-\[\eta = \max_{t \neq 0} |\Re((\dft_{2N}A)(t))|\] to conclude:
+\[\eta = \max_{t \neq 0} |\Re((\dft_{2N}A)(t))|\] to conclude that
+just as the magnitude of some Fourier coefficent must be large, so too
+must the real part also be large:
 
 \begin{corollary}\label{thm:alpha_real}
   If $A$ is as in the theorem, then there is a $k \in [2N]$ such that
@@ -1837,24 +1841,24 @@ Some remarks:
   approach that gives a large Fourier coefficient for all.
 \end{remark}
 
-\begin{remark}
-  In the proof of Roth's theorem, the existence of a large Fourier
-  coefficient in $A$ is somehow used to deduce the existence of an
-  arithmetic progression $P$ such that $A$ intersected with $P$ has
-  higher density in $P$ than $A$ had in $\Z/N$.  Roth's theorem
-  concludes by making all this numerically precise to be able to say
-  "if we repeat this often enough, either we'll eventually have small
-  Fourier coefficient relative to the increased density, or we'll have
-  density 1 in an arithmetic progression at which point...well...we
-  will be guaranteed to contain an arithmetic progression!"  In our
-  case, we are always guaranteed a largeish Fourier coefficient by the
-  above argument, so maybe we can always perform this "density
-  increment" step until we are literally an arithmetic progression.
-  Precisely what this implies about the Fourier coefficients of the
-  original $1_A$ or whether this ensures us any global behaviour of
-  the sequence A depends on precisely how the density-increment step
-  goes.  This will be a another thing to investigate shortly.
-\end{remark}
+% \begin{remark}
+%   In the proof of Roth's theorem, the existence of a large Fourier
+%   coefficient in $A$ is somehow used to deduce the existence of an
+%   arithmetic progression $P$ such that $A$ intersected with $P$ has
+%   higher density in $P$ than $A$ had in $\Z/N$.  Roth's theorem
+%   concludes by making all this numerically precise to be able to say
+%   "if we repeat this often enough, either we'll eventually have small
+%   Fourier coefficient relative to the increased density, or we'll have
+%   density 1 in an arithmetic progression at which point...well...we
+%   will be guaranteed to contain an arithmetic progression!"  In our
+%   case, we are always guaranteed a largeish Fourier coefficient by the
+%   above argument, so maybe we can always perform this "density
+%   increment" step until we are literally an arithmetic progression.
+%   Precisely what this implies about the Fourier coefficients of the
+%   original $1_A$ or whether this ensures us any global behaviour of
+%   the sequence A depends on precisely how the density-increment step
+%   goes.  This will be a another thing to investigate shortly.
+% \end{remark}
 
 \begin{remark}
   It is interesting to note that this argument does not provide an
