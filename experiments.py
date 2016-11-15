@@ -63,7 +63,7 @@ def experiment2():
     for s in l:
         A = l[s][:10000]
         alpha,f = find_alpha_fast(A,debug=False)
-        F = ft_complex(alpha,u)
+        F = ft_complex(alpha,A)
         print(s,alpha,f/A[-1],2*math.pi/alpha,len(A)/A[-1],f/len(A),"{} + {}i".format(*F))
 
 def experiment3():
