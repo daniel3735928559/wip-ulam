@@ -5,6 +5,7 @@ from utils import *
 u1_2 = read_seq("seqs/seq1,2")
 u1_3 = read_seq("seqs/seq1,3")
 u1_4 = read_seq("seqs/seq1,4")
+u1_11 = read_seq("seqs/seq1,11")
 u2_3 = read_seq("seqs/seq2,3")
 u2_5 = read_seq("seqs/seq2,5")
 u12_13 = read_seq("seqs/seq12,13")
@@ -22,6 +23,17 @@ lambda1_3 = 6424,2897
 lambda01010 = 3923,1125
 lambda01001 = 1350,539
 beta01001 = 1.26594784
+
+data = {
+    "u1_2":{"seq":u1_2,"alpha":alpha1_2,"lambda":(5422,2219)},
+    "u1_3":{"seq":u1_3,"alpha":2.8334973144531252,"lambda":(6424,2897)},
+    "u1_4":{"seq":u1_4,"alpha":0.5060131835937502,"lambda":(2769,223)},
+    "u2_3":{"seq":u2_3,"alpha":1.16501220703125,"lambda":(2551,473)},
+    "u1_11":{"seq":u1_11,"alpha":0.9401159667968749,"lambda":(1330,199)},
+    "01001":{"seq":sf01001,"alpha":2.508619384765625,"lambda":(8909,3557)},
+    "01010":{"seq":sf01010,"alpha":1.8018310546875,"lambda":(3923,1125)},
+    "10010":{"seq":sf10010,"alpha":1.9559313964843752,"lambda":(9968,3103)},
+}
 
 def experiment0(l,a,n):
     """Attempt to confirm that f_N(alpha) is linear in N"""
@@ -93,6 +105,25 @@ def experiment4():
     a = alpha1_2
     for i in range(1,10):
         print(i,i*ft(a*i,l)/len(l))
+
+
+def experimentA():
+    l = u1_2
+    a = alpha1_2
+    N = 100
+    while N < len(l):
+        f = 0
+        k = N
+        w = N/2
+        while(w > 20):
+            f = max([j*ft(j*a,l[:N])/l[N] for j in range(k,k+20)])
+            print(k,f)
+            if f > math.pi: k -= w
+            else: k += w
+            k = math.floor(k+0.5)
+            w *= 1/2
+        print(N,k)
+        N *= 10
         
 def experiment5():
     l = u1_2
@@ -104,29 +135,24 @@ def experiment5():
             print(k,d,f)
 
 def experiment6():
-    #l = u1_2[:10000]
-    #m,k = lambda1_2
-    #l = sf01001[:10000]
-    #m,k = lambda01001
-    #l = sf01010[:10000]
-    #m,k = lambda01010
-    l = u1_3[:10000]
-    m,k = lambda1_3
-    
-    N = l[-1] - (l[-1]%m)
-    rAA = {i:0 for i in range(N)}
-    for x in l:
-        for y in l:
-            if y > x or x+y >= N:
-                break
-            rAA[x+y] += 1
-    rAA_dist = [0 for i in range(m)]
-    for x in range(N):
-        rAA_dist[x%m] += rAA[x]
-    for x in range(m):
-        rAA_dist[x] /= N/m
-    for x in range(m):
-        print((x*k)%m,rAA_dist[x])
+    for s in data:
+        l = data[s]["seq"][:10000]
+        m,k = data[s]["lambda"]
+        
+        N = l[-1] - (l[-1]%m)
+        rAA = {i:0 for i in range(N)}
+        for x in l:
+            for y in l:
+                if y > x or x+y >= N:
+                    break
+                rAA[x+y] += 1
+        rAA_dist = [0 for i in range(m)]
+        for x in range(N):
+            rAA_dist[x%m] += rAA[x]
+        for x in range(m):
+            rAA_dist[x] /= N/m
+        for x in range(m):
+            print(s,(x*k)%m,rAA_dist[x])
         
         
 def experiment60(us,ms):
@@ -221,6 +247,40 @@ def experiment10():
     for x in ans:
         print(x)
     print(t2-t1,t3-t2)
+
+def experiment11():
+    l = u1_2[:10000]
+    s = set(l)
+    summands = {}
+    for i in range(2,len(l)):
+        x = l[i]
+        for j in range(i):
+            y = l[j]
+            if y >= x/2:
+                break
+            if x-y in s:
+                summands[y] = summands.get(y,0)+1
+                break
+                
+    la = 2*math.pi/alpha1_2
+    ll = sorted([(y,summands[y]/len(l)) for y in summands if summands[y] > 1],key=lambda x:x[1])
+    for x in ll:
+        y,p = x
+        q1,q2 = (y + (1 - p)/3)/la,(y - (1 - p)/3)/la
+        q1m,q2m = (q1 - math.floor(q1)),(q2 - math.floor(q2))
+        if q1m > 1/2:
+            q1m = 1-q1m
+        if q2m > 1/2:
+            q2m = 1-q2m
+        if(q1m < q2m):
+            q = q1
+        else:
+            q = q2
+        math.round(q)
+        r = real_mod(y,la)/la
+        if r > 1/2:
+            r = 1 - r
+        print(y,p,r,p+3*r,q1,q2)
     
 def experiment80(l):
     """Compute the summands of each element of l"""
@@ -254,7 +314,7 @@ def experiment10_old(l,k,m,N):
         print("{} {}".format(x%m,ev[x]))
     
 
-def experiment11(l,a):
+def experiment11_old(l,a):
     """Compute how often each element x of l occurs as the small summand and compare with cos(a*x)"""
     s = {x : [] for x in l}
     for i in range(2,len(l)):

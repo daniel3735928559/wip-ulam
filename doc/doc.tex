@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amsthm,amssymb,graphicx,setspace,mathrsfs,mathstyle,listings,color}
 \usepackage{csvsimple}
+\usepackage{pbox}
 %\topmargin 0in
 %\headheight 0in
 %\headsep .2in
@@ -1995,22 +1996,125 @@ To support this conjecture, we compute $d \widehat{A_N}(d\alpha)$ for
 $d$ up to $\sqrt{N}$ and observe that in all cases, $d$ appears to be
 bounded by 4.  
 
-{\color{red}
-
 \section{Distribution}
 
+As we have remarked before, a sequence $A$ having a large Fourier
+coefficient at $\alpha$ suggests $A$ should not be equidistributed
+modulo $\lambda = \frac{2\pi}{\alpha}$.  Indeed, we have
+experimentally found large Fourier coefficients for many of the
+sequences we have considered, and if we take the distribution of these
+sequences modulo the corresponding $\lambda$ values, we get
+non-uniform, continuous-looking distributions:
 
+[IMAGES]
+
+In this section, we will examine how what we have learned about the
+spectrum entails various features about the distribution.
 
 \subsection{Distrubution of $r_{A+A}$}
 
+The first observation is that the common feature of the \relevant sets
+is that being in $x$ being in such a set $A$ is a function of how many
+ways we can write $x$ as a sum $x = a+b$ for $a, b \in A$.  To study
+this, we make the following definitions: 
 
+\begin{definition}Define the \textbf{sum representation counting function}
+  $r_{A+A}$ by 
+
+  \[r_{A+A}(x) = \left|\{(a,b) \in A^2 : a+b = x\}\right|\]
+
+  Also define, the \textbf{modified sum representation counting function}
+
+  \[r^*_{A+A}(x) = \left|\{(a,b) \in A^2 : a+b = x ; a < b\}\right|\]
+
+  Finally, define the \textbf{difference representation counting
+    function}
+
+  \[r_{A-A}(x) = \left|\{(a,b) \in A^2 : a-b = x\}\right|\]
+\end{definition} 
+
+So $r_{A+A}(x) = 0$ is the necessary condition for $x$ to lie in a
+sum-free set $A$, as is $r_{A-A}(x) = 0$, whereas $r^*_{A+A}(x) = 1$
+is the condition for being in an Ulam sequence $A$.  Likewise, for $x$
+in an Ulam sequence $A$, $r_{A-A}(x)$ is the number of times $x$ is
+used as a summand in $A$.  (We note that $r_{A-A}$ may be infinite if
+$A$ is infinite, but it will make sense when we truncate $A$.)
+
+But we can write a formulae for $r_{A+A}(x)$ and $r_{A-A}(x)$ in terms
+of the indicator function of $A$:
+
+\[r_{A+A}(x) = \sum_{0 < y < x} A(y)A(x-y)\]
+\[r_{A-A}(x) = \sum_{0 < y} A(y)A(x+y)\]
+
+which are exactly the definition of the convolution $(A \ast A)(x)$
+and cross-correlation $(A \star A)(x)$ respectively.
+
+$r^*_{A+A}$ is less clean, but we can write,
+$2r^*_{A+A}(x) = r_{A+A}(x) - A(x/2)$.  So if we get bounds on
+$r_{A+A}(x)$, we can expect to transfer these to bounds of
+$r^*_{A+A}(x)$.  Thus we expect that understanding $r_{A+A}$ will be
+sufficient to allow us to understand Ulam sequences as well as
+sum-free sets.
+
+So if our assertion is that whether a given $x$ is in $A$ is strongly
+affected by the value of $x$ modulo the associated $\lambda_A$, then
+we might wonder whether it appears that $r_{A+A}(x)$ is affected.  We
+can do this by taking the various congruence classes $a$ modulo
+$\lambda$ and computing the average value of $r_{A+A}(x)$
+for $x$ ranging over integers congruent to $a$ modulo $\lambda$.
+Plotting these for various sequences we get the plots: 
+
+\begin{tabular}{cc}
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_u1_2.png}
+  \\ $\ulam{1}{2}$\end{tabular} &
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_u1_3.png}
+  \\ $\ulam{1}{3}$\end{tabular} \\
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_u1_4.png}
+  \\ $\ulam{1}{4}$\end{tabular} &
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_u1_11.png}
+  \\ $\ulam{1}{11}$\end{tabular} \\
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_u2_3.png}
+  \\ $\ulam{2}{3}$\end{tabular} &
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_01001.png}
+  \\ $\theta(01001)$\end{tabular} \\ 
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_01010.png}
+  \\ $\theta(01010)$\end{tabular} &
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_10010.png}
+  \\ $\theta(10010)$\end{tabular} \\ 
+\end{tabular}
+
+Now, the benefit of studying $r_{A+A}(x)$ is that, being a
+convolution, we understand its Fourier transform.  More precisely,
+truncate $A$ at $N$ and view $r_{A_N + A_N}(x)$ and $r_{A_N - A_N}(x)$
+as functions on $\Z/2N$.  Then
+$(\dft_{2N}r_{A_N + A_N}) = (\dft_{2N}A_N)^2$ and
+$(\dft_{2N}r_{A_N - A_N}) = |\dft_{2N}A_N|^2$.  Using Fourier
+inversion, then, we can compute $r_{A_N + A_N}$ and $r_{A_N - A_N}$ in
+terms of the Fourier coefficients of $A$:
+
+\[r_{A_N + A_N}(x) = \sum_{t=0}^{2N-1} ((\dft_{2N}A)(t))^2 e(\frac{2\pi t}{2N} x)\]
+
+\[r_{A_N - A_N}(x) = \sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2 e(\frac{2\pi t}{2N} x)\]
+
+Since our observations suggest that the spectrum of $A$ is simply
+$\alpha\Z$, in particular for $A_N$ we have
+$\widehat{A_N}(k\alpha) \leq \frac{C}{k}$ for $k$ up to around
+$\sqrt{N}$ and we have lower bounds for $(\dft_{2N}A)(\alpha)$.  We
+can then approximate this sum using these large Fourier coefficients
+and lumping the rest into an error term $R_N$ that we expect (but were
+unable to prove) is always small:
+
+\begin{eqnarray*}
+  r_{A_N + A_N}(x) &=& \sum_{-\sqrt{N} < k < \sqrt{N}} (\dft_{2N}A)^2(k \alpha) e(k\alpha x) + R_N\\
+  r_{A_N - A_N}(x) &=& \sum_{-\sqrt{N} < k < \sqrt{N}} |(\dft_{2N}A)(k\alpha)|^2 e(k\alpha x) + R_N\\
+\end{eqnarray*}
+
+The statement that this error term is small 
 
 \subsection{Distrubution mod $\lambda$}
 
 Now we compute the distributions of various $U(a,b)$ and $\theta(s)$
 modulo their respective $\lambda$s.
-
-}
 
 \subsubsection{No Ulam numbers close to 0 mod $\lambda$}
 
