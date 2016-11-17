@@ -2428,17 +2428,42 @@ $|A_N \cap \pi\inv(E)|/N \geq
 \frac{|A_N|}{N}\frac{|\pi\inv(E)_N|}{N}$?  In fact, we can do slightly
 better:
 
-\begin{theorem}
-  For $A$ an \relevant set of density $\delta$, let $\alpha$ be the
-  maximal Fourier coefficient, and define
-  $E_{t} = \{n \in [N] : \Re(e(\alpha n)) \leq t\}$ (roughly, the set
-  of integers that land in an interval of radius $t$ centred at
-  $\lambda/2$ modulo $\lambda$.  Then there is a $t$ such that
-  $\abr{A,E_t} \geq \delta^2/8 + \delta \frac{|E_{t,N}|}{N}$.
+\begin{theorem}\label{thm:regularity}
+  For $A$ an \relevant set, and let $\alpha$ be the maximal Fourier
+  coefficient, and define
+  $E_{t} = \{n \in [N] : \Re(e(\alpha n)) \leq \eta\}$ (roughly, the
+  set of integers that land in an interval of radius $\eta$ centred at
+  $\lambda/2$ modulo $\lambda$.  Then there is a $\eta$ such that
+  $\abr{A_N, E_{\eta,N}} = |A_N \cap E_{\eta,N}| \geq \delta^2/4 +
+  \delta \frac{|E_{\eta,N}|}{N}$.
 \end{theorem}
 
 \begin{proof}
+  Let $f(t) = A(t) - \delta$ be the ``balanced'' indicator function of
+  $A$.  Then we know from \ref{thm:alpha_real} that $\frac{1}{N}\sum_{t=0}^{N-1}
+  f(t)\Re(e(\alpha t)) \geq \frac{\delta^2}{2}$.  The key here is to
+  write: 
 
+  \[\Re(e(\alpha t)) = 1-\int_{-1}^1 E_\eta(t)d\eta\]
+
+  Then 
+  \begin{eqnarray*}
+    \frac{\delta^2}{2} &\leq& \frac{1}{N}\sum_{t=0}^{N-1}
+                              f(t)\Re(e(\alpha t)) \\
+                       &=& \frac{1}{N}\sum_{t=0}^{N-1}
+                           f(t) -  \frac{1}{N}\sum_{t=0}^{N-1}
+                           \int_{-1}^1 f(t) E_\eta(t)d\eta\\
+                       &\leq& \abs{\int_{-1}^1 \frac{1}{N}\sum_{t=0}^{N-1} f(t) E_\eta(t)}d\eta\\
+                       &\leq& \abs{\int_{-1}^1 \abr{f, E_\eta} d\eta}
+\end{eqnarray*}
+
+Thus $\abr{f, E_\eta} \geq \frac{\delta^2}{4}$ for some $\eta$.  But
+$f = A - \delta$, so 
+
+\[\abr{A, E_\eta} \geq \frac{\delta^2}{4} + \abr{\delta, E_\eta} =
+  \frac{\delta^2}{4} + \delta \frac{|E_{\eta,N}|}{N}\]
+
+And this is what we wanted to show.
 \end{proof}
 
 \section{Structure of $\ulam{1}{2}$}
