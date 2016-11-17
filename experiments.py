@@ -5,6 +5,7 @@ from utils import *
 u1_2 = read_seq("seqs/seq1,2")
 u1_3 = read_seq("seqs/seq1,3")
 u1_4 = read_seq("seqs/seq1,4")
+u1_9 = read_seq("seqs/seq1,9")
 u1_11 = read_seq("seqs/seq1,11")
 u2_3 = read_seq("seqs/seq2,3")
 u2_5 = read_seq("seqs/seq2,5")
@@ -25,14 +26,14 @@ lambda01001 = 1350,539
 beta01001 = 1.26594784
 
 data = {
-    "u1_2":{"seq":u1_2,"alpha":alpha1_2,"lambda":(5422,2219)},
-    "u1_3":{"seq":u1_3,"alpha":2.8334973144531252,"lambda":(6424,2897)},
-    "u1_4":{"seq":u1_4,"alpha":0.5060131835937502,"lambda":(2769,223)},
-    "u2_3":{"seq":u2_3,"alpha":1.16501220703125,"lambda":(2551,473)},
-    "u1_11":{"seq":u1_11[:10000],"alpha":0.37604736328125,"lambda":(8655,259)},#2*259
-    "01001":{"seq":sf01001,"alpha":2.508619384765625,"lambda":(8909,3557)},
-    "01010":{"seq":sf01010,"alpha":1.8018310546875,"lambda":(3923,1125)},
-    "10010":{"seq":sf10010,"alpha":1.9559313964843752,"lambda":(9968,3103)},
+    "u1_2":{"seq":u1_2,"alpha":alpha1_2,"lambda":(5422,2219),"lambda_s":(540,221)},
+    "u1_3":{"seq":u1_3,"alpha":2.8334973144531252,"lambda":(6424,2897),"lambda_s":(1244,561)},
+    "u1_4":{"seq":u1_4,"alpha":0.5060131835937502,"lambda":(2769,223),"lambda_s":(149,12)},
+    "u2_3":{"seq":u2_3,"alpha":1.16501220703125,"lambda":(2551,473),"lambda_s":(480,89)},
+    "u1_9":{"seq":u1_9,"alpha":0.229169921875,"lambda":(4798,175),"lambda_s":(329,12)},
+    "01001":{"seq":sf01001,"alpha":2.508619384765625,"lambda":(8909,3557),"lambda_s":(541,216)},
+    "01010":{"seq":sf01010,"alpha":1.8018310546875,"lambda":(3923,1125),"lambda_s":(136,39)},
+    "10010":{"seq":sf10010,"alpha":1.9559313964843752,"lambda":(9968,3103),"lambda_s":(363,113)},
 }
 
 def experiment0(l,a,n):
@@ -145,6 +146,16 @@ def experimentA():
         N *= 10
         
 def experiment5():
+    for s in data:
+        l = data[s]["seq"][:10000]
+        m,k = data[s]["lambda_s"]
+        rs = {i:0 for i in range(m)}
+        for x in l:
+            rs[(k*x)%m] += 1
+        for x in range(m):
+            print(s,x,rs[x])
+            
+def experiment5_old():
     l = u1_2
     a = 2.5714474995
     for k in range(100000):
@@ -154,8 +165,8 @@ def experiment5():
             print(k,d,f)
 
 def experiment6():
-    for s in ["u1_11"]:
-        l = data[s]["seq"][:50000]
+    for s in data:
+        l = data[s]["seq"][:10000]
         m,k = data[s]["lambda"]
         
         N = l[-1] - (l[-1]%m)

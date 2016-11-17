@@ -2006,7 +2006,20 @@ sequences we have considered, and if we take the distribution of these
 sequences modulo the corresponding $\lambda$ values, we get
 non-uniform, continuous-looking distributions:
 
-[IMAGES]
+\begin{tabular}{cc}
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp5_u1_2.png}
+  \\ $\ulam{1}{2}$\end{tabular} &
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp5_u1_4.png}
+  \\ $\ulam{1}{3}$\end{tabular} \\\hline
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp5_u2_3.png}
+  \\ $\ulam{1}{4}$\end{tabular} &
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp5_u1_9.png}
+  \\ $\ulam{1}{9}$\end{tabular} \\\hline
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp5_01001.png}
+  \\ $\theta(01010)$\end{tabular} &
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp5_10010.png}
+  \\ $\theta(10010)$\end{tabular} \\ \hline
+\end{tabular}
 
 In this section, we will examine how what we have learned about the
 spectrum entails various features about the distribution.
@@ -2072,8 +2085,8 @@ plots:
   \\ $\ulam{1}{3}$\end{tabular} \\\hline
 \begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_u1_4.png}
   \\ $\ulam{1}{4}$\end{tabular} &
-\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_u1_11.png}
-  \\ $\ulam{1}{11}$\end{tabular} \\\hline
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_u1_9.png}
+  \\ $\ulam{1}{9}$\end{tabular} \\\hline
 \begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_u2_3.png}
   \\ $\ulam{2}{3}$\end{tabular} &
 \begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_01001.png}
@@ -2090,13 +2103,20 @@ to zero, and then in between, we can get substantial fluctuations,
 from the relatively extreme example of $\ulam{2}{3}$, to the very
 sedate examples provided by the sum-free sets, or by $\ulam{1}{4}$.  
 
-These two observations would suggest that 
+These two observations would suggest that near 0, we should not have
+any elements of these sequences, and that most of the elements should
+lie in the middle third.  Further, for Ulam sequences, this also
+suggests that any $x$ that fails to be in the sequence because
+$r^*_{A+A}(x) = 0$ should live in the middle third as well, possibly
+explaining the gap in the distribution of elements of $\ulam12$ in the
+very middle.  
 
-Now, the benefit of studying $r_{A+A}(x)$ is that, being a
-convolution, we understand its Fourier transform.  More precisely,
-truncate $A$ at $N$ and view $r_{A_N + A_N}(x)$ and $r_{A_N - A_N}(x)$
-as functions on $\Z/2N$.  Then
-$(\dft_{2N}r_{A_N + A_N}) = (\dft_{2N}A_N)^2$ and
+We shall address these observations in the following sections, but we
+give a word first about the strategy: The benefit of studying
+$r_{A+A}(x)$ is that, being a convolution, we understand its Fourier
+transform.  More precisely, truncate $A$ at $N$ and view
+$r_{A_N + A_N}(x)$ and $r_{A_N - A_N}(x)$ as functions on $\Z/2N$.
+Then $(\dft_{2N}r_{A_N + A_N}) = (\dft_{2N}A_N)^2$ and
 $(\dft_{2N}r_{A_N - A_N}) = |\dft_{2N}A_N|^2$.  Using Fourier
 inversion, then, we can compute $r_{A_N + A_N}$ and $r_{A_N - A_N}$ in
 terms of the Fourier coefficients of $A$:
@@ -2111,14 +2131,12 @@ $\widehat{A_N}(k\alpha) \leq \frac{C}{k}$ for $k$ up to around
 $\sqrt{N}$ and we have lower bounds for $(\dft_{2N}A)(\alpha)$.  We
 can then approximate this sum using these large Fourier coefficients
 and lumping the rest into an error term $R_N$ that we expect (but were
-unable to prove) is always small:
+unable to prove) is small enough to ignore:
 
 \begin{eqnarray*}
   r_{A_N + A_N}(x) &=& \sum_{-\sqrt{N} < k < \sqrt{N}} (\dft_{2N}A)^2(k \alpha) e(k\alpha x) + R_N\\
   r_{A_N - A_N}(x) &=& \sum_{-\sqrt{N} < k < \sqrt{N}} |(\dft_{2N}A)(k\alpha)|^2 e(k\alpha x) + R_N\\
 \end{eqnarray*}
-
-The statement that this error term is small 
 
 \subsection{Distrubution mod $\lambda$}
 
@@ -2175,7 +2193,7 @@ or:
 \[r_{A_N+A_N}(x) = \frac 1N \sum_{t=0}^{N-1} \widehat{1_A}(t)^2
   e(tx)\]
 
-So we can conclude, for example, that $x \notin U(1,2)$ if, say,
+So we can conclude, for example, that $x \notin \ulam12$ if, say,
 $r_{A_{N}+A_{N}}(x) > 3$.  
 
 It appears that integers that lie in $\normrz{x/\lambda} \leq 1/6$ are
