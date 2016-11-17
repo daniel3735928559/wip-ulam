@@ -1412,15 +1412,15 @@ numbers.  Specifically, we will look at:
 
 We do this by running \icode{experiment1}, which computes
 $\alpha_{a,b}$ to around 6 decimal places using the first $10^5$
-elements of each of these sequences.  We get, letting $\eta_{a,b} = \widehat{1_{a,b}}(\alpha_{a,b})$:
+elements of each of these sequences.  We get, letting $\rho_{a,b} = \widehat{1_{a,b}}(\alpha_{a,b})$:
 
 \begin{tabular}{|llllllll|}
   \hline
   $a$ & $b$ & $\alpha_{a,b}$ & $\lambda_{a,b}$ &
-                                                 $|\eta_{a,b}|$
+                                                 $|\rho_{a,b}|$
   & $\delta_{a,b}$ & 
-                     $|\eta_{a,b}|/\delta_{a,b}$
-  & $\eta_{a,b}$
+                     $|\rho_{a,b}|/\delta_{a,b}$
+  & $\rho_{a,b}$
     \csvreader{datafiles/1additive_alphas.csv}{}
     {\\\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii}
   \\\hline
@@ -1678,22 +1678,22 @@ explains this:
   We can pull out the $t = 0$ term which is $\frac{\delta^3}{8}$.  Then we can
   bound the remaining sum from below by replacing one of the three
   $(\dft_{2N} A)(t)$ terms inside the sum with
-  $-\max_{t\neq 0} |(\dft_{2N} A)(t)| = -\eta$:
+  $-\max_{t\neq 0} |(\dft_{2N} A)(t)| = -\rho$:
   
-  \[cN^{2-\epsilon} \geq N^2 \frac{\delta^3}{2} - \eta 4 N^2 \sum_{t=1}^{2N-1} |(\dft_{2N} A)(t)|^2\]
+  \[cN^{2-\epsilon} \geq N^2 \frac{\delta^3}{2} - \rho 4 N^2 \sum_{t=1}^{2N-1} |(\dft_{2N} A)(t)|^2\]
 
   Now, by Plancherel we know that,
   $\sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2 = \frac{1}{2N}
   \sum_{t=0}^{2N-1} |A(t)|^2 = \frac{1}{2N} |A| = \frac{\delta}{2}$,
   so:
 
-  \[cN^{2-\epsilon} \geq N^2 \frac{\delta^3}{2} - \eta \cdot 4N^2
-    \frac{\delta}{2} = N^2\left(\frac{\delta^3}{2} - \eta\cdot 2
+  \[cN^{2-\epsilon} \geq N^2 \frac{\delta^3}{2} - \rho \cdot 4N^2
+    \frac{\delta}{2} = N^2\left(\frac{\delta^3}{2} - \rho\cdot 2
       \delta \right)\]
 
   Or, rearranging, 
 
-  \[\eta \geq \frac{\delta^2}{4} - \frac{c}{2\delta N^\epsilon}\]
+  \[\rho \geq \frac{\delta^2}{4} - \frac{c}{2\delta N^\epsilon}\]
 
   Thus for if $k$ is the value of $t$ that realises the maximum, then we
   have shown that: 
@@ -1817,7 +1817,7 @@ T(A) &=& 4 N^2 \sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2(\dft_{2N}A)(-t)\\
 \end{eqnarray*}
 
 Then we can use the same exact proof as before, letting instead
-\[\eta = \max_{t \neq 0} |\Re((\dft_{2N}A)(t))|\] to conclude that
+\[\rho = \max_{t \neq 0} |\Re((\dft_{2N}A)(t))|\] to conclude that
 just as the magnitude of some Fourier coefficent must be large, so too
 must the real part also be large:
 
@@ -2114,9 +2114,9 @@ $(\dft_{2N}r_{A_N - A_N}) = |\dft_{2N}A_N|^2$.  Using Fourier
 inversion, then, we can compute $r_{A_N + A_N}$ and $r_{A_N - A_N}$ in
 terms of the Fourier coefficients of $A$:
 
-\[r_{A_N + A_N}(x) = \sum_{t=0}^{2N-1} ((\dft_{2N}A)(t))^2 e(\frac{2\pi t}{2N} x)\]
+\begin{equation}\label{eqn:rAAsum}r_{A_N + A_N}(x) = \sum_{t=0}^{2N-1} ((\dft_{2N}A)(t))^2 e(\frac{2\pi t}{2N} x)\end{equation}
 
-\[r_{A_N - A_N}(x) = \sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2 e(\frac{2\pi t}{2N} x)\]
+\begin{equation}\label{eqn:rAAdiff}r_{A_N - A_N}(x) = \sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2 e(\frac{2\pi t}{2N} x)\end{equation}
 
 Since our observations suggest that the spectrum of $A$ is simply
 $\alpha\Z$, in particular for $A_N$ we have
@@ -2126,16 +2126,77 @@ can then approximate this sum using these large Fourier coefficients
 and lumping the rest into an error term $R_N$ that we expect (but were
 unable to prove) is small enough to ignore:
 
+\begin{equation}\label{eqn:rAAsum_err}
+  r_{A_N + A_N}(x) = \sum_{-\sqrt{N} < k < \sqrt{N}}
+  (\dft_{2N}A)^2(k \alpha) e(k\alpha x) + R_N
+\end{equation}
+
+\begin{equation}\label{eqn:rAAdiff_err}
+  r_{A_N - A_N}(x) = \sum_{-\sqrt{N} < k < \sqrt{N}} |(\dft_{2N}A)(k\alpha)|^2 e(k\alpha x) + R_N
+\end{equation}
+
+This is what we shall attempt to exploit in the following section, but
+before then, a word about the actual distributions of $r_{A+A}$ that
+we plotted above: 
+
+\begin{proposition}
+  Let $A$ be one of our \relevant sets, and let $\frac{m}{k}$ be a
+  rational approximation to $\lambda_A$, so $\alpha$ is approximated
+  by $\widetilde{\alpha} = \frac{2\pi k}{m}$.  Then $f_N(x)$ be the
+  function from $\Z/m \to \R$ that averages the values of
+  $r_{A_N+A_N}(t)$ for $t = x \mod{\lambda}$, i.e. $kt = x \mod{m}$.
+
+  That is, 
+  \[f_N(x) = \frac{m}{N} \sum_{kt = x\ \!(m), t < N} r_{A+A}(t)\]
+
+  Then we can express: 
+
+  \[f_N(x) = \sum_{l=0}^{m-1} e(\frac{-2\pi x l}{m}) \widehat{A_N}(l\widetilde{\alpha})^2\]
+\end{proposition}
+
+\begin{proof}
+
+This follows by the usual trick of expressing the indicator function
+of a congruence class mod $m$ using an exponential sum.  In our case: 
+
+
+\[1(kt = x\!\!\!\!\mod{m}) = \frac{1}{m}\sum_{l=0}^{m-1} e(\frac{2\pi
+    (kt-x)}{m}l)\]
+
+So if we simply do this substitution and reverse the order of
+summation, we get: 
+
 \begin{eqnarray*}
-  r_{A_N + A_N}(x) &=& \sum_{-\sqrt{N} < k < \sqrt{N}} (\dft_{2N}A)^2(k \alpha) e(k\alpha x) + R_N\\
-  r_{A_N - A_N}(x) &=& \sum_{-\sqrt{N} < k < \sqrt{N}} |(\dft_{2N}A)(k\alpha)|^2 e(k\alpha x) + R_N\\
+  f_N(x) &=& \frac{m}{N} \sum_{kt = x\ \!(m), t < N} r_{A+A}(t)\\
+         &=& \frac{m}{N} \sum_{t = 0}^{N-1} r_{A+A}(t)1(kt = x\!\!\!\!\mod{m})\\
+         &=& \frac{m}{N} \sum_{t = 0}^{N-1}
+             r_{A+A}(t)\frac{1}{m}\sum_{l=0}^{m-1} e(\frac{2\pi (kt-x)}{m}l)\\
+         &=& \sum_{l=0}^{m-1} \frac{1}{N} \sum_{t = 0}^{N-1}
+             r_{A+A}(t) e(\frac{2\pi (kt-x)}{m}l)\\
+         &=& \sum_{l=0}^{m-1} e(\frac{-2\pi x l}{m}) \frac{1}{N} \sum_{t = 0}^{N-1}
+             r_{A+A}(t) e(\frac{2\pi klt}{m})\\
+         &=& \sum_{l=0}^{m-1} e(\frac{-2\pi x l}{m}) \widehat{r_{A+A}}(l\widetilde{\alpha})\\
+         &=& \sum_{l=0}^{m-1} e(\frac{-2\pi x l}{m}) \widehat{A_N}(l\widetilde{\alpha})^2\\
 \end{eqnarray*}
+
+\end{proof}
+
+Thus if we had more precise knowledge of the argumnet of
+$\widehat{A_N}(\alpha)$ we could deduce, for example, that when $x$ is
+close to zero, that this is large (since it would be dominated by the
+first two terms), or that when $x$ is close to $\frac{m}{2}$, this
+should be small since it is an alternating sum.
 
 \subsection{Distrubution mod $\lambda$}
 
-Now we compute the distributions of various $U(a,b)$ and $\theta(s)$
-modulo their respective $\lambda$s.
-
+As mentioned, the distributions of various $U(a,b)$ and $\theta(s)$
+modulo their respective $\lambda$ values. are non-uniform, and seem to
+have most (but not all) of their support in the middle third of the
+interval $[0,\lambda]$.  For example, if we take the first $10^5$
+elements of each sequence and take a rational approximation
+$\lambda \approx \frac{m}{k}$ and plot, for each congruence class $r$
+mod $m$ how many $a \in A$ have $ka \cong r \mod{m}$, then we get the
+following plots: 
 
 \begin{tabular}{cc}
 \begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp5_u1_2.png}
@@ -2152,129 +2213,92 @@ modulo their respective $\lambda$s.
   \\ $\theta(10010)$\end{tabular} \\ \hline
 \end{tabular}
 
+In this section, we will focus on the three observations we mentioned
+in the previous section, namely: 
 
-\subsubsection{No Ulam numbers close to 0 mod $\lambda$}
+\begin{enumerate}
+\item There seem to be few elements of each $A$ in some interval
+  around 0 modulo $\lambda$.
+\item The support of these distributions seems to usually contain the
+  middle third modulo $\lambda$.  
+\item For Ulam sequences, the $x$ that fail to be in the sequence on
+  account of $r^*_{A+A}(x) = 0$ all lie close to $\frac\lambda2$
+  modulo $\lambda$.  
+\end{enumerate}
 
-Having observed the distributions, there is a common theme: They all
-appear to be at least approximately supported on the interval
-$[\lambda/3, 2\lambda/3]$, and all appear to be actually supported on
-$[\lambda/6, 5\lambda/6]$.  We will study this phenomenon in this
-section.
-
-As a useful piece of notation for expressing the idea of these
-intervals modulo $\lambda$, we will define as usual:
+As a useful piece of notation for expressing the idea of intervals
+such as ``the middle third modulo $\lambda$'', we will define as is
+standard:
 
 \begin{definition}
 For $x \in \R$, define $\normrz{x}$ to be the minimal distance between
 $x$ and an integer: $\normrz{x} = \min_{n \in \Z} |x-n|$.
 \end{definition}
 
-Thus $\normrz{x} \leq \frac12$ always, and $x$ is in $[-\lambda/6,
-\lambda/6]$ precisely if $\normrz{x/\lambda} \leq \frac16$.
+Thus $\normrz{x} \leq \frac12$ always, and $x$ is in the ``middle
+third'', i.e $[\lambda/3, 2\lambda/3]$ mod $\lambda$ precisely if
+$\normrz{x/\lambda} \geq \frac13$.  Likewise, an interval, (say of
+radius $\eta$) around zero (mod $\lambda$) is expressed by the
+condition $\normrz{x/\lambda} < \eta$.  
 
-First, to understand why an element might be in one of these sets, we
-need to understand what determines its inclusion.  For all the sets we
-are considering, if a number is expressable as a sum of elements of
-the set in many ways, then that number is excluded from the set.  So
-we define: 
+\subsubsection{No elements close to 0 mod $\lambda$}
 
-\begin{definition}Define the \textbf{representation counting function}
-  $r_{A+A}$ by 
+So we move first, as promised, to investigate why it appears that
+there are no elements of $A$ close to integer multiples of $\lambda$.
 
-  \[r_{A+A}(x) = \left|\{(a,b) \in A^2 : a+b = x\}\right|\]
-  
+The distributions of $r_{A+A}$ would suggest that the reason is that
+$x$ that are close to $\lambda\Z$ have $r_{A+A}(x)$ large.  
 
-  (Note that we do not necessarily require $a < b$ here.)
-\end{definition} 
-
-The point is that while this doesn't exactly capture the same notion
-as in the exact definition of the Ulam sequence, it is very close and
-has the advantage of being accessible from the Fourier-analytic
-perspective.  The main observation is that $r_{A+A}$, can be written
-as a convolution $r_{A+A} = 1_A \ast 1_A$, and so if we look at the
-finite version, replacing $A$ by $A_N$, we can use Fourier analysis to
-examine this:
-
-\[r_{A_N+A_N} = \mathscr{F}\inv\mathscr{F} (1_A \ast 1_A) =
-\mathscr{F}\inv \widehat{1_A}^2\]
-
-or:
-
-\[r_{A_N+A_N}(x) = \frac 1N \sum_{t=0}^{N-1} \widehat{1_A}(t)^2
-  e(tx)\]
-
-So we can conclude, for example, that $x \notin \ulam12$ if, say,
-$r_{A_{N}+A_{N}}(x) > 3$.  
-
-It appears that integers that lie in $\normrz{x/\lambda} \leq 1/6$ are
-never in any of these sequences, and further that the reason that they
-are excluded is that they are sums of smaller elements of the set in
-many ways: {\color{red}
-
-[DATA]
-
-}
-
-So we might take an $x \in \N$ with $\normrz{x/\lambda} \leq 1/6$ and
-see what we can make of it.  Certainly, if
-$\alpha = \frac{2\pi}{\lambda}$, we get that for such $x$,
-$e(\alpha x)$ will be in the arc from $e^{-2\pi/6}$ to $e^{2\pi/6}$,
-and so will have argument between $-\pi/3$ and $\pi/3$.  In
-particular, the real part of $e(\alpha x)$ will be at least $1/2$.
-
-Intuitively, since the number of representations of $x$ is given by a
-sum like the one above:
-
-\[r_{A_N+A_N}(x) = \frac 1N \sum_{t=0}^{N-1} \widehat{1_A}(t)^2
-  e_N(tx)\]
-
-then the idea is if $2\pi k/N$ is close to our large Fourier
-coefficient $\alpha$, then $\widehat{1_A}(k)$ will be very large.  And
-if we chose $x$ with $\normrz{x/\lambda} \leq 1/6$, then $e_N(kx)$
-will have a large real part, and so the terms $t = k$ and $t = -k$
-will together contribute a large amount to the sum, which the
-remainder of the summands should not be able to counteract.  This
-would guarantee that for such $x$, $r_{A_N+A_N}(x) >> 0$, which will
-in turn guarantee that such $x$ are not in $A$.
-
-More precisely, with $k$ as above:
+As we saw in equation \ref{eqn:rAAsum}, we can express this in terms
+of the spectrum of $A$, and hopefully can therefore extract some
+information.  In particular, if $\normrz{x/\lambda} < \eta$, then for
+$\frac{m}{2N} \approx \lambda$, $e(\frac{2\pi k}{2N} x)$ will be on
+the arc between $e(-\eta)$ and $e(\eta)$, making it very close to 1.
+So, particularly if we use the approximation given in equation
+\ref{eqn:rAAsum_err}, we get: 
 
 \begin{eqnarray*}
-r_{A_N+A_N}(x) &=& \frac 1N \sum_{t=0}^{N-1} \widehat{1_A}(t)^2 e(tx)\\
- &=& \delta + 2\Re(e(kx)\widehat{1_A}(k)^2) + \sum_{t\neq 0,k,N-k}
- \widehat{1_A}(t)^2 e(tx)\\
- &\geq& \delta + \Re(\widehat{1_A}(k)^2) + \sum_{t\neq 0,k,N-k}
- \widehat{1_A}(t)^2 e(tx)\\
+  r_{A_N + A_N}(x) &=& 2N \left(\sum_{-\sqrt{N} < k < \sqrt{N}}
+                       (\dft_{2N}A)(k\alpha)^2 e(k\alpha x) + R_N\right)\\
+                   &\approx& 2N \left(\frac{\delta^2}{2} +
+                             2\Re((\dft_{2N}A)(\alpha)^2 e(\eta)) + \sum_{k > 1}
+                             2\Re((\dft_{2N}A)(k\alpha)^2 e(k\eta)) + R_N\right)\\
 \end{eqnarray*}
 
-Continuing this idea with the notion that $2\alpha$ will give the next
-largest Fourier coefficient, we can ensure that this also contributes
-positively (or at least contributes not-too-negatively) to the sum by,
-for example, making $\normrz{x/\lambda}$ even smaller.  Continuing
-this idea, we can prove some results of which the simplest is: 
+And so if the argument of $(\dft_{2N}A)(\alpha)$ is close to $\pi$ and
+$\eta$ is small enough, then hopefully this first term is (or perhaps
+the first few are) larger than the error and the remaining sums and we
+get that $r_{A_N + A_N}(x) = O(N)$.  However this requires very
+precise control over the argument of $(\dft_{2N}A)(k\alpha)$ that we
+do not currently have.
+
+However, at least for truly sum-free sets, we can still pull out a
+theorem (as always, conditional on small error) of this kind by using
+the fact that for a sum-free set, an element can be in the set $A$
+only if $r_{A-A}(x) = 0$ also.  And, recalling \ref{eqn:rAAsum} and
+\ref{eqn:rAAsum_err}, this we can compute using only the magnitudes of
+the Fourier coefficients, allowing us to ignore the argument issue
+completely: 
 
 \begin{theorem}\label{thm:hole1}
-  If $A$ is a sum-free set of positive integers with upper density
-  $\delta > 0$, and further, $A$ has spectrum $\alpha\Z$, then for
-  some $\eta > 0$, $\norm{x/\lambda} < \eta$ implies $x \notin A$.
+  Let $A$ is a \relevant set of positive integers with
+  $|A_N| = \delta N$.  Suppose that $A$ has spectrum $\alpha\Z$, that
+  it satisfes \ref{conj:decay}, and that the error in
+  \ref{eqn:rAAsum_err} in fact satisfies $R_N = o(1/N)$.  Then for
+  some $\eta > 0$, $\norm{x/\lambda} < \eta$ implies
+  $r_{A_N-A_N}(x) = O(N)$.
 \end{theorem}
 
 \begin{proof}
   Take $x$ with $\normrz{x/\lambda} < \eta$ for $\eta$ to be chosen
-  later.  Note first that since $A$ is sum-free,
-  $x \in A+A \implies x \notin A$ by definition, but also
-  $x \in A-A \implies x \notin A$.  So it suffices to show that
-  $x \in A-A$.  To check this at a finite level, we consider $A_N$ as
-  a subset of $\Z/2N$, at which point $x \in A_N - A_N$ viewed inside
-  $\Z/2N$ iff $x \in A_N - A_N$ in $\Z$.  So we want that
-  $r_{A_N-A_N,2N}(x) > 0$.  But this we can compute by Fourier
-  analytic techniques as described above.
+  later.  Viewing $A_N$ as usual inside $\Z/2N$, we have
+  $x \in A_N - A_N$ viewed inside $\Z/2N$ iff $x \in A_N - A_N$ in
+  $\Z$.  So we can use equation \ref{eqn:rAAsum_err}.  In preparation
+  for doing this, let $|\widehat{A_N}(\alpha)| = \rho$ (we know
+  $\rho > \frac{\delta^2}{2} - O(1/N)$ by \ref{thm:alpha_finitary}).
+  Finally, let $k_0$ be such that
 
-  In preparation for doing this, let
-  $|\widehat{1_A}(\alpha)| = \rho N$ (we know $\rho > 0$ by
-  \ref{thm:alpha}).  Finally, let $k_0$ be such that
-
-  \[\delta^2 + \rho^2 - C^2 \sum_{k=k_0}^\infty \frac{1}{k^2} > 0\]
+  \[\delta^2 + \rho^2 - 4 C^2 \sum_{k=k_0}^\infty \frac{1}{k^2} > 0\]
 
   (which we know is possible since $\delta > 0, \rho > 0$, and since
   the the sum converges, and so approaches 0 as $k_0 \to 0$).  Then if
@@ -2283,25 +2307,26 @@ this idea, we can prove some results of which the simplest is:
   have:
 
   \begin{eqnarray*}
-    r_{A_N - A_N,2N}(x) &=& \frac{1}{2N} \sum_{t=0}^{2N-1} |\widehat{1_A}(t)|^2 e_{2N}(tx)\\
-                        &\geq& \frac{\delta^2}{2} N + \frac{1}{N}
-                               |\widehat{1_A}(\alpha)|^2
-                               \Re(e_N(\alpha x)) - \frac{1}{2N} \sum_{|k| \geq k_0}
-                               |\widehat{1_A}(k\alpha)|^2\\
+    r_{A_N - A_N}(x) &=& 2N \left(\sum_{-\sqrt{N} < k < \sqrt{N}}
+                       (\dft_{2N}A)(k\alpha)^2 e(k\alpha x) + R_N\right)\\
+                     &\geq& N \delta^2 + 2N
+                            |\widehat{1_A}(\alpha)|^2
+                            \Re(e_N(\alpha x)) - 2N \sum_{|k| \geq k_0}
+                            |\widehat{1_A}(k\alpha)|^2\\
   \end{eqnarray*}
 
   where here, we are using that
-  $\Re(|\widehat{1_A}(k\alpha)|^2 e(k\alpha x)) > 0$ for $k < k_0$ by
-  choice of $\eta$, and that
-  $\Re(|\widehat{1_A}(k\alpha)|^2 e(k\alpha x)) >
-  -|\widehat{1_A}(k\alpha)|^2$ for $k \geq k_0$.
+  $\Re(|\widehat{1_A}(k\alpha)|^2 e(k\alpha x)) \geq 0$ for
+  $1 < k < k_0$ by choice of $\eta$, and that
+  $\Re(|\widehat{1_A}(k\alpha)|^2 e(k\alpha x)) \geq
+  -|\widehat{1_A}(k\alpha)|^2$ for $k \geq k_0$.  So: 
 
   \begin{eqnarray*}
-    &\geq& \frac{\delta^2}{2} N + \frac{\rho^2}{2} N
-           - \frac{1}{2N} \sum_{|k| \geq k_0} |\widehat{1_A}(k\alpha)|^2\\
-    &\geq& \frac{\delta^2}{2} N + \frac{\rho^2}{2} N
-           - \frac{C^2 N}{2} \sum_{|k| \geq k_0}
-           \frac{1}{k^2}\\
+    r_{A_N - A_N}(x) &\geq& \frac{\delta^2}{2} N + \frac{\rho^2}{2} N
+                            - 2N \sum_{|k| \geq k_0} |\widehat{1_A}(k\alpha)|^2\\
+                     &\geq& \frac{\delta^2}{2} N + \frac{\rho^2}{2} N
+                            - 2C^2 N \sum_{|k| \geq k_0}
+                            \frac{1}{k^2}\\
   \end{eqnarray*}
 
 
@@ -2309,35 +2334,33 @@ this idea, we can prove some results of which the simplest is:
   $|\widehat{1_A}(k\alpha)| \leq \frac{C}{k}$ for some constant $C$.
 
   \begin{eqnarray*}
-    &\geq& \frac{N}{2}\left(\delta^2 + \rho^2 - C^2 \sum_{|k| \geq k_0} \frac{1}{k^2}\right)\\
+    &\geq& \frac{N}{2}\left(\delta^2 + \rho^2 - 4C^2 \sum_{|k| \geq k_0} \frac{1}{k^2}\right)\\
   \end{eqnarray*}
   
-  Which we know by choice of $k_0$ is $O(N)$, and therefore larger
-  than 0.
+  Which we know by choice of $k_0$ is $O(N)$, as desired.  
 
-  Thus we have $x \in A - A$ (and in fact has many representations as
-  such), which means $x$ cannot be in $A$, as $A$ is sum-free.
 \end{proof}
 
-This gives us that there must be some hole of some size near to
-multiples of $\lambda$.  Looking at the constants in the proof, we can
-compute what the size of this hole should be: 
+For sum-free $A$, this automatically guarantees that no integer within
+this interval can be in $A$, as for sum-free sets, $r_{A_N-A_N}(x) >
+0$ for any $N$ already implies $x \notin A$: 
 
-{\color{red}
+\begin{corollary}
+If $A$ is a sum-free set satisfying all the conditions of the theorem,
+then there is an $\eta > 0$ such that $\normrz{x/\lambda_A} < \eta
+\implies x \notin A$.  
+\end{corollary}
 
-[COMPUTATION]
+% Also, one will note that the bound we used on the tail sum in the
+% above proof was very crude--simply the triangle inequality.  In fact,
+% as $N$ gets large this approaches something like
 
-Also, one will note that the bound we used on the tail sum in the
-above proof was very crude--simply the triangle inequality.  In fact,
-as $N$ gets large this approaches something like
+% \[N \int_{\frac{k_0}{N}}^{2\pi} \frac{e^{it}}{t^2}dt\]
 
-\[N \int_{\frac{k_0}{N}}^{2\pi} \frac{e^{it}}{t^2}dt\]
+% Which is related to standard exponential integrals.  So we can use
+% facts about such integrals to bound this particular one analytically
+% in terms of $k_0$ and $N$ and get a better result.
 
-Which is related to standard exponential integrals.  So we can use
-facts about such integrals to bound this particular one analytically
-in terms of $k_0$ and $N$ and get a better result.
-
-}
 
 % And so if $\widehat{1_A}(k)$ is much larger than all the other Fourier
 % coefficients, then we might be able to guarantee that this is
