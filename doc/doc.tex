@@ -2405,29 +2405,35 @@ A conjecture of Gibbs states...
 Numbers $x$ that fail to be Ulam because in fact $r^*_{A+A}(x) = 0$
 all seem to lie within the middle third.  
 
+}
+
 \subsection{Non-uniformity/Regularity}
 
+% \begin{definition}$A \subseteq \N$ is
+%   \textbf{$\epsilon, \beta$-regular} if there is a subset
+%   $S \subseteq \R/\Z$ such that
+%   $\abr{A^c, \pi_\beta\inv(S)} < \epsilon$, where $\pi_\beta$ is the
+%   composition $\Z \to \beta\Z \to \R/\Z$, the first map being
+%   multiplication by $\beta$ and the second being reduction modulo
+%   $\Z$.
+% \end{definition}
 
-\begin{definition}$A \subseteq \N$ is \textbf{$\epsilon, \beta$ regular}
-  if there is a subset $S \subseteq \R/\Z$ such that
-  $\abr{A^c, \pi_\beta\inv(S)} < \epsilon$, where $\pi_\beta$ is the
-  composition $\Z \to \beta\Z \to \R/\Z$, where the first map is
-  multiplication by $\beta$ and the second is reduction modulo $\Z$.
-\end{definition}
-
-
-We might ask whether we can at least guarantee some kind of
-non-uniformity.  For example, can we find a set $E$ and constant $c$
-such that $|A_N \cap E|/N \geq \frac{|A_N|}{N}\frac{|E_N|}{N}$?  In
-fact, we can do slightly better: 
+Without any unconditional result describing the distributions of our
+various $A$ modulo $\lambda_A$, we might ask whether we can at least
+guarantee some kind of non-uniformity of these distributions.  For
+example, can we find a set $E \subseteq \R/\Z$ such that if
+$\pi : Z \to \R/\Z$ is $x \mapsto x/\lambda \mod{1}$, then
+$|A_N \cap \pi\inv(E)|/N \geq
+\frac{|A_N|}{N}\frac{|\pi\inv(E)_N|}{N}$?  In fact, we can do slightly
+better:
 
 \begin{theorem}
-  For $A$ a nearly sum-freeset of densite $\delta$, let $\alpha$ be
-  the maximal Fourier coefficient, and define
+  For $A$ an \relevant set of density $\delta$, let $\alpha$ be the
+  maximal Fourier coefficient, and define
   $E_{t} = \{n \in [N] : \Re(e(\alpha n)) \leq t\}$ (roughly, the set
   of integers that land in an interval of radius $t$ centred at
   $\lambda/2$ modulo $\lambda$.  Then there is a $t$ such that
-  $\abr{A,E_t} \geq \delta^2/8 + \delta |E_t \cap [N]|$.  
+  $\abr{A,E_t} \geq \delta^2/8 + \delta \frac{|E_{t,N}|}{N}$.
 \end{theorem}
 
 \begin{proof}
@@ -2435,6 +2441,8 @@ fact, we can do slightly better:
 \end{proof}
 
 \section{Structure of $\ulam{1}{2}$}
+
+{\color{red}
 
 \subsection{Distribution of summands}
 
@@ -2706,41 +2714,26 @@ such test is pick randomly from the 100000 $a_n$s in that congruence
 class and ask whether 2 is ever a complement of that $a_n$), and the
 proportion of times 2 shows up as a complement of k is equal to the
 proportion of times we get exactly k successes in our trials.
-
+}
 
 \subsection{Density}
 
-The first step in our strategy is to establish positive density
-results for sum-free and Ulam sequences.  In this paper, we will not
-actually establish these, but give conjectures in this direction.
-However, one may note that the only reason we know other Ulam
-sequences such as $\ulam{2}{5}$ have positive density is that we know
-they are regular.  So in trying to get a handle on the distribution
-of, say, $\ulam{1}{2}$, it might seem backwards to start with an
-assertion of positive density and then deduce regularity.
+One simple element of structure that we might hope to deduce from all
+of this is some kind of positive density result for sum-free and Ulam
+sequences.  For example, we note that for around 60\% of all Ulam
+numbers $x$, then next Ulam number will be $x+2$.  For another 30\%,
+the next will be $x+3$.  So one approach to studying the density would
+be to understand the structure of the Ulam numbers well enough to be
+able to bound how often any given $d$ appears as a difference of
+consecutive Ulam numbers.
 
-There are three things: 
-
-\begin{enumerate}
-\item First, it is already non-obvious that positive density in fact
-  implies all the rest of what we want to know, and so even if this is
-  all we can prove at the moment, it still seems worthwhile to record.
-\item Second, beyond that, there is some reason for believing
-  conjectures of this form.  Combined with a lot of experimental
-  computations, one suggestive sort of argument takes the shape:
-  ``There are many positive-density sets of the right sort
-  (1-additive, sum-free, etc.), and the procedures for constructing
-  the sum-free and Ulam sets that we are looking at are in some way
-  `as greedy as possible', so what other sets could we get from those
-  constructions if not some version of the positive-density ones we
-  can construct?''  We will suggest some possible more precise
-  versions of this in what follows.
-\item Finally, while literal positive-density makes the arguments
-  nicer, Many of the statements we wish to make later do have versions
-  that make sense without it (mostly by changing ``large'' from
-  meaning ``large relative to $N$'' to ``large relative to $|A_N|$''),
-  as we shall discuss later.
-\end{enumerate}
+In this document we do not resolve this question either, but do give
+conjectures in this direction.  However, one may note that the only
+reason we know other Ulam sequences such as $\ulam{2}{5}$ have
+positive density is that we know they are regular.  So in trying to
+get a handle on the distribution of, say, $\ulam{1}{2}$, we expect
+that the actual positive density result will come from an
+understanding of its distribution, rather than vice-versa.
 
 The first question is to attempt to compute the density of the various
 sum-free sets and Ulam sequences that we are studying.  
@@ -2812,6 +2805,14 @@ estimates for the densities of these sets:
 
 \subsubsection{Constructions}
 
+Another line of thought is to note that that the Ulam numbers are, in
+some sense, as greedy as possible in their definition.  And while, for
+example, $\theta(01001)$ is not maximally greedy, it is still greedy
+$\frac25$ of the time.  So in the family of Ulam-like sets or sum-free
+sets, if we have many positive-density examples, it seems unlikely
+(though not impossible, as we shall see) that these very greedy sets
+fail to be positive-density.  
+
 We first start by noting that positive-density sum-free sets are
 abundant, as a result of the abundance of sum-free sets
 $A \subseteq \R/\Z$, coupled with the fact that if
@@ -2867,11 +2868,17 @@ which belong the Ulam sequences, but also many others:
 \end{example}
 
 The last example gives plenty of examples of regular 1-additive
-sequences.  But we might wonder what the analogue of $A_\lambda$ (for
-irrational $\lambda$ would be for 1-additive sets.  Indeed, these were
-our first examples of irregular sum-free sets of positive density, so
-we might first ask whether there even is such a thing for 1-additive
-sets.  It turns out that there is: 
+sequences.  (Indeed, $a = 3, b = 4$ provides an example of a set with
+density apparently higher than that of $\ulam{1}{2}$ despite being
+less greedy: It goes $3, 4, 7, 10, 14, \ldots$, whereas a greedy
+algorithm would include 11 as well.)  
+
+Nevertheless, all these examples are regular in the conventional
+``mod-$m$'' sense.  So we might wonder what the analogue of
+$A_\lambda$ for {\em irrational} $\lambda$ would be for 1-additive sets.
+Indeed, these were our first examples of irregular sum-free sets of
+positive density, so we might first ask whether there even is such a
+thing for 1-additive sets.  It turns out that there is:
 
 \begin{proposition}
   There exists an irregular 1-additive set of positive density.
@@ -3004,6 +3011,8 @@ greediness of the Ulam sequence suggests for us the conjecture:
 \begin{conjecture}
   The Ulam sequence $\ulam{1}{2}$ has positive upper density.
 \end{conjecture}
+
+{\color{red}
 
 \section{Future Directions}
 
