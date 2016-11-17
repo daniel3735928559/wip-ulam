@@ -51,15 +51,16 @@ def experiment0(l,a,n):
 def experiment1():
     """Compute alpha_{a,b} for various a,b"""
     n = 10000
-    l = [(1,i) for i in range(2,16)]
+    l = []
+    l += [(1,i) for i in range(2,16)]
     l += [(2,3)]
     l += [(3,i) for i in range(4,11) if i % 3 != 0]
     #l += [(4,i) for i in range(4,16) if i % 2 != 0]
     l += [(5,i) for i in range(7,10)]
     for x in l:
         a,b=x
-        u = ulam(a,b,n)
-        alpha,f = find_alpha_fast(u,debug=False)
+        u = u1_11#ulam(a,b,n)
+        alpha,f = find_alpha_fast(u,debug=True)
         F = ft_complex(alpha,u)
         print(a,b,alpha,f/u[-1],2*math.pi/alpha,len(u)/u[-1],f/len(u),"{} + {}i".format(*F))
 
@@ -68,6 +69,13 @@ def experiment1A():
     u = ulam(2,5,10000)
     alpha,f = find_alpha_fast(u,debug=False)
     print(a,b,alpha,f/u[-1],2*math.pi/alpha,len(u)/u[-1],f)
+
+def experiment1B():
+    """Compute alpha_{1,11}"""
+    u = u1_11
+    alpha,f = find_alpha_fast(u,debug=True)
+    F = ft_complex(alpha,u)
+    print(a,b,alpha,f/u[-1],2*math.pi/alpha,len(u)/u[-1],f/len(u),"{} + {}i".format(*F))
 
 def experiment2():
     """Compute alpha_{a,b} for various a,b"""
@@ -135,8 +143,8 @@ def experiment5():
             print(k,d,f)
 
 def experiment6():
-    for s in data:
-        l = data[s]["seq"][:10000]
+    for s in ["u1_11"]:
+        l = data[s]["seq"][:50000]
         m,k = data[s]["lambda"]
         
         N = l[-1] - (l[-1]%m)

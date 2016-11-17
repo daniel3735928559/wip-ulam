@@ -2060,28 +2060,33 @@ So if our assertion is that whether a given $x$ is in $A$ is strongly
 affected by the value of $x$ modulo the associated $\lambda_A$, then
 we might wonder whether it appears that $r_{A+A}(x)$ is affected.  We
 can do this by taking the various congruence classes $a$ modulo
-$\lambda$ and computing the average value of $r_{A+A}(x)$
-for $x$ ranging over integers congruent to $a$ modulo $\lambda$.
-Plotting these for various sequences we get the plots: 
+$\lambda$ and computing the average value of $r_{A+A}(x)$ for $x$
+ranging over integers congruent to $a$ modulo $\lambda$.  Plotting
+these for the first $10^5$ terms of various sequences we get the
+plots:
 
 \begin{tabular}{cc}
 \begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_u1_2.png}
   \\ $\ulam{1}{2}$\end{tabular} &
 \begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_u1_3.png}
-  \\ $\ulam{1}{3}$\end{tabular} \\
+  \\ $\ulam{1}{3}$\end{tabular} \\\hline
 \begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_u1_4.png}
   \\ $\ulam{1}{4}$\end{tabular} &
 \begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_u1_11.png}
-  \\ $\ulam{1}{11}$\end{tabular} \\
+  \\ $\ulam{1}{11}$\end{tabular} \\\hline
 \begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_u2_3.png}
   \\ $\ulam{2}{3}$\end{tabular} &
 \begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_01001.png}
-  \\ $\theta(01001)$\end{tabular} \\ 
+  \\ $\theta(01001)$\end{tabular} \\ \hline
 \begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_01010.png}
   \\ $\theta(01010)$\end{tabular} &
 \begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_10010.png}
-  \\ $\theta(10010)$\end{tabular} \\ 
+  \\ $\theta(10010)$\end{tabular} \\ \hline
 \end{tabular}
+
+We have included $\ulam{1}{11}$ since its large Fourier coefficient
+was the smallest we observed, and so 
+
 
 Now, the benefit of studying $r_{A+A}(x)$ is that, being a
 convolution, we understand its Fourier transform.  More precisely,
