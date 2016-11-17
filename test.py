@@ -1168,6 +1168,6 @@ beta01001 = 1.26594784
 # for i in range(10):
 #     print(ft(i*alpha1_2, u1_2)/len(u1_2))
 
-l = ulam(1,11,50000,debug=True)
+l = ulam(1,9,50000,debug=True)
 for x in l:
     print(x)

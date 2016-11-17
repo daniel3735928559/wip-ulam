@@ -321,14 +321,14 @@ def find_alpha_search(l,t,s,N,debug=False):
         s /= 2
     return t,L
 
-def find_alpha_fast(l,prec=10,debug=False):
+def find_alpha_fast(l,prec=10,debug=False,start=0.2,end=math.pi):
     a = 0.2
     s = 0.005
     prec = 4
     winner = a
     curmax = 0
-    for i in range(int(math.pi/s+1)):
-        a = 0.2+i*s
+    for i in range(int(end/s+1)):
+        a = start+i*s
         if debug: print('around',a)
         rwinner,rmax = find_alpha_search(l,a,s/2,3*prec,debug)
         if debug: print('found',rwinner,rmax,curmax)

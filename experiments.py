@@ -29,7 +29,7 @@ data = {
     "u1_3":{"seq":u1_3,"alpha":2.8334973144531252,"lambda":(6424,2897)},
     "u1_4":{"seq":u1_4,"alpha":0.5060131835937502,"lambda":(2769,223)},
     "u2_3":{"seq":u2_3,"alpha":1.16501220703125,"lambda":(2551,473)},
-    "u1_11":{"seq":u1_11,"alpha":0.9401159667968749,"lambda":(1330,199)},
+    "u1_11":{"seq":u1_11[:10000],"alpha":0.37604736328125,"lambda":(8655,259)},#2*259
     "01001":{"seq":sf01001,"alpha":2.508619384765625,"lambda":(8909,3557)},
     "01010":{"seq":sf01010,"alpha":1.8018310546875,"lambda":(3923,1125)},
     "10010":{"seq":sf10010,"alpha":1.9559313964843752,"lambda":(9968,3103)},
@@ -76,6 +76,17 @@ def experiment1B():
     alpha,f = find_alpha_fast(u,debug=True)
     F = ft_complex(alpha,u)
     print(a,b,alpha,f/u[-1],2*math.pi/alpha,len(u)/u[-1],f/len(u),"{} + {}i".format(*F))
+            
+def experiment1C():
+    """Compute alpha_{a,b} for various a,b"""
+    n = 20000
+    l = [(1,i) for i in range(11,16)]
+    for x in l:
+        a,b=x
+        u = ulam(a,b,n)
+        alpha,f = find_alpha_fast(u,debug=False,start=0.1,end=0.2)
+        F = ft_complex(alpha,u)
+        print(a,b,alpha,f/u[-1],2*math.pi/alpha,len(u)/u[-1],f/len(u),"{} + {}i".format(*F))
 
 def experiment2():
     """Compute alpha_{a,b} for various a,b"""
