@@ -100,6 +100,32 @@ def experiment2():
 
 def experiment3():
     """ """
+    l = u1_2
+    ms = [2, 5, 17, 22, 259, 281, 540, 2441, 2981]
+    for m in ms:
+        rs = [0 for k in range(m)]
+        for x in l:
+            rs[x%m] += 1
+        mu = sum(rs)/m
+        var = sum([(r-mu)**2 for r in rs])/m
+        print(m,var)
+
+def experiment3A():
+    """ """
+    l = u1_2
+    R = 3
+    ms = [540+i for i in range(-R,R+1)] + [2441 + i for i in range(-R,R+1)]
+    for m in ms:
+        rs = [0 for k in range(m)]
+        for x in l:
+            rs[x%m] += 1
+        mu = sum(rs)/m
+        var = sum([(r-mu)**2 for r in rs])/m
+        print(m,var)
+
+
+def experiment3_old():
+    """ """
     ls = {"u1_2":(u1_2[:1000],alpha1_2)}
     for s in ls:
         l,alpha = ls[s]

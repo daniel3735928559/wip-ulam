@@ -239,6 +239,12 @@ We will start by giving an overview of some known results that should
 lead us in the right direction.  No arguments in this section are
 original unless noted otherwise.
 
+{\color{red}
+
+\subsection{Fourier Transform}
+
+}
+
 \subsection{Known regularity results}
 
 If we want to prove this kind of generalised regularity statement, it
@@ -1476,11 +1482,38 @@ To get rational approximations for $\lambda$, we run the program
 \icode{cf\_alpha.py} in SAGE to compute continued fractions and
 convergents:
 
-[TABLE]
+\begin{tabular}{ll}
+\begin{tabular}{|l|l|}
+\hline $\ulam{1}{2}$ & $[2; 2, 3, 1, 11, 1, 1, 4, 1, \ldots]$ \\\hline $i$ & $P_i/Q_i$\csvreader{datafiles/cf_u1_2.csv}{}{\\\csvcoli & \csvcolii}\\\hline
+\end{tabular}
+&
+\begin{tabular}{|l|l|}
+\hline $\ulam{1}{3}$ & $[2; 4, 1, 1, 2, 24, 1, 3, 10, 1, \ldots]$ \\\hline $i$ & $P_i/Q_i$ \csvreader{datafiles/cf_u1_3.csv}{}{\\\csvcoli & \csvcolii}\\\phantom{a}&\phantom{a}\\\hline
+\end{tabular}
+\end{tabular}
+\begin{tabular}{ll}
+\begin{tabular}{|l|l|}
+\hline $\ulam{2}{3}$ & $[5; 2, 1, 1, 5, 3, 5, 4, 1, 1, 1, \ldots]$ \\\hline $i$ & $P_i/Q_i$ \csvreader{datafiles/cf_u2_3.csv}{}{\\\csvcoli & \csvcolii}\\\phantom{a}&\phantom{a}\\\phantom{a}&\phantom{a}\\\hline
+\end{tabular}
+&
+\begin{tabular}{|l|l|}
+\hline $\theta(01001)$ & $[2; 1, 1, 53, 2, 1, 1, 5, 1, 17, 2, \ldots]$ \\\hline $i$ & $P_i/Q_i$ \csvreader{datafiles/cf_01001.csv}{}{\\\csvcoli & \csvcolii}\\\hline
+\end{tabular}
 
-(Since we only have believe our $\lambda$ up to $10^{-6}$, we have
-reason to mistrust convergents with denominator larger than $10^6$, so
-we have left these out.)
+\end{tabular}
+\begin{tabular}{ll}
+\begin{tabular}{|l|l|}
+\hline $\theta(01010)$ & $[3; 2, 18, 1, 8, 1, 2, 6, 4, 12, 1, 1, \ldots]$ \\\hline $i$ & $P_i/Q_i$ \csvreader{datafiles/cf_01010.csv}{}{\\\csvcoli & \csvcolii}\\\phantom{a}&\phantom{a}\\\hline
+\end{tabular}
+&
+\begin{tabular}{|l|l|}
+\hline $\theta(10010)$ & $[3; 4, 1, 2, 2, 3, 5, 5, 3, 1, 21, 7, \ldots]$ \\\hline $i$ & $P_i/Q_i$ \csvreader{datafiles/cf_10010.csv}{}{\\\csvcoli & \csvcolii}\\\hline
+\end{tabular}
+\end{tabular}
+
+(Since we only have believe our values of $\lambda$ up to $10^{-6}$,
+we have reason to mistrust convergents with larger heights anyways, so
+we only list those with numerators up to $10^5$.)
 
 One indicator that $\lambda$ might be quite near a rational number
 would be if the continued fraction had a single anomalously large
@@ -1489,15 +1522,28 @@ if we examine the non-uniformity of, say, $\ulam{1}{2}$ modulo $m$
 where $m$ runs through the numerators of the convergents (where we
 measure non-uniformity simply by the variance $\sigma_m$ in the number
 of elements that lie in each congruence class modulo $m$, as computed
-in \icode{experiment2}:
+in \icode{experiment3}:
 
-[TABLE]
+\begin{tabular}{|l|l|}
+\hline
+  $m$ & $\sigma_m$
+  \csvreader{datafiles/vars_u1_2.csv}{}
+  {\\\csvcoli & \csvcolii}
+\\\hline
+\end{tabular}
 
 Indeed, the variance is quite large for these moduli, but for nearby
 moduli tends to be far less pronounced, as we compute in
-\icode{experiment2A}:
+\icode{experiment3A}:
 
-[TABLE]
+
+\begin{tabular}{|l|l|}
+\hline
+  $m$ & $\sigma_m$
+  \csvreader{datafiles/varsA_u1_2.csv}{}
+  {\\\csvcoli & \csvcolii}
+\\\hline
+\end{tabular}
 
 We might wonder: All of the known regularity results that we mentioned
 earlier were showed that various $\ulam{a}{b}$ were biased modulo 2.
@@ -1719,7 +1765,7 @@ explains this:
 In particular, it follows that if ultimately the upper density of any
 of the \relevant sequences is positive, then we are guaranteed a
 non-zero Fourier coefficient in $\R/\Z$:
-
+{\color{red}
 \begin{corollary}\label{thm:alpha}
   If $A \subseteq \N$ is a sequence of positive integers of upper
   density density $\delta > 0$ such that for all $N$, $T(A_N)$ is
@@ -1805,7 +1851,7 @@ non-zero Fourier coefficient in $\R/\Z$:
   \frac{\delta^2}{2}$, which means exactly that
   $\widehat{A}(\alpha) \geq \frac{\delta^2}{2}$, as desired.
 \end{proof}
-
+}
 We noticed earlier that the actual complex value of the Fourier
 transform of $A$ for most of the $A$ had large real part and small
 imaginary part.  If we look at the proof of the theorem, we notice
