@@ -2512,6 +2512,40 @@ $f = A - \delta$, so
 And this is what we wanted to show.
 \end{proof}
 
+So this is our first basic result in the direction we want to go:
+Towards some statement that large \relevant sets are \relevant for
+local reasons.  Another simpler example of this comes from thinking
+about regular such sequences: 
+
+\begin{proposition}
+  If $A$ is a regular 1-additive or sum-free set, then there is an
+  $N > 0$, an $m$, and a sum-free $E \subseteq \Z/m$ such that if
+  $\pi : \Z \to \Z/m$ is the quotient map, then $A$ and $E$ agree for
+  all integers larger than $N$.  In other words, such $A$ eventually
+  agree with a locally sum-free set. 
+\end{proposition}
+
+\begin{proof}
+  If $A$ is regular, then there is an $N > 0$ and a modulus $m$ with a
+  list of congruence classes $a_1, \ldots, a_n$ mod $m$ such that for
+  all $x > N$, $x \in A$ if and only if $x = a_i \mod{m}$ for some
+  $i$.  
+
+  If $E = \{a_1, \ldots, a_n\} \subseteq \Z/m$ is not sum-free, then there
+  are $i, j, k$ with $a_i + a_j = a_k \mod{m}$.  Supposing, as we may
+  without loss, that $0 \leq a_r < m$ for all $r$, then
+  $a_i + a_j = a_k + m\epsilon$ for $\epsilon = 0$ or $\epsilon = 1$.
+
+  Now, $x = Nm + a_i$, $y = Nm + a_j$, $z = (N+1)m + a_i$,
+  $w = (N+1)m+a_j$, and $(2N+2+\epsilon)m + a_k$ are all distinct
+  elements of $A$.  However, $x+w \in A$ and $y+z \in A$, and
+  $x + w = y + z$, contradicting the 1-additivity of $A$.
+
+  Thus $E$ had to have been sum-free, and then we have that for
+  $x > N$, $x \in A \iff x \in \pi\inv(E)$, where $\pi : \Z \to \Z/m$
+  is the quotient map, as desired.
+\end{proof}
+
 \section{Structure of $\ulam{1}{2}$}
 
 {\color{red}
