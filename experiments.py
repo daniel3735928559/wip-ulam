@@ -79,7 +79,7 @@ def experiment1B():
     print(a,b,alpha,f/u[-1],2*math.pi/alpha,len(u)/u[-1],f/len(u),"{} + {}i".format(*F))
             
 def experiment1C():
-    """Compute alpha_{a,b} for various a,b"""
+    """Compute alpha_{a,b} for various 1,11-15"""
     n = 20000
     l = [(1,i) for i in range(11,16)]
     for x in l:
@@ -99,7 +99,7 @@ def experiment2():
         print(s,alpha,f/A[-1],2*math.pi/alpha,len(A)/A[-1],f/len(A),"{} + {}i".format(*F))
 
 def experiment3():
-    """ """
+    """Compute variance of Ulam numbers mod various convergents to alpha"""
     l = u1_2
     ms = [2, 5, 17, 22, 259, 281, 540, 2441, 2981]
     for m in ms:
@@ -111,7 +111,7 @@ def experiment3():
         print(m,var)
 
 def experiment3A():
-    """ """
+    """Compute variance of Ulam numbers mod various less good rational approximations to alpha"""
     l = u1_2
     R = 3
     ms = [540+i for i in range(-R,R+1)] + [2441 + i for i in range(-R,R+1)]
@@ -136,6 +136,7 @@ def experiment3_old():
         print(s,tot/N)
 
 def experiment30():
+    """Probabalistic version"""
     x = 10
     for p in [i/x for i in range(x+1)]:
         print(p)
@@ -147,31 +148,34 @@ def experiment30():
     #print(find_alpha(l,s,debug=False))
 
 def experiment4():
+    """Search efficiently (if approximately) for smallest k where ft(k*alpha) > 4/k"""
+    for s in data:
+        l = data[s]["seq"][:100000]
+        a = data[s]["alpha"]
+        N = 100
+        while N < len(l):
+            f = 0
+            k = N
+            w = N/2
+            while(w > 10):
+                f = max([j*ft(j*a,l[:N])/l[N] for j in range(k-20,k+20)])
+                #print(k,f)
+                if f > 4: k -= w
+                else: k += w
+                k = math.floor(k+0.5)
+                w *= 1/2
+            print(s,N,k)
+            N = math.floor(N * 1.5)
+        
+def experiment4A():
+    """Compute i*ft(A)(alpha*i) for increasing i"""
     l = u1_2[:1000000]
     a = alpha1_2
     for i in range(1,10):
         print(i,i*ft(a*i,l)/len(l))
 
-
-def experimentA():
-    l = u1_2
-    a = alpha1_2
-    N = 100
-    while N < len(l):
-        f = 0
-        k = N
-        w = N/2
-        while(w > 20):
-            f = max([j*ft(j*a,l[:N])/l[N] for j in range(k,k+20)])
-            print(k,f)
-            if f > math.pi: k -= w
-            else: k += w
-            k = math.floor(k+0.5)
-            w *= 1/2
-        print(N,k)
-        N *= 10
-        
 def experiment5():
+    """Compute distribution mod lambda for the sequences"""
     for s in data:
         l = data[s]["seq"][:10000]
         m,k = data[s]["lambda_s"]
@@ -191,6 +195,7 @@ def experiment5_old():
             print(k,d,f)
 
 def experiment6():
+    """Compute distribution of r_{A+A} mod lambda for the sequences"""
     for s in data:
         l = data[s]["seq"][:10000]
         m,k = data[s]["lambda"]
@@ -209,21 +214,45 @@ def experiment6():
             rAA_dist[x] /= N/m
         for x in range(m):
             print(s,(x*k)%m,rAA_dist[x])
-        
-        
-def experiment60(us,ms):
-    """Try to measure the bias in the 'us' mod each m in ms by computing the std dev of the number of times each residue class mod m shows up"""
-    m = 1
-    for x in ms:
-        m = x
-        l = [0 for i in range(m)]
-        for a in us:
-            l[a % m] += 1
-        mu = len(us)/x
-        sigma = math.sqrt(sum([(i - mu)*(i - mu) for i in l]))
-        print(m,sigma)
 
 def experiment7():
+    """Compute complete spectrum of A--that is, any x with |ft(A_N)(x)| > sqrt(N)"""
+    for s in data:
+        l = data[s]["seq"][:5000]
+        N = l[-1]
+        spec = []
+        x = 0
+        step = 0.0005
+        while x <= math.pi+step:
+            f = ft(x,l)
+            if f > math.sqrt(N):
+                spec += [(round(x,4),f)]
+            x += step
+        for a in spec:
+            print(s,a[0],a[1])
+
+def experiment7A():
+    """Compute k*alpha mod 2pi for various k"""
+    for s in data:
+        a = data[s]["alpha"]
+        for k in range(20):
+            r = real_mod(k*a,2*math.pi)
+            if r > math.pi:
+                r = 2*math.pi - r
+            print(s,k,r)
+            
+def experiment7B():
+    """Compute the difference between r_{A_N+A_N}(x) and sum |k|<sqrt(N) ft(A_N)(k*alpha)"""
+    for s in data:
+        a = data[s]["alpha"]
+        for k in range(50):
+            r = real_mod(k*alpha,2*math.pi)
+            if r > math.pi:
+                r = 2*math.pi - r
+            print(s,k,r)
+    
+
+def experiment7_old():
     l = u1_2[:10000]
     ll = set(l)
     lm = 2*math.pi/alpha1_2
@@ -236,6 +265,7 @@ def experiment7():
         print(i+1,real_mod(l[i],lm),l[i],s)
 
 def experiment8():
+    """Compute ping-pong sequence mod sqrt(2)"""
     n = 500
     m = math.sqrt(2)
     a,b,c = 0,0,0
@@ -281,10 +311,10 @@ def experiment8():
             
 
 def experiment9():
-    ls = {"u12":u1_2,"u13":u1_3,"01001":sf01001,"01010":sf01010}
-    for s in ls:
+    """Compute density for various sequences"""
+    for s in ldata:
         print(s)
-        l = ls[s]
+        l = data[s]["seq"]
         n = len(l)
         while n > 0:
             print(n,':',l[n-1]/n)
