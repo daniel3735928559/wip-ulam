@@ -784,9 +784,10 @@ $\left(\frac{\alpha}{3m}-k,\frac{2\alpha}{3m}-k\right)$ modulo the
 irrational number $\frac{\alpha}{m}$.  Then it is clear that $mn+k$
 will reduce to $\left(\frac{\alpha}{3},\frac{2\alpha}{3}\right)$ mod
 $\alpha$, meaning that $mn+k \in A_\alpha$ as desired.
-{\color{red}
 
-\subsection{Abelian arithmetic regularity}
+%{\color{red}
+
+%\subsection{Abelian arithmetic regularity}
 
 % If $A$ is any set, then an easy probablistic argument shows that there
 % is a sum-free subset of $A$ of size $|A|/3$.  Indeed, if for any real $\alpha$,
@@ -815,7 +816,7 @@ $\alpha$, meaning that $mn+k \in A_\alpha$ as desired.
 
 % ...
 
-}
+%}
 
 \subsection{Roth's theorem}
 
@@ -939,45 +940,46 @@ in many places, for example \cite{roth:jlm1953}.
 
 \end{proof}
 
-{\color{red}
+% {\color{red}
 
-\subsubsection{Proof via the regularity theorem}
+% \subsubsection{Proof via the regularity theorem}
 
-The density increment proof exemplifies a kind of dichootomy between
-structure and randomness in its two cases: Where $A$ behaves
-pseudorandomly, in which density controls all the counting
-expressions, and where $A$ has structure, which we can use exploit to
-iterate the argument.
+% The density increment proof exemplifies a kind of dichootomy between
+% structure and randomness in its two cases: Where $A$ behaves
+% pseudorandomly, in which density controls all the counting
+% expressions, and where $A$ has structure, which we can use exploit to
+% iterate the argument.
 
-The pseudorandomness argument will carry over nicely to the sum-free
-and Ulam cases, but second part of the argument relies on the fact
-that the structure of interest--in the case of Roth, arithmetic
-progressions, and in our case, additive triangles--can be found
-equally in any arithmetic progression.  For progressions, this is
-clear, but for triangles, this is simply false: The very dense
-progression of all odd numbers already contains zero additive
-triangles.  
+% The pseudorandomness argument will carry over nicely to the sum-free
+% and Ulam cases, but second part of the argument relies on the fact
+% that the structure of interest--in the case of Roth, arithmetic
+% progressions, and in our case, additive triangles--can be found
+% equally in any arithmetic progression.  For progressions, this is
+% clear, but for triangles, this is simply false: The very dense
+% progression of all odd numbers already contains zero additive
+% triangles.  
 
-As this part of the proof seems unlikely to generalise to our
-situation, we explore a second avenue of proof for Roth's theorem,
-namely using the arithmetic regularity and counting lemmas of the
-earlier section.  This comes from \cite{tao:ams2012}
+% As this part of the proof seems unlikely to generalise to our
+% situation, we explore a second avenue of proof for Roth's theorem,
+% namely using the arithmetic regularity and counting lemmas of the
+% earlier section.  This comes from \cite{tao:ams2012}
 
-\begin{proof}[Proof of Roth's theorem via arithmetic regularity]
-  For a function $f : [N] \to \{0,1\}$, define
-  $T(f) = \sum_{x,y \in [N]} f(x)f(x+y)f(x+2y)$ to be the function
-  that counts 3-term progressions if $f$ is thought of as an indicator
-  function.  So our goal is to prove that for $A \subseteq [N]$ of
-  density $\delta$ (for $N$ sufficiently large relative to $\delta$)
-  that $T(1_A) > 0$.  
+% \begin{proof}[Proof of Roth's theorem via arithmetic regularity]
+%   For a function $f : [N] \to \{0,1\}$, define
+%   $T(f) = \sum_{x,y \in [N]} f(x)f(x+y)f(x+2y)$ to be the function
+%   that counts 3-term progressions if $f$ is thought of as an indicator
+%   function.  So our goal is to prove that for $A \subseteq [N]$ of
+%   density $\delta$ (for $N$ sufficiently large relative to $\delta$)
+%   that $T(1_A) > 0$.  
   
-  As in the statement of the regularity lemma, write
-  $1_A = f_{str} + f_{sml} + f_{unf}$ with parameters $M$ and
-  $\epsilon$.  .
-\end{proof}
+%   As in the statement of the regularity lemma, write
+%   $1_A = f_{str} + f_{sml} + f_{unf}$ with parameters $M$ and
+%   $\epsilon$.  .
+% \end{proof}
 
-%\subsection{Green's arithmetic triangle removal theorem}
-}
+% %\subsection{Green's arithmetic triangle removal theorem}
+% }
+
 \subsection{Quantitative bounds in finite fields}
 
 There have been several recent developments in a finite field setting
@@ -1974,12 +1976,12 @@ computational evidence in its favour:
 
 \begin{conjecture}\label{conj:decay} 
   If $A$ is a \relevant set of positive integers, and
-  $\widehat{A}(\alpha) \neq 0$, then for $d \in \Z$ with $d \neq 0$,
+  $\widehat{A}(\alpha) \neq 0$, then for $d\ in \Z$ with $|d| \leq \sqrt{N}$ with $d \neq 0$,
   we have
 
-  \[\widehat{f}(d\alpha) \leq \frac{C}{d}\]
+  \[\widehat{A_N}(d\alpha) \leq \frac{C}{d}\]
 
-  for some constant $C$.  
+  for some constant $C$ independent of $N$.  
 \end{conjecture}
 
 % \begin{proof}[Idea]
@@ -2041,6 +2043,8 @@ computational evidence in its favour:
 To support this conjecture, we compute $d \widehat{A_N}(d\alpha)$ for
 $d$ up to $\sqrt{N}$ and observe that in all cases, $d$ appears to be
 bounded by 4.  
+
+[COMPUTATION]
 
 \section{Distribution}
 
