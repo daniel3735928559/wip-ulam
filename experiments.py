@@ -239,18 +239,43 @@ def experiment7A():
             r = real_mod(k*a,2*math.pi)
             if r > math.pi:
                 r = 2*math.pi - r
-            print(s,k,r)
+            print(s,r,k,a)
             
 def experiment7B():
     """Compute the difference between r_{A_N+A_N}(x) and sum |k|<sqrt(N) ft(A_N)(k*alpha)"""
     for s in data:
-        a = data[s]["alpha"]
-        for k in range(50):
-            r = real_mod(k*alpha,2*math.pi)
-            if r > math.pi:
-                r = 2*math.pi - r
-            print(s,k,r)
-    
+        for N in [500,1000,2000,5000,7500]:
+            a = data[s]["alpha"]
+            l = data[s]["seq"][:N]
+            # rAA = {i:0 for i in range(l[-1])}
+            # for x in l:
+            #     for y in l:
+            #         if y > x or x+y >= l[-1]:
+            #             break
+            #         elif x == y:
+            #             rAA[x+y] += 1
+            #             break
+            #         else:
+            #             rAA[x+y] += 2
+            la = 2*math.pi/a
+            m = 2*l[-1]
+            k = math.floor(la*m+0.5)%m
+            fts = [ft_complex_2pi(t,l,m) for t in range(m)]
+            fts_a = [ft_complex(t*a,l) for t in range(math.floor(math.sqrt(m)))]
+            errs = []
+            for x in range(l[-1]//2,l[-1]//2+200):
+                ccs = [(1/m)*((fts[t][0]**2 - fts[t][1]**2)*math.cos(2*math.pi*t*x/m)+2*fts[t][0]*fts[t][1]*math.sin(2*math.pi*t*x/m)) for t in range(m)]
+                ccs_a = [(1 if t == 0 else 2) * (1/m)*((fts_a[t][0]**2 - fts_a[t][1]**2)*math.cos(t*a*x)+2*fts[t][0]*fts[t][1]*math.sin(t*a*x)) for t in range(math.floor(math.sqrt(m)))]
+                # bigs = [ccs[0]]
+                # for i in range(1,math.floor(math.sqrt(m))):
+                #     bigs += [ccs[(i*k)%m],ccs[(-i*k)%m]]
+                b = sum(ccs_a)
+                c = sum(ccs)
+                #print(s,x,rAA[x],round(c,2),round(b,2),round(b-c,2),round((b-c)/m,7))
+                errs += [b-c]
+            Rm_max = max(errs,key=lambda x: abs(x))
+            Rm_avg = sum(errs)/len(errs)
+            print(s,m,round(Rm_avg,3),round(Rm_max,3), round(Rm_avg/m,7))
 
 def experiment7_old():
     l = u1_2[:10000]
