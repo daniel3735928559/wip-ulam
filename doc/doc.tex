@@ -64,13 +64,12 @@
 
 \section{Introduction}
 
-The Ulam sequence is a sequence of positive integers that is defined
-in a recursive way that sounds like it should make it difficult to
-compute.  It starts with $a_1 = 1$, $a_2 = 2$, and then for $n > 2$,
-$a_n$ is the integer satisfying: 
+The Ulam sequence is a sequence $a_n$ of positive integers that is given byu
+the folowing recursive definition: It starts with $a_1 = 1$,
+$a_2 = 2$, and then for $n > 2$, $a_n$ is the integer satisfying:
 \begin{enumerate}
-\item It is expressible as a sum of distinct previous terms in exactly
-  one way: There is exactly one pair of $i < j$ with
+\item It is expressible as a sum of distinct previous Ulam numbers in
+  exactly one way: There is exactly one pair of $0 < i < j < n$ with
   $a_i + a_j = a_n$.
 \item It is larger than the previous element of the sequence: $a_n >
   a_{n-1}$.
@@ -93,16 +92,17 @@ One thing that makes the sequence interesting is that it seems
 historically to have been very difficult to prove anything about it.
 We know, for example, that it must be infinite, since, given the first
 $n$ elements $a_1, \ldots, a_n$, we can always find at least one
-number that satisfies both the criteria above, namely $a_{n-1} + a_n$.
-Thus there must be a smallest such number, which is therefore the next
-Ulam number.
+number that satisfies the first two criteria above, namely
+$a_{n-1} + a_{n-2}$.  Thus there must be a smallest such number, which
+is therefore the next Ulam number.  However we do not know whether
+this sequence has positive density in any sense.
 
 We also know that if we use the same definition but start with
 different initial values, we can get sequences that we can analyse
-very easily indeed: If the $(u,v)$-Ulam sequence is the sequence with
-$a_1 = u, a_2 = v$, and $a_n$ (for $n > 3$) defined exactly as before,
-then by theorems of Finch \cite{cassaigne:em1995} and Schmerl and Speigel
-\cite{schmerl:jct1994}, we know that the $(2,v)$-Ulam sequence, in the
+very easily indeed: If the ``$(u,v)$-Ulam sequence'' is the sequence
+with $a_1 = u, a_2 = v$, and $a_n$ (for $n > 3$) defined exactly as
+before, then by a theorem of Schmerl and Speigel
+\cite{schmerl:jct1994} we know that the $(2,v)$-Ulam sequence, in the
 case where $v$ is odd and at least 5, is regular in the following
 sense:
 
@@ -112,81 +112,59 @@ sense:
   is eventually periodic.
 \end{definition}
 
-Such sequences are very easy to describe--we could specify them (after
-some initial segment) by a set of congruence classes modulo some
-(possibly large) $m$.  In particular, a regular Ulam-like sequence
-will be far easier to compute than the definition of an Ulam sequence
-would naively suggest.
+Regular sequences are very easy to describe--we could specify them
+(after some initial segment) by a set of congruence classes modulo
+some (possibly large) $m$.  In particular, a regular Ulam-like
+sequence will be far easier to compute than the definition of an Ulam
+sequence would naively suggest.
 
 There are other initial values that are variously known to and
 believed to give rise to regular sequences, also.  See, for example,
-\cite{finch:em1992}.  That said, many
-Ulam-type sequences appear not to be regular, among them the $(1,2)$-
-and $(2,3)$-Ulam sequences.  So one might ask some questions:
-
-\begin{itemize}
-\item What is it that causes some initial conditions to be regular and
-  not others (if indeed they are not)?
-\item Is there any perhaps more general notion of regularity that even
-  the irregular-looking sequences do satisfy?
-\end{itemize}
+\cite{finch:em1992}.  That said, many Ulam-type sequences appear not
+to be regular, among them the $(1,2)$- and $(2,3)$-Ulam sequences.  So
+we might wonder if these exhibit some other kind of similar pattern,
+though perhaps not as rigid as that for the $(2,5)$-Ulam sequence.  
 
 In looking for hidden regularity, one might take a signal processing
 approach to the sequence and try, for example, to Fourier transform
 the indicator function of the sequence and see if the spectrum has any
-interesting features.  In \cite{steinerberger:preprint}, Stefan Steinerberger did exactly
-that and behold, the spectrum has a large spike exactly only at some
-$\alpha \in \R/\Z$ (and at its harmonics), and seemingly nowhere else.
+interesting features.  In \cite{steinerberger:preprint}, Stefan
+Steinerberger did exactly that and beheld that the spectrum has a
+large spike at 0 (suggesting some flavour of positive density) as well
+as another at some $\alpha \in \R/\Z$ (and at its harmonics), and
+seemingly nowhere else.
 
 More precisely: 
 
-\begin{definition} If $f : [N] \to \C$, recall the the \textbf{Fourier
-    transform} of $f$ is a function $\widehat{f}$ defined by the
-  formula:
+\begin{definition} If $f : [N] \to \C$, we might define the
+  \textbf{Fourier transform} of $f$ to be the function $\widehat{f}$
+  defined by the formula:
 
-\[\widehat{f}(x) = \frac 1N \sum_{t=0}^{N-1} f(t) e(-tx)\]
+  \[\widehat{f}(x) = \sum_{t=0}^{N-1} f(t) e(-tx)\]
 
-where $e(x) = e_N(x) = e^{2\pi i x / N}$.  Thus $\widehat{f}$ is a
-function defined on all of $\R/\Z$.
+  where $e(x) = e^{i x}$.  Thus $\widehat{f}$ is a function defined on
+  all of $\R/2\pi\Z$.
 
-$N$ will often be omitted from the notation and understood from
-context.  If we wish to make $N$ explicit in the notation for the
-Fourier transform itself, we will denote it as $\mathcal{F}_N f$
-rather than $\widehat{f}$.
-
+  $N$ will often be omitted from the notation and understood from
+  context.  If we wish to make $N$ explicit in the notation for the
+  Fourier transform itself, we will denote it as $\mathcal{F}_N f$
+  rather than $\widehat{f}$.
 \end{definition}
 
-This definition satisfies many properties, which are standard from
-Fourier analysis and additive combinatorics \cite{tao:cup2006}:
-
-\begin{proposition}
-If $f : [N] \to \C$, then: 
-
-\begin{itemize}
-\item If in fact $f$ takes values in $\R$, then
-  $\widehat{f}(-x) = \overline{\widehat{f}(x)}$ for all $x \in \R/\Z$.
-
-\item $\widehat{\widehat{f}}(x) = f(-x)$ for all $x \in [N]$.
-
-\item $\widehat{fg}(x) = (\widehat{f} \ast \widehat{g})(x)$ for all
-  $x \in \R/\Z$.
-
-\item If in fact $f$ is the indicator function of a set
-  $A \subseteq [N]$, then $\widehat{f}(0) = \frac{|A|}{N}$.
-\end{itemize}
-\end{proposition}
-
 So if $A$ is a set of positive integers (say, the Ulam sequence), and
-$1_A$ is the indicator function of $A$, then we might define
-$\widehat{1_A}(x) = \lim_{N \to \infty} \widehat{1_{A_N}}(x)$, where
-as usual, $A_N = A \cap [N]$ is the truncation of $A$ at $N$.  Then in
-the case of the Ulam sequence, what is observed numerically is that
-for one particular value of $\alpha \in \R/\Z$ (namely
-$\alpha = \ldots)$, that $\widehat{1_A}(\alpha) \approx 0.8$, and for
-$k \in \Z$, $\widehat{1_A}(k \alpha)$ is also some non-zero value that
-shrinks with $k$.  For example, for $N = 100000$, we compute this for
-a few values of $k$ (noting that of course the values for $-k$ are
-just the conjugates of these:
+we also denote by $A$ the indicator function of $A$, then we might
+define $\widehat{A}(x) = \lim_{N \to \infty} \widehat{A_N}(x)$, where
+$A_N = A \cap [N]$ is the ``truncation of $A$ at $N$''.  Then in the
+case of the Ulam sequence, what is observed numerically is that
+$\widehat{A}(0) = \delta \approx 0.07$ is the density of the sequence.
+It is clear that $\widehat{A}(x)$ cannot be larger than this.
+However, for one particular value of $\alpha \in \R/2\pi\Z$ (namely
+$\alpha = 2.571447\ldots$), that
+$\widehat{1_A}(\alpha) \approx 0.8 \delta$, and for $k \in \Z$,
+$\widehat{1_A}(k \alpha)$ is also some non-zero value that shrinks
+with $k$.  For example, for $N = 100000$, we compute this for a few
+values of $k$ (noting that of course the values for $-k$ are just the
+conjugates of these:
 
 \begin{tabular}{|l|l|}
 \hline
@@ -197,53 +175,208 @@ just the conjugates of these:
 \end{tabular}
 
 and as $N$ gets large, it appears that
-$\widehat{1_{A_N}}(\beta) \to 0$ as $N \to \infty$ for all other
+$\widehat{A_N}(\beta) \to 0$ as $N \to \infty$ for all other
 $\beta \notin \alpha\Z$.
 
 From a signal processing perspective, this might suggest that the set
-$A$ has some periodicity mod $\frac 1 \alpha \approx \ldots$.  Using
-$\ldots$ as a rational approximation to this, we can plot the
-distribution of $A_N$ for, say, $N = 100000$ modulo this number: 
+$A$ has some periodicity mod
+$\frac {2\pi} \alpha \approx 2.443442\ldots$.  Using $5422/2219$ as a
+rational approximation to this, we can plot the distribution of $A_N$
+for, say, $N = 10^8$ modulo this number:
 
 \includegraphics[scale=0.5]{../figs/u1_2_mod5422.png}
 
 This has some notable features: 
 
 \begin{itemize}
-\item From the value of $\widehat{1_A}(0)$, it looks like the Ulam
+\item From the value of $\widehat{A}(0)$, it looks like the Ulam
   sequence has small but nonzero density (in fact, around $0.07$).
 
 \item As noted in \cite{steinerberger:preprint} it looks like as we increase $N$
   that this is converging to an actually continuous distribution.
 
 \item It looks at a glance like this distribution is supported on the
-  middle third of the interval $[0,\frac1\alpha]$.  This is not
+  middle third of the interval $[0,\frac{2\pi}\alpha]$.  This is not
   literally the case, but in \cite{gibbs:preprint} there is a
   conjecture in this direction.
-
 \end{itemize}
 
-{\color{red}
+This phenomenon is actually apparent even after plotting a much
+smaller number of Ulam numbers--say $10^3$, and does not appear to
+weaken even after other people have computed many more Ulam numbers.
 
-TODO: More questions--do the easy-to-explain-now highlights of the
-later ``Questions'' section.
+The striking nature and numerical strength of this phenomenon
+naturally leads to many questions.  We will list a larger number of
+these in section 3, but we give a sampling now: 
+
+\begin{enumerate}
+\item What is the $\alpha$ that we have computed as comprising the
+  spectrum of the Ulam numbers?  Is it irrational?  Transcendental?
+
+\item What feature of the Ulam numbers gives rise to this
+  distribution?  That is, what is a general class of sets with similar
+  behaviour?
+
+\item What is it that causes some initial conditions to be regular and
+  not others (if indeed they are not)?
+
+\item Can we distill this phenomenon into a more general notion of
+  regularity that even the irregular-looking sequences do satisfy?
+\end{enumerate}
 
 \subsection{Results}
 
-TODO: Highlight the major results (whatever those end up being)
+In this document, we do not provide a complete explanation for the
+phenomenon, but we do focus attention on a class of sets that all
+exhibit it, namely ``\relevant sets'': The idea is that the set $A$ of
+Ulam numbers has the property that the number of pairs
+$(x, y) \in A^2$ with $x + y \in A$ is unusually small.  For example,
+in a randomly generated set $B$ of density $\delta$, we might expect
+that $B_N$ has about $\delta N$ elements, and hence $\delta^2 N^2$
+pairs of elements, of whose sums maybe $\delta$ will be in $A$.  So we
+expect about $\delta^3 N^2$, or, generally, $\Omega(N^2)$ such sums.
+If we have fewer of these, say $O(N^{2-\epsilon}$ for some
+$\epsilon > 0$, then that suggests that the set cannot be purely
+random.  So we define: 
 
-}
+\begin{definition}A set $A$ of positive integers is
+  \textbf{\relevant}if there is a constant $C \geq 0$ and $\epsilon > 0$
+  such that if $T(A_N) = |\{(x, y)\in A_N^2 : x + y \in A\}|$, then
+  $T(A_N) \leq C N^{2-\epsilon}$ for all $N$.  
+\end{definition}
+
+\begin{example}
+  Any $(a,b)$-Ulam sequence is \relevant, because for each Ulam number
+  $x < N$, the number of representations $x$ has as a sum of other
+  Ulam numbers is at most 3: The sum that qualifies it to be an Ulam
+  number in the first place, that same sum with the order reversed,
+  and possible $\frac{x}{2} + \frac{x}{2}$ if $\frac{x}{2}$ happens to
+  also be in the sequence.  Thus such a sequence has $T(A_N) \leq 3N$,
+  and thus is \relevant with $C = 3$ and $\epsilon = 1$.
+\end{example}
+
+\begin{example}
+  A set $A$ is called ``sum-free'' if for every $N$, $T(A_N) = 0$.
+  These sets are also \relevant therefore, and indeed provide in some
+  ways simpler and more extreme examples of the same phenomenon.  
+\end{example}
+
+As we discussed above, these sets are defined in some way that
+guarantees they behave differently from purely random sets.  One might
+wonder, then, what structure this definition actually guarantees for
+such sets.
+
+We suspect that the nature of this structure is roughly ``correlation
+with a periodic sum-free set''.  More precisely, that there should be
+an $\lambda \in \R$ such that if $\pi : \R \to \R/\Z$ is the map
+$x \mapsto \lambda x\mod{1}$, then there is an actually sum-free
+subset $E \subseteq \R/\Z$ such that $A$ and $\pi\inv(E)$ are in some
+sense strongly correlated.  
+
+In this document, we come to a first result in this direction: theorem
+\ref{thm:regularity}, which gives such a $\lambda$ and a set $E$ that
+are at least non-trivially more correlated than expected.  We also
+show (proposition \ref{prop:regular_sumfree}) that regular Ulam
+sequences are eventually equivalent to lifts of a sum-free subset of
+some $\Z/m$.  
+
+To get such results, we first prove a theorem (theorem
+\ref{thm:alpha_finitary}) that \relevant sets are guaranteed (in a
+certain sense) a large Fourier coefficient $\alpha$ in their spectrum.
+We also show in theorem \ref{thm:hole1} that, granting certain
+statements about the Fourier spectrum that we could not prove, that
+circle-method type arguments to entail certain features of this
+distribution.  
+
+Finally, turning our attention from the general study of \relevant
+sets to the Ulam numbers in particular, we consider the combinatorial
+structure of the Ulam numbers that results from their definition.  For
+example, we know that every Ulam number $a$ has a unique pair of Ulam
+numbers $x < y$ with $x + y = a$.  We can ask questions about the
+distribution of such $x$ and $y$--for example, does every Ulam number
+show up as a summand of other Ulam numbers equally often?  Further,
+$x$ and $y$ are also Ulam numbers so they can be decomposed likewise
+until every $(u,v)$-Ulam number is expressed as a sum of $u$s and
+$v$s.  The distributions of these also makes for interesting study.
+And lastly, we might ask what kind of structure would give rise to an
+``irrationally regular'' sequence with the additive structure that the
+Ulam numbers have.  To this end, we propose in proposition
+\ref{prop:irr_1add} a construction that we know is not regular in the
+earlier sense, but that does have an irrational period.
+
 \section{Background}
 
 We will start by giving an overview of some known results that should
 lead us in the right direction.  No arguments in this section are
 original unless noted otherwise.
 
-{\color{red}
-
 \subsection{Fourier Transform}
 
-}
+The definition of the Fourier transform-like operator that seems
+experimentally to be the one that applies is the following:
+
+\begin{definition}
+For $A \subseteq \Z^+$ a set of positive integers, define for any
+$x\in \R/2\pi\Z$: 
+
+\[\widehat{A_N}(x) = \frac{1}{N} \sum_{t=0}^{N-1} A(x) e(tx)\]
+
+Also define 
+
+\[\widehat{A}(x) = \lim_{N \to \infty} \widehat{A_N}(x)\]
+
+if this limit converges.  
+\end{definition}
+
+So, for example, it $A$ is the Ulam numbers, $\widehat{A}(0)$ would be
+the so-called natural density $\delta$ (which may be around $0.07$) if
+this exists.  Then the observation of Steinerberger is that
+$\widehat{A}(x) = 0$ unless $x \in \alpha\Z$ for the above particular
+choice of $\alpha$, and
+$\widehat{A}(\alpha) \approx 0.8\delta \approx 0.056$, for example.
+
+Of course, it is not clear that this definition ever converges or what
+properties it might satisfy, so we shall in this document always work
+only with truncated sequences $A_N \subseteq [N] = \{1, \ldots, N\}$,
+where we can view $[N]$ as $\Z/N$ and apply a more standard
+definition:
+
+\begin{definition}
+  For $f : \Z/N \to \C$, let the \textbf{discrete Fourier transform}
+  of $f$ be a function $\dft_N f$ defined by
+  \[(\dft_N f)(k) = \sum_{t=0}^{N-1} f(t) e(\frac{-2\pi k t}{N})\]
+  where $e(x) = e^{ix}$.
+\end{definition}
+
+This definition satisfies many properties, which are standard from
+Fourier analysis and additive combinatorics \cite{tao:cup2006}:
+
+\begin{proposition}
+If $f : \Z/N \to \C$, then: 
+
+\begin{itemize}
+\item If in fact $f$ takes values in $\R$, then
+  $(\dft_N f)(-x) = \overline{(\dft_N f)(x)}$ for all $x \in \Z/N$.
+
+\item If in fact $f$ is the indicator function of a set
+  $A \subseteq \Z/N$ with $|A| = \delta N$, then
+  $(\dft_N f)(0) = \delta$, and $|(\dft_N f)(x)| \leq \delta$ for all
+  $x \in \Z/N$.
+
+\item (Fourier inversion):
+  $(\dft_N\inv f)(x) = \frac{1}{N} \overline{(\dft_N f)(-x)}$ for all
+  $x \in \Z/N$.
+
+\item (Convolution formula): For two function $f, g : \Z/N \to \C$, we
+  have $(\dft_N fg)(x) = (\dft_N f \ast \dft_N g)(x)$ for all
+  $x \in \Z/N$.
+
+\item (Parseval's identity): For $f : \Z/N \to \C$, we
+  have
+  \[\sum_{t=0}^{N-1} |(\dft_N f)(t)|^2 = \frac{1}{N} \sum_{t=0}^{N-1}
+    |f(t)|^2\]
+\end{itemize}
+\end{proposition}
 
 \subsection{Known regularity results}
 
@@ -885,8 +1018,8 @@ still remain by the time we get to this point.
   of solutions to $x+z=2y$ is counted by
 
   \begin{eqnarray*}
-    S &=& \frac1N \sum_{t=0}^{N-1} \hat 1_A(t)\hat 1_gA(t)\hat 1_A(-2t) \\
-    S &=& \frac1N |A|^3 + \frac1N \sum_{t=1}^{N-1} \hat 1_A(t)\hat 1_gA(t)\hat 1_A(-2t) \\
+    S &=& \frac1N \sum_{t=0}^{N-1} \hat 1_A(t)\hat 1_A(t)\hat 1_A(-2t) \\
+    S &=& \frac1N |A|^3 + \frac1N \sum_{t=1}^{N-1} \hat 1_A(t)\hat 1_A(t)\hat 1_A(-2t) \\
       &=& \delta^3 N^2 + \frac1N \sum_{t=0}^{N-1} \hat 1_A(t)^2\hat 1_A(-2t) \\
       &\geq& \delta^3 N^2 - \sup_t |\hat 1_A(-2t)| \frac1N \sum_{t=0}^{N-1} |\hat 1_A(t)|^2 \\
       &=& \delta^3 N^2 - \sup_t |\hat 1_A(-2t)| \frac1N \sum_{t=0}^{N-1} |1_A(t)|^2 \\
@@ -1976,7 +2109,7 @@ computational evidence in its favour:
 
 \begin{conjecture}\label{conj:decay} 
   If $A$ is a \relevant set of positive integers, and
-  $\widehat{A}(\alpha) \neq 0$, then for $d\ in \Z$ with $|d| \leq \sqrt{N}$ with $d \neq 0$,
+  $\widehat{A}(\alpha) \neq 0$, then for $d \in \Z$ with $|d| \leq \sqrt{N}$ with $d \neq 0$,
   we have
 
   \[\widehat{A_N}(d\alpha) \leq \frac{C}{d}\]
@@ -2520,7 +2653,7 @@ Towards some statement that large \relevant sets are \relevant for
 local reasons.  Another simpler example of this comes from thinking
 about regular such sequences: 
 
-\begin{proposition}
+\begin{proposition}\label{prop:regular_sumfree}
   If $A$ is a regular 1-additive or sum-free set, then there is an
   $N > 0$, an $m$, and a sum-free $E \subseteq \Z/m$ such that if
   $\pi : \Z \to \Z/m$ is the quotient map, then $A$ and $E$ agree for
@@ -2989,7 +3122,7 @@ Indeed, these were our first examples of irregular sum-free sets of
 positive density, so we might first ask whether there even is such a
 thing for 1-additive sets.  It turns out that there is:
 
-\begin{proposition}
+\begin{proposition}\label{prop:irr_1add}
   There exists an irregular 1-additive set of positive density.
 \end{proposition}
 
