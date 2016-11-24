@@ -1552,7 +1552,7 @@ numbers.  Specifically, we will look at:
 \end{itemize}
 
 We do this by running \icode{experiment1}, which computes
-$\alpha_{a,b}$ to around 6 decimal places using the first $10^5$
+$\alpha_{a,b}$ to around 6 decimal places using the first $10^4$
 elements of each of these sequences.  We get, letting $\rho_{a,b} = \widehat{1_{a,b}}(\alpha_{a,b})$:
 
 \begin{tabular}{|llllllll|}
@@ -1646,9 +1646,9 @@ convergents:
 \end{tabular}
 \end{tabular}
 
-(Since we only have believe our values of $\lambda$ up to $10^{-6}$,
+(Since we only have believe our values of $\lambda$ up to $10^{-5}$,
 we have reason to mistrust convergents with larger heights anyways, so
-we only list those with numerators up to $10^5$.)
+we only list those with denominators up to $10^4$.)
 
 One indicator that $\lambda$ might be quite near a rational number
 would be if the continued fraction had a single anomalously large
@@ -2072,14 +2072,16 @@ can brute-force compute $\widehat{A_N}(t)$ for many values of $t$
 between 0 and $\pi$, and the only time we find values larger than
 $\sqrt{N}$ are: 
 
-[COMPUTATION]
+{\color{red}[COMPUTATIONS]}
 
 Similar observations can be made for other \relevant sets, such as our
-various $\theta(s)$ and $\ulam{2}{3}$ and $\ulam{1}{3}$.  
+various $\theta(s)$ and $\ulam{2}{3}$ and $\ulam{1}{3}$: 
+
+{\color{red}[COMPUTATIONS]}
 
 Secondly, Plancherel tells us that 
 
-[COMPUTATION]
+{\color{red}[COMPUTATIONS]}
 
 We should point out, however, that simply being \relevant is not enough
 to guarantee the spectrum is of the form $\alpha\Z$ only.  For
@@ -2177,7 +2179,7 @@ To support this conjecture, we compute $d \widehat{A_N}(d\alpha)$ for
 $d$ up to $\sqrt{N}$ and observe that in all cases, $d$ appears to be
 bounded by 4.  
 
-[COMPUTATION]
+{\color{red}[COMPUTATIONS]}
 
 \section{Distribution}
 
@@ -2251,7 +2253,7 @@ we might wonder whether it appears that $r_{A+A}(x)$ is affected.  We
 can do this by taking the various congruence classes $a$ modulo
 $\lambda$ and computing the average value of $r_{A+A}(x)$ for $x$
 ranging over integers congruent to $a$ modulo $\lambda$.  Plotting
-these for the first $10^5$ terms of various sequences we get the
+these for the first $10^4$ terms of various sequences we get the
 plots:
 
 \begin{tabular}{cc}
@@ -2297,26 +2299,40 @@ $(\dft_{2N}r_{A_N - A_N}) = |\dft_{2N}A_N|^2$.  Using Fourier
 inversion, then, we can compute $r_{A_N + A_N}$ and $r_{A_N - A_N}$ in
 terms of the Fourier coefficients of $A$:
 
-\begin{equation}\label{eqn:rAAsum}r_{A_N + A_N}(x) = \sum_{t=0}^{2N-1} ((\dft_{2N}A)(t))^2 e(\frac{2\pi t}{2N} x)\end{equation}
+\begin{equation}\label{eqn:rAAsum}r_{A_N + A_N}(x) = 2N \sum_{t=0}^{2N-1} ((\dft_{2N}A)(t))^2 e(\frac{2\pi t}{2N} x)\end{equation}
 
-\begin{equation}\label{eqn:rAAdiff}r_{A_N - A_N}(x) = \sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2 e(\frac{2\pi t}{2N} x)\end{equation}
+\begin{equation}\label{eqn:rAAdiff}r_{A_N - A_N}(x) = 2N \sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2 e(\frac{2\pi t}{2N} x)\end{equation}
 
 Since our observations suggest that the spectrum of $A$ is simply
 $\alpha\Z$, in particular for $A_N$ we have
 $\widehat{A_N}(k\alpha) \leq \frac{C}{k}$ for $k$ up to around
-$\sqrt{N}$ and we have lower bounds for $(\dft_{2N}A)(\alpha)$.  We
-can then approximate this sum using these large Fourier coefficients
-and lumping the rest into an error term $R_N$ that we expect (but were
-unable to prove) is small enough to ignore:
+$c\sqrt{N}$ for some constant $c$, and we have lower bounds for
+$(\dft_{2N}A)(\alpha)$.  We can then approximate this sum using these
+large Fourier coefficients and lumping the rest into an error term
+$R_N$ that we expect (but were unable to prove) is small enough to
+ignore.  Precisely : 
 
-\begin{equation}\label{eqn:rAAsum_err}
-  r_{A_N + A_N}(x) = \sum_{-\sqrt{N} < k < \sqrt{N}}
-  (\dft_{2N}A)^2(k \alpha) e(k\alpha x) + R_N
-\end{equation}
+
+\begin{conjecture}\label{conj:spec_estimate}
+  For $A$ a \relevant set with Fourier spectrum $\alpha\Z$, there are
+  constants $c, c' > 0$ such that:
 
 \begin{equation}\label{eqn:rAAdiff_err}
-  r_{A_N - A_N}(x) = \sum_{-\sqrt{N} < k < \sqrt{N}} |(\dft_{2N}A)(k\alpha)|^2 e(k\alpha x) + R_N
+  r_{A_N - A_N}(x) = 2N\sum_{|k| < c\sqrt{N}} |(\dft_{2N}A)(k\alpha)|^2 e(k\alpha x) + R_N
 \end{equation}
+
+\begin{equation}\label{eqn:rAAsum_err}
+  r_{A_N + A_N}(x) = 2N\sum_{|k| < c'\sqrt{N}}(\dft_{2N}A)^2(k \alpha) e(k\alpha x) + R'_N
+\end{equation}
+  
+Where $R_N$ and $R'_N$ are both $o(N)$ as $N \to \infty$.  
+\end{conjecture}
+
+\begin{proof}[Computational evidence]
+
+{\color{red}[COMPUTATION]}
+
+\end{proof}
 
 This is what we shall attempt to exploit in the following section, but
 before then, a word about the actual distributions of $r_{A+A}$ that
@@ -2375,7 +2391,7 @@ should be small since it is an alternating sum.
 As mentioned, the distributions of various $U(a,b)$ and $\theta(s)$
 modulo their respective $\lambda$ values. are non-uniform, and seem to
 have most (but not all) of their support in the middle third of the
-interval $[0,\lambda]$.  For example, if we take the first $10^5$
+interval $[0,\lambda]$.  For example, if we take the first $10^4$
 elements of each sequence and take a rational approximation
 $\lambda \approx \frac{m}{k}$ and plot, for each congruence class $r$
 mod $m$ how many $a \in A$ have $ka \cong r \mod{m}$, then we get the
@@ -2396,18 +2412,22 @@ following plots:
   \\ $\theta(10010)$\end{tabular} \\ \hline
 \end{tabular}
 
-In this section, we will focus on the three observations we mentioned
-in the previous section, namely: 
+There are many observations to be made, among which:
 
 \begin{enumerate}
 \item There seem to be few elements of each $A$ in some interval
   around 0 modulo $\lambda$.
-\item The support of these distributions seems to usually contain the
-  middle third modulo $\lambda$.  
 \item For Ulam sequences, the $x$ that fail to be in the sequence on
   account of $r^*_{A+A}(x) = 0$ all lie close to $\frac\lambda2$
   modulo $\lambda$.  
+\item The support of these distributions seems to usually contain the
+  middle third modulo $\lambda$.  
+\item The distribution of $\ulam{1}{n}$ seems like it might be
+  converging to a multiple of the characteristic function of the
+  middle third modulo $\lambda$.  
 \end{enumerate}
+
+Of these, we will examine in this section the first two
 
 As a useful piece of notation for expressing the idea of intervals
 such as ``the middle third modulo $\lambda$'', we will define as is
@@ -2441,11 +2461,11 @@ So, particularly if we use the approximation given in equation
 \ref{eqn:rAAsum_err}, we get: 
 
 \begin{eqnarray*}
-  r_{A_N + A_N}(x) &=& 2N \left(\sum_{-\sqrt{N} < k < \sqrt{N}}
-                       (\dft_{2N}A)(k\alpha)^2 e(k\alpha x) + R_N\right)\\
-                   &\approx& 2N \left(\frac{\delta^2}{2} +
+  r_{A_N + A_N}(x) &=& 2N \sum_{|k| < c\sqrt{N}}
+                       (\dft_{2N}A)(k\alpha)^2 e(k\alpha x) + R_N\\
+                   &\approx& 2N (\frac{\delta^2}{2} +
                              2\Re((\dft_{2N}A)(\alpha)^2 e(\eta)) + \sum_{k > 1}
-                             2\Re((\dft_{2N}A)(k\alpha)^2 e(k\eta)) + R_N\right)\\
+                             2\Re((\dft_{2N}A)(k\alpha)^2 e(k\eta))) + R_N\\
 \end{eqnarray*}
 
 And so if the argument of $(\dft_{2N}A)(\alpha)$ is close to $\pi$ and
@@ -2490,7 +2510,7 @@ completely:
   have:
 
   \begin{eqnarray*}
-    r_{A_N - A_N}(x) &=& 2N \left(\sum_{-\sqrt{N} < k < \sqrt{N}}
+    r_{A_N - A_N}(x) &=& 2N \left(\sum_{|k| < c\sqrt{N}}
                        (\dft_{2N}A)(k\alpha)^2 e(k\alpha x) + R_N\right)\\
                      &\geq& N \delta^2 + 2N
                             |\widehat{1_A}(\alpha)|^2
@@ -2533,6 +2553,11 @@ If $A$ is a sum-free set satisfying all the conditions of the theorem,
 then there is an $\eta > 0$ such that $\normrz{x/\lambda_A} < \eta
 \implies x \notin A$.  
 \end{corollary}
+
+Likewise, for an Ulam sequence $A$, this gives us that any element
+within $\eta$ of $\lambda\Z$ will appear as a summand for elements of
+$A_N$ some $\Omega(N)$ times.  We will return to this observation in
+section 7.  
 
 % Also, one will note that the bound we used on the tail sum in the
 % above proof was very crude--simply the triangle inequality.  In fact,
@@ -2577,18 +2602,53 @@ then there is an $\eta > 0$ such that $\normrz{x/\lambda_A} < \eta
 % necessarily has many representations and is therefore disqualified
 % from being an Ulam number for that reason.  
 
-{\color{red}
+% \subsubsection{Few Ulam numbers outside middle third mod $\lambda$}
 
-\subsubsection{Few Ulam numbers outside middle third mod $\lambda$}
-
-A conjecture of Gibbs states...
+% A conjecture of Gibbs states...
 
 \subsubsection{Numbers that are not sums of Ulam numbers close to middle mod $\lambda$}
 
-Numbers $x$ that fail to be Ulam because in fact $r^*_{A+A}(x) = 0$
-all seem to lie within the middle third.  
+Another behaviour suggested by the distribution of $r_{A+A}$ concerns
+non-Ulam numbers, and specifically numbers $x$ that fail to be Ulam
+because $r^*_{A+A}(x) = 0$.  The fact that it appears
+$r^*_{A+A}(x) > 0$ outside the middle third suggests that all of these
+would lie within the middle third.
 
-}
+Indeed, if we take such numbers and plot their distribution mod
+$\lambda$, as we do in \icode{experiment10}, we get:
+
+\begin{tabular}{cc}
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp10_u1_2.png}
+  \\ $\ulam{1}{2}$\end{tabular} &
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp10_u1_3.png}
+  \\ $\ulam{1}{3}$\end{tabular} \\\hline
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp10_u1_9.png}
+  \\ $\ulam{1}{9}$\end{tabular} &
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp10_u2_3.png}
+  \\ $\ulam{2}{3}$\end{tabular} \\
+\end{tabular}
+
+Which share many features with the distributions of the Ulam numbers
+modulo $\lambda$, bolstering the idea that it isn't the feature of
+``being an Ulam number'' as such that creates the distribution, but
+more just the relationship between $r_{A+A}(x)$ and being in $A$.
+Specifically, for \relevant sets $A$, $x \in A \iff r_{A+A}(x)$ is
+small, whether it is 2 or 3 and so $x \in A$ or it is literally 0, and
+$x$ is in the sets we're counting here, such $x$'s still show the same
+bias modulo $\lambda$, 
+
+We end with a final remark that within the first $10^4$ elements of
+each of these Ulam sequences, we have many elements that fail to
+qualify by having no representations:
+
+\begin{tabular}{|lll|}
+\hline
+$A$ & $N$ (with $|A_N| = 10^4$) & $|x < N : r^*_{A+A}(x) = 0|$\\
+$\ulam{1}{2}$ & 132788 & 24415\\
+$\ulam{1}{3}$ & 78819 & 13445\\
+$\ulam{1}{9}$ & 58114 & 7859\\
+$\ulam{2}{3}$ & 108466 & 23052\\\hline
+\end{tabular}
 
 \subsection{Non-uniformity/Regularity}
 
@@ -2639,7 +2699,7 @@ better:
                        &\leq& \abs{\int_{-1}^1 \abr{f, E_\eta} d\eta}
 \end{eqnarray*}
 
-Thus $\abr{f, E_\eta} \geq \frac{\delta^2}{4}$ for some $\eta$.  But
+{\color{blue}Thus $\abr{f, E_\eta} \geq \frac{\delta^2}{4}$ for some $\eta$.  }But
 $f = A - \delta$, so 
 
 \[\abr{A, E_\eta} \geq \frac{\delta^2}{4} + \abr{\delta, E_\eta} =
@@ -2684,14 +2744,31 @@ about regular such sequences:
 
 \section{Structure of $\ulam{1}{2}$}
 
-{\color{red}
+We now turn specifically to $A = \ulam{1}{2}$, the sequence we started
+with.  
 
 \subsection{Distribution of summands}
 
-\subsubsection{Distribution of large summands}
-We've studied the smaller summands a bit--now the question is: What
-about the large summands?
+We know that each element $a_n \in A$ is a sum $a_i + a_j$ of smaller elements
+with $a_i < a_j$.  This gives us much structure to play with: 
+\begin{itemize}
+\item For example, for each $x \in A$, let
+  $S_x = \{y \in A : x + y \in A\}$.  We might wonder about the sizes
+  of $S_x$ for various $x$--is it roughly constant among all $x$, or
+  are there very few $x$ that act as summands for elements of $A$?
+\item If we write each $a_n = a_i + a_j$ where $i < j$, what is the
+  distribution of the values of $i$ that show up?  (That is, what is
+  the distribution of small summands?)  What about the values of
+  $j$?  Perhaps more reasonable would be to ask about the distribution
+  of $n-j$ (so a queestion about the distribution of large summands).
+\item If we start by breaking up an $a \in A$ as $a = x+y$ for $x < y$
+  both in $A$, we can then break up $x$ and $y$ themselves into sums
+  of Ulam numbers, and repeat until we get down to writing $a$ as a
+  sum of 1s and 2s.  So we can wonder about the proportion of 1s and
+  2s in this factorisation.  
+\end{itemize}
 
+\subsubsection{Distribution of large summands}
 We note first that if 2 or 3 is the small summand of $a_{n+1}$, then
 the large summand is necesarily $a_n$ (if 2 is the small summand and
 $a_n$ is not the large summand, then $a_{n+1}$ would be $a_n + 1$
@@ -2700,136 +2777,59 @@ which is impossible since this is a duplicate sum with $a_n+a_1$.  If
 $a_{n+1}$ is either $a_n + 1$ or $a_n + 2$, both of which would be
 duplicates.)
 
-This means that over 50\% of the time, the large summand will be the
-last thing in the list so far.  When looking at the large summand,
-then, it seems more relevant to consider how many indices from the end
+This means that as often as 2 is the small summand, (whcih we will see
+is over 50\% of the time), the large summand will be the last thing in
+the list so far.  When looking at the large summand, then, it seems
+like it may be interesting to consider how many indices from the end
 it lives, rather than its actual value.  We compute these in
-experiment13, generating output [FILE] of the form:
+experiment13.  Some post-processing gives us the following table,
+which accounts for over 9000 of the $a_n$ for $n \leq 10^4$
 
-\begin{tabular}{|l|l|l|l|}
-$n$ 	&$a_n$	&$i$	&$n-j$ (with $a_i + a_j = a_n$ and $i < j$)\\
-2 	&1 	&0 	&1\\
-3 	&2 	&0 	&1\\
-4 	&3 	&1 	&1\\
-5 	&4 	&1 	&1\\
-6 	&6 	&2 	&1\\
-7 	&8 	&1 	&1\\
-8 	&11 	&2 	&1\\
-9 	&13 	&1 	&1\\
-10 	&16 	&5 	&1\\
-11 	&18 	&1 	&1
+\begin{tabular}{|llll|}
+\hline
+  $|n : a_i + a_{n-j} = a_n|$ & $a_i$ & $i$ & $n-j$
+  \csvreader{datafiles/large_summands.csv}{}
+  {\\\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
+\\\hline
 \end{tabular}
 
-We can do some processing on these to figure out which $n-j$ are the
-most common:
+All told there are 312 different pairs $(i, n-j)$ that appear in the
+first $10^4$ Ulam numbers, including only $69$ distinct values of $i$
+and 159 values distinct values of $n-j$.  
 
-% \begin{verbatim}
-% cat data/indices_of_summands | cut -d ' ' -f 4 | sort -n|uniq -c|sort -n > data/n_minus_js
-% \end{verbatim}
-
-results [FILE].  Note in particular that there are only 159 of them
-and (as suggested above) that n-j = 1 accounts for over 50\% of them.
-This list seems to contain few surprises: Among all the values of $n-j$
-that appear more than 10 times, nothing bigger than 34 shows up.
-
-If we look at values that show up fewer than 10 times, then it looks
-like $n-j = 100$ and $185 < n-j < 205$ seem to be preferred, with many
-of these showing up 3 or more times, while all other values show up 2
-or fewer times.  This could be an artifact of not much data, however.
-
-We might instead take a look instead at enumerating $(i,n-j)$ pairs,
-rather than just values of $n-j$:
-
-% \begin{verbatim}
-% cat data/indices_of_summands | cut -d ' ' -f 3,4 | sort -n|uniq -c|sort -n > data/i_nmj
-% \end{verbatim}
-
-with results in [FILE].  Note in particular that there are
-only 312 distinct such pairs, meaning that technically, to compute the
-first 10000 Ulam numbers, we only have to check 312 possibilities for
-each.  If only there were a way of knowing ahead of time which 312 we
-had to check...
+Note in particular that there being only 312 distinct such pairs means
+that technically, to compute the first 10000 Ulam numbers, we only
+have to check 312 possibilities for each if we knew which
+possibilities to check ahead of time.  
 
 \subsubsection{Distribution of small summands}
 
 We note with interest the observation in the abstract of Steinerberger
-that $\cos(\alpha a_n) < 0$ for all $a_n$ other than 2, 3, 47, and 69.  In
-particular, thee were also the $a_n$ that showed up most frequently as
-summands in our earlier computation.
+that $\cos(\alpha a_i) < 0$ for all $a_i$ other than 2, 3, 47, and 69.  In
+particular, thee were also the $a_i$ that showed up most frequently as
+summands in our earlier computation.  We also note that $\cos(\alpha
+a_i) < 0$ is just the condition that $\normrz{x/\lambda} < \frac14$.  
 
-So we compute which how often each $a_n$ appears as the smaller
-summand of a later $a_i$ and we compute $\cos(\alpha a_n)$ for each
-and sort by this quantity.  We note what looks like a very strong
-correlation between how often $a_n$ shows up as a summand and
-$\cos(\alpha a_n)$ in the resulting table, computed by experiment11.
-Define $S_i$ to be the number of $a_i$ such that $a_n$ is the smaller
-summand of $a_i$
+So we compute which how often each $a$ appears as the smaller summand
+of a later $a_i$ (that is, what we would call $|S_a|$ earlier) and we
+compute $a$ modulo $\lambda$ for each and sort by this quantity.  We
+note what looks like a very strong correlation between how often $a$
+shows up as a summand and $\normrz{a/\lambda}$ in the resulting table,
+computed by \icode{experiment12}: 
 
-\begin{tabular}{llll}
-$a_n$ & $S_n$ & $\cos(\alpha_{1,2}  a_n)$ & $[a_i : a_i = a_n + a_?]$\\
 
-2 & 3630 & 0.4173307 & [6, 8, 13, 18, 28, 38, 99, 177, 182, 221, 238, ...\\
-3 & 1356 & 0.1391857 & [11, 16, 72, 102, 148, 180, 209, 241, 319, 412, ...\\
-47 & 1190 & 0.0931494 & [236, 253, 356, 363, 429, 456, 544, 720, 732, ...\\
-69 & 999 & 0.0700500 & [175, 258, 451, 483, 566, 820, 1018, 1052, 1101, ...\\
-102 & 836 & -0.0353342 & [282, 441, 502, 585, 624, 646, 668, 949, 1125, ...\\
-339 & 589 & -0.071198 & [695, 739, 751, 861, 905, 1186, 1230, 1770, 1853, ...\\
-36 & 465 & -0.1046811 & [138, 309, 602, 927, 1191, 1550, 1682, 2090, 2288, ...\\
-273 & 305 & -0.140326 & [612, 673, 685, 1164, 1296, 1308, 1428, 1660, 1765, ...\\
-8 & 181 & -0.1506519 & [26, 36, 77, 114, 197, 324, 390, 991, 1470, 1602, ...\\
-2581 & 85 & -0.2874041 & [5795, 7459, 8947, 9443, 9619, 9641, 9663, 10677, ...\\
-400 & 55 & -0.288437 & [3214, 3605, 3991, 12763, 13562, 13799, 13931, 15160, ...\\
-983 & 50 & -0.316087 & [2445, 2748, 5514, 9553, 16121, 17135, 19427, 21626, ...\\
-97 & 47 & -0.320453 & [316, 370, 497, 1252, 2581, 3622, 4057, 10366, 13628, ...\\
-356 & 21 & -0.3324957 & [983, 4118, 11226, 22676, 27817, 34104, 34969, 52789, ...\\
-1155 & 16 & -0.3466450 & [4878, 9132, 13733, 16047, 27883, 30886, 38920, 40931, ...\\
-206 & 33 & -0.3521083 & [522, 891, 1155, 1514, 2787, 4324, 9399, 11432, 20375, ...\\
-53 & 35 & -0.3640037 & [155, 409, 1208, 3038, 5049, 8421, 14945, 16648, 19480, ...\\
-1308 & 18 & -0.369428 & [3029, 8368, 10501, 20937, 29147, 34784, 37765, 61029, ...\\
-9193 & 8 & -0.3921254 & [20419, 68914, 74099, 83323, 92073, 108317, 123718, 124864]\\
-10831 & 4 & -0.427570 & [31878, 56503, 89101, 126493]\\
-13 & 6 & -0.427833 & [82, 219, 273, 19642, 59734, 91748]\\
-14892 & 2 & -0.4327025 & [41620, 84500]\\
-13531 & 3 & -0.437951 & [47279, 61451, 83139]\\
-23883 & 2 & -0.440936 & [65740, 106394]\\
-10269 & 1 & -0.446345 & [44816]\\
-8368 & 1 & -0.449499 & [20968]\\
-20643 & 0 & -0.4532970 & []\\
-316 & 5 & -0.457968 & [2897, 9509, 37809, 44377, 45132]\\
-30315 & 1 & -0.460326 & [64928]\\
-3205 & 1 & -0.4609725 & [89057]\\
-56437 & 0 & -0.462393 & []\\
-4118 & 0 & -0.4642290 & []\\
-10247 & 0 & -0.4669642 & []\\
-3038 & 2 & -0.468304 & [7156, 95616]\\
-57 & 3 & -0.4692568 & [126, 339, 9250]\\
-483 & 1 & -0.471289 & [80891]\\
-60665 & 0 & -0.471907 & []\\
-63646 & 0 & -0.4728583 & []\\
-39912 & 1 & -0.473267 & [128969]\\
-1023 & 3 & -0.4733195 & [2178, 20643, 65705]\\
-69608 & 0 & -0.474758 & []\\
-47920 & 0 & -0.475271 & []\\
-123683 & 0 & -0.4762679 & []\\
-33274 & 1 & -0.4817218 & [97956]\\
-11586 & 0 & -0.482232 & []\\
-75706 & 0 & -0.48225 & []\\
-128969 & 0 & -0.4825153 & []\\
-3723 & 1 & -0.483432 & [34038]\\
-39653 & 1 & -0.48445 & [84469]\\
-42217 & 0 & -0.48455 & []
+\begin{tabular}{|lll|}
+\hline
+  $a$ (with $|S_a| > 10$) & $|S_a|$ & $\normrz{a/\lambda}$
+  \csvreader{datafiles/small_summands.csv}{}
+  {\\\csvcoli & \csvcolii & \csvcoliii}
+\\\hline
 \end{tabular}
-
-If nothing else, this might suggest to us how to compute more $a_n$ more
-quickly: Rather than searching previous summands in order, search in
-the order given by using $\cos(\alpha a_n)$ as the index.  Once we find a
-sum that is unique, we only have to search all smaller sums, again in
-this order.  
 
 \subsubsection{Distribution of complements}
 In the cases Steinerberger looks at, the resulting non-uniform
-distributions consist usually of multiple peaks.  In the case of the
-1,2 Ulam sequence one of these peaks looks a little misshapen, so we
+distributions consist usually of multiple peaks.  In the case of
+$\ulam{1}{2}$, one of these peaks looks a little misshapen, so we
 might reasonably wonder what each of these peaks actually is.
 
 To get a handle on this, we take the Ulam sequence mod 5422, and
@@ -2839,11 +2839,13 @@ distribution we've come to expect:
 
 \includegraphics[scale=0.5]{../figs/u1_2_mod5422.png}
 
-Supposing we look instead only at $a_n$'s for which 2, say is a summand.  Then we get this nice picture:
+Supposing we look instead only at $a_n$'s for which 2, say is a
+summand--that is, the distribution of $S_2$.  Then we get this nice
+picture:
 
 \includegraphics[scale=0.5]{../figs/summands2.png}
 
-Likewise for 47:
+Likewise for $S_{47}$:
 
 \includegraphics[scale=0.5]{../figs/summands47.png}
 
@@ -2863,9 +2865,9 @@ parameters of each, starting with the means.  We do this with a crunchy bash scr
   % +=$2} END {print x}')|bc -l);  echo -e "$y\t$(((y*2219)%5422))\t$z"; done|sort -n -k 2
 
 
-Which outputs the summand $a_i$, the quantity $2219*a_i mod 5422$,
-and the calculated mean of the distribution of $2219*a_n mod 5422$ for
-which $a_i$ is a summand, we get:
+Which outputs the summand $a$, the quantity $2219 a \mod {5422}$, and
+the calculated mean of the distribution of $2219 a_n \mod{5422}$ for
+all $a_n$ for which $a$ is a summand, we get:
 
 \begin{tabular}{lll}
 3	&1235	&3241.07886089813800657174\\
@@ -2901,62 +2903,14 @@ entries (those on the right end of the distribution).  Likewise, those
 on the left end (rows 12-25) seem to have a similar pattern.
 
 One possible source for this is that the distribution we're taking the
-mean of in the first row, say, is of $2219*a_n mod 5422$ where 3 is a
-summand of $a_n$ in the Ulam sequence.  Since 3 is a summand of $a_n$ in
-the sequence, we might instead look at the other summand of $a_n$,
-i.e. $a_n - 3$.  This would lead to us not plotting $2219*a_n mod 5422$,
-but rather $2219*(a_n-3) mod 5422$.  We can compute these quickly with
-another crunchy bash script [appendix A code 2]
-
-And if we plot these, we get: 
+mean of in the first row, say, is of $2219 a_n \mod{5422}$ where 3 is
+a summand of $a_n$ in the Ulam sequence.  Since 3 is a summand of
+$a_n$ in the sequence, we might instead look at the other summand of
+$a_n$, i.e. $a_n - 3$.  This would lead to us not plotting
+$2219a_n \mod {5422}$, but rather $2219(a_n-3) \mod{5422}$.  We can
+compute these quickly and if we plot these, we get: 
 
 \includegraphics[scale=0.5]{../figs/shifted_summands_mod_5422.png}
-
-That's more like it.  Running the same mean computation as above on this, we get:
-
-\begin{tabular}{lll}
-3    		&1235	&2006.0788\\
-47   		&1275	&2013.0071\\
-69   		&1295	&2005.9454\\
-8    		&1486	&1945.5554\\
-2581 		&1607	&1878.8789\\
-983  		&1633	&1870.2807\\
-206  		&1666	&1852.4758\\
-1308 		&1682	&1843.9567\\
-9193 		&1703	&1838.3522\\
-13   		&1737	&1814.5918\\
-23883		&1749	&1823.5333\\
-30315		&3653	&3587.7000\\
-13531		&3675	&3574.6000\\
-14892		&3680	&3575.3636\\
-10831		&3685	&3582.6296\\
-53  		&3745	&3549.4139\\
-1155 		&3761	&3544.3774\\
-356  		&3774	&3526.8508\\
-97   		&3785	&3528.2974\\
-400  		&3814	&3520.7858\\
-273  		&3945	&3461.7919\\
-36   		&3976	&3441.7082\\
-339  		&4005	&3430.3337\\
-102  		&4036	&3413.2990\\
-2    		&4438	&3303.2424\\
-\end{tabular}
-
-We note also that the picture kind of suggests a binomial distribution
-because of the variance that appears to grow as the mean gets closer
-to the middle.
-
-Indulging this hypothesis for just a moment, the actual graph (say for
-$a_i = 2$ specifically), is measuting "for each congruence class, how
-many complements of 2 in the sequence are in that congruence class?"
-The idea that this graph is a binomial distribution would be saying
-that we can perform 5422 independent trials (say one for each
-congruence class?)  with identical success probabilities (one possible
-such test is pick randomly from the 100000 $a_n$s in that congruence
-class and ask whether 2 is ever a complement of that $a_n$), and the
-proportion of times 2 shows up as a complement of k is equal to the
-proportion of times we get exactly k successes in our trials.
-}
 
 \subsection{Density}
 
@@ -3276,6 +3230,8 @@ Circle method gets better with more variables.  For this reason, we
 might find it convenient to 
 
 \subsubsection{Probabilistic versions}
+
+\subsection{More questions}
 
 }
 

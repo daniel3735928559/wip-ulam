@@ -337,7 +337,7 @@ def experiment8():
 
 def experiment9():
     """Compute density for various sequences"""
-    for s in ldata:
+    for s in data:
         print(s)
         l = data[s]["seq"]
         n = len(l)
@@ -346,6 +346,23 @@ def experiment9():
             n //= 10
     
 def experiment10():
+    """Compute non-sums for various sequences"""
+    for s in ["u1_2","u1_3","u1_9","u2_3"]:
+        l = data[s]["seq"][:10000]
+        m,k = data[s]["lambda_s"]
+        ss = set(l)
+        nonsums = {x:0 for x in range(m)}
+        for x in range(l[-1]):
+            for y in l:
+                if x-y in ss:
+                    break
+                elif y >= x/2:
+                    nonsums[(k*x)%m] += 1
+                    break
+        for x in range(m):
+            print(s,x,nonsums[x])
+    
+def experiment10_old():
     n = 1000
     t1 = time.time()
     l = extend_lambda([1,2],lambda1_2[0],lambda1_2[1],n)
@@ -437,31 +454,36 @@ def experiment11_old(l,a):
         print("{} {} {} {} {}".format(x,len(s[x]), abs(a*x-2*math.pi*math.floor(a*x/(2*math.pi))-math.pi), math.cos(a * x), s[x]))
     return 
 
-def experiment12(l,a):
-    """Compute how often each element x of l occurs as any summand and compare with cos(a*x)"""
-    s = {x : [] for x in l}
-    for i in range(2,len(l)):
-        for j in range(i):
-            if(l[i] - l[j] in s):
-                s[l[j]].append(l[i])
-                s[l[i] - l[j]].append(l[i])
-                break
-    for x in s:
-        print("{} {} {} {}".format(x,len(s[x]), math.cos(a * x), s[x]))
-    return s
+def experiment12():
+    """Compute how often each element x of l occurs as any summand and compare with x mod lambda"""
+    for d in ["u1_2"]:
+        l = data[d]["seq"][:10000]
+        a = data[d]["alpha"]
+        lam = 2*math.pi/a
+        s = {x : [] for x in l}
+        for i in range(2,len(l)):
+            for j in range(i):
+                if(l[i] - l[j] in s):
+                    s[l[j]].append(l[i])
+                    s[l[i] - l[j]].append(l[i])
+                    break
+        for x in s:
+            r = real_mod(x/lam,1)
+            if r > .5:
+                r = 1-r
+            print("{} {} {}".format(x,len(s[x]), r))
 
-def experiment13(l):
+def experiment13():
     """For each x in l, compute how far from x the large summand of x is"""
-    s = {l[i] : i for i in range(len(l))}
-    ans = []
-    for i in range(2,len(l)):
-        for j in range(i):
-            if(l[i] - l[j] in s):
-                ans.append((l[j],l[i] - l[j],j,i-(s[l[i] - l[j]]),l[i]-l[i-1]))
-                break
-    for i in range(len(ans)):
-        print("{} \t{} \t{} \t{} \t{} \t{}".format(i+2,l[i],ans[i][0],ans[i][2],ans[i][3],ans[i][4]))
-    return s
+    for d in ["u1_2"]:
+        l = data[d]["seq"][:10000]
+        s = {l[i] : i for i in range(len(l))}
+        ans = []
+        for i in range(2,len(l)):
+            for j in range(i):
+                if(l[i] - l[j] in s):
+                    print(l[i], l[j], j+1, i-(s[l[i] - l[j]]))
+                    break
 
 def experiment14(l,a,k,m):
     """
