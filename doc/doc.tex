@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass{report}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amsthm,amssymb,graphicx,setspace,mathrsfs,mathstyle,listings,color}
 \usepackage{csvsimple}
@@ -18,8 +18,8 @@
 \newtheorem{question}[theorem]{Question}
 \newtheorem{corollary}{Corollary}[theorem]
 
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}
+%\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
 \newtheorem{example}{Example}
 
 \theoremstyle{remark}
@@ -61,6 +61,8 @@
 \maketitle
 
 \tableofcontents
+
+%%%%%%STARTDOC
 
 \section{Introduction}
 
@@ -1196,9 +1198,9 @@ and related sequences, and the various phenomena that we observe
 around them.  In addition, we shall give definitions in this section
 to allow us to formulate our questions precisely.
 
-\subsection{Ulam numbers and other 1-additive sequences}
+\subsection{Ulam sequences}
 
-\begin{definition}\label{def:ulam}
+\begin{definition}
   The \textbf{Ulam sequence} starting with positive integers $a$, $b$
   is denoted $\ulam{a}{b}$ and is the sequence with $a_1 = a$,
   $a_2 = b$, and, for $n > 2$, $a_n > a_{n-1}$ is the integer satisfying:
@@ -3234,6 +3236,8 @@ might find it convenient to
 \subsection{More questions}
 
 }
+
+%%%%%%ENDDOC
 
 \bibliography{doc}{}
 \bibliographystyle{plain}
