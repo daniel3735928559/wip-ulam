@@ -333,9 +333,8 @@ def find_alpha_search(l,t,s,N,debug=False):
         s /= 2
     return t,L
 
-def find_alpha_fast(l,prec=10,debug=False,start=0.2,end=math.pi):
+def find_alpha_fast(l,s = 0.005,prec=10,debug=False,start=0.2,end=math.pi):
     a = 0.2
-    s = 0.005
     prec = 4
     winner = a
     curmax = 0

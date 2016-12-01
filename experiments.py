@@ -90,13 +90,20 @@ def experiment1C():
         print(a,b,alpha,f/u[-1],2*math.pi/alpha,len(u)/u[-1],f/len(u),"{} + {}i".format(*F))
 
 def experiment2():
-    """Compute alpha_{a,b} for various a,b"""
+    """Compute alpha_{s} for various s"""
     l = {"01001":sf01001,"01010":sf01010,"10010":sf10010}
     for s in l:
         A = l[s][:10000]
         alpha,f = find_alpha_fast(A,debug=False)
         F = ft_complex(alpha,A)
         print(s,alpha,f/A[-1],2*math.pi/alpha,len(A)/A[-1],f/len(A),"{} + {}i".format(*F))
+
+def experiment2A():
+    """Compute alpha_01001 for various s"""
+    A = sf01001[:20000]
+    alpha,f = find_alpha_fast(A,s=0.0025,debug=True)
+    F = ft_complex(alpha,A)
+    print(s,alpha,f/A[-1],2*math.pi/alpha,len(A)/A[-1],f/len(A),"{} + {}i".format(*F))
 
 def experiment3():
     """Compute variance of Ulam numbers mod various convergents to alpha"""
@@ -218,7 +225,7 @@ def experiment6():
 def experiment7():
     """Compute complete spectrum of A--that is, any x with |ft(A_N)(x)| > sqrt(N)"""
     N = 5000
-    for s in data:
+    for s in ["01001"]:#data:
         l = data[s]["seq"][:N]
         N = l[-1]
         spec = []
@@ -226,18 +233,29 @@ def experiment7():
         step = 10/N
         while x <= math.pi+step:
             f = ft(x,l)
-            if f > math.sqrt(N):
+            if f > math.sqrt(2*N):
+                print(s,round(x,4),f)
                 spec += [(round(x,4),f)]
             x += step
             #print("step",x)
-        for a in spec:
-            print(s,a[0],a[1])
+        #for a in spec:
+        #    print(s,a[0],a[1])
 
 def experiment7A():
+    spec_size = {
+        "01001":22,
+        "10010":4,
+        "01010":7,
+        "u1_2":11,
+        "u1_3":52,
+        "u1_4":50,
+        "u1_9":121,
+        "u2_3":24,
+    }
     """Compute k*alpha mod 2pi for various k"""
     for s in data:
         a = data[s]["alpha"]
-        for k in range(20):
+        for k in range(2*spec_size[s]):
             r = real_mod(k*a,2*math.pi)
             if r > math.pi:
                 r = 2*math.pi - r
@@ -281,6 +299,23 @@ def experiment7B():
 
 def experiment7C():
     """Compute complete spectrum of A--that is, any x with |ft(A_N)(x)| > sqrt(N)"""
+    for s in ["u1_2"]:
+        l = data[s]["seq"]
+        spec = []
+        N = l[-1]
+        x = 0
+        step = 0.0005
+        while x <= math.pi+step:
+            n = 10000
+            f = ft(x,l[:n])
+            logf = math.log(f)/math.log(l[n])
+            print(s,round(x,4),round(logf,4))
+            x += step
+        # for a in spec:
+        #     print(s,a[0],a[1])
+
+def experiment7D():
+    """asd"""
     for s in ["u1_2"]:
         l = data[s]["seq"]
         spec = []
