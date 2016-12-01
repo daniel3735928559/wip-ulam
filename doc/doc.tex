@@ -64,7 +64,7 @@
 
 %%%%%%STARTDOC
 
-\section{Introduction}
+\chapter{Introduction}
 
 The Ulam sequence is a sequence $a_n$ of positive integers that is given byu
 the folowing recursive definition: It starts with $a_1 = 1$,
@@ -226,7 +226,7 @@ these in section 3, but we give a sampling now:
   regularity that even the irregular-looking sequences do satisfy?
 \end{enumerate}
 
-\subsection{Results}
+\section{Results}
 
 In this document, we do not provide a complete explanation for the
 phenomenon, but we do focus attention on a class of sets that all
@@ -306,13 +306,13 @@ Ulam numbers have.  To this end, we propose in proposition
 \ref{prop:irr_1add} a construction that we know is not regular in the
 earlier sense, but that does have an irrational period.
 
-\section{Background}
+\chapter{Background}
 
 We will start by giving an overview of some known results that should
 lead us in the right direction.  No arguments in this section are
 original unless noted otherwise.
 
-\subsection{Fourier Transform}
+\section{Fourier Transform}
 
 The definition of the Fourier transform-like operator that seems
 experimentally to be the one that applies is the following:
@@ -380,14 +380,14 @@ If $f : \Z/N \to \C$, then:
 \end{itemize}
 \end{proposition}
 
-\subsection{Known regularity results}
+\section{Known regularity results}
 
 If we want to prove this kind of generalised regularity statement, it
 might help to understand existing proofs of regularity (i.e. that
 consecutive differences are eventually periodic).  We discuss two such
 results in this section.
 
-\subsubsection{Finch's criterion for regularity}
+\subsection{Finch's criterion for regularity}
 
 In \cite{finch:em1992}, Finch proves:
 
@@ -464,7 +464,7 @@ list of $(a,b)$ with $U(a,b)$ regular:
 In particular the conjecture implies that all of these sequences are
 regular, although it may not be the complete list of regular $U(a,b)$.
 
-\subsubsection{Regularity of $U(2,2n+3)$}
+\subsection{Regularity of $U(2,2n+3)$}
 
 Using the above criterion, Schmerl and Speigel in
 \cite{schmerl:jct1994} prove: regularity for the 1-additive sets
@@ -571,7 +571,7 @@ of these sets has finitely many evens.  Specifically:
 
   \end{proof}
 
-\subsection{Sum-free sets}
+\section{Sum-free sets}
 
 The set of Ulam numbers $A$ has the property that for each $a \in A$,
 there is exactly one solution to $x+y=a$ with $x < y$ in $A$.  The
@@ -627,7 +627,7 @@ When we think about generalising the particular notion of
 sum-free sets, the basic idea is that a set should be ``regular'' if
 it has some correlation with a set of the form in example 3.
 
-\subsubsection{Decision sequences}
+\subsection{Decision sequences}
 
 It turns out there is a construction that bijects sum-free sets of
 positive integers with infinite binary sequences.  In words, the
@@ -718,7 +718,7 @@ Nevertheless, there is no known example of an ultimately periodic
 decision sequence for which we can prove its corresponding sum-free
 set is non-regular.
 
-\subsubsection{Density and regularity}
+\subsection{Density and regularity}
 
 We start with the observation that if $A$ is a sum-free set and
 $a \in A$, then $A$ and $A+a$ are disjoint sets of integers.  This
@@ -900,7 +900,7 @@ elements), this is again bounded by $\frac25$ in the limit, so the
 claimed bound follows.
 \end{proof}
 
-\subsubsection{Aperiodic sum-free sets}
+\subsection{Aperiodic sum-free sets}
 
 A construction of Erdos in \cite{erdos:spm1965} supplies an
 example of a sum-free set with density $\frac13$ that has no
@@ -922,7 +922,7 @@ $\alpha$, meaning that $mn+k \in A_\alpha$ as desired.
 
 %{\color{red}
 
-%\subsection{Abelian arithmetic regularity}
+%\section{Abelian arithmetic regularity}
 
 % If $A$ is any set, then an easy probablistic argument shows that there
 % is a sum-free subset of $A$ of size $|A|/3$.  Indeed, if for any real $\alpha$,
@@ -953,7 +953,7 @@ $\alpha$, meaning that $mn+k \in A_\alpha$ as desired.
 
 %}
 
-\subsection{Roth's theorem}
+\section{Roth's theorem}
 
 Roth's theorem is about the number 3-term arithmetic progressions
 $x, y, z$ in a set $A \subseteq \Z^+$.  Specifically: 
@@ -982,7 +982,7 @@ proofs.  We will not give the complete proofs in either case, but will
 simply work through the steps that we shall return to later and
 outline the rest.
 
-\subsubsection{Density increment proof}
+\subsection{Density increment proof}
 
 Proofs of Roth's theorem often work with a finitary version of the
 statement, which we make now:
@@ -1077,7 +1077,7 @@ in many places, for example \cite{roth:jlm1953}.
 
 % {\color{red}
 
-% \subsubsection{Proof via the regularity theorem}
+% \subsection{Proof via the regularity theorem}
 
 % The density increment proof exemplifies a kind of dichootomy between
 % structure and randomness in its two cases: Where $A$ behaves
@@ -1112,10 +1112,10 @@ in many places, for example \cite{roth:jlm1953}.
 %   $\epsilon$.  .
 % \end{proof}
 
-% %\subsection{Green's arithmetic triangle removal theorem}
+% %\section{Green's arithmetic triangle removal theorem}
 % }
 
-\subsection{Quantitative bounds in finite fields}
+\section{Quantitative bounds in finite fields}
 
 There have been several recent developments in a finite field setting
 on analogous problems (specifically, the work of Croot, Lev, and Pach
@@ -1190,7 +1190,7 @@ $\FF_q^n$ such that the equation $\alpha a_1 + \beta a_2 + \gamma a_3
   paper for details.
 \end{proof}
 
-\section{Questions and Definitions}
+\chapter{Questions and Definitions}
 
 Bearing in mind this landscape of ideas, theorems, and techniques, we
 now raise some questions in the particular context of the Ulam numbers
@@ -1198,7 +1198,7 @@ and related sequences, and the various phenomena that we observe
 around them.  In addition, we shall give definitions in this section
 to allow us to formulate our questions precisely.
 
-\subsection{Ulam sequences}
+\section{Ulam sequences}
 
 \begin{definition}
   The \textbf{Ulam sequence} starting with positive integers $a$, $b$
@@ -1318,7 +1318,7 @@ ask somewhat broadly about this also:
   knowledge of the spectrum alone?
 \end{question}
 
-\subsection{Sum-free sets}
+\section{Sum-free sets}
 
 We start noting the same dichotomy that existed with 1-additive sets
 seems present for sum-free sets as well: Many sum-free sets with
@@ -1400,9 +1400,9 @@ under consideration.
   density of $A$?  
 \end{question}
 
-\section{Strategy}
+\chapter{Strategy}
 
-\subsection{Overview}
+\section{Overview}
 
 In this document we shall unfortunately not answer all these
 questions, nor supply a complete understanding of the observed
@@ -1428,7 +1428,7 @@ Of this programme, we will provide results in the direction of steps 1
 and 4, and computational and heuristic evidence in favour of the
 others.
 
-\subsection{Outline}
+\section{Outline}
 
 Before we embark on this journey, we provide a little fuller picture
 of what we intend to actually do towards each of the steps and in the
@@ -1512,7 +1512,7 @@ remainder of this document:
   \end{enumerate}
 \end{enumerate}
 
-\subsection{About the computations}
+\section{About the computations}
 
 When we refer to computations done by computer, we will mention the
 code that was use to execute them by referring to various programs in
@@ -1524,12 +1524,12 @@ repository.  Sometimes we will refer to code in other files as well
 from the same repository, and will mention where the code in question
 is located in each case.
 
-\section{Spectrum}
+\chapter{Spectrum}
 
 The first three steps of our strategy are about understanding the
 Fourier spectrum of the various \relevant sets under consideration.
 
-\subsection{Large Fourier coefficient}
+\section{Large Fourier coefficient}
 
 The initial observation of \cite{steinerberger:preprint} is that the
 Fourier transform of the indicator function of $U(1,2)$ has takes a
@@ -1540,7 +1540,7 @@ correlated with $t+\frac{2\pi}{\alpha} k$ being in $A$ for various
 integer $k$.  In other words, $\lambda = \frac{2\pi}{\alpha}$ behaves
 somewhat like a period for $A$.
 
-\subsubsection{Computing $\alpha$}
+\subsection{Computing $\alpha$}
 
 We will start by computing this period for several $U(a,b)$ which are
 not believed to be regular by virtue of having only finitely many even
@@ -1604,7 +1604,7 @@ $s$ & $\alpha_{s}$ & $\lambda_{s}$ & $|\widehat{1_s}(\alpha_{s})|$ &
 \\\hline
 \end{tabular}
 
-\subsubsection{Is $\lambda$ rational?  Algebraic?}
+\subsection{Is $\lambda$ rational?  Algebraic?}
 
 As mentioned earlier, the existence of a large Fourier coefficient
 $\alpha$ for one of these sets $A$ sugggests some kind of pattern or
@@ -1763,7 +1763,7 @@ to be a good candidate for minimal polynomial.
 In particular, there is no indication that any of these $\lambda$ has
 small degree, if it is algebraic at all.
 
-\subsubsection{Existence of $\alpha$}
+\subsection{Existence of $\alpha$}
 
 The common thread with all these \relevant sets is that they have few
 solutions to $x+y=z$ in them.  As we talk about why this gives us
@@ -2054,7 +2054,7 @@ Some remarks:
   above, but is growing, albeit sort of slowly and non-uniformly).
 \end{remark}
 
-\subsection{The complete spectrum of $A$}
+\section{The complete spectrum of $A$}
 
 Knowing that the spectrum of $A$ has some nonzero $\alpha$, this
 suggests at least that $\widehat{A}(n\alpha)$ would also be nonzero
@@ -2066,7 +2066,7 @@ $x \in \R/\Z$ with $\widehat{A}(x) \neq 0$ has measure zero.  We have
 found one such set of $x$, namely $\alpha\Z$.  We now investigate
 whether for our particular \relevant sets there are any others.
 
-\subsubsection{Spectral complexity}
+\subsection{Spectral complexity}
 
 There are two pieces of computational evidence that suggest that the
 spectrum of $\ulam{1}{2}$ should consist only of $\alpha\Z$: First, we
@@ -2081,9 +2081,12 @@ various $\theta(s)$ and $\ulam{2}{3}$ and $\ulam{1}{3}$:
 
 {\color{red}[COMPUTATIONS]}
 
-Secondly, Plancherel tells us that 
+Secondly, Plancherel tells us that over $x \in \frac1{N}\Z/\Z$, the
+average value of
 
-{\color{red}[COMPUTATIONS]}
+\[\left|\sum_{t=0}^{N-1} f(t) e(-2\pi xt)\right|\]
+
+will be around $\sqrt{N}$, so the fact that in this case some entry 
 
 We should point out, however, that simply being \relevant is not enough
 to guarantee the spectrum is of the form $\alpha\Z$ only.  For
@@ -2094,7 +2097,7 @@ e.g., $A$ is certainly sumfree, however it will not be equidistributed
 modulo either $\frac{2\pi}{\alpha}$ or $\frac{2\pi}{\beta}$, giving it
 nonzero Fourier coefficients on $\alpha\Z$ and on $\beta\Z$.  
 
-\subsubsection{Decay of Fourier coefficients}
+\subsection{Decay of Fourier coefficients}
 
 Recall from the background section our intuition on why smoother
 functions have better decay in their Fourier coefficients: The Fourier
@@ -2183,7 +2186,7 @@ bounded by 4.
 
 {\color{red}[COMPUTATIONS]}
 
-\section{Distribution}
+\chapter{Distribution}
 
 As we have remarked before, a sequence $A$ having a large Fourier
 coefficient at $\alpha$ suggests $A$ should not be equidistributed
@@ -2204,7 +2207,7 @@ In this section, we will examine how what we have learned about the
 spectrum might control various features about the corresponding
 distributions.
 
-\subsection{Distrubution of $r_{A+A}$}
+\section{Distrubution of $r_{A+A}$}
 
 The first observation is that the common feature of the \relevant sets
 is that being in $x$ being in such a set $A$ is a function of how many
@@ -2388,7 +2391,7 @@ close to zero, that this is large (since it would be dominated by the
 first two terms), or that when $x$ is close to $\frac{m}{2}$, this
 should be small since it is an alternating sum.
 
-\subsection{Distrubution mod $\lambda$}
+\section{Distrubution mod $\lambda$}
 
 As mentioned, the distributions of various $U(a,b)$ and $\theta(s)$
 modulo their respective $\lambda$ values. are non-uniform, and seem to
@@ -2446,7 +2449,7 @@ $\normrz{x/\lambda} \geq \frac13$.  Likewise, an interval, (say of
 radius $\eta$) around zero (mod $\lambda$) is expressed by the
 condition $\normrz{x/\lambda} < \eta$.  
 
-\subsubsection{No elements close to 0 mod $\lambda$}
+\subsection{No elements close to 0 mod $\lambda$}
 
 So we move first, as promised, to investigate why it appears that
 there are no elements of $A$ close to integer multiples of $\lambda$.
@@ -2604,11 +2607,11 @@ section 7.
 % necessarily has many representations and is therefore disqualified
 % from being an Ulam number for that reason.  
 
-% \subsubsection{Few Ulam numbers outside middle third mod $\lambda$}
+% \subsection{Few Ulam numbers outside middle third mod $\lambda$}
 
 % A conjecture of Gibbs states...
 
-\subsubsection{Numbers that are not sums of Ulam numbers close to middle mod $\lambda$}
+\subsection{Numbers that are not sums of Ulam numbers close to middle mod $\lambda$}
 
 Another behaviour suggested by the distribution of $r_{A+A}$ concerns
 non-Ulam numbers, and specifically numbers $x$ that fail to be Ulam
@@ -2652,7 +2655,7 @@ $\ulam{1}{9}$ & 58114 & 7859\\
 $\ulam{2}{3}$ & 108466 & 23052\\\hline
 \end{tabular}
 
-\subsection{Non-uniformity/Regularity}
+\section{Non-uniformity/Regularity}
 
 % \begin{definition}$A \subseteq \N$ is
 %   \textbf{$\epsilon, \beta$-regular} if there is a subset
@@ -2744,12 +2747,12 @@ about regular such sequences:
   is the quotient map, as desired.
 \end{proof}
 
-\section{Structure of $\ulam{1}{2}$}
+\chapter{Structure of $\ulam{1}{2}$}
 
 We now turn specifically to $A = \ulam{1}{2}$, the sequence we started
 with.  
 
-\subsection{Distribution of summands}
+\section{Distribution of summands}
 
 We know that each element $a_n \in A$ is a sum $a_i + a_j$ of smaller elements
 with $a_i < a_j$.  This gives us much structure to play with: 
@@ -2770,7 +2773,7 @@ with $a_i < a_j$.  This gives us much structure to play with:
   2s in this factorisation.  
 \end{itemize}
 
-\subsubsection{Distribution of large summands}
+\subsection{Distribution of large summands}
 We note first that if 2 or 3 is the small summand of $a_{n+1}$, then
 the large summand is necesarily $a_n$ (if 2 is the small summand and
 $a_n$ is not the large summand, then $a_{n+1}$ would be $a_n + 1$
@@ -2804,7 +2807,7 @@ that technically, to compute the first 10000 Ulam numbers, we only
 have to check 312 possibilities for each if we knew which
 possibilities to check ahead of time.  
 
-\subsubsection{Distribution of small summands}
+\subsection{Distribution of small summands}
 
 We note with interest the observation in the abstract of Steinerberger
 that $\cos(\alpha a_i) < 0$ for all $a_i$ other than 2, 3, 47, and 69.  In
@@ -2828,7 +2831,7 @@ computed by \icode{experiment12}:
 \\\hline
 \end{tabular}
 
-\subsubsection{Distribution of complements}
+\subsection{Distribution of complements}
 In the cases Steinerberger looks at, the resulting non-uniform
 distributions consist usually of multiple peaks.  In the case of
 $\ulam{1}{2}$, one of these peaks looks a little misshapen, so we
@@ -2914,7 +2917,7 @@ compute these quickly and if we plot these, we get:
 
 \includegraphics[scale=0.5]{../figs/shifted_summands_mod_5422.png}
 
-\subsection{Density}
+\section{Density}
 
 One simple element of structure that we might hope to deduce from all
 of this is some kind of positive density result for sum-free and Ulam
@@ -2936,7 +2939,7 @@ understanding of its distribution, rather than vice-versa.
 The first question is to attempt to compute the density of the various
 sum-free sets and Ulam sequences that we are studying.  
 
-\subsubsection{Computations}
+\subsection{Computations}
 
 The prescribed method for computing sum-free sets from a decision
 sequence is already decently fast, provided we keep track of the data
@@ -3001,7 +3004,7 @@ estimates for the densities of these sets:
 
 {\color{red}[COMPUTATIONS]}
 
-\subsubsection{Constructions}
+\subsection{Constructions}
 
 Another line of thought is to note that that the Ulam numbers are, in
 some sense, as greedy as possible in their definition.  And while, for
@@ -3181,7 +3184,7 @@ The following construction, we believe should work:
   the ball back onto the table.  
 \end{proof}
 
-\subsubsection{Conjectures}
+\subsection{Conjectures}
 
 Recall that sum-free sets of positive integers correspond bijectively
 with binary ``decision'' sequences.  We know also that there are many
@@ -3212,28 +3215,28 @@ greediness of the Ulam sequence suggests for us the conjecture:
 
 {\color{red}
 
-\section{Future Directions}
+\chapter{Future Directions}
 
-\subsection{Reducing 1-additive sets to sum-free sets}
+\section{Reducing 1-additive sets to sum-free sets}
 
-\subsubsection{Via triangle removal}
+\subsection{Via triangle removal}
 
-\subsection{Technology}
+\section{Technology}
 
-\subsubsection{Arithmetic regularity}
+\subsection{Arithmetic regularity}
 
-\subsubsection{Ultralimits}
+\subsection{Ultralimits}
 
-\subsection{Variants of the Ulam problem}
-\subsubsection{Larger seed sets}
-\subsubsection{Sums of more than two previous elements}
+\section{Variants of the Ulam problem}
+\subsection{Larger seed sets}
+\subsection{Sums of more than two previous elements}
 
 Circle method gets better with more variables.  For this reason, we
 might find it convenient to 
 
-\subsubsection{Probabilistic versions}
+\subsection{Probabilistic versions}
 
-\subsection{More questions}
+\section{More questions}
 
 }
 

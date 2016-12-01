@@ -280,6 +280,18 @@ def ft(a,l):
     ss = sum([math.sin(a*x) for x in l])
     return math.sqrt(cs*cs+ss*ss)
 
+def fts(a,l,s,n):
+    cs = 0
+    ss = 0
+    ans = []
+    for i in range(n):
+        for j in range(s):
+            k = s*i+j
+            cs += math.cos(a*l[k])
+            ss += math.sin(a*l[k])
+        ans += [(l[(i+1)*s],cs*cs+ss*ss)]
+    return ans
+
 def ft_complex_2pi(t,l,N):
     d=len(l)/N
     cs = sum([math.cos(2*math.pi*t*x/N) for x in l])

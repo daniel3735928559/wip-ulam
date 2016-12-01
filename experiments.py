@@ -166,7 +166,7 @@ def experiment4():
                 w *= 1/2
             print(s,N,k)
             N = math.floor(N * 1.5)
-        
+
 def experiment4A():
     """Compute i*ft(A)(alpha*i) for increasing i"""
     l = u1_2[:1000000]
@@ -217,17 +217,19 @@ def experiment6():
 
 def experiment7():
     """Compute complete spectrum of A--that is, any x with |ft(A_N)(x)| > sqrt(N)"""
+    N = 5000
     for s in data:
-        l = data[s]["seq"][:5000]
+        l = data[s]["seq"][:N]
         N = l[-1]
         spec = []
         x = 0
-        step = 0.0005
+        step = 10/N
         while x <= math.pi+step:
             f = ft(x,l)
             if f > math.sqrt(N):
                 spec += [(round(x,4),f)]
             x += step
+            #print("step",x)
         for a in spec:
             print(s,a[0],a[1])
 
@@ -277,6 +279,24 @@ def experiment7B():
             Rm_avg = sum(errs)/len(errs)
             print(s,m,round(Rm_avg,3),round(Rm_max,3), round(Rm_avg/m,7))
 
+def experiment7C():
+    """Compute complete spectrum of A--that is, any x with |ft(A_N)(x)| > sqrt(N)"""
+    for s in ["u1_2"]:
+        l = data[s]["seq"]
+        spec = []
+        N = l[-1]
+        x = 0
+        step = 0.0005
+        while x <= math.pi+step:
+            n = 10000
+            f = ft(x,l[:n])
+            logf = math.log(f)/math.log(l[n])
+            print(s,round(x,4),round(logf,4))
+            x += step
+        # for a in spec:
+        #     print(s,a[0],a[1])
+
+            
 def experiment7_old():
     l = u1_2[:10000]
     ll = set(l)
@@ -361,20 +381,6 @@ def experiment10():
                     break
         for x in range(m):
             print(s,x,nonsums[x])
-    
-def experiment10_old():
-    n = 1000
-    t1 = time.time()
-    l = extend_lambda([1,2],lambda1_2[0],lambda1_2[1],n)
-    t2 = time.time()
-    c,dq,ans = extend_with_storage_careful([1,2],{3},{},n)
-    t3 = time.time()
-    
-    for x in l:
-        print(x)
-    for x in ans:
-        print(x)
-    print(t2-t1,t3-t2)
 
 def experiment11():
     l = u1_2[:10000]
@@ -409,50 +415,6 @@ def experiment11():
         if r > 1/2:
             r = 1 - r
         print(y,p,r,p+3*r,q1,q2)
-    
-def experiment80(l):
-    """Compute the summands of each element of l"""
-    s = {x : (0, x) for x in l}
-    for i in range(2,len(l)):
-        for j in range(i):
-            if(l[i] - l[j] in s):
-                #s[l[j]] += 1
-                #s[l[i] - l[j]] += 1
-                s[l[i]] = (l[j], l[i] - l[j])
-                break
-    for x in s:
-        print("{} = {} + {}".format(x,s[x][0],s[x][1]))
-
-def experiment90(l,m):
-    """Compute how many times a_n lies in each additive subgroup mod m:"""
-    s = {x:0 for x in range(1,m+1) if m%x == 0}
-    for i in l:
-        s[gcd(i,m)] += 1
-    gcds = phid(m)
-    for x in s:
-        print("{} : {} =? {}".format(x,s[x],int((len(l)/m)*len([t for t in gcds if t[1] == x]))))
-
-def experiment10_old(l,k,m,N):
-    """Evolve the mod m distribution on the elements of l (multiplied by k) by selecting new summands randomly according to the existing distribution"""
-    s = {x:0 for x in range(m)}
-    for i in l:
-        s[(k*i)%m] += 1
-    ev = evolve_random(s,m,len(l),N)
-    for x in ev:
-        print("{} {}".format(x%m,ev[x]))
-    
-
-def experiment11_old(l,a):
-    """Compute how often each element x of l occurs as the small summand and compare with cos(a*x)"""
-    s = {x : [] for x in l}
-    for i in range(2,len(l)):
-        for j in range(i):
-            if(l[i] - l[j] in s):
-                s[l[j]].append(i)
-                break
-    for x in s:
-        print("{} {} {} {} {}".format(x,len(s[x]), abs(a*x-2*math.pi*math.floor(a*x/(2*math.pi))-math.pi), math.cos(a * x), s[x]))
-    return 
 
 def experiment12():
     """Compute how often each element x of l occurs as any summand and compare with x mod lambda"""
@@ -473,19 +435,7 @@ def experiment12():
                 r = 1-r
             print("{} {} {}".format(x,len(s[x]), r))
 
-def experiment13():
-    """For each x in l, compute how far from x the large summand of x is"""
-    for d in ["u1_2"]:
-        l = data[d]["seq"][:10000]
-        s = {l[i] : i for i in range(len(l))}
-        ans = []
-        for i in range(2,len(l)):
-            for j in range(i):
-                if(l[i] - l[j] in s):
-                    print(l[i], l[j], j+1, i-(s[l[i] - l[j]]))
-                    break
-
-def experiment14(l,a,k,m):
+def experiment14A(l,a,k,m):
     """
     For each x in l, create a histogram of all values mod alpha for
     which x shows up as a summand (only for xs that show up as a
@@ -504,17 +454,28 @@ def experiment14(l,a,k,m):
         for i in s[x]:
             lm[(k*l[i])%m]+=1
         print("{} \t{} \t{} \t{} \t{} \t{}".format(x,len(s[x]), a*x-2*math.pi*math.floor(a*x/(2*math.pi)), math.cos(a * x), (k*x)%m, lm))
-    return 
+    return
 
+def experiment14B(l):
+    """Compute the summands of each element of l"""
+    s = {x : (0, x) for x in l}
+    for i in range(2,len(l)):
+        for j in range(i):
+            if(l[i] - l[j] in s):
+                #s[l[j]] += 1
+                #s[l[i] - l[j]] += 1
+                s[l[i]] = (l[j], l[i] - l[j])
+                break
+    for x in s:
+        print("{} = {} + {}".format(x,s[x][0],s[x][1]))
 
-def experiment15(l,k,m):
+def experiment14C(l,k,m):
     """Compute a histogram of values of a_i mod lambda"""
     cs = [0 for i in range(m)]
     for x in l:
         cs[(k*x) % m] += 1
     print(cs)
     return cs
-
 
 def experiment16(l):
     """
