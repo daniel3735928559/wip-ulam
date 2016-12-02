@@ -160,18 +160,25 @@ def experiment4():
         l = data[s]["seq"][:100000]
         a = data[s]["alpha"]
         N = 100
+        k_prev = 0
         while N < len(l):
             f = 0
             k = N
             w = N/2
             while(w > 10):
-                f = max([j*ft(j*a,l[:N])/l[N] for j in range(k-20,k+20)])
+                f = max([j*ft(j*a,l[:N])/l[N] for j in range(k-10,k+10)])
                 #print(k,f)
                 if f > 4: k -= w
                 else: k += w
                 k = math.floor(k+0.5)
                 w *= 1/2
-            print(s,N,k)
+            x = k+10
+            for j in range(k_prev-20,x+10):
+                if(j*ft(j*a,l[:N])/l[N] > 4):
+                    k = j
+                    break
+            k_prev = k
+            print(s,l[N],k)
             N = math.floor(N * 1.5)
 
 def experiment4A():

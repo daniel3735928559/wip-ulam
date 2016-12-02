@@ -1,8 +1,7 @@
 \documentclass{report}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amsthm,amssymb,graphicx,setspace,mathrsfs,mathstyle,listings,color}
-\usepackage{csvsimple}
-\usepackage{pbox}
+\usepackage{csvsimple,longtable}
 %\topmargin 0in
 %\headheight 0in
 %\headsep .2in
@@ -166,8 +165,12 @@ $\widehat{1_A}(\alpha) \approx 0.8 \delta$, and for $k \in \Z$,
 $\widehat{1_A}(k \alpha)$ is also some non-zero value that shrinks
 with $k$.  For example, for $N = 100000$, we compute this for a few
 values of $k$ (noting that of course the values for $-k$ are just the
-conjugates of these:
+conjugates of these).  The output is in table
+\ref{tab:intro_fourier_coeffs}.
 
+\begin{table}
+\caption{Fourier coefficients of $\ulam{1}{2}$}\label{tab:intro_fourier_coeffs}
+\begin{center}
 \begin{tabular}{|l|l|}
 \hline
   $k$ & $\widehat{A}(k\alpha)$
@@ -175,6 +178,8 @@ conjugates of these:
   {\\\csvcoli & \csvcolii}
 \\\hline
 \end{tabular}
+\end{center}
+\end{table}
 
 and as $N$ gets large, it appears that
 $\widehat{A_N}(\beta) \to 0$ as $N \to \infty$ for all other
@@ -184,9 +189,15 @@ From a signal processing perspective, this might suggest that the set
 $A$ has some periodicity mod
 $\frac {2\pi} \alpha \approx 2.443442\ldots$.  Using $5422/2219$ as a
 rational approximation to this, we can plot the distribution of $A_N$
-for, say, $N = 10^8$ modulo this number:
+for, say, $N = 10^8$ modulo this number.  This is done in figure
+\ref{fig:intro_dist}.  
 
+\begin{figure}
+\caption{Distribution of $A$ modulo $\frac{2\pi}{\alpha}$}\label{fig:intro_dist}
+\begin{center}
 \includegraphics[scale=0.5]{../figs/u1_2_mod5422.png}
+\end{center}
+\end{figure}
 
 This has some notable features: 
 
@@ -2305,14 +2316,19 @@ modulo $\lambda = \frac{2\pi}{\alpha}$.  Indeed, we have
 experimentally found large Fourier coefficients for many of the
 sequences we have considered, and if we take the distribution of these
 sequences modulo the corresponding $\lambda$ values, we get
-non-uniform, continuous-looking distributions:
+non-uniform, continuous-looking distributions as in \ref{fig:dist_sample}.
 
+\begin{figure}
+\caption{Some distribuions of $A$ mod $\lambda_A$}\label{fig:dist_sample}
+\begin{center}
 \begin{tabular}{cc}
 \begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp5_u1_2.png}
   \\ $\ulam{1}{2}$\end{tabular} &
 \begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp5_u1_4.png}
   \\ $\ulam{1}{3}$\end{tabular} \\\hline
 \end{tabular}
+\end{center}
+\end{figure}
 
 In this section, we will examine how what we have learned about the
 spectrum might control various features about the corresponding
@@ -2370,8 +2386,11 @@ can do this by taking the various congruence classes $a$ modulo
 $\lambda$ and computing the average value of $r_{A+A}(x)$ for $x$
 ranging over integers congruent to $a$ modulo $\lambda$.  Plotting
 these for the first $10^4$ terms of various sequences we get the
-plots:
+plots in figure \ref{fig:rAA}.
 
+\begin{figure}
+\caption{Plots of $r_{A+A}$ modulo $\lambda_A$ for various $A$}\label{fig:rAA}
+\begin{center}
 \begin{tabular}{cc}
 \begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_u1_2.png}
   \\ $\ulam{1}{2}$\end{tabular} &
@@ -2390,6 +2409,8 @@ plots:
 \begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp6_10010.png}
   \\ $\theta(10010)$\end{tabular} \\ \hline
 \end{tabular}
+\end{center}
+\end{figure}
 
 The general pattern here seems to be that near 0, all these
 distributions are large, and within in the middle third, they are all close
@@ -2511,8 +2532,11 @@ interval $[0,\lambda]$.  For example, if we take the first $10^4$
 elements of each sequence and take a rational approximation
 $\lambda \approx \frac{m}{k}$ and plot, for each congruence class $r$
 mod $m$ how many $a \in A$ have $ka \cong r \mod{m}$, then we get the
-following plots: 
+plots in figure \ref{fig:dists}
 
+\begin{figure}
+\caption{Distributions of various $A$ modulo $\lambda_A$}\label{fig:dists}
+\begin{center}
 \begin{tabular}{cc}
 \begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp5_u1_2.png}
   \\ $\ulam{1}{2}$\end{tabular} &
@@ -2527,6 +2551,8 @@ following plots:
 \begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp5_10010.png}
   \\ $\theta(10010)$\end{tabular} \\ \hline
 \end{tabular}
+\end{center}
+\end{figure}
 
 There are many observations to be made, among which:
 
@@ -2731,8 +2757,12 @@ $r^*_{A+A}(x) > 0$ outside the middle third suggests that all of these
 would lie within the middle third.
 
 Indeed, if we take such numbers and plot their distribution mod
-$\lambda$, as we do in \icode{experiment10}, we get:
+$\lambda$, as we do in \icode{experiment10}, we get figure
+\ref{fig:nonsums}.
 
+\begin{figure}
+\caption{Numbers not in $A$ nor in $A+A$ plotted modulo $\lambda_A$}\label{fig:nonsums}
+\begin{center}
 \begin{tabular}{cc}
 \begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp10_u1_2.png}
   \\ $\ulam{1}{2}$\end{tabular} &
@@ -2743,6 +2773,8 @@ $\lambda$, as we do in \icode{experiment10}, we get:
 \begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp10_u2_3.png}
   \\ $\ulam{2}{3}$\end{tabular} \\
 \end{tabular}
+\end{center}
+\end{figure}
 
 Which share many features with the distributions of the Ulam numbers
 modulo $\lambda$, bolstering the idea that it isn't the feature of
