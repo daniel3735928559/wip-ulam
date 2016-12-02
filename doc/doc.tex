@@ -920,8 +920,6 @@ irrational number $\frac{\alpha}{m}$.  Then it is clear that $mn+k$
 will reduce to $\left(\frac{\alpha}{3},\frac{2\alpha}{3}\right)$ mod
 $\alpha$, meaning that $mn+k \in A_\alpha$ as desired.
 
-%{\color{red}
-
 %\section{Abelian arithmetic regularity}
 
 % If $A$ is any set, then an easy probablistic argument shows that there
@@ -1074,8 +1072,6 @@ well as properly transitioning from $\Z/N$ back to $\Z$), are covered
 in many places, for example \cite{roth:jlm1953}.
 
 \end{proof}
-
-% {\color{red}
 
 % \subsection{Proof via the regularity theorem}
 
@@ -2068,17 +2064,25 @@ whether for our particular \relevant sets there are any others.
 
 \subsection{Spectral complexity}
 
-There are two pieces of computational evidence that suggest that the
-spectrum of $\ulam{1}{2}$ should consist only of $\alpha\Z$: First, we
-can brute-force compute $\widehat{A_N}(t)$ for many values of $t$
-between 0 and $\pi$.  We want to look at the values that are larger
-than $\sqrt{N}$.  However, if we are looking at finite $N$, then while
-this is the average size we still expect some random variation to put
-some values over this mark.  To account for this, then, we look at
-values above $\sqrt{2N}$ in the first 5000 values of each sequence:
+There is some computational evidence that suggests that the spectrum
+of $\ulam{1}{2}$ should consist only of $\alpha\Z$.  We can
+brute-force compute $\widehat{A_N}(t)$ for many values of $t$ between
+0 and $\pi$.  Plancherel tells us that over $x \in \frac1{N}\Z/\Z$,
+the average value of
+
+\[\left|\sum_{t=0}^{N-1} f(t) e(-2\pi xt)\right|\]
+
+will be around $\sqrt{N}$, so in this computation, we want to look at
+the values that are significantly larger than $\sqrt{N}$.  However, if
+we are looking at finite $N$, then while this is the average size we
+still expect some random variation to put some values over this mark.
+To account for this, then, we look at values above $\sqrt{2N}$ in the
+first 5000 values of each sequence.  We do this in \icode{experiment7}
+and search for corresponding multiples of $\alpha$ using
+\icode{experiment7A}, with output found in table \ref{tab:spec_u1_2}.  
 
 \begin{table}
-\caption{Spectrum of $\ulam{1}{2}$}
+\caption{Spectrum of $\ulam{1}{2}$}\label{tab:spec_u1_2}
 \begin{center}
 \begin{tabular}{|lll|}
 \hline
@@ -2093,11 +2097,15 @@ values above $\sqrt{2N}$ in the first 5000 values of each sequence:
 Here, it appears that the only large Fourier coefficients are thosse
 in $\alpha\Z$.  However, if we run the same computations for other
 sequences such as $\ulam{1}{3}$, $\ulam{1}{4}$, $\ulam{1}{9}$,
-$\ulam{2}{3}$ or the various $\theta(s)$: 
-
+$\ulam{2}{3}$ or the various $\theta(s)$, we see some values that we
+cannot account for by multiples of the corresponding $\alpha$, found
+in tables \ref{tab:spec_u1_3}--\ref{tab:spec_10010}.  We give here
+only the top 20 elements of each spectrum (as some sequences, such as
+$\ulam{1}{3}$ and $\ulam{1}{9}$ had many elements that were somewhat
+large, while others, such as the $\theta(s)$, had very few). 
 
 \begin{table}
-\caption{Spectrum of $\ulam{1}{3}$}
+\caption{Spectrum of $\ulam{1}{3}$}\label{tab:spec_u1_3}
 \begin{center}
 \begin{tabular}{|lll|}
 \hline
@@ -2110,7 +2118,7 @@ $\ulam{2}{3}$ or the various $\theta(s)$:
 \end{table}
 
 \begin{table}
-\caption{Spectrum of $\ulam{2}{3}$}
+\caption{Spectrum of $\ulam{2}{3}$}\label{tab:spec_u2_3}
 \begin{center}
 \begin{tabular}{|lll|}
 \hline
@@ -2123,7 +2131,7 @@ $\ulam{2}{3}$ or the various $\theta(s)$:
 \end{table}
 
 \begin{table}
-\caption{Spectrum of $\ulam{1}{9}$}
+\caption{Spectrum of $\ulam{1}{9}$}\label{tab:spec_u1_9}
 \begin{center}
 \begin{tabular}{|lll|}
 \hline
@@ -2136,7 +2144,7 @@ $\ulam{2}{3}$ or the various $\theta(s)$:
 \end{table}
 
 \begin{table}
-\caption{Spectrum of $\theta(01010)$}
+\caption{Spectrum of $\theta(01010)$}\label{tab:spec_01010}
 \begin{center}
 \begin{tabular}{|lll|}
 \hline
@@ -2149,7 +2157,7 @@ $\ulam{2}{3}$ or the various $\theta(s)$:
 \end{table}
 
 \begin{table}
-\caption{Spectrum of $\theta(10010)$}
+\caption{Spectrum of $\theta(10010)$}\label{tab:spec_10010}
 \begin{center}
 \begin{tabular}{|lll|}
 \hline
@@ -2161,26 +2169,42 @@ $\ulam{2}{3}$ or the various $\theta(s)$:
 \end{center}
 \end{table}
 
-Similar observations can be made for other \relevant sets, such as our
-various $\theta(s)$ and $\ulam{2}{3}$ and $\ulam{1}{3}$: 
-
-{\color{red}[COMPUTATIONS]}
-
-Secondly, Plancherel tells us that over $x \in \frac1{N}\Z/\Z$, the
-average value of
-
-\[\left|\sum_{t=0}^{N-1} f(t) e(-2\pi xt)\right|\]
-
-will be around $\sqrt{N}$, so the fact that in this case some entry 
-
-We should point out, however, that simply being \relevant is not enough
-to guarantee the spectrum is of the form $\alpha\Z$ only.  For
-example, take two irrational numbers $\alpha$ and $\beta$ that are not
-rational multiples of each other (such as $\sqrt2$ and $\sqrt3$) and
-let $A = A_\alpha \cap A_\beta$.  Then because $A \subseteq A_\alpha$,
+We should point out that simply being \relevant is not enough to
+guarantee the spectrum is of the form $\alpha\Z$ only.  For example,
+take two irrational numbers $\alpha$ and $\beta$ that are not rational
+multiples of each other (such as $\sqrt2$ and $\sqrt3$) and let
+$A = A_\alpha \cap A_\beta$.  Then because $A \subseteq A_\alpha$,
 e.g., $A$ is certainly sumfree, however it will not be equidistributed
 modulo either $\frac{2\pi}{\alpha}$ or $\frac{2\pi}{\beta}$, giving it
-nonzero Fourier coefficients on $\alpha\Z$ and on $\beta\Z$.  
+nonzero Fourier coefficients on $\alpha\Z$ and on $\beta\Z$.
+
+The question is whether the values $\beta$ observed in the above
+computations that we could not match with an element of $\alpha\Z$
+actually represent another component in the spectrum.  In other words,
+we want to check whetherthe growth of $N\widehat{A_N}(\beta)$ as
+$N \to \infty$ is $o(N)$, and we are only seeing an unusually large
+initial value.  
+
+To this end, we pick a few such values and increase $N$ and see how
+they evolve.  We do this in \icode{experiment7D} and the results are
+in table \ref{tab:betas}.  
+
+\begin{table}
+\caption{Values of $\widehat{A_N}(\beta)$ for $N \in 1000 \times \{1,
+  \ldots, 10\}$}\label{tab:betas}
+\begin{center}
+\begin{tabular}{|lll|}
+\hline
+  $A$ & $\beta$ & $\widehat{A_{1000k}}(\beta)$
+  \csvreader{datafiles/betas.csv}{}
+  {\\$\csvcoli$ & \csvcolii & \csvcoliii}
+\\\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+The results suggest a slow decay, but are not entirely convincing
+either way, so we leave this as a question for further investigation.
 
 \subsection{Decay of Fourier coefficients}
 
@@ -2266,8 +2290,10 @@ computational evidence in its favour:
 % \end{proof}
 
 To support this conjecture, we compute $d \widehat{A_N}(d\alpha)$ for
-$d$ up to $\sqrt{N}$ and observe that in all cases, $d$ appears to be
-bounded by 4.  
+increasing $d$ increasing until we see $d \widehat{A_N}(d\alpha) >
+4$.  
+
+
 
 {\color{red}[COMPUTATIONS]}
 

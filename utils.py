@@ -289,8 +289,20 @@ def fts(a,l,s,n):
             k = s*i+j
             cs += math.cos(a*l[k])
             ss += math.sin(a*l[k])
-        ans += [(l[(i+1)*s],cs*cs+ss*ss)]
+        ans += [((i+1)*s,l[(i+1)*s],math.sqrt(cs*cs+ss*ss))]
     return ans
+
+def search_alpha(l,b,r=0.01,s=0.0001):
+    fmax = ft(b,l)
+    betamax = b
+    for i in range(int(2*r/s)):
+        beta = b-r+i*s
+        f = ft(beta,l)
+        #print(beta,f)
+        if(f > fmax):
+            betamax = beta
+            fmax = f
+    return betamax,fmax
 
 def ft_complex_2pi(t,l,N):
     d=len(l)/N

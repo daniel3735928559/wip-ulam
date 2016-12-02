@@ -224,9 +224,9 @@ def experiment6():
 
 def experiment7():
     """Compute complete spectrum of A--that is, any x with |ft(A_N)(x)| > sqrt(N)"""
-    N = 5000
-    for s in ["01001"]:#data:
-        l = data[s]["seq"][:N]
+    n = 5000
+    for s in data:
+        l = data[s]["seq"][:n]
         N = l[-1]
         spec = []
         x = 0
@@ -315,21 +315,18 @@ def experiment7C():
         #     print(s,a[0],a[1])
 
 def experiment7D():
-    """asd"""
-    for s in ["u1_2"]:
+    """Take some values of beta for each sequence that seem to be large Fourier coeffs outside alphaZ and test them"""
+    betas = {
+        "u1_3":[0.062,1.909,2.7715,1.662],
+        "u1_9":[0.012,0.032,0.2555,0.271],
+        "u2_3":[2.3695,1.271,2.436,0.0605],
+        }
+    for s in betas:
         l = data[s]["seq"]
-        spec = []
-        N = l[-1]
-        x = 0
-        step = 0.0005
-        while x <= math.pi+step:
-            n = 10000
-            f = ft(x,l[:n])
-            logf = math.log(f)/math.log(l[n])
-            print(s,round(x,4),round(logf,4))
-            x += step
-        # for a in spec:
-        #     print(s,a[0],a[1])
+        for b in betas[s]:
+            b,f = search_alpha(l,b)
+            fs = fts(b,l,1000,10)
+            print(s+","+str(b)+',"'+", ".join([str(round(x[2]/x[0],4)) for x in fs])+'"')
 
             
 def experiment7_old():
