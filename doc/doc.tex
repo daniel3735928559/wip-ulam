@@ -168,9 +168,10 @@ values of $k$ (noting that of course the values for $-k$ are just the
 conjugates of these).  The output is in table
 \ref{tab:intro_fourier_coeffs}.
 
-\begin{table}
-\caption{Fourier coefficients of $\ulam{1}{2}$}\label{tab:intro_fourier_coeffs}
-\begin{center}
+\begin{table}[ht]
+\caption{Fourier coefficients of $\ulam{1}{2}$}
+\label{tab:intro_fourier_coeffs}
+\centering
 \begin{tabular}{|l|l|}
 \hline
   $k$ & $\widehat{A}(k\alpha)$
@@ -178,7 +179,6 @@ conjugates of these).  The output is in table
   {\\\csvcoli & \csvcolii}
 \\\hline
 \end{tabular}
-\end{center}
 \end{table}
 
 and as $N$ gets large, it appears that
@@ -1562,21 +1562,23 @@ numbers.  Specifically, we will look at:
 
 We do this by running \icode{experiment1}, which computes
 $\alpha_{a,b}$ to around 6 decimal places using the first $10^4$
-elements of each of these sequences.  We get, letting $\rho_{a,b} = \widehat{1_{a,b}}(\alpha_{a,b})$:
+elements of each of these sequences.  We get, letting
+$\rho_{a,b} = \widehat{1_{a,b}}(\alpha_{a,b})$, the results summarised
+in table \ref{tab:alpha_ulam}.
 
+\begin{table}
+\caption{$\alpha$ for various Ulam sequences}\label{tab:alpha_ulam}
+\centering
 \begin{tabular}{|llllllll|}
   \hline
-  $a$ & $b$ & $\alpha_{a,b}$ & $\lambda_{a,b}$ &
-                                                 $|\rho_{a,b}|$
-  & $\delta_{a,b}$ & 
-                     $|\rho_{a,b}|/\delta_{a,b}$
-  & $\rho_{a,b}$
+  $a$ & $b$ & $\alpha_{a,b}$ & $\lambda_{a,b}$ & $|\rho_{a,b}|$ & $\delta_{a,b}$ & $|\rho_{a,b}|/\delta_{a,b}$ & $\rho_{a,b}$
     \csvreader{datafiles/1additive_alphas.csv}{}
     {\\\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii}
   \\\hline
 \end{tabular}
+\end{table}
 
-There are a few possible patterns here: 
+There are a few possible patterns observed: 
 
 \begin{enumerate}
 \item The fractional part of $\lambda_{1,n}$ remains roughly constant
@@ -1599,8 +1601,11 @@ Similarly, we can compute the $\alpha$ maximising
 $\widehat{1_A}(\alpha)$ for various sum-free sets $A$--for example,
 those that are believed to be non-periodic.  In particular, we will
 look at $s = 01001, s = 01010$, and $s = 10010$ by running
-\icode{experiment2}:
+\icode{experiment2}, with results in table \ref{tab:sumfree_alpha}.
 
+\begin{table}
+\caption{$\alpha$ for sum-free sets}\label{tab:sumfree_alpha}
+\centering
 \begin{tabular}{|lllllll|}
 \hline
 $s$ & $\alpha_{s}$ & $\lambda_{s}$ & $|\widehat{1_s}(\alpha_{s})|$ &
@@ -1610,6 +1615,7 @@ $s$ & $\alpha_{s}$ & $\lambda_{s}$ & $|\widehat{1_s}(\alpha_{s})|$ &
   {\\\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii}
 \\\hline
 \end{tabular}
+\end{table}
 
 \subsection{Is $\lambda$ rational?  Algebraic?}
 
@@ -1624,36 +1630,32 @@ polynomial.
 
 To get rational approximations for $\lambda$, we run the program
 \icode{cf\_alpha.py} in SAGE to compute continued fractions and
-convergents:
+convergents, found in tables \ref{tab:cf} and \ref{tab:convergents},
+respectively.
 
+\begin{table}
+\caption{Continued fractions for $\alpha_A$ for various $A$}\label{tab:cf}
+\centering
 \begin{tabular}{ll}
-\begin{tabular}{|l|l|}
-\hline $\ulam{1}{2}$ & $[2; 2, 3, 1, 11, 1, 1, 4, 1, \ldots]$ \\\hline $i$ & $P_i/Q_i$\csvreader{datafiles/cf_u1_2.csv}{}{\\\csvcoli & \csvcolii}\\\hline
+$\ulam{1}{2}$ & $[2; 2, 3, 1, 11, 1, 1, 4, 1, \ldots]$ \\
+$\ulam{1}{3}$ & $[2; 4, 1, 1, 2, 24, 1, 3, 10, 1, \ldots]$ \\
+$\ulam{2}{3}$ & $[5; 2, 1, 1, 5, 3, 5, 4, 1, 1, 1, \ldots]$ \\
+$\theta(01001)$ & $[2; 1, 1, 53, 2, 1, 1, 5, 1, 17, 2, \ldots]$ \\
+$\theta(01010)$ & $[3; 2, 18, 1, 8, 1, 2, 6, 4, 12, 1, 1, \ldots]$ \\
+$\theta(10010)$ & $[3; 4, 1, 2, 2, 3, 5, 5, 3, 1, 21, 7, \ldots]$ \\
 \end{tabular}
-&
-\begin{tabular}{|l|l|}
-\hline $\ulam{1}{3}$ & $[2; 4, 1, 1, 2, 24, 1, 3, 10, 1, \ldots]$ \\\hline $i$ & $P_i/Q_i$ \csvreader{datafiles/cf_u1_3.csv}{}{\\\csvcoli & \csvcolii}\\\phantom{a}&\phantom{a}\\\hline
-\end{tabular}
-\end{tabular}
-\begin{tabular}{ll}
-\begin{tabular}{|l|l|}
-\hline $\ulam{2}{3}$ & $[5; 2, 1, 1, 5, 3, 5, 4, 1, 1, 1, \ldots]$ \\\hline $i$ & $P_i/Q_i$ \csvreader{datafiles/cf_u2_3.csv}{}{\\\csvcoli & \csvcolii}\\\phantom{a}&\phantom{a}\\\phantom{a}&\phantom{a}\\\hline
-\end{tabular}
-&
-\begin{tabular}{|l|l|}
-\hline $\theta(01001)$ & $[2; 1, 1, 53, 2, 1, 1, 5, 1, 17, 2, \ldots]$ \\\hline $i$ & $P_i/Q_i$ \csvreader{datafiles/cf_01001.csv}{}{\\\csvcoli & \csvcolii}\\\hline
-\end{tabular}
+\end{table}
 
+\begin{table}
+\caption{Convergents for $\alpha_A$ for various $A$}\label{tab:convergents}
+\centering
+\doublespacing
+\begin{tabular}{llllllllll}
+$A$ & $\frac{P_i}{Q_i}$ & & & & & & & &  \\
+\csvreader{datafiles/cf.csv}{}
+{$\csvcoli$ & $\csvcolii$ & $\csvcoliii$ & $\csvcoliv$ & $\csvcolv$ & $\csvcolvi$ & $\csvcolvii$ & $\csvcolvii$ & $\csvcolix$ & $\csvcolx$\\}
 \end{tabular}
-\begin{tabular}{ll}
-\begin{tabular}{|l|l|}
-\hline $\theta(01010)$ & $[3; 2, 18, 1, 8, 1, 2, 6, 4, 12, 1, 1, \ldots]$ \\\hline $i$ & $P_i/Q_i$ \csvreader{datafiles/cf_01010.csv}{}{\\\csvcoli & \csvcolii}\\\phantom{a}&\phantom{a}\\\hline
-\end{tabular}
-&
-\begin{tabular}{|l|l|}
-\hline $\theta(10010)$ & $[3; 4, 1, 2, 2, 3, 5, 5, 3, 1, 21, 7, \ldots]$ \\\hline $i$ & $P_i/Q_i$ \csvreader{datafiles/cf_10010.csv}{}{\\\csvcoli & \csvcolii}\\\hline
-\end{tabular}
-\end{tabular}
+\end{table}
 
 (Since we only have believe our values of $\lambda$ up to $10^{-5}$,
 we have reason to mistrust convergents with larger heights anyways, so
@@ -1666,21 +1668,28 @@ if we examine the non-uniformity of, say, $\ulam{1}{2}$ modulo $m$
 where $m$ runs through the numerators of the convergents (where we
 measure non-uniformity simply by the variance $\sigma_m$ in the number
 of elements that lie in each congruence class modulo $m$, as computed
-in \icode{experiment3}:
+in \icode{experiment3}, with results in table \ref{tab:variances}.
 
-\begin{tabular}{|l|l|}
+\begin{table}
+  \caption{Variance in Ulam numbers modulo numerators of $\lambda$}\label{tab:variances}
+\centering
+\begin{tabular}{|ll|}
 \hline
   $m$ & $\sigma_m$
   \csvreader{datafiles/vars_u1_2.csv}{}
   {\\\csvcoli & \csvcolii}
 \\\hline
 \end{tabular}
+\end{table}
 
 Indeed, the variance is quite large for these moduli, but for nearby
 moduli tends to be far less pronounced, as we compute in
-\icode{experiment3A}:
+\icode{experiment3A}, with results in table \ref{tab:other_variances}
 
-
+\begin{table}
+  \caption{Variance in Ulam numbers modulo other
+    $m$}\label{tab:other_variances}
+  \centering
 \begin{tabular}{|l|l|}
 \hline
   $m$ & $\sigma_m$
@@ -1688,6 +1697,7 @@ moduli tends to be far less pronounced, as we compute in
   {\\\csvcoli & \csvcolii}
 \\\hline
 \end{tabular}
+\end{table}
 
 We might wonder: All of the known regularity results that we mentioned
 earlier were showed that various $\ulam{a}{b}$ were biased modulo 2.
@@ -1757,8 +1767,12 @@ from this polynomial is significantly less than $\frac{1}{N}$.
 In our case, we use SAGE's LLL code in \icode{alg\_lambda.py} to
 compute.  In this case, we use $N = 10^{10}$, so if we get a
 polynomial $f$ out then we will want $f(\lambda) << 10^{-10}$ for $f$
-to be a good candidate for minimal polynomial.  
+to be a good candidate for minimal polynomial.  The results are in
+table \ref{tab:minpoly}.
 
+\begin{table}
+\caption{Candidate minimal polynomials for $\lambda_A$}\label{tab:minpoly}
+\centering
 \begin{tabular}{|lll|}
 \hline
   $A$ & $f(\lambda)$ & $f(X)$ 
@@ -1766,6 +1780,7 @@ to be a good candidate for minimal polynomial.
   {\\\csvcoli & \csvcolii & $\csvcoliii$}
 \\\hline
 \end{tabular}
+\end{table}
 
 In particular, there is no indication that any of these $\lambda$ has
 small degree, if it is algebraic at all.
@@ -2301,12 +2316,40 @@ computational evidence in its favour:
 % \end{proof}
 
 To support this conjecture, we compute $d \widehat{A_N}(d\alpha)$ for
-increasing $d$ increasing until we see $d \widehat{A_N}(d\alpha) >
-4$.  
+increasing $d$ increasing until we see $d \widehat{A_N}(d\alpha) > 4$.
+This is done in \icode{experiment4} for various $N$.  If we call the
+minimum such $d$ for a given $N$ to be $d_N$, then the points
+$(N, d_N^2)$ (along with the best fitting line) are plotted in figure
+\ref{fig:decay}.  
 
+\begin{figure}
+  \caption{Plots of first $d_N \alpha_A$ to violate conjectured decay
+    rate.}\label{fig:decay}
+\begin{center}
+\begin{tabular}{cc}
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp4_u1_2.png}
+  \\ $\ulam{1}{2}$\end{tabular} &
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp4_u1_3.png}
+  \\ $\ulam{1}{3}$\end{tabular} \\\hline
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp4_u1_4.png}
+  \\ $\ulam{1}{4}$\end{tabular} &
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp4_u1_9.png}
+  \\ $\ulam{1}{9}$\end{tabular} \\\hline
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp4_u2_3.png}
+  \\ $\ulam{2}{3}$\end{tabular} &
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp4_01001.png}
+  \\ $\theta(01001)$\end{tabular} \\\hline
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp4_01010.png}
+  \\ $\theta(01010)$\end{tabular} &
+\begin{tabular}[c]{@{}c@{}}\includegraphics[scale=0.3]{../figs/exp4_10010.png}
+  \\ $\theta(10010)$\end{tabular} \\\hline
+\end{tabular}
+\end{center}
+\end{figure}
 
-
-{\color{red}[COMPUTATIONS]}
+These suggest, if somewhat loosely, that the $d_N = \Theta(\sqrt{N})$,
+(with some oscillation around the line of best fit).  In particular,
+there is some $c$ with $d_N \leq c \sqrt{N}$.  
 
 \chapter{Distribution}
 
@@ -2787,8 +2830,13 @@ bias modulo $\lambda$,
 
 We end with a final remark that within the first $10^4$ elements of
 each of these Ulam sequences, we have many elements that fail to
-qualify by having no representations:
+qualify by having no representations, as enumerated in table
+\ref{tab:nonsums_count}.  
 
+\begin{table}
+\caption{Count of non-sums in $A_N$ up to
+  $N$}\label{tab:nonsums_count}
+\centering
 \begin{tabular}{|lll|}
 \hline
 $A$ & $N$ (with $|A_N| = 10^4$) & $|x < N : r^*_{A+A}(x) = 0|$\\
@@ -2797,6 +2845,7 @@ $\ulam{1}{3}$ & 78819 & 13445\\
 $\ulam{1}{9}$ & 58114 & 7859\\
 $\ulam{2}{3}$ & 108466 & 23052\\\hline
 \end{tabular}
+\end{table}
 
 \section{Non-uniformity/Regularity}
 
@@ -2930,9 +2979,13 @@ is over 50\% of the time), the large summand will be the last thing in
 the list so far.  When looking at the large summand, then, it seems
 like it may be interesting to consider how many indices from the end
 it lives, rather than its actual value.  We compute these in
-experiment13.  Some post-processing gives us the following table,
-which accounts for over 9000 of the $a_n$ for $n \leq 10^4$
+experiment13.  Some post-processing gives us table
+\ref{tab:large_summands}, which accounts for over 9000 of the $a_n$
+for $n \leq 10^4$.
 
+\begin{table}
+\caption{Large summands}\label{tab:large_summands}
+\centering
 \begin{tabular}{|llll|}
 \hline
   $|n : a_i + a_{n-j} = a_n|$ & $a_i$ & $i$ & $n-j$
@@ -2940,6 +2993,7 @@ which accounts for over 9000 of the $a_n$ for $n \leq 10^4$
   {\\\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
 \\\hline
 \end{tabular}
+\end{table}
 
 All told there are 312 different pairs $(i, n-j)$ that appear in the
 first $10^4$ Ulam numbers, including only $69$ distinct values of $i$
@@ -2962,10 +3016,12 @@ So we compute which how often each $a$ appears as the smaller summand
 of a later $a_i$ (that is, what we would call $|S_a|$ earlier) and we
 compute $a$ modulo $\lambda$ for each and sort by this quantity.  We
 note what looks like a very strong correlation between how often $a$
-shows up as a summand and $\normrz{a/\lambda}$ in the resulting table,
-computed by \icode{experiment12}: 
+shows up as a summand and $\normrz{a/\lambda}$ in the resulting table
+\ref{tab:small_summands}, computed by \icode{experiment12}.
 
-
+\begin{table}
+\caption{Small summands}\label{tab:small_summands}
+\centering
 \begin{tabular}{|lll|}
 \hline
   $a$ (with $|S_a| > 10$) & $|S_a|$ & $\normrz{a/\lambda}$
@@ -2973,6 +3029,7 @@ computed by \icode{experiment12}:
   {\\\csvcoli & \csvcolii & \csvcoliii}
 \\\hline
 \end{tabular}
+\end{table}
 
 \subsection{Distribution of complements}
 In the cases Steinerberger looks at, the resulting non-uniform
@@ -2983,26 +3040,42 @@ might reasonably wonder what each of these peaks actually is.
 To get a handle on this, we take the Ulam sequence mod 5422, and
 multiply it by 2219 ($5422/2219$ being a good rational approximation
 to $2\pi/\alpha$).  Of course, this gives rise to the usual
-distribution we've come to expect:
+distribution we've come to expect in figure \ref{fig:dist_ulam12}
 
+\begin{figure}
+\caption{Distribution of $\ulam12$ modulo
+  $\lambda$}\label{fig:dist_ulam12}
+\centering
 \includegraphics[scale=0.5]{../figs/u1_2_mod5422.png}
+\end{figure}
 
 Supposing we look instead only at $a_n$'s for which 2, say is a
-summand--that is, the distribution of $S_2$.  Then we get this nice
-picture:
+summand--that is, the distribution of $S_2$.  Then we get the nice
+picture in figure \ref{fig:summands2}, and likewise for $S_{47}$, say,
+in figure \ref{fig:summands47}.
 
+\begin{figure}
+\caption{Distribution of $S_2$}\label{fig:summands2}
+\centering
 \includegraphics[scale=0.5]{../figs/summands2.png}
+\end{figure}
 
-Likewise for $S_{47}$:
-
+\begin{figure}
+\caption{Distribution of $S_{47}$}\label{fig:summands47}
+\centering
 \includegraphics[scale=0.5]{../figs/summands47.png}
+\end{figure}
 
 These are relatively clean-looking distributions, by comparison.  If
 we plot these graphs for all of the top 25 most common summands all in
 one picture, we notice that these seem to be the components of the two
-observed peaks:
+observed peaks, illustrated in figure \ref{fig:summands}.
 
+\begin{figure}
+\caption{Distribution of all $S_a$ for small summands $a$}\label{fig:summands}
+\centering
 \includegraphics[scale=0.5]{../figs/summands_mod_5422.png}
+\end{figure}
 
 Since each of these seems to be instances of the same distribution
 with different parameters, we might be interested in computing the
@@ -3015,8 +3088,12 @@ parameters of each, starting with the means.  We do this with a crunchy bash scr
 
 Which outputs the summand $a$, the quantity $2219 a \mod {5422}$, and
 the calculated mean of the distribution of $2219 a_n \mod{5422}$ for
-all $a_n$ for which $a$ is a summand, we get:
+all $a_n$ for which $a$ is a summand, we get table
+\ref{tab:mean_comps}.
 
+\begin{table}
+\caption{Means of complements of $x \in \ulam{1}{2}$}\label{tab:mean_comps}
+\centering
 \begin{tabular}{lll}
 3	&1235	&3241.07886089813800657174\\
 47	&1275	&3288.00715563506261180679\\
@@ -3044,11 +3121,13 @@ all $a_n$ for which $a$ is a summand, we get:
 102	&4036	&2027.29907648591049017286\\
 2	&4438	&2319.24248003248950859618
 \end{tabular}
+\end{table}
 
-Staring at this for a minute, we notice that if we subtract the second
-column from the third, we seen to get roughly 2000 for the first 11
-entries (those on the right end of the distribution).  Likewise, those
-on the left end (rows 12-25) seem to have a similar pattern.
+Staring at that table for a minute, we notice that if we subtract the
+second column from the third, we seen to get roughly 2000 for the
+first 11 entries (those on the right end of the distribution).
+Likewise, those on the left end (rows 12-25) seem to have a similar
+pattern.
 
 One possible source for this is that the distribution we're taking the
 mean of in the first row, say, is of $2219 a_n \mod{5422}$ where 3 is
@@ -3056,9 +3135,14 @@ a summand of $a_n$ in the Ulam sequence.  Since 3 is a summand of
 $a_n$ in the sequence, we might instead look at the other summand of
 $a_n$, i.e. $a_n - 3$.  This would lead to us not plotting
 $2219a_n \mod {5422}$, but rather $2219(a_n-3) \mod{5422}$.  We can
-compute these quickly and if we plot these, we get: 
+compute these quickly and if we plot these, we get the plot in figure
+\ref{fig:complements}.
 
+\begin{figure}
+\caption{Distribution of $S_a - a$}\label{fig:complements}
+\centering
 \includegraphics[scale=0.5]{../figs/shifted_summands_mod_5422.png}
+\end{figure}
 
 \section{Density}
 

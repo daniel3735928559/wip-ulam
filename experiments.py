@@ -155,7 +155,7 @@ def experiment30():
     #print(find_alpha(l,s,debug=False))
 
 def experiment4():
-    """Search efficiently (if approximately) for smallest k where ft(k*alpha) > 4/k"""
+    """Search (somewhat) efficiently (if somewhat approximately) for smallest k where ft(k*alpha) > 4/k"""
     for s in data:
         l = data[s]["seq"][:100000]
         a = data[s]["alpha"]
