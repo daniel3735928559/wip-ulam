@@ -172,12 +172,10 @@ conjugates of these).  The output is in table
 \caption{Fourier coefficients of $\ulam{1}{2}$}
 \label{tab:intro_fourier_coeffs}
 \centering
-\begin{tabular}{|l|l|}
-\hline
+\begin{tabular}{ll}
   $k$ & $\widehat{A}(k\alpha)$
   \csvreader{datafiles/harmonics_u1_2.csv}{}
   {\\\csvcoli & \csvcolii}
-\\\hline
 \end{tabular}
 \end{table}
 
@@ -1569,12 +1567,10 @@ in table \ref{tab:alpha_ulam}.
 \begin{table}
 \caption{$\alpha$ for various Ulam sequences}\label{tab:alpha_ulam}
 \centering
-\begin{tabular}{|llllllll|}
-  \hline
+\begin{tabular}{llllllll}
   $a$ & $b$ & $\alpha_{a,b}$ & $\lambda_{a,b}$ & $|\rho_{a,b}|$ & $\delta_{a,b}$ & $|\rho_{a,b}|/\delta_{a,b}$ & $\rho_{a,b}$
     \csvreader{datafiles/1additive_alphas.csv}{}
     {\\\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii}
-  \\\hline
 \end{tabular}
 \end{table}
 
@@ -1606,14 +1602,12 @@ look at $s = 01001, s = 01010$, and $s = 10010$ by running
 \begin{table}
 \caption{$\alpha$ for sum-free sets}\label{tab:sumfree_alpha}
 \centering
-\begin{tabular}{|lllllll|}
-\hline
+\begin{tabular}{lllllll}
 $s$ & $\alpha_{s}$ & $\lambda_{s}$ & $|\widehat{1_s}(\alpha_{s})|$ &
                                                                      $\delta_s$
   & $|\widehat{1_s}(\alpha_{s})|/\delta_s$ & $\widehat{1_s}(\alpha_{s})$
   \csvreader{datafiles/sumfree_alphas.csv}{}
   {\\\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii}
-\\\hline
 \end{tabular}
 \end{table}
 
@@ -1673,12 +1667,10 @@ in \icode{experiment3}, with results in table \ref{tab:variances}.
 \begin{table}
   \caption{Variance in Ulam numbers modulo numerators of $\lambda$}\label{tab:variances}
 \centering
-\begin{tabular}{|ll|}
-\hline
+\begin{tabular}{ll}
   $m$ & $\sigma_m$
   \csvreader{datafiles/vars_u1_2.csv}{}
   {\\\csvcoli & \csvcolii}
-\\\hline
 \end{tabular}
 \end{table}
 
@@ -1690,12 +1682,10 @@ moduli tends to be far less pronounced, as we compute in
   \caption{Variance in Ulam numbers modulo other
     $m$}\label{tab:other_variances}
   \centering
-\begin{tabular}{|l|l|}
-\hline
+\begin{tabular}{ll}
   $m$ & $\sigma_m$
   \csvreader{datafiles/varsA_u1_2.csv}{}
   {\\\csvcoli & \csvcolii}
-\\\hline
 \end{tabular}
 \end{table}
 
@@ -1773,12 +1763,10 @@ table \ref{tab:minpoly}.
 \begin{table}
 \caption{Candidate minimal polynomials for $\lambda_A$}\label{tab:minpoly}
 \centering
-\begin{tabular}{|lll|}
-\hline
+\begin{tabular}{lll}
   $A$ & $f(\lambda)$ & $f(X)$ 
   \csvreader{datafiles/min_poly_some.csv}{}
   {\\\csvcoli & \csvcolii & $\csvcoliii$}
-\\\hline
 \end{tabular}
 \end{table}
 
@@ -2110,12 +2098,10 @@ and search for corresponding multiples of $\alpha$ using
 \begin{table}
 \caption{Spectrum of $\ulam{1}{2}$}\label{tab:spec_u1_2}
 \begin{center}
-\begin{tabular}{|lll|}
-\hline
+\begin{tabular}{lll}
   $x$ with $N\widehat{A_N} > \sqrt{2N}$ & $N \widehat{A_N}(x)$ & $k\alpha \approx \pm x \mod{2\pi}$ 
   \csvreader{datafiles/specsort_u1_2.csv}{}
   {\\\csvcoli & \csvcolii & \csvcoliii $\alpha$}
-\\\hline
 \end{tabular}
 \end{center}
 \end{table}
@@ -2133,12 +2119,10 @@ large, while others, such as the $\theta(s)$, had very few).
 \begin{table}
 \caption{Spectrum of $\ulam{1}{3}$}\label{tab:spec_u1_3}
 \begin{center}
-\begin{tabular}{|lll|}
-\hline
+\begin{tabular}{lll}
   $x$ with $N\widehat{A_N} > \sqrt{2N}$ & $N \widehat{A_N}(x)$ & $k\alpha \approx \pm x \mod{2\pi}$ 
   \csvreader{datafiles/specsort_u1_3.csv}{}
   {\\\csvcoli & \csvcolii & \csvcoliii $\alpha$}
-\\\hline
 \end{tabular}
 \end{center}
 \end{table}
@@ -2146,12 +2130,10 @@ large, while others, such as the $\theta(s)$, had very few).
 \begin{table}
 \caption{Spectrum of $\ulam{2}{3}$}\label{tab:spec_u2_3}
 \begin{center}
-\begin{tabular}{|lll|}
-\hline
+\begin{tabular}{lll}
   $x$ with $N\widehat{A_N} > \sqrt{2N}$ & $N \widehat{A_N}(x)$ & $k\alpha \approx \pm x \mod{2\pi}$ 
   \csvreader{datafiles/specsort_u2_3.csv}{}
   {\\\csvcoli & \csvcolii & \csvcoliii $\alpha$}
-\\\hline
 \end{tabular}
 \end{center}
 \end{table}
@@ -2159,12 +2141,10 @@ large, while others, such as the $\theta(s)$, had very few).
 \begin{table}
 \caption{Spectrum of $\ulam{1}{9}$}\label{tab:spec_u1_9}
 \begin{center}
-\begin{tabular}{|lll|}
-\hline
+\begin{tabular}{lll}
   $x$ with $N\widehat{A_N} > \sqrt{2N}$ & $N \widehat{A_N}(x)$ & $k\alpha \approx \pm x \mod{2\pi}$ 
   \csvreader{datafiles/specsort_u1_9.csv}{}
   {\\\csvcoli & \csvcolii & \csvcoliii $\alpha$}
-\\\hline
 \end{tabular}
 \end{center}
 \end{table}
@@ -2172,12 +2152,10 @@ large, while others, such as the $\theta(s)$, had very few).
 \begin{table}
 \caption{Spectrum of $\theta(01010)$}\label{tab:spec_01010}
 \begin{center}
-\begin{tabular}{|lll|}
-\hline
+\begin{tabular}{lll}
   $x$ with $N\widehat{A_N} > \sqrt{2N}$ & $N \widehat{A_N}(x)$ & $k\alpha \approx \pm x \mod{2\pi}$ 
   \csvreader{datafiles/specsort_01010.csv}{}
   {\\\csvcoli & \csvcolii & \csvcoliii $\alpha$}
-\\\hline
 \end{tabular}
 \end{center}
 \end{table}
@@ -2185,12 +2163,10 @@ large, while others, such as the $\theta(s)$, had very few).
 \begin{table}
 \caption{Spectrum of $\theta(10010)$}\label{tab:spec_10010}
 \begin{center}
-\begin{tabular}{|lll|}
-\hline
+\begin{tabular}{lll}
   $x$ with $N\widehat{A_N} > \sqrt{2N}$ & $N \widehat{A_N}(x)$ & $k\alpha \approx \pm x \mod{2\pi}$ 
   \csvreader{datafiles/specsort_10010.csv}{}
   {\\\csvcoli & \csvcolii & \csvcoliii $\alpha$}
-\\\hline
 \end{tabular}
 \end{center}
 \end{table}
@@ -2219,12 +2195,10 @@ in table \ref{tab:betas}.
 \caption{Values of $\widehat{A_N}(\beta)$ for $N \in 1000 \times \{1,
   \ldots, 10\}$}\label{tab:betas}
 \begin{center}
-\begin{tabular}{|lll|}
-\hline
+\begin{tabular}{lll}
   $A$ & $\beta$ & $\widehat{A_{1000k}}(\beta)$
   \csvreader{datafiles/betas.csv}{}
   {\\$\csvcoli$ & \csvcolii & \csvcoliii}
-\\\hline
 \end{tabular}
 \end{center}
 \end{table}
@@ -2878,13 +2852,12 @@ qualify by having no representations, as enumerated in table
 \caption{Count of non-sums in $A_N$ up to
   $N$}\label{tab:nonsums_count}
 \centering
-\begin{tabular}{|lll|}
-\hline
+\begin{tabular}{lll}
 $A$ & $N$ (with $|A_N| = 10^4$) & $|x < N : r^*_{A+A}(x) = 0|$\\
 $\ulam{1}{2}$ & 132788 & 24415\\
 $\ulam{1}{3}$ & 78819 & 13445\\
 $\ulam{1}{9}$ & 58114 & 7859\\
-$\ulam{2}{3}$ & 108466 & 23052\\\hline
+$\ulam{2}{3}$ & 108466 & 23052
 \end{tabular}
 \end{table}
 
@@ -3027,12 +3000,10 @@ for $n \leq 10^4$.
 \begin{table}
 \caption{Large summands}\label{tab:large_summands}
 \centering
-\begin{tabular}{|llll|}
-\hline
+\begin{tabular}{llll}
   $|n : a_i + a_{n-j} = a_n|$ & $a_i$ & $i$ & $n-j$
   \csvreader{datafiles/large_summands.csv}{}
   {\\\csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
-\\\hline
 \end{tabular}
 \end{table}
 
@@ -3063,12 +3034,10 @@ shows up as a summand and $\normrz{a/\lambda}$ in the resulting table
 \begin{table}
 \caption{Small summands}\label{tab:small_summands}
 \centering
-\begin{tabular}{|lll|}
-\hline
+\begin{tabular}{lll}
   $a$ (with $|S_a| > 10$) & $|S_a|$ & $\normrz{a/\lambda}$
   \csvreader{datafiles/small_summands.csv}{}
   {\\\csvcoli & \csvcolii & \csvcoliii}
-\\\hline
 \end{tabular}
 \end{table}
 
