@@ -397,12 +397,12 @@ def experiment8():
 def experiment9():
     """Compute density for various sequences"""
     for s in data:
-        print(s)
         l = data[s]["seq"]
         n = len(l)
-        while n > 0:
-            print(n,':',l[n-1]/n)
-            n //= 10
+        n -= n%1000
+        #while n > 1000:
+        print("{},{},{} = \\frac{{1}}{{{}}}".format(s,n,round(n/l[n-1],5),round(l[n-1]/n,5)))
+        #    n //= 2
     
 def experiment10():
     """Compute non-sums for various sequences"""

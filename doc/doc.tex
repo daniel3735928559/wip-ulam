@@ -2510,7 +2510,48 @@ Where $R_N$ and $R'_N$ are both $o(N)$ as $N \to \infty$.
 
 \begin{proof}[Computational evidence]
 
-{\color{red}[COMPUTATION]}
+We compute in \icode{experiment7B} the values of 
+
+\[R'_N = r_{A_N + A_N}(x) - 2N\sum_{|k| < \sqrt{2N}}(\dft_{2N}A)^2(k
+  \alpha) e(k\alpha x)\] for various random values of $x$ and each of
+our various sequences $A$.  We let $\widetilde{R}_N$ be the maximum
+value we see for this quantity over all the $x$ we sample, and put
+into table \ref{tab:rAA_est_error}.  Already with the relatively
+conservative value of $c' = \sqrt{2}$, we find these to be small
+relative to $N$, suggesting that with careful tuning of this parameter
+we could estimate $r_{A+A}(x)$ as accurately as needed.  
+
+\begin{table}
+\caption{Estimation of error in using $\alpha\Z$ to compute
+  $r_{A+A}(x)$}\label{tab:rAA_est_error}
+\centering
+\begin{tabular}{llll}
+$A$ & $N$ & $\widetilde{R}_N$ & $\frac{\widetilde{R}_N}{N}$
+  \csvreader{datafiles/rAA_est_u1_2.csv}{}
+  {\\$\ulam{1}{2}$ & \csvcoli & \csvcolii & \csvcoliii}\\\hline
+                                          
+  \csvreader{datafiles/rAA_est_u1_3.csv}{}
+  {\\$\ulam{1}{3}$ & \csvcoli & \csvcolii & \csvcoliii}\\\hline
+
+  \csvreader{datafiles/rAA_est_u1_4.csv}{}
+  {\\$\ulam{1}{4}$ & \csvcoli & \csvcolii & \csvcoliii}\\\hline
+
+  \csvreader{datafiles/rAA_est_u1_9.csv}{}
+  {\\$\ulam{1}{9}$ & \csvcoli & \csvcolii & \csvcoliii}\\\hline
+
+  \csvreader{datafiles/rAA_est_u2_3.csv}{}
+  {\\$\ulam{2}{3}$ & \csvcoli & \csvcolii & \csvcoliii}\\\hline
+
+  \csvreader{datafiles/rAA_est_01001.csv}{}
+  {\\$\theta(01001)$ & \csvcoli & \csvcolii & \csvcoliii}\\\hline
+
+  \csvreader{datafiles/rAA_est_01010.csv}{}
+  {\\$\theta(01010)$ & \csvcoli & \csvcolii & \csvcoliii}\\\hline
+
+  \csvreader{datafiles/rAA_est_10010.csv}{}
+  {\\$\theta(10010)$ & \csvcoli & \csvcolii & \csvcoliii}\\\hline
+\end{tabular}
+\end{table}
 
 \end{proof}
 
@@ -3227,9 +3268,20 @@ one can be even more careful about it, which is done in
 \cite{knuth:note}.
 
 In any case, the results of our computations give the following
-estimates for the densities of these sets: 
+estimates for the densities of these sets:
 
-{\color{red}[COMPUTATIONS]}
+\begin{table}[ht]
+\caption{Densities}
+\label{tab:densities}
+\centering
+\doublespacing
+\begin{tabular}{lll}
+  $A$ & $|A_N|$ & $\delta_N$
+  \csvreader{datafiles/density.csv}{}
+  {\\$\csvcoli$ & \csvcolii & $\csvcoliii = \frac{1}{\csvcoliv}$}
+\end{tabular}
+\end{table}
+
 
 \subsection{Constructions}
 
@@ -3440,22 +3492,24 @@ greediness of the Ulam sequence suggests for us the conjecture:
   The Ulam sequence $\ulam{1}{2}$ has positive upper density.
 \end{conjecture}
 
-{\color{red}
-
 \chapter{Future Directions}
-
-\section{Reducing 1-additive sets to sum-free sets}
-
-\subsection{Via triangle removal}
 
 \section{Technology}
 
 \subsection{Arithmetic regularity}
 
+\subsection{Triangle removal}
+
+Reducing 1-additive sets to sum-free sets
+
 \subsection{Ultralimits}
 
+
+
 \section{Variants of the Ulam problem}
+
 \subsection{Larger seed sets}
+
 \subsection{Sums of more than two previous elements}
 
 Circle method gets better with more variables.  For this reason, we
@@ -3464,8 +3518,6 @@ might find it convenient to
 \subsection{Probabilistic versions}
 
 \section{More questions}
-
-}
 
 %%%%%%ENDDOC
 
