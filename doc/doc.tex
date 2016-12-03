@@ -326,7 +326,7 @@ original unless noted otherwise.
 The definition of the Fourier transform-like operator that seems
 experimentally to be the one that applies is the following:
 
-\begin{definition}
+\begin{definition}\label{def:fourier}
 For $A \subseteq \Z^+$ a set of positive integers, define for any
 $x\in \R/2\pi\Z$: 
 
@@ -1908,32 +1908,43 @@ explains this:
   as claimed.
 \end{proof}
 
-In particular, it follows that if ultimately the upper density of any
-of the \relevant sequences is positive, then we are guaranteed a
-non-zero Fourier coefficient in $\R/\Z$:
-{\color{red}
+This gives us a non-zero Fourier coefficient $\alpha_N$ for $A_N$.  As
+$N$ grows, we get a sequence of such $\alpha_N \in \R/2\pi\Z$.  If the
+density eventually stays above some fixed $\delta$ and if the
+$\alpha_N$ have a non-zero limit point $\alpha$, then we can show that
+in fact this $\alpha$ would indeed be a non-zero Fourier coefficient
+for the whole set $A$ in the sense of definition \ref{def:fourier}: 
+
+% \begin{corollary}\label{thm:alpha}
+%   If $A \subseteq \N$ is a sequence of positive integers of upper
+%   density density $\delta > 0$ such that for all $N$, $T(A_N)$ is
+%   bounded by $c N^{2-\epsilon}$ for some constants
+%   $c > 0, \epsilon > 0$, then there is an $\alpha \in \R/2\pi\Z$ with
+%   $\alpha \neq 0$ such that
+%   $\widehat{A}(\alpha) \geq \frac{\delta^2}{2}$.
+% \end{corollary}
+
 \begin{corollary}\label{thm:alpha}
-  If $A \subseteq \N$ is a sequence of positive integers of upper
-  density density $\delta > 0$ such that for all $N$, $T(A_N)$ is
-  bounded by $c N^{2-\epsilon}$ for some constants
-  $c > 0, \epsilon > 0$, then there is an $\alpha \in \R/2\pi\Z$ with
-  $\alpha \neq 0$ such that
+  If $A \subseteq \N$ is a sequence of positive integers of density
+  $\delta > 0$ such that for all $N$, $T(A_N)$ is bounded by
+  $c N^{2-\epsilon}$ for some constants $c > 0, \epsilon > 0$, and
+  suppose further that $\alpha$ is a nonzero limiting point of the
+  $\alpha_N$ that the theorem guarantees us.  Then
   $\widehat{A}(\alpha) \geq \frac{\delta^2}{2}$.
 \end{corollary}
 
 \begin{example}
   For example, in the Ulam sequence we know by construction that
   $T(A_N) \leq 3|A| \leq 3N$, and we believe that the Ulam sequence
-  has density around $0.07$, so this theorem would guarantee us a
-  non-zero Fourier coefficient of size at least $0.00245$.  This is a
-  bit off our numerical value of
+  has density around $0.07$, so this theorem would guarantee that if
+  we had a non-zero Fourier coefficient, it would have size at least
+  $0.00245$.  This is a bit off our numerical value of
   $0.8\delta \approx 0.8 \times 0.07 = 0.056$, but it is a start.
 \end{example}
 
-\begin{proof}Since $A$ has upper density $\delta$, for any
-  $\epsilon > 0$, there is an $N > 0$ with
-  $\frac{|A_N|}{N} > \delta-\epsilon$.  So as $j \to \infty$, for each
-  $j$ we can find $N_j$ with
+\begin{proof}Since $A$ has density $\delta$, for any $\epsilon > 0$,
+  there is an $N > 0$ with $\frac{|A_N|}{N} > \delta-\epsilon$.  So as
+  $j \to \infty$, for each $j$ we can find $N_j$ with
   $\frac{|A_{N_j}|}{N_j} > \delta-\frac{1}{j}$.
 
   Thus, by the theorem, there is an $\alpha_j = \frac{2\pi k_j}{2N}$
@@ -1947,16 +1958,11 @@ non-zero Fourier coefficient in $\R/\Z$:
   limiting value of $\widehat{A_{N_j}}(\alpha_j)$ is greater than
   $\frac{\delta^2}{2}$ (or, if there is no limiting value, take a
   convergent subsequence of these values).  So then we would like to
-  conclude that $\alpha \neq 0$ in $\R/2\pi\Z$ and that
-  $\widehat{A}(\alpha) \geq \frac{\delta^2}{2}$, the former claim is
-  requires some work and the latter involves swapping some limits, so
-  let us be more careful:
-
-  First, why is $\alpha \neq 0$: 
-
-  ...
-
-  Now, why does it follow that
+  conclude that $\widehat{A}(\alpha) \geq \frac{\delta^2}{2}$.
+  However, this claim involves swapping some limits, so let us be more
+  careful:
+  
+  Why does it follow that
   $\widehat{A}(\alpha) \geq \frac{\delta^2}{2}$?  That is, we have
   that
   $\lim_{j \to \infty} \widehat{A_{N_j}}(\alpha_j) \geq
@@ -1997,7 +2003,7 @@ non-zero Fourier coefficient in $\R/\Z$:
   \frac{\delta^2}{2}$, which means exactly that
   $\widehat{A}(\alpha) \geq \frac{\delta^2}{2}$, as desired.
 \end{proof}
-}
+
 We noticed earlier that the actual complex value of the Fourier
 transform of $A$ for most of the $A$ had large real part and small
 imaginary part.  If we look at the proof of the theorem, we notice
@@ -2910,7 +2916,7 @@ better:
                        &\leq& \abs{\int_{-1}^1 \abr{f, E_\eta} d\eta}
 \end{eqnarray*}
 
-{\color{blue}Thus $\abr{f, E_\eta} \geq \frac{\delta^2}{4}$ for some $\eta$.  }But
+Thus $\abr{f, E_\eta} \geq \frac{\delta^2}{4}$ for some $\eta$.  But
 $f = A - \delta$, so 
 
 \[\abr{A, E_\eta} \geq \frac{\delta^2}{4} + \abr{\delta, E_\eta} =
