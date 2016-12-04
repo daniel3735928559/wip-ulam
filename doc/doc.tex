@@ -1248,7 +1248,19 @@ into this definition, we might wonder about what it is specifically:
 
 \begin{question}\label{qn:rationality}
   Is $\alpha$ irrational?  Algebraic?  What about
-  $\frac{2\pi}{\alpha}$?
+  $\frac{2\pi}{\alpha}$?  
+\end{question}
+
+We will see later that mod $\frac{2\pi}{\alpha}$ Ulam sequences appear
+to be controlled by a few $x \in A =\ulam{a}{b}$ that form the
+summands of further elements.  That is, there is a small set
+$S \subseteq A$ such that any $z \in A$ is in fact in $S+A$.  These $x
+\in S$ also end up being close to 0 mod $\frac{2\pi}{\alpha}$, so we
+might wonder whether these will help to compute $\alpha$: 
+
+\begin{question}\label{qn:compute_alpha}
+  Is there a way of using knowledge of the set $S$ for a given $A$ to
+  compute the corresponding $\alpha$ for that $A$?
 \end{question}
 
 Beyond just asking about $\alpha$, we can ask about other features of
@@ -3556,16 +3568,78 @@ managed here.
 
 \section{Variants of the Ulam problem}
 
-\subsection{Larger seed sets}
+We have already described 1-additive (see definition
+\ref{def:1additive}) sets in greater generality than just the Ulam
+numbers.  We could either modify the initial ``seed set'' or we could
+be less greedy about picking the next elements, but fundamentally,
+these sets are all \relevant and so we expect to be able to say the
+same things about them.  There are, however, modifications that may be
+worth considering: 
 
 \subsection{Sums of more than two previous elements}
 
-Circle method gets better with more variables.  For this reason, we
-might find it convenient to 
+One modification is that our notion of 1-additive used only sums of
+two elements.  We could equally define: 
+
+\begin{definition}\label{def:1k_additive}
+A $(1,k)$-additive set is a set $A \subseteq \N$ with an $N$ such
+that, for $x > N$, there is exactly one way to write $x = a_1 + \ldots
++ a_k$ for $a_i \in A$ and $a_1 \leq \ldots \leq a_k$.  
+\end{definition}
+
+This we would expect to behave similarly, but one particular
+consideration brings us to this type of set specifically: When we were
+trying before to estimate $r_{A+A}(x)$ using the large spectrum
+$\alpha\Z$, this essentially amounted to using the circle method.  In
+classical applications of the circle method, (for example, the proof
+of Vinogradov's theorem), we find that the circle method is much
+better at counting representations of a given $x$ by sums of $k$
+elements of a set $A$ for larger $k$ than for, say, $k = 2$ (which in
+the Vinogradov case would be the Goldback conjecture).  
+
+This might lead us to suspect that $(1,k)$-additive sets may be even
+more susceptible to analysis in this way for larger $k$ than $k = 2$,
+which is the case we have been dealing with.
 
 \subsection{Probabilistic versions}
 
-\section{More questions}
+One thing we get out of from bijection between sum-free sets and
+infinite binary sequences is a probability measure on all sum-free
+sets, taken from the measure on binary sequences that considers each
+entry as a flip of a fair coin (or, if desired, of a weighted coin).
+This leads to natural questions about the structure of random sum-free
+sets, which have been studied in \cite{cameron:ptrf1987} and
+\cite{calkin:dm1998}.
+
+Considering Ulam numbers as an extension of the idea of sum-free sets
+to considering sets $A$ whose elements $x$ have $r_{A+A}(x)$ small, we
+might try to define a random version of this.  For example we can
+construct a random 1-additive set: 
+
+\begin{definition}
+  Let $A$ be a set consisting of a finite ``seed set'' $S$, and then
+  being built by the following random process: Given the current set
+  of elements in $A$, let $A_1$ be the set of elements
+  $x \in \N, x > \max(A)$ such that $r^*_{A+A}(x) = 1$.  Select an
+  element uniformly at random from $A_1$ and include that element in
+  $A$.  Repeat forever.  
+\end{definition}
+
+Or, we could define a random construction of a set that simply has
+small values for $r_{A+A}(x)$ for $x \in A$: 
+
+\begin{definition}
+Let $A$ be a set consisting of a finite ``seed set'' $S$, and then
+being built by a random process that takes each $x$, computes
+$r_{A+A}(x)$ using the elements included in $A$ thus far, and includes
+$x$ with probability $\frac{1}{r_{A+A}(x)}$ (including it
+automatically if $r_{A+A}(x) = 0$, say.)
+\end{definition}
+
+Having such definitions in hand, we can then ask probabilistic
+versions of all the questions we have asked about density, Fourier
+spectrum, distribution, and structure that we have asked about the
+Ulam numbers.
 
 %%%%%%ENDDOC
 
