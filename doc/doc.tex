@@ -3469,15 +3469,69 @@ greediness of the Ulam sequence suggests for us the conjecture:
 
 \chapter{Future Directions}
 
+In this section, we outline some possible future avenues of study,
+both for extending our main line of thought here as well as for
+answering separate, related questions.  
+
 \section{Technology}
 
-\subsection{Arithmetic regularity}
+There are a number of results and techniques that have seen
+application to related problems that we suspect may allow for further
+progress in future study of this problem.  
 
 \subsection{Triangle removal}
 
-Reducing 1-additive sets to sum-free sets
+Throughout this study, we have been treating sum-free sets and
+\relevant sets more or less simultaneously.  However, in many ways
+sum-free sets are less rigid and are easier to reason about, whether
+via the correspondence with decision sequences or in the ease of
+constructing examples with certain desired features.  
+
+We have also noted that the Ulam sequence has few small summands.  In
+particular, if $S$ is the set of small summands, then we can partition
+the Ulam numbers $A$ into $S \cup T$ where $T$ is sum-free, and $S$
+seems to be small.  A result about the size of $S$ could allow us to
+reduce general questions about 1-additive and other \relevant sets to
+questions just about sum-free sets.  One general result in this
+direction comes from Green \cite{green:gfa2005} (Cor. 1.6) in the
+following theorem:
+
+\begin{theorem}
+  There is a universal function $f(\delta)$ with $f(\delta) \to 0$ as
+  $\delta \to 0$ such that the following holds: For any $N > 0$ and
+  any subset $A \subseteq [N]$ with $\delta N^2$ solutions to $x+y=z$.
+  Then there is a partition of $A$ as $A = B \cup C$ where $B$ is
+  sum-free, $C$ is small--specifically, $|C| \leq f(\delta)N$--and,
+  $B$ and $C$ are disjoint.
+\end{theorem}
+
+In the case of the Ulam numbers, assuming they have positive density
+$\delta$, then they have at most $3\delta N$ solutions to $x+y=z$, so
+$A_N$ has $\frac{3\delta}{N} N^2$ solutions, meaning this theorem
+gives us a $A_N = B_N \cup C_N$ where
+$|C_N| \leq f(\frac{3\delta}{N})N$ and $B_N$ is sum-free.  However,
+this notation is slightly misleading: There isn't a guarantee that
+there is one whole set $C \subseteq \N$ such that $C_N = C \cap [N]$
+as $N$ grows.  It also does not gives us a bound on $|S_N|$ as $N$
+grows.  Thus there are two questions:
+
+\begin{question}
+Can we estimate $|S_N|$ associated to a 1-additive set $A$?  For
+example, can we prove $|S_N| = O(log(N))$?  
+\end{question}
+
+\begin{question}
+\end{question}
 
 \subsection{Ultralimits}
+
+
+
+\subsection{Energy increment}
+
+
+
+\subsection{Arithmetic regularity}
 
 
 
