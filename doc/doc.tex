@@ -3560,11 +3560,58 @@ managed here.
 
 \subsection{Energy increment}
 
+Considering the mileage we got out of imitating the classic ``density
+increment'' proof of Roth's theorem, we might turn to looking at other
+methods of proof and seeing what those tell us about Ulam sequences
+also.  One such relies on the so-called Szemeredi regularity theorem,
+which is in turn proven by a technique that appears repeatedly in
+additive combinatorics: The ``energy increment'' argument.  
 
+Broadly, this type of argument (as described in \cite{tao:cup2006})
+goes by quantifying the presence of a certain kind of structure
+present in a function by an ``energy''.  Then, we approximate our
+given function with a low-complexity approximation function (such as
+the indicator function of a set, which can be approximated at first by
+the constant function whose value is the density of the set).  The
+argument then proceeds to use a dichotomy, much as in the density
+increment case: If the energy of this approximation is large, then
+there is a lot of the desired structure and we are done.  If the
+energy is small, then this implies some bias (such as, in the case of
+Roth's theorem, a large Fourier coefficient) that we can use to find a
+better approximation with increased energy.  Executing this enough
+times, we force our approximation into the large energy setting where
+we can win.
+
+So if we could pin down a more general notion of regularity (such as
+bias modulo some $\lambda$), then we might be able to follow a similar
+plan: Assign a notion of ``energy modulo $\lambda$'' to the
+distribution, and approximate the indicator function $A$ of
+$\ulam{1}{2}$ on $[N]$ by $\delta = \frac{|A_N|}{N}$.  Then if this
+has low energy, prove that we have Fourier bias (as in
+\ref{thm:alpha}) and therefore some correlation with a non-uniform
+distribution (as in \ref{thm:regularity}), and use that to better
+approximate the indicator function with something of higher energy.
+
+This plan would first require having a precise notion of ``energy''
+that captures whatever notion of ``regularity'' we would ultimately
+hope to prove for $\ulam{1}{2}$.
 
 \subsection{Arithmetic regularity}
 
+The ultimate consequence of many energy increment type arguments is a
+very general sort of regularity theorem, from Szemeredi's regularity
+theorem to the more arithmetically flavoured regularity results of
+Green and Tao \cite{green:bsm2010}.  In that paper, the arithmetic
+regularity theorem in particular was used to prove Roth's theorem
+directly, and it has been used to study sum-free subsets of integers
+to great effect in \cite{eberhard:ann2014}.  In particular,
+\cite{eberhard:ann2014} works with sum-free sets using a kind of
+``local-to-global'' argument that has a similar flavour (if very
+different content, because they are doing something fundamentally
+different) to what we are looking for.  
 
+A likely fruitful future direction, then, would be to understand the
+implications of such regularity results for Ulam numbers.  
 
 \section{Variants of the Ulam problem}
 
