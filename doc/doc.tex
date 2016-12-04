@@ -3496,7 +3496,7 @@ questions just about sum-free sets.  One general result in this
 direction comes from Green \cite{green:gfa2005} (Cor. 1.6) in the
 following theorem:
 
-\begin{theorem}
+\begin{theorem}\label{thm:green_triangle_removal}
   There is a universal function $f(\delta)$ with $f(\delta) \to 0$ as
   $\delta \to 0$ such that the following holds: For any $N > 0$ and
   any subset $A \subseteq [N]$ with $\delta N^2$ solutions to $x+y=z$.
@@ -3513,19 +3513,38 @@ $|C_N| \leq f(\frac{3\delta}{N})N$ and $B_N$ is sum-free.  However,
 this notation is slightly misleading: There isn't a guarantee that
 there is one whole set $C \subseteq \N$ such that $C_N = C \cap [N]$
 as $N$ grows.  It also does not gives us a bound on $|S_N|$ as $N$
-grows.  Thus there are two questions:
+grows.  Thus we have a question:
 
 \begin{question}
-Can we estimate $|S_N|$ associated to a 1-additive set $A$?  For
-example, can we prove $|S_N| = O(log(N))$?  
+  Can we estimate $|S_N|$ associated to a 1-additive set $A$?  For
+  example, can we prove $|S_N| = O(\log(N))$?  (For example, if we
+  plot $\log$ of the $i$th small summand against $i$, we get figure
+  \ref{fig:log_ss}.)  Specifically, perhaps, can we take the proof of
+  theorem \ref{thm:green_triangle_removal} and in the particular case
+  of the Ulam numbers get a good bound for $f$?
 \end{question}
 
-\begin{question}
-\end{question}
+\begin{figure}
+\caption{$\log(s_i)$ for small summands $s_i$ plotted against
+  $i$}\label{fig:log_ss}
+\centering
+\includegraphics[scale=0.5]{../figs/log_ss.png}
+\end{figure}
 
 \subsection{Ultralimits}
 
-
+The phenomenon we have been addressing appears to be one that remains
+true in some kind of limit.  However, the precise statement of this
+seems delicate.  For example, trying to prove that there is a non-zero
+$\alpha\in\R/2\pi\Z$ with $\widehat{A}(\alpha) \neq 0$ in the sense of
+definition \ref{def:fourier} is fraught with tricky convergence
+issues.  In \cite{tao:ams2012}, Tao outlines an argument for Roth's
+theorem using ultralimits that manages to work entirely in the
+infinitary setting and deduce the finite structure (namely, 3-term
+arithmetic progressions) that is desired.  It may be worth exploring
+whether this technique applies in the Ulam case as well, whether to
+simplify the arguments we have given or to prove more than we have
+managed here.
 
 \subsection{Energy increment}
 

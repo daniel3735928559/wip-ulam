@@ -422,7 +422,7 @@ def experiment10():
             print(s,x,nonsums[x])
 
 def experiment11():
-    l = u1_2[:10000]
+    l = u1_2[:1000000]
     s = set(l)
     summands = {}
     for i in range(2,len(l)):
@@ -449,7 +449,7 @@ def experiment11():
             q = q1
         else:
             q = q2
-        math.round(q)
+        q = round(q,4)
         r = real_mod(y,la)/la
         if r > 1/2:
             r = 1 - r
