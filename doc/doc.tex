@@ -100,12 +100,12 @@ this sequence has positive density in any sense.
 
 We also know that if we use the same definition but start with
 different initial values, we can get sequences that we can analyse
-very easily indeed: If the ``$(u,v)$-Ulam sequence'' is the sequence
-with $a_1 = u, a_2 = v$, and $a_n$ (for $n > 3$) defined exactly as
-before, then by a theorem of Schmerl and Speigel
-\cite{schmerl:jct1994} we know that the $(2,v)$-Ulam sequence, in the
-case where $v$ is odd and at least 5, is regular in the following
-sense:
+very easily indeed: If the ``$(u,v)$-Ulam sequence'', denoted
+$\ulam{u}{v}$, is the sequence with $a_1 = u, a_2 = v$, and $a_n$ (for
+$n > 3$) defined exactly as before, then by a theorem of Schmerl and
+Speigel \cite{schmerl:jct1994} we know that the $(2,v)$-Ulam sequence,
+in the case where $v$ is odd and at least 5, is regular in the
+following sense:
 
 \begin{definition}\label{def:regularity}
   An increasing, infinite sequence $\{a_i\}$ of positive integers is
@@ -130,39 +130,26 @@ In looking for hidden regularity, one might take a signal processing
 approach to the sequence and try, for example, to Fourier transform
 the indicator function of the sequence and see if the spectrum has any
 interesting features.  In \cite{steinerberger:preprint}, Stefan
-Steinerberger did exactly that and beheld that the spectrum has a
+Steinerberger does exactly that and finds that the spectrum has a
 large spike at 0 (suggesting some flavour of positive density) as well
-as another at some $\alpha \in \R/\Z$ (and at its harmonics), and
-seemingly nowhere else.
+as another at some $\alpha \in \R/\Z$ (and, therefore, at its
+harmonics), and seemingly nowhere else.
 
-More precisely: 
+More precisely if $A = \ulam{1}{2}$ is the set of Ulam numbers, and by
+abuse of notation we also use $A$ to denote the indicator function of
+the set $A$, then we can define a ``Fourier transform'' by:
 
-\begin{definition} If $f : [N] \to \C$, we might define the
-  \textbf{Fourier transform} of $f$ to be the function $\widehat{f}$
-  defined by the formula:
+\[f_N(x) = \frac{1}{N}\sum_{t=1}^N A(t) e(tx)\] 
 
-  \[\widehat{f}(x) = \sum_{t=0}^{N-1} f(t) e(-tx)\]
-
-  where $e(x) = e^{i x}$.  Thus $\widehat{f}$ is a function defined on
-  all of $\R/2\pi\Z$.
-
-  $N$ will often be omitted from the notation and understood from
-  context.  If we wish to make $N$ explicit in the notation for the
-  Fourier transform itself, we will denote it as $\mathcal{F}_N f$
-  rather than $\widehat{f}$.
-\end{definition}
-
-So if $A$ is a set of positive integers (say, the Ulam sequence), and
-we also denote by $A$ the indicator function of $A$, then we might
-define $\widehat{A}(x) = \lim_{N \to \infty} \widehat{A_N}(x)$, where
-$A_N = A \cap [N]$ is the ``truncation of $A$ at $N$''.  Then in the
-case of the Ulam sequence, what is observed numerically is that
-$\widehat{A}(0) = \delta \approx 0.07$ is the density of the sequence.
-It is clear that $\widehat{A}(x)$ cannot be larger than this.
-However, for one particular value of $\alpha \in \R/2\pi\Z$ (namely
-$\alpha = 2.571447\ldots$), that
-$\widehat{1_A}(\alpha) \approx 0.8 \delta$, and for $k \in \Z$,
-$\widehat{1_A}(k \alpha)$ is also some non-zero value that shrinks
+Where $e(x) = e^{ix}$.  If
+$A_N = A \cap [N] = A \cap \{1, \ldots, N\}$ denotes the ``truncation
+of $A$ at $N$'', then in the case of the Ulam sequence, what is
+observed numerically is that $f_N(0) = \delta \approx 0.07$ is the
+density of the sequence.  It is clear that $f_N(x)$ cannot ever be
+larger than this.  However, for one particular value of
+$\alpha \in \R/2\pi\Z$ (namely $\alpha = 2.571447\ldots$), we find
+$f_N(\alpha) \approx 0.8 \delta$, even as $N \to \infty$, and for
+$k \in \Z$, $f_N(k \alpha)$ is also some non-zero value that shrinks
 with $k$.  For example, for $N = 100000$, we compute this for a few
 values of $k$ (noting that of course the values for $-k$ are just the
 conjugates of these).  The output is in table
@@ -225,8 +212,8 @@ these in section 3, but we give a sampling now:
   spectrum of the Ulam numbers?  Is it irrational?  Transcendental?
 
 \item What feature of the Ulam numbers gives rise to this
-  distribution?  That is, what is a general class of sets with similar
-  behaviour?
+  distribution?  For example, can we write down a general class of
+  sets with this behaviour?
 
 \item What is it that causes some initial conditions to be regular and
   not others (if indeed they are not)?
@@ -238,26 +225,27 @@ these in section 3, but we give a sampling now:
 \section{Results}
 
 In this document, we do not provide a complete explanation for the
-phenomenon, but we do focus attention on a class of sets that all
-exhibit it, namely ``\relevant sets'': The idea is that the set $A$ of
-Ulam numbers has the property that the number of pairs
-$(x, y) \in A^2$ with $x + y \in A$ is unusually small.  For example,
-in a randomly generated set $B$ of density $\delta$, we might expect
-that $B_N$ has about $\delta N$ elements, and hence $\delta^2 N^2$
-pairs of elements, of whose sums maybe $\delta$ will be in $A$.  So we
-expect about $\delta^3 N^2$, or, generally, $\Omega(N^2)$ such sums.
-If we have fewer of these, say $O(N^{2-\epsilon}$ for some
-$\epsilon > 0$, then that suggests that the set cannot be purely
-random.  So we define: 
+phenomenon, but we do focus attention on a class of sets that all seem
+to exhibit simlar behaviour, namely ``\relevant sets'': The idea is
+that the set $A$ of Ulam numbers has the property that the number of
+pairs $(x, y) \in A^2$ with $x + y \in A$ is unusually small.  For
+example, in a randomly generated set $B$ of density $\delta$, we might
+expect that $B_N$ has about $\delta N$ elements, and hence
+$\delta^2 N^2$ pairs of elements, of whose sums maybe $\delta$ will be
+in $A$.  So we expect about $\delta^3 N^2$, or, generally,
+$\Omega(N^2)$ such sums.  If we have fewer of these, say
+$O(N^{2-\epsilon})$ for some $\epsilon > 0$, then that suggests that
+the set cannot be purely random.  So we define:
 
-\begin{definition}A set $A$ of positive integers is
-  \textbf{\relevant}if there is a constant $C \geq 0$ and $\epsilon > 0$
-  such that if $T(A_N) = |\{(x, y)\in A_N^2 : x + y \in A\}|$, then
-  $T(A_N) \leq C N^{2-\epsilon}$ for all $N$.  
+\begin{definition}Call a set $A$ of positive integers
+  \textbf{\relevant}if there is a constant $C \geq 0$ and
+  $\epsilon > 0$ such that if
+  $T(A_N) = |\{(x, y)\in A_N^2 : x + y \in A_N\}|$, then
+  $T(A_N) \leq C N^{2-\epsilon}$ for all $N$.
 \end{definition}
 
 \begin{example}
-  Any $(a,b)$-Ulam sequence is \relevant, because for each Ulam number
+  Any $(a,b)$-Ulam sequence is \relevant because for each Ulam number
   $x < N$, the number of representations $x$ has as a sum of other
   Ulam numbers is at most 3: The sum that qualifies it to be an Ulam
   number in the first place, that same sum with the order reversed,
@@ -268,14 +256,15 @@ random.  So we define:
 
 \begin{example}
   A set $A$ is called ``sum-free'' if for every $N$, $T(A_N) = 0$.
-  These sets are also \relevant therefore, and indeed provide in some
-  ways simpler and more extreme examples of the same phenomenon.  
+  These sets are thus also \relevant, and indeed will provide examples
+  of the same phenomena that are in some ways simpler and more extreme
+  than the Ulam numbers.
 \end{example}
 
-As we discussed above, these sets are defined in some way that
-guarantees they behave differently from purely random sets.  One might
-wonder, then, what structure this definition actually guarantees for
-such sets.
+As we discussed above, these sets are defined in a way that guarantees
+they behave differently from truly random sets.  One might wonder,
+then, what structure this definition actually guarantees for such
+sets.
 
 We suspect that the nature of this structure is roughly ``correlation
 with a periodic sum-free set''.  More precisely, that there should be
@@ -285,19 +274,18 @@ subset $E \subseteq \R/\Z$ such that $A$ and $\pi\inv(E)$ are in some
 sense strongly correlated.  
 
 In this document, we come to a first result in this direction: theorem
-\ref{thm:regularity}, which gives such a $\lambda$ and a set $E$ that
-are at least non-trivially more correlated than expected.  We also
-show (proposition \ref{prop:regular_sumfree}) that regular Ulam
-sequences are eventually equivalent to lifts of a sum-free subset of
-some $\Z/m$.  
+\ref{thm:regularity}, which gives such a $\lambda$ and a set
+$E \subseteq \R/\lambda\Z$ that is ``more correlated than expected''
+with $A$.  We also show (proposition \ref{prop:regular_sumfree}) that
+regular Ulam sequences are eventually equivalent to lifts of a
+sum-free subset of some $\Z/m$.
 
 To get such results, we first prove a theorem (theorem
 \ref{thm:alpha_finitary}) that \relevant sets are guaranteed (in a
 certain sense) a large Fourier coefficient $\alpha$ in their spectrum.
-We also show in theorem \ref{thm:hole1} that, granting certain
-statements about the Fourier spectrum that we could not prove, that
-circle-method type arguments to entail certain features of this
-distribution.  
+We also show in theorem \ref{thm:hole1}, granting certain statements
+about the Fourier spectrum that we could not prove, that circle-method
+type arguments to entail certain features of this distribution.
 
 Finally, turning our attention from the general study of \relevant
 sets to the Ulam numbers in particular, we consider the combinatorial
@@ -312,14 +300,14 @@ $v$s.  The distributions of these also makes for interesting study.
 And lastly, we might ask what kind of structure would give rise to an
 ``irrationally regular'' sequence with the additive structure that the
 Ulam numbers have.  To this end, we propose in proposition
-\ref{prop:irr_1add} a construction that we know is not regular in the
-earlier sense, but that does have an irrational period.
+\ref{prop:irr_1add} a construction that is not regular in the earlier
+sense, but that does have some non-trivial irrational periodicity.
 
 \chapter{Background}
 
 We will start by giving an overview of some known results that should
 lead us in the right direction.  No arguments in this section are
-original unless noted otherwise.
+original.
 
 \section{Fourier Transform}
 
@@ -332,16 +320,16 @@ $x\in \R/2\pi\Z$:
 
 \[\widehat{A_N}(x) = \frac{1}{N} \sum_{t=0}^{N-1} A(x) e(tx)\]
 
-Also define 
+(Where, recall, $A_N = A \cap [N]$.)  Also define
 
 \[\widehat{A}(x) = \lim_{N \to \infty} \widehat{A_N}(x)\]
 
 if this limit converges.  
 \end{definition}
 
-So, for example, it $A$ is the Ulam numbers, $\widehat{A}(0)$ would be
+So, for example, if $A$ is the Ulam numbers, $\widehat{A}(0)$ would be
 the so-called natural density $\delta$ (which may be around $0.07$) if
-this exists.  Then the observation of Steinerberger is that
+it exists.  Then the observation of Steinerberger is that
 $\widehat{A}(x) = 0$ unless $x \in \alpha\Z$ for the above particular
 choice of $\alpha$, and
 $\widehat{A}(\alpha) \approx 0.8\delta \approx 0.056$, for example.
@@ -378,9 +366,15 @@ If $f : \Z/N \to \C$, then:
   $(\dft_N\inv f)(x) = \frac{1}{N} \overline{(\dft_N f)(-x)}$ for all
   $x \in \Z/N$.
 
-\item (Convolution formula): For two function $f, g : \Z/N \to \C$, we
-  have $(\dft_N fg)(x) = (\dft_N f \ast \dft_N g)(x)$ for all
-  $x \in \Z/N$.
+\item (Convolution formula): For two functions $f, g : \Z/N \to \C$,
+  we have $(\dft_N (fg))(x) = (\dft_N f \ast \dft_N g)(x)$ for all
+  $x \in \Z/N$, where $(F \ast G)(x) = \sum_{t=0}^{N-1} F(t)G(x-t)$ is
+  the convolution of $F$ and $G$.
+
+\item (Cross-correlation formula): For two functions $f, g : \Z/N \to \C$,
+  we have $(\dft_N (f\overline{g}))(x) = (\dft_N f \star \dft_N g)(x)$ for all
+  $x \in \Z/N$, where $(F \star G)(x) = \sum_{t=0}^{N-1} F(t)G(t+x)$ is
+  the cross-correlation of $F$ and $G$.
 
 \item (Parseval's identity): For $f : \Z/N \to \C$, we
   have
@@ -393,16 +387,16 @@ If $f : \Z/N \to \C$, then:
 
 If we want to prove this kind of generalised regularity statement, it
 might help to understand existing proofs of regularity (i.e. that
-consecutive differences are eventually periodic).  We discuss two such
-results in this section.
+consecutive differences are eventually periodic) in cases where this
+is known to hold.  We discuss two such results in this section.
 
 \subsection{Finch's criterion for regularity}
 
 In \cite{finch:em1992}, Finch proves:
 
 \begin{theorem}
-If $A = U(a,b)$ is a 1-additive set containing finitely many even
-elements, then $A$ is regular.  
+  If $A = U(a,b)$ is an Ulam sequence containing finitely many even
+  elements, then $A$ is regular.
 \end{theorem}
 
 The idea of the proof is that if there are finitely many evens, say
@@ -449,38 +443,37 @@ More precisely:
   \end{eqnarray*}
 
   So in fact $B_{n+N+2} = B_{n+2}$ and we can proceed by induction to
-  show the $B_n$ are periodic with period $N$.  Since the $x_n$ are a
-  function of the $B_n$, $x_n$ is therefore also periodic with period
-  $N$.
+  show the $B_n$ are periodic with period $N$.  Since the $x_n$ are
+  determined by the $B_n$, $x_n$ is therefore also periodic with
+  period $N$.
 \end{proof}
 
-Using empirical computations inspired by this criterion, Finch
-conjectures \cite{finch:em1992} that the following is the complete
-list of $(a,b)$ with $U(a,b)$ regular:
+Using numerical computations inspired by this criterion, Finch
+conjectures \cite{finch:em1992} that the following $U(a,b)$ are
+regular:
 
 \begin{conjecture}[Finch]
   $U(a,b)$ has only finitely many even terms if and only if $(a,b)$ is
   in the following list:
 
 \begin{itemize}
-\item $(2,v)$ for $v \geq 5$ and odd.
 \item $(5,6)$.
+\item $(2,v)$ for $v \geq 5$ and odd.
 \item $(u,v)$ for $u \geq 4$ and even.
 \item $(u,v)$ for $u \geq 7$ and odd if $v$ is even.
 \end{itemize}
 \end{conjecture}
 
-In particular the conjecture implies that all of these sequences are
+In particular the this would imply that all of these sequences are
 regular, although it may not be the complete list of regular $U(a,b)$.
 
 \subsection{Regularity of $U(2,2n+3)$}
 
 Using the above criterion, Schmerl and Speigel in
-\cite{schmerl:jct1994} prove: regularity for the 1-additive sets
-$U(2, 2n+3)$:
+\cite{schmerl:jct1994} prove:
 
 \begin{theorem}
-The 1-additive sets $U(2,v)$ for $v > 5$ and odd are regular.
+  The sets $U(2,v)$ for $v > 5$ and odd are regular.
 \end{theorem}
 
 Since they use Finch's criterion, this boils down to showing that each
@@ -587,26 +580,15 @@ there is exactly one solution to $x+y=a$ with $x < y$ in $A$.  The
 condition that $x < y$ is a little hard to capture using standard
 techniques, but, for example, this entails that the number of
 solutions to $x + y = a$ with $x, y \in A$ is at most 3 (namely, the
-unique solution $x+y = a$ above, then also $y+x = a$, and then
-possibly some other $z+z = a$, since the definition of the Ulam
-numbers does not consider this.  For example, 4 is Ulam, and its
+unique solution $x+y = a$ above, then also $y+x = a$, and then at most
+one other solution of the form $z+z = a$, since the definition of the
+Ulam numbers does not consider this.  For example, 4 is Ulam, and its
 unique representation is $1+3=4$, but it also happens that $2+2=4$ and
 2 is also Ulam).
 
 In particular, this implies that if $A_N$ is again the set of Ulam
 numbers up to $N$, then $A_N$ has at most $3|A_N|$ solutions to $x+y =
 z$ with $x, y, z \in A_N$.  
-
-We might ask how special such a condition is on sets of integers.  For
-instance, suppose we take the integers up to $N$ and we generate a
-random subset by including each one with probability $p$.  The size of
-set we expect to get is $pN$.  The number of pairs $x,y$ is $(pN)^2$,
-and of these, we expect $p$ of them have $x+y$ in the set, so we
-expect $p^3 N^2$ solutions to $x+y=z$.  In particular, an arbitrary
-set of density $p$ we expect to have $O(N^2)$ solutions.  Since the
-Ulam numbers appear to have density around $0.07$ but by construction
-have only $O(N)$ solutions to $x+y=z$, they are already somewhat
-special.  
 
 In the interest of understanding what precisely is happening with the
 Ulam numbers, then, we might turn our attention to the more extreme
@@ -633,19 +615,22 @@ situation of sets with no solutions to this equation at all: So-called
 
 When we think about generalising the particular notion of
 ``regularity'' above for the purpose of the Ulam sequence or for
-sum-free sets, the basic idea is that a set should be ``regular'' if
-it has some correlation with a set of the form in example 3.
+sum-free sets, the basic thought is that a set should be ``regular''
+in a more general sense if it has some non-trivial correlation with a
+set of the form in example 3.
 
 \subsection{Decision sequences}
 
 It turns out there is a construction that bijects sum-free sets of
 positive integers with infinite binary sequences.  In words, the
 construction is simple: Take the positive integers in turn starting
-with 1.  Flip a coin.  If it's heads, include it in the set and erase
-all integers that are sums of elements in the set thus far (as these
-could not be in the set if it is to be sum-free).  If tails, do not
-include that integer in the set.  Then move on to the next integer
-that has not been included, excluded, or disqualified.
+with 1.  For each integer, flip a coin.  If the coin shows heads,
+include that integer in the set and erase all integers that are sums
+of pairs of elements in the set thus far (as these cannot be in the
+set if the set is to be sum-free).  If tails, do not include that
+integer in the set.  Then move on to the next integer that has not
+already been included, excluded by a ``tails'' result, or disqualified
+by being erased.
 
 More formally: 
 
@@ -714,25 +699,29 @@ There are many questions about this construction.  For example, it is
 known that if a sum-free set $A$ is regular (as defined
 above--i.e. its sequence of successive differences is ultimately
 periodic), then its decision sequence $\theta\inv(A)$ must also be
-ultimately periodic \cite{cameron:sc1987}.  The converse is believed
-to be false, with one of the simplest apparent counterexamples being
-$\theta(\overline{01001})$ ($\overline{01001}$ meaning the binary
-sequence that repeats the pattern $01001$ forever).  This is a set
-$\{2, 6, 9, 14, 19, 26, 29, 36, 39, 47, 54, 64, 69, 79, 84, 91, 96,
-\ldots\}$ that has been computed extensively and for which no period
-has been identified.  There is other computational evidence that this
-sequence may not be periodic beyond just brute force attempts to
-compute a period found in \cite{calkin:int2005}.
-Nevertheless, there is no known example of an ultimately periodic
-decision sequence for which we can prove its corresponding sum-free
-set is non-regular.
+ultimately periodic \cite{cameron:sc1987}.  Conversely, many periodic
+decision sequences give rise to provably regular sum-rfee sets.  For
+example, if for a finite string $s$, $\overline{s}$ denotes the
+infinite string got by repeating $s$ forever, then all $s$ of length
+five are known to have $\theta(\overline{s})$ regular except
+$s = 01001$, $s = 01010$, and $s = 10010$.  For example,
+$\theta(01001) = \{2, 6, 9, 14, 19, 26, 29, 36, 39, 47, 54, 64, 69,
+79, 84, 91, 96, \ldots\}$ has been computed extensively and no period
+has been identified.  There is other computational evidence in
+\cite{calkin:int2005} that this sequence may not be periodic beyond
+just brute force attempts to compute a period for it.  Nevertheless,
+there is no known example of an ultimately periodic decision sequence
+for which we can actually prove its corresponding sum-free set is
+non-regular.
 
 \subsection{Density and regularity}
 
-We start with the observation that if $A$ is a sum-free set and
-$a \in A$, then $A$ and $A+a$ are disjoint sets of integers.  This
-automatically guarantees that a sum-free set cannot have density in
-the integers of more than $\frac12$.  Specifically: 
+In the world of sum-free sets, the odd integers provide an example of
+a very large sum-free set.  In fact, a theorem of Luczak that we will
+discuss in this section shows that they are the largest example: Any
+sum-free set that has an even number has density bounded by $\frac25$.
+Before we can discuss this, however, we will dwell for a brief moment
+on what we mean by ``density'':
 
 \begin{definition}
   A subset $A \subset \Z^+$ has \textbf{density} $\delta$ if
@@ -783,9 +772,9 @@ contains consecutive elements and where it does not.
 
 \textbf{Case 1: $A$ has no consecutive elements} In the case where $A$
 has an even element but no two consecutive elements, let $t$ be the
-minimal odd positive element of $A-A$ which does exist using the odd
-and even elements, and is not 1, since there are no consecutive
-elements.  Also fix $x, y \in A$ with $t = x-y$.
+minimal odd positive element of $A-A$ which does exist (using the fact
+that $A$ has both odd and even elements), and is not 1 (since there
+are no consecutive elements).  Also fix $x, y \in A$ with $t = x-y$.
 
 This means that if $a \in A$, then $a+t-2$ cannot be in $A$ (else
 $t-2$ would be a smaller odd positive difference than the minimal odd
@@ -798,7 +787,8 @@ three: Since $t=x-y$, this means $B+x-y$ and $A$ are disjoint, meaning
 $B+x$ and $A+y$ are disjoint.  But both of these are contained in
 $A+A$, so they are both also disjoint from $A$.  Thus we have $A$,
 $A+y$, and $B+x$ all disjoint.  If we truncate $A$ to $A_N$, then
-these are all disjoint subsets of $[N+x]$, and so
+$A_N$, $A_N + y$, and $B_N + x$ are all disjoint subsets of $[N+x]$,
+and so
 
 \[2|A_N|+|B_N| \leq N+x\].
 
@@ -814,11 +804,11 @@ But by the definition of $B$, we have two cases for an element of $A$:
 \end{itemize}
 
 So we have the five sets:
-$B, B+1, A\setminus B, A\setminus B + 1, A\setminus B + 2$, and these
-are all pairwise disjoint in $[N+2]$.  (The only one that might not be
-clear is $B+1 \cap A \setminus B + 2$, but if $a \in A\setminus B$ and
-$b \in B$ with $a+2=b+1$, then $a + 1 = b$, giving two consecutive
-elements of $A$ which does not happen.)
+$B, B+1, A\setminus B, (A\setminus B) + 1, (A\setminus B) + 2$, and
+these are all pairwise disjoint in $[N+2]$.  (The only one that might
+not be clear is $(B+1) \cap ((A \setminus B) + 2)$, but if
+$a \in A\setminus B$ and $b \in B$ with $a+2=b+1$, then $a + 1 = b$,
+giving two consecutive elements of $A$ which does not happen.)
 
 Thus $2|B_N| + 3(|A_N| - |B_N|) \leq N+2$, i.e.
 
@@ -845,7 +835,7 @@ simply 1.  So we do something slightly different: This time, we let
 $t$ be any positive element of $A-A$ for which $t+1, \ldots, t+d$ are
 all not in $A-A$.  
 
-\begin{lemma}Such $t$ does exist\end{lemma}
+\begin{lemma}Such $t$ does exist.\end{lemma}
 
 \begin{proof}Since $a, a+1 \in A$, we know $1 \in A-A$.  Then let $t$
   be the maximum of $1, \ldots, a-1$ that is in $A-A$, so nothing from
@@ -898,7 +888,7 @@ $|A_N| + |A_N| + (|A_N| - |B_N|) \leq N+x$ or:
 
 Dropping this into the first inequality and rearranging, we get:
 
-\[2|A_N|+(d-1)(3|A_N|-N-x) \leq N+a+d-\]
+\[2|A_N|+(d-1)(3|A_N|-N-x) \leq N+a+d-1\]
 
 which simplifies to: 
 
@@ -911,23 +901,24 @@ claimed bound follows.
 
 \subsection{Aperiodic sum-free sets}
 
-A construction of Erdos in \cite{erdos:spm1965} supplies an
-example of a sum-free set with density $\frac13$ that has no
-periodicity, namely: Take $\alpha \in \R$ irrational, and let
-$A_\alpha$ be the set of integers $n$ such that $n \mod{\alpha}$ lies
-in $\left(\frac \alpha 3, \frac {2\alpha}{3}\right)$.  $A_\alpha$ is
+A construction of Erdos in \cite{erdos:spm1965} supplies an example of
+a sum-free set with density $\frac13$ that is provably not regular,
+namely: Take $\alpha \in \R$ irrational, and let $A_\alpha$ be the set
+of integers $n$ such that $n \mod{\alpha}$ lies in
+$\left(\frac \alpha 3, \frac {2\alpha}{3}\right)$.  $A_\alpha$ is
 clearly sum-free, since it is sum-free modulo $\alpha$, but for
 irrational $\alpha$, $A_\alpha$ is also not periodic.  That is, for
 every modulus $m$ and every residue class $k$, there is an element of
-$A_\alpha$ congruent to $k$ mod $m$.  
+$A_\alpha$ congruent to $k$ mod $m$.
 
 Indeed, equidistribution results for irrational numbers tell us that
 there the integers are equidistributed modulo any irrational.  For
-example, there is at least one $n$ that reduces to the interval
-$\left(\frac{\alpha}{3m}-k,\frac{2\alpha}{3m}-k\right)$ modulo the
-irrational number $\frac{\alpha}{m}$.  Then it is clear that $mn+k$
-will reduce to $\left(\frac{\alpha}{3},\frac{2\alpha}{3}\right)$ mod
-$\alpha$, meaning that $mn+k \in A_\alpha$ as desired.
+example, there is at least one $n$ that is equivalent to an integer in
+the interval $\left(\frac{\alpha}{3m}-k,\frac{2\alpha}{3m}-k\right)$
+modulo the irrational number $\frac{\alpha}{m}$.  Then it is clear
+that $mn+k$ will reduce to
+$\left(\frac{\alpha}{3},\frac{2\alpha}{3}\right)$ mod $\alpha$,
+meaning that $mn+k \in A_\alpha$ as desired.
 
 %\section{Abelian arithmetic regularity}
 
@@ -964,7 +955,6 @@ $\alpha$, meaning that $mn+k \in A_\alpha$ as desired.
 
 Roth's theorem is about the number 3-term arithmetic progressions
 $x, y, z$ in a set $A \subseteq \Z^+$.  Specifically: 
-
 
 \begin{theorem}[Roth's theorem]
   Let $A \subseteq Z^+$ be a set of positive integers with positive
