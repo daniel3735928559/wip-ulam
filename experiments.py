@@ -516,6 +516,16 @@ def experiment14C(l,k,m):
     print(cs)
     return cs
 
+def experiment15():
+    for s in ["u1_9"]:
+        l = data[s]["seq"]
+        a = data[s]["alpha"]
+        lam = 2*math.pi/a
+        for i in range(7):
+            print('y =',i*lam/6)
+        for i in range(100):
+            print(i+1,real_mod(l[i],lam))
+    
 def experiment16(l):
     """
     Factor each element of l into l[0] and l[1] and compute how many of
