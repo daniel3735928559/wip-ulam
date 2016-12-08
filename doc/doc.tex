@@ -968,16 +968,15 @@ sum-free set $A$ instead has are no solutions to $x+z=y$ (swapping
 around variable names to highlight the similarity), so if we have a
 sum-free set that we believe has positive density, we might wonder
 what the proof of Roth's theorem has to say about it.  (After all, in
-the case of the slightly different equation $x+z=2y$ it says that the
+the case of the slightly different equation $x+z=2y$, it says that the
 set $A$ cannot exist.)
 
 As it turns out, many new techniques in additive combinatorics cut
 their teeth on Roth's theorem, and so there are many proofs, from
 those that use probabilistic techniques to ergodic theory.  We will
-discuss two in particular: The density increment and energy increment
-proofs.  We will not give the complete proofs in either case, but will
-simply work through the steps that we shall return to later and
-outline the rest.
+discuss one in particular: The density increment proof.  We will not
+give the complete proof, but will simply work through the part that is
+relevant to our study and will outline the rest.
 
 \subsection{Density increment proof}
 
@@ -1014,16 +1013,28 @@ still remain by the time we get to this point.
   to $x+z=2y$ in $A$ viewed as a subset of $\Z$.  
 
   If $A$ is a set of density $\delta$ in $\Z/N$, then the number $S$
-  of solutions to $x+z=2y$ is counted by
+  of solutions to $x+z=2y$ is counted by: 
+
+  \[S = \sum_{x, y, z = 0}^{N-1}A(x)A(y)A(z)\delta_{x+y-z}\]
+
+  Where $\delta_x = 1$ if $x = 0$, else $\delta_x = 0$.  Then, writing
+
+  \[\delta_x = \frac{1}{N}\sum_{t=0}^{N-1}e(\frac{2\pi tx}{N}) =
+    \dft_N 1\]
+
+  we can substitute this into our expression for $S$ and rearrange to
+  find: 
+
+  \[S = N^2 \sum_{t=0}^{N-1} \widehat{A_N}(t)\widehat{A_N}(t)\widehat{A_N}(-2t)\]
 
   \begin{eqnarray*}
-    S &=& \frac1N \sum_{t=0}^{N-1} \hat 1_A(t)\hat 1_A(t)\hat 1_A(-2t) \\
-    S &=& \frac1N |A|^3 + \frac1N \sum_{t=1}^{N-1} \hat 1_A(t)\hat 1_A(t)\hat 1_A(-2t) \\
-      &=& \delta^3 N^2 + \frac1N \sum_{t=0}^{N-1} \hat 1_A(t)^2\hat 1_A(-2t) \\
-      &\geq& \delta^3 N^2 - \sup_t |\hat 1_A(-2t)| \frac1N \sum_{t=0}^{N-1} |\hat 1_A(t)|^2 \\
-      &=& \delta^3 N^2 - \sup_t |\hat 1_A(-2t)| \frac1N \sum_{t=0}^{N-1} |1_A(t)|^2 \\
-      &=& \delta^3 N^2 - \sup_t |\hat 1_A(-2t)| |A|\\
-      &=& \delta^3 N^2 - \sup_k |\hat 1_A(k)| \delta N
+    S &=& N^2 \sum_{t=0}^{N-1} \widehat{A_N}(t)\widehat{A_N}(t)\widehat{A_N}(-2t) \\
+    S &=& N^2 \delta^3 + N^2 \sum_{t=1}^{N-1} \widehat{A_N}(t)\widehat{A_N}(t)\widehat{A_N}(-2t) \\
+      &=& \delta^3 N^2 + N^2 \sum_{t=0}^{N-1} \widehat{A_N}(t)^2\widehat{A_N}(-2t) \\
+      &\geq& \delta^3 N^2 - \sup_t |\widehat{A_N}(-2t)| N^2 \sum_{t=0}^{N-1} |\widehat{A_N}(t)|^2 \\
+      &=& \delta^3 N^2 - \sup_t |\widehat{A_N}(-2t)| N \sum_{t=0}^{N-1} |1_A(t)|^2 \\
+      &=& \delta^3 N^2 - \sup_t |\widehat{A_N}(-2t)| N |A|\\
+      &=& \delta^3 N^2 - \sup_k |\widehat{A_N}(k)| \delta N^2
   \end{eqnarray*}
 
   So if there is no large Fourier coefficient--that is, every Fourier
@@ -1035,7 +1046,7 @@ still remain by the time we get to this point.
   lest one solution, as desired.  
   
   If, on the other hand, there is a $k$ such that
-  $|\hat 1_A(k)| \geq \delta^2 N$, then this argument does not
+  $|\widehat{A_N}(k)| \geq \delta^2 N$, then this argument does not
   guarantee a solution.  However, in that case, let $P = d[1,L]$ be
   the arithmetic progression of length$L$ and difference $d$
   $\{d, 2d, \ldots ,Ld\}$ ($d$ to be chosen later).  We want an
@@ -1045,22 +1056,22 @@ still remain by the time we get to this point.
   can analyse using Fourier analysis:
   
   \begin{eqnarray*}
-    \hat Q(s) = \hat 1_A(s) \overline{\hat 1_P(s)}
+    \widehat{Q}(s) = \widehat{A_N}(s) \overline{\widehat{P}(s)}
   \end{eqnarray*}
   
   Further, we know that for all $s \neq 0$,
-  $\sum_a Q(a) \geq |\hat Q(s)|$ (looking at the definition of the
-  Fourier transform and using the triangle inequality).  So in
+  $\sum_a Q(a) \geq |\widehat{Q}(s)|$ (looking at the definition of
+  the Fourier transform and using the triangle inequality).  So in
   particular, for $s = k$ (the large Fourier coefficient):
 
 \begin{eqnarray*}
-  \sum_a Q(a) &\geq& |\hat Q(k)| \\
-              &=& |\hat 1_A(k)| |\hat 1_P(k)| \\
-              &\geq& \epsilon N |\hat 1_P(k)| 
+  \sum_a Q(a) &\geq& |\widehat{Q}(k)| \\
+              &=& |\widehat{A_N}(k)| |\widehat{P}(k)| \\
+              &\geq& \epsilon N |\widehat{P}(k)| 
 \end{eqnarray*}
 
-Thus for some $a$, $Q(a)/N \geq \delta^2 |\hat 1_P(k)|$.  We can
-select $d$ and $L$ such that $|\hat 1_P(k)| \geq L/2$, so for some
+Thus for some $a$, $Q(a)/N \geq \delta^2 |\widehat{P}(k)|$.  We can
+select $d$ and $L$ such that $|\widehat{P}(k)| \geq L/2$, so for some
 $A$, $Q(a)/N \geq \epsilon L/2$.  In particular, $A$ intersected with
 an arithmetic progression of length $L$ has density
 $\delta + \epsilon/2$, meaning we have increased the density,
@@ -1147,7 +1158,7 @@ $\FF_q^n$ such that the equation $\alpha a_1 + \beta a_2 + \gamma a_3
   
   \[|\supp(P_d)| >= m_d - q^n + |A|\]
   
-  Now for the last bit: If we have a degree-d polynomial $P$
+  Now for the last bit: If we have a degree-$d$ polynomial $P$
   vanishing on the complement of $2A$, then we can form the $|A|$ by
   $|A|$ matrix $M$ whose $i,j$ entry is $P(a_i + a_j)$ where $a_i$ are
   the elements of $A$.  First of all, because for $i$ and $j$
@@ -1158,11 +1169,11 @@ $\FF_q^n$ such that the equation $\alpha a_1 + \beta a_2 + \gamma a_3
   
   We can brutally expand this polynomial into a sum of monomials:
   
-  \[P(a_i + a_j) = \sum_{\text{monomials m,m' of degree d or less}} c_{m,m'} m(a_i) m'(a_j)\]
+  \[P(a_i + a_j) = \sum_{\text{monomials $m$,$m'$ of degree $d$ or less}} c_{m,m'} m(a_i) m'(a_j)\]
   
   Further, in each term at least one of m and m' has degree at most d/2, so we can sum over 
   
-  \[P(a_i + a_j) = \displaystyle\sum_{\text{monomials m of degree d/2 or less}} c_{m} m(a_i) F_m(a_j) + c'_m m(a_j) G_m(a_i)\]
+  \[P(a_i + a_j) = \displaystyle\sum_{\text{monomials $m$ of degree $d/2$ or less}} c_{m} m(a_i) F_m(a_j) + c'_m m(a_j) G_m(a_i)\]
   
   So $M$ is a linear combiantion of $2 m_{d/2}$ matrices $(m(a_i)
   F_m(a_j))$ each of which, as the exterior product of two vectors, has
@@ -1178,14 +1189,14 @@ $\FF_q^n$ such that the equation $\alpha a_1 + \beta a_2 + \gamma a_3
   
   \[|A| \leq 2 m_{d/2} - m_d + q^n\]
 
-  Choosing a particular value of d and bounding these quantities is
+  Choosing a particular value of $d$ and bounding these quantities is
   all that remains.  In \cite{ellenberg:preprint} they take
   $d = 2(q-1)n/3$ and use Cramer's theorem to bound $m_d$ and related
   quantities in terms of the claimed exponential.  We refer to the
   paper for details.
 \end{proof}
 
-\chapter{Questions and Definitions}
+\chapter{Questions}
 
 Bearing in mind this landscape of ideas, theorems, and techniques, we
 now raise some questions in the particular context of the Ulam numbers
@@ -1194,6 +1205,8 @@ around them.  In addition, we shall give definitions in this section
 to allow us to formulate our questions precisely.
 
 \section{Ulam sequences}
+
+Recall the definition of an Ulam sequence: 
 
 \begin{definition}
   The \textbf{Ulam sequence} starting with positive integers $a$, $b$
@@ -1211,14 +1224,14 @@ One of the first questions that was asked by Ulam himself about the
 Ulam sequence $\ulam{1}{2}$ was: 
 
 \begin{question}\label{qn:density}
-  Does $\ulam{1}{2}$ have positive uppper density?
+  Does $\ulam{1}{2}$ have positive (uppper) density?
 \end{question}
 
 For all examples of Ulam-like sequences where we know the answer to
-this question, the way we know is by first establishing a regularity
+this question, the way we do so is by first establishing a regularity
 result, at which point positive density is immediate.  Given the known
-regularity results concerning 1-additive sequences, a very basic
-question about the Ulam numbers then would be:
+regularity results concerning Ulam sequences, a very basic question
+about the Ulam numbers then would be:
 
 \begin{question}\label{qn:irregular}
   Can we prove the Ulam numbers are not regular (in the sense of
@@ -1261,7 +1274,7 @@ the spectrum:
 \end{question}
 
 \begin{question}\label{qn:decay}
-  How quickly does $\widehat{1_A}(k\alpha)$ decay with $k$?
+  How quickly does $\widehat{A}(k\alpha)$ decay with $k$?
 \end{question}
 
 Moving on from $\ulam{1}{2}$, we can also ask about similar sequences: 
@@ -1331,8 +1344,8 @@ We start noting the same dichotomy that existed with 1-additive sets
 seems present for sum-free sets as well: Many sum-free sets with
 easy-to-describe decision sequences (much as the procedure for
 generating Ulam numbers was in algorithmic) are provably regular, but
-for some we do not know.  For instance, we might start with the
-aforementioned ``smallest'' three examples: 
+for some we do not know whether they are regular.  For instance, we
+might start with the aforementioned ``smallest'' three examples:
 
 \begin{question}\label{qn:sumfree_regularity}
   Are any of the sets $\theta(01001), \theta(01010)$, or
@@ -1368,9 +1381,9 @@ $\frac25$--a meaningful improvement from the automatic bound of
 $\frac12$ on the density of an arbitrary sum-free set.
 
 On the other hand, the construction of Erdos tells us that there exist
--sum-free sets with density $\frac13$ whose image mod $m$, for all $m$,
+sum-free sets with density $\frac13$ whose image mod $m$, for all $m$,
 is everything.  We might ask if there is any condition we can prove in
-the gap between $\frac13$ and $\frac25$.  
+the gap between $\frac13$ and $\frac25$.
 
 \begin{question}\label{qn:irregularity_density}
   If $m$ is a positive integer, what is the maximal density $d_m$ of a
@@ -1392,19 +1405,15 @@ For example,
   $(2+5\Z) \cup (3+5\Z)$ covers every congruence class mod 4.
 \end{itemize}
 
-Lastly, thinking back on the arithmetic regularity lemma, we consider
-the decpomosition $1_A = f_{str} + f_{sml} + f_{unf}$ for $A$ the
-various sum-free or nearly sum-free sets (e.g. the Ulam sequence)
-under consideration.  
+Lastly, thinking back on our definition of \relevant sets, all our
+examples have $\epsilon \geq 1$.  We might wonder what we would
+observe in a case that is closer to the case of random sets would look
+like: 
 
-\begin{question}\label{qn:fourier_complexity_density}
-  What can we deduce about the structured component from our knowledge
-  of the structure of $A$?  For example, $f_{str}$ comes with bounded
-  Fourier complexity.  How does the spectrum of $f_{str}$ relate to
-  the structure and/or density of $A$?  For example, if $f_{str}$ has
-  spectrum consisting of $\alpha\Z$ and $\beta\Z$ for two independent
-  irrational $\alpha, \beta$, does this guarantee some bound on the
-  density of $A$?  
+\begin{question}
+  Is there anything we can say about about a set $A \subseteq \N$
+  where $C'N^{2-\epsilon'} \leq T(A_N) \leq CN^{2-\epsilon}$ for some
+  $\epsilon < \epsilon' < 1$ and constants $C, C' > 0$, say?
 \end{question}
 
 \chapter{Strategy}
