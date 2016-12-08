@@ -367,14 +367,16 @@ If $f : \Z/N \to \C$, then:
   $x \in \Z/N$.
 
 \item (Convolution formula): For two functions $f, g : \Z/N \to \C$,
-  we have $(\dft_N (fg))(x) = (\dft_N f \ast \dft_N g)(x)$ for all
+  we have \[(\dft_N (fg))(x) = (\dft_N f \ast \dft_N g)(x)\] for all
   $x \in \Z/N$, where $(F \ast G)(x) = \sum_{t=0}^{N-1} F(t)G(x-t)$ is
   the convolution of $F$ and $G$.
 
-\item (Cross-correlation formula): For two functions $f, g : \Z/N \to \C$,
-  we have $(\dft_N (f\overline{g}))(x) = (\dft_N f \star \dft_N g)(x)$ for all
-  $x \in \Z/N$, where $(F \star G)(x) = \sum_{t=0}^{N-1} F(t)G(t+x)$ is
-  the cross-correlation of $F$ and $G$.
+\item (Cross-correlation formula): For two functions
+  $f, g : \Z/N \to \C$, we have
+  \[(\dft_N (f\overline{g}))(x) = (\dft_N f \star \dft_N g)(x)\] for
+  all $x \in \Z/N$, where
+  $(F \star G)(x) = \sum_{t=0}^{N-1} F(t)G(t+x)$ is the
+  cross-correlation of $F$ and $G$.
 
 \item (Parseval's identity): For $f : \Z/N \to \C$, we
   have
@@ -3032,6 +3034,7 @@ $a_n$ for $n \leq 10^4$.
 \begin{table}
 \caption{Large summands}\label{tab:large_summands}
 \centering
+\small
 \begin{tabular}{llll}
   $|n : a_i + a_{n-j} = a_n|$ & $a_i$ & $i$ & $n-j$
   \csvreader{datafiles/large_summands.csv}{}
@@ -3065,7 +3068,6 @@ a summand and $\normrz{a/\lambda}$ in the resulting table
 \ref{tab:small_summands}, computed by \icode{experiment12}.
 
 \begin{table}
-\small
 \caption{Small summands}\label{tab:small_summands}
 \centering
 \begin{tabular}{lll}
