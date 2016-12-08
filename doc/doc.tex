@@ -233,7 +233,7 @@ example, in a randomly generated set $B$ of density $\delta$, we might
 expect that $B_N$ has about $\delta N$ elements, and hence
 $\delta^2 N^2$ pairs of elements, of whose sums maybe $\delta$ will be
 in $A$.  So we expect about $\delta^3 N^2$, or, generally,
-$\Omega(N^2)$ such sums.  If we have fewer of these, say
+$\Theta(N^2)$ such sums.  If we have fewer of these, say
 $O(N^{2-\epsilon})$ for some $\epsilon > 0$, then that suggests that
 the set cannot be purely random.  So we define:
 
@@ -350,7 +350,7 @@ definition:
 This definition satisfies many properties, which are standard from
 Fourier analysis and additive combinatorics \cite{tao:cup2006}:
 
-\begin{proposition}
+\begin{proposition}\label{prop:fourier}
 If $f : \Z/N \to \C$, then: 
 
 \begin{itemize}
@@ -1420,11 +1420,11 @@ like:
 
 \section{Overview}
 
-In this document we shall unfortunately not answer all these
-questions, nor supply a complete understanding of the observed
-phenomena.  We do, however, propose a strategy that we hope will lead
-to such an understanding, and we shall partially execute certain
-components of that strategy.
+In this document we shall unfortunately not answer all the questions
+from the previous section, nor supply a complete understanding of the
+observed phenomena.  We do, however, propose a strategy that we hope
+will lead to such an understanding, and we shall partially execute
+certain components of that strategy.
 
 Broadly, we will first try to understand the Fourier spectrum, and
 then determine what this says about the distrubution.  This happens in
@@ -1446,9 +1446,9 @@ others.
 
 \section{Outline}
 
-Before we embark on this journey, we provide a little fuller picture
+Before we embark on this journey, we provide a somewhat fuller picture
 of what we intend to actually do towards each of the steps and in the
-remainder of this document: 
+remainder of this document:
 
 \begin{enumerate}
 \item First, we study the large Fourier coefficient $\alpha$ and
@@ -1466,8 +1466,8 @@ remainder of this document:
     be rational with numerator 3.
   \item We prove the existence of an $\alpha$ for \relevant sets $A$
     (truncated at $N$) at which the Fourier transform has size
-    comparable to $|A_N|$.  In fact, we show that the real part of the
-    Fourier transform itself must be large compared to $|A_N|$.
+    comparable to $|A_N|$.  In fact, we show that even the real part
+    of the Fourier transform must itself be large compared to $|A_N|$.
   \end{enumerate}
 
 \item We then study the complete spectrum of various \relevant sets,
@@ -1492,8 +1492,8 @@ remainder of this document:
   deduce from the definition as well as from the spectral information
   we have gathered in the previous steps.  Specifically:
   \begin{enumerate}
-  \item First the definition of such $A$ means that whether a given
-    $x$ is in $A$ is controlled largely by $r_{A+A}(x)$--the number of
+  \item The definition of such $A$ means that whether a given $x$ is
+    in $A$ is controlled largely by $r_{A+A}(x)$--the number of
     representations of $x$ as a sum of elements of $A$.  So we start
     by studying the distribution of this.  We use a computer to
     generate plots of this that suggest a high degree of regularity in
@@ -1503,8 +1503,9 @@ remainder of this document:
     plausible conjecture about the behaviour of this function.
   \item Having come to some understanding of $r_{A+A}$ using the
     Fourier spectrum, we will use this to attempt to deduce features
-    of the distribution itself, ultimately proving a mild theorem that
-    the distribution is at least non-uniform.
+    of the distribution itself, ultimately proving a mild theorem
+    that, supposing our computational understanding of the spectrum is
+    correct, the distribution is at least non-uniform.
   \end{enumerate}
 
 \item Finally, we will focus specifically on $\ulam{1}{2}$ and turn to
@@ -1533,12 +1534,12 @@ remainder of this document:
 When we refer to computations done by computer, we will mention the
 code that was use to execute them by referring to various programs in
 the repository \cite{ross:gh2016}.  In most cases, we will be
-referring to the particular file \icode{/experiments.py}.  For example,
-when we talk about \icode{experiment17}, we mean the function
+referring to the particular file \icode{/experiments.py}.  For
+example, when we talk about \icode{experiment17}, we mean the function
 \icode{experiment17()} in the \icode{experiments.py} file in that
-repository.  Sometimes we will refer to code in other files as well
-from the same repository, and will mention where the code in question
-is located in each case.
+repository.  Sometimes we will refer to code in other files from the
+same repository, and will mention where the code in question is
+located in each case.
 
 \chapter{Spectrum}
 
@@ -1556,7 +1557,7 @@ correlated with $t+\frac{2\pi}{\alpha} k$ being in $A$ for various
 integer $k$.  In other words, $\lambda = \frac{2\pi}{\alpha}$ behaves
 somewhat like a period for $A$.
 
-\subsection{Computing $\alpha$}
+\subsection{Computing $\lambda$}
 
 We will start by computing this period for several $U(a,b)$ which are
 not believed to be regular by virtue of having only finitely many even
@@ -1592,20 +1593,17 @@ There are a few possible patterns observed:
   at around $0.416$ for $4 \leq n \leq 10$, and then alternates
   between $0.708$ and $0.208$ thereafter.  We also note that $2 \times
   0.708 = 1.416$.  
-\item Indeed, there is a marked change in the value of the maximal
-  Fourier coefficient for $\ulam{1}{n}$ between $4 \leq n \leq 10$ and
-  $n > 10$.
 \item None of the $\lambda$s we have computed appear to be obviously
   rational.  (By contrast, when we repeat this in \icode{experiment1A}
   with a known regular Ulam sequence such as $\ulam{2}{5}$, we get
   $\lambda$ that is within $10^{-6}$ of 2).
 \item Though we have only a small amount of data, the first few
-  $\lambda_{3,n}$ look like they might alternate around and converge
+  $\rho_{3,n}$ look like they might alternate around and converge
   to some value close to 3.
 \end{enumerate}
 
 Similarly, we can compute the $\alpha$ maximising
-$\widehat{1_A}(\alpha)$ for various sum-free sets $A$--for example,
+$\widehat{A}(\alpha)$ for various sum-free sets $A$--for example,
 those that are believed to be non-periodic.  In particular, we will
 look at $s = 01001, s = 01010$, and $s = 10010$ by running
 \icode{experiment2}, with results in table \ref{tab:sumfree_alpha}.
@@ -1627,11 +1625,11 @@ $s$ & $\alpha_{s}$ & $\lambda_{s}$ & $|\widehat{1_s}(\alpha_{s})|$ &
 As mentioned earlier, the existence of a large Fourier coefficient
 $\alpha$ for one of these sets $A$ sugggests some kind of pattern or
 bias modulo $\lambda = \frac{2\pi}{\alpha}$.  If this $\lambda$ were
-rational, say $\frac{m}{k}$, then this would mean that $kA$ is very
+rational, say $\frac{m}{k}$, then this would mean that $kA$ is
 non-uniformly distributed modulo $m$.  In particular, we might wonder
 whether $\lambda$ is well-approximated by a rational number or, if
 not, whether it is at least annihilated by some low-complexity
-polynomial.  
+polynomial.
 
 To get rational approximations for $\lambda$, we run the program
 \icode{cf\_alpha.py} in SAGE to compute continued fractions and
@@ -1736,7 +1734,7 @@ But now, to ensure that $x_i$ are all in $A$, we will need some
 elements that are 0 mod 3 to be the small summands of the $x_i$.  Say
 $y_1, \ldots, y_n$ are all the elements of $A$ that are 0 mod 3, say
 in increasing order.  But then $y_i + y_n$ must not be in the sequence
-for any $i$, whcih this means that we need some further elements
+for any $i$, which this means that we need some further elements
 $a_i, b_i$ that are 1 and 2 mod 3 respectively to be in the sequence
 and with $a_i+b_i = y_i + y_n$.  And we can continue like this, where
 the more elements that we find must be in the set, the more elements
@@ -1767,13 +1765,14 @@ from this polynomial is significantly less than $\frac{1}{N}$.
 
 In our case, we use SAGE's LLL code in \icode{alg\_lambda.py} to
 compute.  In this case, we use $N = 10^{10}$, so if we get a
-polynomial $f$ out then we will want $f(\lambda) << 10^{-10}$ for $f$
+polynomial $f$ out then we will want $f(\lambda) \ll 10^{-10}$ for $f$
 to be a good candidate for minimal polynomial.  The results are in
 table \ref{tab:minpoly}.
 
 \begin{table}
 \caption{Candidate minimal polynomials for $\lambda_A$}\label{tab:minpoly}
 \centering
+\small
 \begin{tabular}{lll}
   $A$ & $f(\lambda)$ & $f(X)$ 
   \csvreader{datafiles/min_poly_some.csv}{}
@@ -1854,7 +1853,7 @@ explains this:
   we substitute this into our expression for $T(A)$, then we will only
   be counting solutions to $x+y=z$ modulo $N$.  However, because
   $A \subseteq [N]$, solving $x+y=z$ in $\Z$ is the same as solving it
-  modulo $2N$ (which we will fix later).  Thus we can use the formula:
+  modulo $2N$.  Thus we can use the formula:
 
   \[\delta_x = \frac{1}{2N} \sum_{t=0}^{2N-1} e(\frac{2\pi x t}{2N}) = \dft_{2N} 1\]
 
@@ -1886,9 +1885,11 @@ explains this:
   
   \[cN^{2-\epsilon} \geq N^2 \frac{\delta^3}{2} - \rho 4 N^2 \sum_{t=1}^{2N-1} |(\dft_{2N} A)(t)|^2\]
 
-  Now, by Plancherel we know that,
-  $\sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2 = \frac{1}{2N}
-  \sum_{t=0}^{2N-1} |A(t)|^2 = \frac{1}{2N} |A| = \frac{\delta}{2}$,
+  Now, by Plancherel we know that
+
+  \[\sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2 = \frac{1}{2N}
+  \sum_{t=0}^{2N-1} |A(t)|^2 = \frac{1}{2N} |A| = \frac{\delta}{2}\]
+
   so:
 
   \[cN^{2-\epsilon} \geq N^2 \frac{\delta^3}{2} - \rho \cdot 4N^2
@@ -2048,8 +2049,9 @@ Some remarks:
   actually at $\alpha$ and can only be observed at rational $k/N$ that
   are good approximations to $\alpha$.  In particular, we also observe
   that for some $N$, the largest Fourier coefficient might honestly
-  only be as large as $\frac{\delta^2}{2}$.  In particular, an
-  approach that gives a large Fourier coefficient for all.
+  only be as large as $\frac{\delta^2}{2}$.  So any approach that
+  gives a large Fourier coefficient in $\frac{2\pi}{N}\Z/\Z$ for all
+  $N$ should not give a Fourier coefficient as large as we expect.
 \end{remark}
 
 % \begin{remark}
@@ -2123,7 +2125,7 @@ and search for corresponding multiples of $\alpha$ using
 \end{center}
 \end{table}
 
-Here, it appears that the only large Fourier coefficients are thosse
+Here, it appears that the only large Fourier coefficients are those
 in $\alpha\Z$.  However, if we run the same computations for other
 sequences such as $\ulam{1}{3}$, $\ulam{1}{4}$, $\ulam{1}{9}$,
 $\ulam{2}{3}$ or the various $\theta(s)$, we see some values that we
@@ -2200,7 +2202,7 @@ nonzero Fourier coefficients on $\alpha\Z$ and on $\beta\Z$.
 The question is whether the values $\beta$ observed in the above
 computations that we could not match with an element of $\alpha\Z$
 actually represent another component in the spectrum.  In other words,
-we want to check whetherthe growth of $N\widehat{A_N}(\beta)$ as
+we want to check whether the growth of $N\widehat{A_N}(\beta)$ as
 $N \to \infty$ is $o(N)$, and we are only seeing an unusually large
 initial value.  
 
@@ -2213,7 +2215,7 @@ in table \ref{tab:betas}.
   \ldots, 10\}$}\label{tab:betas}
 \begin{center}
 \begin{tabular}{lll}
-  $A$ & $\beta$ & $\widehat{A_{1000k}}(\beta)$
+  $A$ & $\beta$ & $\widehat{A_{1000k}}(\beta)$ for $k = 2, \ldots, 10$
   \csvreader{datafiles/betas.csv}{}
   {\\$\csvcoli$ & \csvcolii & \csvcoliii}
 \end{tabular}
@@ -2228,10 +2230,10 @@ either way, so we leave this as a question for further investigation.
 Recall from the background section our intuition on why smoother
 functions have better decay in their Fourier coefficients: The Fourier
 coefficient $\widehat{f}(\xi) = \int_0^1 f(t) e^{2\pi i t \xi} dt$ can
-be integrated by parts, which will replace $f(t)$ with $f'(t)$ (which
-if $f$ is well-behaved should be bounded or otherwise controlled), and
-$e^{2\pi i t \xi}$ with the integral of this, which as $\xi$ grows,
-will wind faster and faster around the unit circle, giving this
+be integrated by parts, which will replace $f(t)$ with $f'(t)$ (which,
+if $f$ is well-behaved, should be bounded or otherwise controlled),
+and $e^{2\pi i t \xi}$ with the integral of this, which as $\xi$
+grows, will wind faster and faster around the unit circle, giving this
 integral more and more cancellation and therefore making it smaller.
 In particular, the antiderivative of $e^{2\pi i t \xi}$ involves a
 $\frac{1}{\xi}$, so the decay should go like $\frac{1}{\xi}$.
@@ -2371,12 +2373,12 @@ distributions.
 \section{Distrubution of $r_{A+A}$}
 
 The first observation is that the common feature of the \relevant sets
-is that being in $x$ being in such a set $A$ is a function of how many
-ways we can write $x$ as a sum $x = a+b$ for $a, b \in A$.  To study
-this, we make the following definitions: 
+that we have been considering is that $x$ being in one of these sets
+$A$ is determined by how many ways we can write $x$ as a sum $x = a+b$
+for $a, b \in A$.  To study this, we make the following definitions:
 
-\begin{definition}Define the \textbf{sum representation counting function}
-  $r_{A+A}$ by 
+\begin{definition}For $A \subseteq \N$, define the \textbf{sum
+    representation counting function} $r_{A+A}$ by
 
   \[r_{A+A}(x) = \left|\{(a,b) \in A^2 : a+b = x\}\right|\]
 
@@ -2415,12 +2417,13 @@ sum-free sets.
 
 So if our assertion is that whether a given $x$ is in $A$ is strongly
 affected by the value of $x$ modulo the associated $\lambda_A$, then
-we might wonder whether it appears that $r_{A+A}(x)$ is affected.  We
-can do this by taking the various congruence classes $a$ modulo
-$\lambda$ and computing the average value of $r_{A+A}(x)$ for $x$
-ranging over integers congruent to $a$ modulo $\lambda$.  Plotting
-these for the first $10^4$ terms of various sequences we get the
-plots in figure \ref{fig:rAA}.
+we might wonder how $r_{A+A}(x)$ depends on the value of $x$ modulo
+$\lambda_A$.  We can do this by taking the various congruence classes
+$a$ modulo $\lambda$ and computing the average value of $r_{A+A}(x)$
+for $x$ ranging over integers congruent to $a$ modulo $\lambda$.  To
+do this in practice, we use a rational approximation to $\lambda$.
+Plotting these for the first $10^4$ terms of various sequences we get
+the plots in figure \ref{fig:rAA}.
 
 \begin{figure}
 \caption{Plots of $r_{A+A}$ modulo $\lambda_A$ for various $A$}\label{fig:rAA}
@@ -2463,9 +2466,10 @@ very middle.
 We shall address these observations in the following sections, but we
 give a word first about the strategy: The benefit of studying
 $r_{A+A}(x)$ is that, being a convolution, we understand its Fourier
-transform.  More precisely, truncate $A$ at $N$ and view
+transform.  More precisely, truncate $A$ at $N$ and view (as before)
 $r_{A_N + A_N}(x)$ and $r_{A_N - A_N}(x)$ as functions on $\Z/2N$.
-Then $(\dft_{2N}r_{A_N + A_N}) = (\dft_{2N}A_N)^2$ and
+Then by the convolution theorem (in proposition \ref{prop:fourier}),
+we have $(\dft_{2N}r_{A_N + A_N}) = (\dft_{2N}A_N)^2$ and
 $(\dft_{2N}r_{A_N - A_N}) = |\dft_{2N}A_N|^2$.  Using Fourier
 inversion, then, we can compute $r_{A_N + A_N}$ and $r_{A_N - A_N}$ in
 terms of the Fourier coefficients of $A$:
@@ -2508,9 +2512,10 @@ We compute in \icode{experiment7B} the values of
 our various sequences $A$.  We let $\widetilde{R}_N$ be the maximum
 value we see for this quantity over all the $x$ we sample, and put
 into table \ref{tab:rAA_est_error}.  Already with the relatively
-conservative value of $c' = \sqrt{2}$, we find these to be small
-relative to $N$, suggesting that with careful tuning of this parameter
-we could estimate $r_{A+A}(x)$ as accurately as needed.  
+conservative (relative to observed values of $d_N$) value of
+$c' = \sqrt{2}$, we find these to be small relative to $N$, suggesting
+that with careful tuning of this parameter we could estimate
+$r_{A+A}(x)$ as accurately as needed.
 
 \begin{table}
 \caption{Estimation of error in using $\alpha\Z$ to compute
@@ -2644,7 +2649,7 @@ There are many observations to be made, among which:
   middle third modulo $\lambda$.  
 \end{enumerate}
 
-Of these, we will examine in this section the first two
+Of these, we will examine in this section the first two.
 
 As a useful piece of notation for expressing the idea of intervals
 such as ``the middle third modulo $\lambda$'', we will define as is
@@ -2695,18 +2700,18 @@ do not currently have.
 However, at least for truly sum-free sets, we can still pull out a
 theorem (as always, conditional on small error) of this kind by using
 the fact that for a sum-free set, an element can be in the set $A$
-only if $r_{A-A}(x) = 0$ also.  And, recalling \ref{eqn:rAAsum} and
-\ref{eqn:rAAsum_err}, this we can compute using only the magnitudes of
-the Fourier coefficients, allowing us to ignore the argument issue
-completely: 
+only if $r_{A-A}(x) = 0$ also.  And, recalling equations
+\ref{eqn:rAAsum} and \ref{eqn:rAAsum_err}, this we can compute using
+only the magnitudes of the Fourier coefficients, allowing us to ignore
+the argument issue completely:
 
 \begin{theorem}\label{thm:hole1}
   Let $A$ is a \relevant set of positive integers with
   $|A_N| = \delta N$.  Suppose that $A$ has spectrum $\alpha\Z$, that
-  it satisfes \ref{conj:decay}, and that the error in
-  \ref{eqn:rAAsum_err} in fact satisfies $R_N = o(1/N)$.  Then for
-  some $\eta > 0$, $\norm{x/\lambda} < \eta$ implies
-  $r_{A_N-A_N}(x) = O(N)$.
+  it satisfes conjecture \ref{conj:decay}, and that the error in
+  equation \ref{eqn:rAAsum_err} in fact satisfies $R_N = o(1/N)$.
+  Then for some $\eta > 0$, $\norm{x/\lambda} < \eta$ implies
+  $r_{A_N-A_N}(x) = \Omega(N)$.
 \end{theorem}
 
 \begin{proof}
@@ -2715,43 +2720,43 @@ completely:
   $x \in A_N - A_N$ viewed inside $\Z/2N$ iff $x \in A_N - A_N$ in
   $\Z$.  So we can use equation \ref{eqn:rAAsum_err}.  In preparation
   for doing this, let $|\widehat{A_N}(\alpha)| = \rho$ (we know
-  $\rho > \frac{\delta^2}{2} - O(1/N)$ by \ref{thm:alpha_finitary}).
-  Finally, let $k_0$ be such that
+  $\rho > \frac{\delta^2}{2} - O(1/N)$ by \ref{thm:alpha_finitary}),
+  and let $k_0$ be such that
 
   \[\delta^2 + \rho^2 - 4 C^2 \sum_{k=k_0}^\infty \frac{1}{k^2} > 0\]
 
   (which we know is possible since $\delta > 0, \rho > 0$, and since
-  the the sum converges, and so approaches 0 as $k_0 \to 0$).  Then if
-  we guarantee that $\normrz{k_0 x/\lambda} < \frac14$ (so that
-  $\Re(e(k\alpha x)) > 0$ for all $k < k_0$), then as $N$ gets large, we
-  have:
+  the the sum converges, and so approaches 0 as $k_0 \to \infty$).
+  Then if we choose $\eta$ to guarantee that
+  $\normrz{k_0 x/\lambda} < \frac14$ (so that $\Re(e(k\alpha x)) > 0$
+  for all $k < k_0$), then as $N$ gets large, we have:
 
   \begin{eqnarray*}
     r_{A_N - A_N}(x) &=& 2N \left(\sum_{|k| < c\sqrt{N}}
                        (\dft_{2N}A)(k\alpha)^2 e(k\alpha x) + R_N\right)\\
                      &\geq& N \delta^2 + 2N
-                            |\widehat{1_A}(\alpha)|^2
+                            |\widehat{A_N}(\alpha)|^2
                             \Re(e_N(\alpha x)) - 2N \sum_{|k| \geq k_0}
-                            |\widehat{1_A}(k\alpha)|^2\\
+                            |\widehat{A_N}(k\alpha)|^2\\
   \end{eqnarray*}
 
   where here, we are using that
-  $\Re(|\widehat{1_A}(k\alpha)|^2 e(k\alpha x)) \geq 0$ for
+  $\Re(|\widehat{A_N}(k\alpha)|^2 e(k\alpha x)) \geq 0$ for
   $1 < k < k_0$ by choice of $\eta$, and that
-  $\Re(|\widehat{1_A}(k\alpha)|^2 e(k\alpha x)) \geq
-  -|\widehat{1_A}(k\alpha)|^2$ for $k \geq k_0$.  So: 
+  $\Re(|\widehat{A_N}(k\alpha)|^2 e(k\alpha x)) \geq
+  -|\widehat{A_N}(k\alpha)|^2$ for $k \geq k_0$.  So: 
 
   \begin{eqnarray*}
     r_{A_N - A_N}(x) &\geq& \frac{\delta^2}{2} N + \frac{\rho^2}{2} N
-                            - 2N \sum_{|k| \geq k_0} |\widehat{1_A}(k\alpha)|^2\\
+                            - 2N \sum_{|k| \geq k_0} |\widehat{A_N}(k\alpha)|^2\\
                      &\geq& \frac{\delta^2}{2} N + \frac{\rho^2}{2} N
                             - 2C^2 N \sum_{|k| \geq k_0}
                             \frac{1}{k^2}\\
   \end{eqnarray*}
 
 
-  Using theorem \ref{conj:decay} to conclude
-  $|\widehat{1_A}(k\alpha)| \leq \frac{C}{k}$ for some constant $C$.
+  Using \ref{conj:decay} to conclude
+  $|\widehat{A_N}(k\alpha)| \leq \frac{C}{k}$ for some constant $C$.
 
   \begin{eqnarray*}
     &\geq& \frac{N}{2}\left(\delta^2 + \rho^2 - 4C^2 \sum_{|k| \geq k_0} \frac{1}{k^2}\right)\\
@@ -2771,10 +2776,16 @@ then there is an $\eta > 0$ such that $\normrz{x/\lambda_A} < \eta
 \implies x \notin A$.  
 \end{corollary}
 
-Likewise, for an Ulam sequence $A$, this gives us that any element
-within $\eta$ of $\lambda\Z$ will appear as a summand for elements of
-$A_N$ some $\Omega(N)$ times.  We will return to this observation in
-section 7.  
+We can make an analogous statement for Ulam sequences, noting that if
+$x$ is in an Ulam sequence $A$ and $r_{A_N - A_N}(x)$ is also large,
+then this means that $x$ is a summand for many elements of $A$: 
+
+\begin{corollary}If $A$ is an Ulam sequence, then there is an
+  $\eta > 0$ such that $\normrz{x/\lambda_A} < \eta$ implies that $x$
+  appears as a summand for elements of $A_N$ some $\Omega(N)$ times.
+\end{corollary}
+
+We will seem examples of this observation in section 7.
 
 % Also, one will note that the bound we used on the tail sum in the
 % above proof was very crude--simply the triangle inequality.  In fact,
@@ -2851,14 +2862,15 @@ $\lambda$, as we do in \icode{experiment10}, we get figure
 \end{center}
 \end{figure}
 
-Which share many features with the distributions of the Ulam numbers
-modulo $\lambda$, bolstering the idea that it isn't the feature of
-``being an Ulam number'' as such that creates the distribution, but
-more just the relationship between $r_{A+A}(x)$ and being in $A$.
-Specifically, for \relevant sets $A$, $x \in A \iff r_{A+A}(x)$ is
-small, whether it is 2 or 3 and so $x \in A$ or it is literally 0, and
-$x$ is in the sets we're counting here, such $x$'s still show the same
-bias modulo $\lambda$, 
+These plots share many features with the distributions of the Ulam
+numbers modulo $\lambda$, bolstering the idea that it isn't the
+feature of ``being an Ulam number'' as such that creates the
+distribution, but simply the relationship between $r_{A+A}(x)$ and
+being in $A$.  Specifically, for Ulam sequences $A$,
+$x \in A \iff r_{A+A}(x)$ is small, whether it is 2 or 3 and so
+$x \in A$ or it is literally 0, and $x$ is in the sets we're
+considering in this section, such $x$'s still show the same bias
+modulo $\lambda$,
 
 We end with a final remark that within the first $10^4$ elements of
 each of these Ulam sequences, we have many elements that fail to
@@ -2894,9 +2906,10 @@ various $A$ modulo $\lambda_A$, we might ask whether we can at least
 guarantee some kind of non-uniformity of these distributions.  For
 example, can we find a set $E \subseteq \R/\Z$ such that if
 $\pi : Z \to \R/\Z$ is $x \mapsto x/\lambda \mod{1}$, then
-$|A_N \cap \pi\inv(E)|/N \geq
-\frac{|A_N|}{N}\frac{|\pi\inv(E)_N|}{N}$?  In fact, we can do slightly
-better:
+$|A_N \cap \pi\inv(E)|/N$ is creater than what might be expected from
+the sizes of these sets alone, namely
+$\frac{|A_N|}{N}\frac{|\pi\inv(E)_N|}{N}$?  In fact, we can do
+slightly better:
 
 \begin{theorem}\label{thm:regularity}
   For $A$ an \relevant set, and let $\alpha$ be the maximal Fourier
@@ -2936,10 +2949,10 @@ $f = A - \delta$, so
 And this is what we wanted to show.
 \end{proof}
 
-So this is our first basic result in the direction we want to go:
-Towards some statement that large \relevant sets are \relevant for
-local reasons.  Another simpler example of this comes from thinking
-about regular such sequences: 
+So this is our first basic result in the direction we want to go,
+namely towards some statement that large \relevant sets are \relevant
+for local reasons.  Another simpler example of this comes from
+thinking about regular such sequences:
 
 \begin{proposition}\label{prop:regular_sumfree}
   If $A$ is a regular 1-additive or sum-free set, then there is an
@@ -2972,8 +2985,8 @@ about regular such sequences:
 
 \chapter{Structure of $\ulam{1}{2}$}
 
-We now turn specifically to $A = \ulam{1}{2}$, the sequence we started
-with.  
+We now turn specifically to $A = \ulam{1}{2}$, the original sequence
+of Ulam numbers.   
 
 \section{Distribution of summands}
 
@@ -2988,7 +3001,7 @@ with $a_i < a_j$.  This gives us much structure to play with:
   distribution of the values of $i$ that show up?  (That is, what is
   the distribution of small summands?)  What about the values of
   $j$?  Perhaps more reasonable would be to ask about the distribution
-  of $n-j$ (so a queestion about the distribution of large summands).
+  of $n-j$ (so a question about the distribution of large summands).
 \item If we start by breaking up an $a \in A$ as $a = x+y$ for $x < y$
   both in $A$, we can then break up $x$ and $y$ themselves into sums
   of Ulam numbers, and repeat until we get down to writing $a$ as a
@@ -2997,22 +3010,24 @@ with $a_i < a_j$.  This gives us much structure to play with:
 \end{itemize}
 
 \subsection{Distribution of large summands}
-We note first that if 2 or 3 is the small summand of $a_{n+1}$, then
-the large summand is necesarily $a_n$ (if 2 is the small summand and
-$a_n$ is not the large summand, then $a_{n+1}$ would be $a_n + 1$
-which is impossible since this is a duplicate sum with $a_n+a_1$.  If
-3 is the small summand and $a_n$ is not the large summand, then
-$a_{n+1}$ is either $a_n + 1$ or $a_n + 2$, both of which would be
-duplicates.)
+We note first that if 2 or 3 is the small summand of $a_{n+1}$, and if
+$a_N > $, then the large summand is necesarily $a_n$ (if 2 is the
+small summand and $a_n$ is not the large summand, then $a_{n+1}$ would
+be $a_n + 1$ which is impossible since this would mean
+$a_n + a_1 = a_{n-1} + a_2$, which violates 1-additivity.  If 3 is the
+small summand and $a_n$ is not the large summand, then $a_{n+1}$ is
+either $a_n + 1$ or $a_n + 2$, either of which would give an honestly
+distinct (since $a_n > 6$) second way of representing $a_{n+1}$ as a
+sum of smaller Ulam numbers, again violating 1-additivity.)
 
-This means that as often as 2 is the small summand, (whcih we will see
-is over 50\% of the time), the large summand will be the last thing in
-the list so far.  When looking at the large summand, then, it seems
-like it may be interesting to consider how many indices from the end
-it lives, rather than its actual value.  We compute these in
-experiment13.  Some post-processing gives us table
-\ref{tab:large_summands}, which accounts for over 9000 of the $a_n$
-for $n \leq 10^4$.
+This means that as often as 2 is the small summand, (which we will see
+is a large proportion of the time), the large summand will be the last
+thing in the list so far.  When looking at the large summand, then, it
+seems like it may be interesting to consider how many indices from the
+end it lives, rather than its actual value.  We compute these in
+\icode{experiment13}.  Some post-processing of the output gives us
+table \ref{tab:large_summands}, which accounts for over 9000 of the
+$a_n$ for $n \leq 10^4$.
 
 \begin{table}
 \caption{Large summands}\label{tab:large_summands}
@@ -3030,25 +3045,27 @@ and 159 values distinct values of $n-j$.
 
 Note in particular that there being only 312 distinct such pairs means
 that technically, to compute the first 10000 Ulam numbers, we only
-have to check 312 possibilities for each if we knew which
-possibilities to check ahead of time.  
+have to check 312 possibilities for each if we somehow knew which
+possibilities to check ahead of time.
 
 \subsection{Distribution of small summands}
 
-We note with interest the observation in the abstract of Steinerberger
-that $\cos(\alpha a_i) < 0$ for all $a_i$ other than 2, 3, 47, and 69.  In
-particular, thee were also the $a_i$ that showed up most frequently as
-summands in our earlier computation.  We also note that $\cos(\alpha
-a_i) < 0$ is just the condition that $\normrz{x/\lambda} < \frac14$.  
+We note with interest the observation of Steinerberger
+\cite{steinerberger:preprint} that $\cos(\alpha a_i) < 0$ for all
+$a_i$ other than 2, 3, 47, and 69.  In particular, thee were also the
+$a_i$ that showed up most frequently as summands in our earlier
+computation.  We also note that $\cos(\alpha a_i) < 0$ is just the
+condition that $\normrz{x/\lambda} < \frac14$.
 
 So we compute which how often each $a$ appears as the smaller summand
-of a later $a_i$ (that is, what we would call $|S_a|$ earlier) and we
-compute $a$ modulo $\lambda$ for each and sort by this quantity.  We
-note what looks like a very strong correlation between how often $a$
-shows up as a summand and $\normrz{a/\lambda}$ in the resulting table
+of a later $a_i$ (that is, we compute $|S_a|$) and we compute
+$\normrz{a/\lambda}$ for each and sort by this quantity.  We note what
+looks like a very strong correlation between how often $a$ shows up as
+a summand and $\normrz{a/\lambda}$ in the resulting table
 \ref{tab:small_summands}, computed by \icode{experiment12}.
 
 \begin{table}
+\small
 \caption{Small summands}\label{tab:small_summands}
 \centering
 \begin{tabular}{lll}
@@ -3066,7 +3083,7 @@ might reasonably wonder what each of these peaks actually is.
 
 To get a handle on this, we take the Ulam sequence mod 5422, and
 multiply it by 2219 ($5422/2219$ being a good rational approximation
-to $2\pi/\alpha$).  Of course, this gives rise to the usual
+to $\lambda$).  Of course, this gives rise to the usual
 distribution we've come to expect in figure \ref{fig:dist_ulam12}
 
 \begin{figure}
@@ -3106,47 +3123,42 @@ observed peaks, illustrated in figure \ref{fig:summands}.
 
 Since each of these seems to be instances of the same distribution
 with different parameters, we might be interested in computing the
-parameters of each, starting with the means.  We do this with a crunchy bash script
-
+parameters of each, starting with the means.  This gives us table
+\ref{tab:mean_comps}.
 
 % for x in `ls`; do y=$(echo $x|sed 's/summands//'); z=$(echo '('$(cat $x|sed 's/\([0-9]\)[ \t]\+\([0-9]\)/\1*\2/' | tr '\n' '+' | sed 's/+$//;s/[ \t]//g')')/'$(cat $x|awk '{x
   % +=$2} END {print x}')|bc -l);  echo -e "$y\t$(((y*2219)%5422))\t$z"; done|sort -n -k 2
-
-
-Which outputs the summand $a$, the quantity $2219 a \mod {5422}$, and
-the calculated mean of the distribution of $2219 a_n \mod{5422}$ for
-all $a_n$ for which $a$ is a summand, we get table
-\ref{tab:mean_comps}.
 
 \begin{table}
 \caption{Means of complements of $x \in \ulam{1}{2}$}\label{tab:mean_comps}
 \centering
 \begin{tabular}{lll}
-3	&1235	&3241.07886089813800657174\\
-47	&1275	&3288.00715563506261180679\\
-69	&1295	&3300.94546174403642482430\\
-8	&1486	&3431.55542168674698795180\\
-2581	&1607	&3485.87893462469733656174\\
-983	&1633	&3503.28070175438596491228\\
-206	&1666	&3518.47580645161290322580\\
-1308	&1682	&3525.95679012345679012345\\
-9193	&1703	&3541.35227272727272727272\\
-13	&1737	&3551.59183673469387755102\\
-23883	&1749	&3572.53333333333333333333\\
-30315	&3653	&1818.70000000000000000000\\
-13531	&3675	&1827.60000000000000000000\\
-14892	&3680	&1833.36363636363636363636\\
-10831	&3685	&1845.62962962962962962962\\
-53	&3745	&1872.41395348837209302325\\
-1155	&3761	&1883.37745098039215686274\\
-356	&3774	&1878.85087719298245614035\\
-97	&3785	&1891.29746835443037974683\\
-400	&3814	&1912.78585086042065009560\\
-273	&3945	&1984.79197207678883071553\\
-36	&3976	&1995.70821114369501466275\\
-339	&4005	&2013.33377814845704753961\\
-102	&4036	&2027.29907648591049017286\\
-2	&4438	&2319.24248003248950859618
+  $a$     &$2219 a \mod {5422}$ & Mean of $2219 S_a \mod{5422}$ \\
+  3	&1235	&3241.078\\
+  47	&1275	&3288.007\\
+  69	&1295	&3300.945\\
+  8	&1486	&3431.555\\
+  2581	&1607	&3485.878\\
+  983	&1633	&3503.280\\
+  206	&1666	&3518.475\\
+  1308	&1682	&3525.956\\
+  9193	&1703	&3541.352\\
+  13	&1737	&3551.591\\
+  23883	&1749	&3572.533\\
+  30315	&3653	&1818.700\\
+  13531	&3675	&1827.600\\
+  14892	&3680	&1833.363\\
+  10831	&3685	&1845.629\\
+  53	&3745	&1872.413\\
+  1155	&3761	&1883.377\\
+  356	&3774	&1878.850\\
+  97	&3785	&1891.297\\
+  400	&3814	&1912.785\\
+  273	&3945	&1984.791\\
+  36	&3976	&1995.708\\
+  339	&4005	&2013.333\\
+  102	&4036	&2027.299\\
+  2	&4438	&2319.242
 \end{tabular}
 \end{table}
 
@@ -3175,12 +3187,12 @@ compute these quickly and if we plot these, we get the plot in figure
 
 One simple element of structure that we might hope to deduce from all
 of this is some kind of positive density result for sum-free and Ulam
-sequences.  For example, we note that for around 60\% of all Ulam
-numbers $x$, then next Ulam number will be $x+2$.  For another 30\%,
-the next will be $x+3$.  So one approach to studying the density would
-be to understand the structure of the Ulam numbers well enough to be
-able to bound how often any given $d$ appears as a difference of
-consecutive Ulam numbers.
+sequences.  For example, we note that for some large proportion of all
+Ulam numbers $x$, then next Ulam number will be $x+2$.  For another
+slightly smaller proportion, the next will be $x+3$.  So one approach
+to studying the density would be to understand the structure of the
+Ulam numbers well enough to be able to bound how often any given $d$
+appears as a difference of consecutive Ulam numbers.
 
 In this document we do not resolve this question either, but do give
 conjectures in this direction.  However, one may note that the only
@@ -3213,8 +3225,8 @@ until we get bored:
 \item If 1, append $x$ in $A$ and add $x + A$ to $D$ ($|A|$ steps).
 \end{enumerate}
 
-So this algorithm to compute the first $N$ items will be roughly
-$O(N \cdot |A_N|)$
+So this algorithm to compute the first $N$ items will take
+$O(N \cdot |A_N|)$ steps.
 
 A similar algorithm can be implemented for the Ulam sequence, in fact:
 Now, we track the set $A$ as a list, the hashset $D$ of disqualified
@@ -3241,20 +3253,18 @@ And proceed thus:
   (where we can find it by bisection, since $C$ is sorted).
 \end{enumerate}
 
-There is a more advanced algorithm that leverages the apparent
-regularity of such sequences as well, implemented in
-\cite{knuth:note}, which speed this basic algorithm up by, among
-other things, noting that if we track which elements of $A$ are
-outside the middle third mod $\lambda$ for a $\lambda$ where there are
-few such elements, then when we're testing whether any new $x$ within
-the middle third is actually a sum of smaller elements of $A$, we only
-have to look at whether $x - a$ is in $A$ where $a$ is one of the
-(hopefully few) elements of $A$ outside the middle third.  In fact,
-one can be even more careful about it, which is done in
-\cite{knuth:note}.
+There is a more advanced algorithm that leverages the apparent bias of
+such sequences as well, implemented in \cite{knuth:note}, which speed
+this basic algorithm up by, among other things, noting that if we
+track which elements of $A$ are outside the middle third mod $\lambda$
+for a $\lambda$ where there are few such elements, then when we're
+testing whether any new $x$ within the middle third is actually a sum
+of smaller elements of $A$, we only have to look at whether $x - a$ is
+in $A$ where $a$ is one of the (hopefully few) elements of $A$ outside
+the middle third.  
 
-In any case, the results of our computations give the following
-estimates for the densities of these sets:
+In any case, the results of our computations give the estimates for
+the densities of these sets found in label \ref{tab:densities}.
 
 \begin{table}[ht]
 \caption{Densities}
@@ -3268,7 +3278,6 @@ estimates for the densities of these sets:
 \end{tabular}
 \end{table}
 
-
 \subsection{Constructions}
 
 Another line of thought is to note that that the Ulam numbers are, in
@@ -3277,7 +3286,7 @@ example, $\theta(01001)$ is not maximally greedy, it is still greedy
 $\frac25$ of the time.  So in the family of Ulam-like sets or sum-free
 sets, if we have many positive-density examples, it seems unlikely
 (though not impossible, as we shall see) that these very greedy sets
-fail to be positive-density.  
+fail to be as high a density as possible.
 
 We first start by noting that positive-density sum-free sets are
 abundant, as a result of the abundance of sum-free sets
@@ -3350,21 +3359,19 @@ thing for 1-additive sets.  It turns out that there is:
   There exists an irregular 1-additive set of positive density.
 \end{proposition}
 
-\begin{proof}[Idea of proof]
-  The basic idea will be the following ``ping-pong mod $\lambda$''
-  construction: Take an irrational $\lambda$.  Take $a$ (the ``left
-  bat'') just above $0$ mod $\lambda$, and $b$ (the ``right bat'')
-  just below 0 mod $\lambda$, and a $c$ (the ``ball'') just above
-  $\lambda/3$ mod $\lambda$.  The game will be to keep the ball in the
-  set $T = (\frac{\lambda}{3}, \frac{2\lambda}{3})$ (the ``table'')
-  mod $\lambda$ by adding $a$ to it until it reaches the right side,
-  then adding $b$ to it until it reaches the left side, and repeating
-  indefinitely.
+The basic idea will be the following ``ping-pong mod $\lambda$''
+construction: Take an irrational $\lambda$.  Take $a$ (the ``left
+bat'') just above $0$ mod $\lambda$, and $b$ (the ``right bat'') just
+below 0 mod $\lambda$, and a $c$ (the ``ball'') just above $\lambda/3$
+mod $\lambda$.  The game will be to keep the ball in the set
+$T = (\frac{\lambda}{3}, \frac{2\lambda}{3})$ (the ``table'') mod
+$\lambda$ by adding $a$ to it until it reaches the right side, then
+adding $b$ to it until it reaches the left side, and repeating
+indefinitely.
 
-  Supposing we are a little careful about our choices of $a, b, c$,
-  and $\lambda$, we should be able to show that this construction
-  satisfies the required properties.
-\end{proof}
+Supposing we are a little careful about our choices of $a, b, c$, and
+$\lambda$, we should be able to show that this construction satisfies
+the required properties.
 
 \begin{proof}
   More precisely: start with an irrational $\lambda$, an $a$ with
@@ -3428,26 +3435,24 @@ The following construction, we believe should work:
   of size 2.
 \end{conjecture}
 
-\begin{proof}[Idea]
-  We will play the same game of ping-pong, but now we are only allowed
-  to use two elements.  We will again start with an irrational
-  $\lambda$ and $a \in \Z^+$ the ``left bat'' in the range
-  $(\frac{\lambda}{6}, \frac{\lambda}{3})$ mod $\lambda$.  But now we
-  will start with $c$ being the ``ball'' inside the ``table''
-  $T = (\frac{\lambda}{3}, \frac{2\lambda}{3})$.
+To try this, we will play the same game of ping-pong, but now we are
+only allowed to use two elements.  We will again start with an
+irrational $\lambda$ and $a \in \Z^+$ the ``left bat'' in the range
+$(\frac{\lambda}{6}, \frac{\lambda}{3})$ mod $\lambda$.  But now we
+will start with $c$ being the ``ball'' inside the ``table''
+$T = (\frac{\lambda}{3}, \frac{2\lambda}{3})$.
 
-  Then we will add $a$ to $c$ until it comes out on the right side as
-  some $b \in (\frac{2\lambda}{3}, \frac{5\lambda}{6})$, and that will
-  be our ``right bat''.  Then we will do roughly the same thing as
-  before, except now $a$ and $b$ have larger magnitude mod $\lambda$,
-  so they may occasionally hit the ball off the table slightly.  This
-  will give us further bats with which to hit the ball--usually bats
-  with even greater magnitude mod $\lambda$.  The idea, then, will be
-  to always hit the ball with the largest available bat that doesn't
-  send it off the table (when possible), so that there is the most
-  flexibility for the other side to ensure they are also able to hit
-  the ball back onto the table.  
-\end{proof}
+Then we will add $a$ to $c$ until it comes out on the right side as
+some $b \in (\frac{2\lambda}{3}, \frac{5\lambda}{6})$, and that will
+be our ``right bat''.  Then we will do roughly the same thing as
+before, except now $a$ and $b$ have larger magnitude mod $\lambda$, so
+they may occasionally hit the ball off the table slightly.  This will
+give us further bats with which to hit the ball--usually bats with
+even greater magnitude mod $\lambda$.  The idea, then, will be to
+always hit the ball with the largest available bat that doesn't send
+it off the table (when possible), so that there is the most
+flexibility for the other side to ensure they are also able to hit the
+ball back onto the table.
 
 \subsection{Conjectures}
 
@@ -3492,11 +3497,11 @@ progress in future study of this problem.
 
 \subsection{Triangle removal}
 
-Throughout this study, we have been treating sum-free sets and
-\relevant sets more or less simultaneously.  However, in many ways
-sum-free sets are less rigid and are easier to reason about, whether
-via the correspondence with decision sequences or in the ease of
-constructing examples with certain desired features.  
+Throughout much of this study, we have been treating sum-free sets and
+other \relevant sets more or less simultaneously.  However, in many
+ways sum-free sets are less rigid and are easier to reason about,
+whether via the correspondence with decision sequences or in the ease
+of constructing examples with certain desired features.
 
 We have also noted that the Ulam sequence has few small summands.  In
 particular, if $S$ is the set of small summands, then we can partition
@@ -3523,13 +3528,13 @@ gives us a $A_N = B_N \cup C_N$ where
 $|C_N| \leq f(\frac{3\delta}{N})N$ and $B_N$ is sum-free.  However,
 this notation is slightly misleading: There isn't a guarantee that
 there is one whole set $C \subseteq \N$ such that $C_N = C \cap [N]$
-as $N$ grows.  It also does not gives us a bound on $|S_N|$ as $N$
-grows.  Thus we have a question:
+as $N$ grows.  It also does not gives us a numerical bound on $|S_N|$
+as $N$ grows.  Thus we have a question:
 
 \begin{question}
-  Can we estimate $|S_N|$ associated to a 1-additive set $A$?  For
-  example, can we prove $|S_N| = O(\log(N))$?  (For example, if we
-  plot $\log$ of the $i$th small summand against $i$, we get figure
+  Can we estimate $|S_N|$ associated to a 1-additive set $A$?  Say,
+  can we prove $|S_N| = \Theta(\log(N))$?  (For example, if we plot $\log$
+  of the $i$th small summand against $i$, we get figure
   \ref{fig:log_ss}.)  Specifically, perhaps, can we take the proof of
   theorem \ref{thm:green_triangle_removal} and in the particular case
   of the Ulam numbers get a good bound for $f$?
@@ -3569,9 +3574,9 @@ additive combinatorics: The ``energy increment'' argument.
 Broadly, this type of argument (as described in \cite{tao:cup2006})
 goes by quantifying the presence of a certain kind of structure
 present in a function by an ``energy''.  Then, we approximate our
-given function with a low-complexity approximation function (such as
-the indicator function of a set, which can be approximated at first by
-the constant function whose value is the density of the set).  The
+given function with a low-complexity approximation function (for
+example, the indicator function of a set can be approximated at first
+by the constant function whose value is the density of the set).  The
 argument then proceeds to use a dichotomy, much as in the density
 increment case: If the energy of this approximation is large, then
 there is a lot of the desired structure and we are done.  If the
@@ -3584,12 +3589,14 @@ we can win.
 So if we could pin down a more general notion of regularity (such as
 bias modulo some $\lambda$), then we might be able to follow a similar
 plan: Assign a notion of ``energy modulo $\lambda$'' to the
-distribution, and approximate the indicator function $A$ of
-$\ulam{1}{2}$ on $[N]$ by $\delta = \frac{|A_N|}{N}$.  Then if this
-has low energy, prove that we have Fourier bias (as in
-\ref{thm:alpha}) and therefore some correlation with a non-uniform
-distribution (as in \ref{thm:regularity}), and use that to better
-approximate the indicator function with something of higher energy.
+distribution that is large if the distribution is very non-uniform,
+say, and approximate the indicator function $A$ of $\ulam{1}{2}$ on
+$[N]$ by $\delta = \frac{|A_N|}{N}$.  Then if this has low energy,
+prove that the difference between the function and our approximation
+has Fourier bias (as in \ref{thm:alpha}) and therefore some
+correlation with a non-uniform distribution (as in
+\ref{thm:regularity}), and use that to better approximate the
+indicator function with something of higher energy.
 
 This plan would first require having a precise notion of ``energy''
 that captures whatever notion of ``regularity'' we would ultimately
@@ -3619,8 +3626,8 @@ We have already described 1-additive (see definition
 numbers.  We could either modify the initial ``seed set'' or we could
 be less greedy about picking the next elements, but fundamentally,
 these sets are all \relevant and so we expect to be able to say the
-same things about them.  There are, however, modifications that may be
-worth considering: 
+same things about them.  There are, however, other modifications that
+may be worth considering:
 
 \subsection{Sums of more than two previous elements}
 
@@ -3633,15 +3640,15 @@ that, for $x > N$, there is exactly one way to write $x = a_1 + \ldots
 + a_k$ for $a_i \in A$ and $a_1 \leq \ldots \leq a_k$.  
 \end{definition}
 
-This we would expect to behave similarly, but one particular
-consideration brings us to this type of set specifically: When we were
-trying before to estimate $r_{A+A}(x)$ using the large spectrum
-$\alpha\Z$, this essentially amounted to using the circle method.  In
-classical applications of the circle method, (for example, the proof
-of Vinogradov's theorem), we find that the circle method is much
-better at counting representations of a given $x$ by sums of $k$
-elements of a set $A$ for larger $k$ than for, say, $k = 2$ (which in
-the Vinogradov case would be the Goldback conjecture).  
+This we would expect to behave similarly, but one consideration draws
+us to this type of set specifically: When we were trying before to
+estimate $r_{A+A}(x)$ using the large spectrum $\alpha\Z$, this
+essentially amounted to using the circle method.  In classical
+applications of the circle method, (for example, the proof of
+Vinogradov's theorem), we find that the circle method is much better
+at counting representations of a given $x$ by sums of $k$ elements of
+a set $A$ for larger $k$ than for, say, $k = 2$ (which in the
+Vinogradov case would be the Goldbach conjecture).
 
 This might lead us to suspect that $(1,k)$-additive sets may be even
 more susceptible to analysis in this way for larger $k$ than $k = 2$,
@@ -3649,12 +3656,12 @@ which is the case we have been dealing with.
 
 \subsection{Probabilistic versions}
 
-One thing we get out of from bijection between sum-free sets and
-infinite binary sequences is a probability measure on all sum-free
-sets, taken from the measure on binary sequences that considers each
-entry as a flip of a fair coin (or, if desired, of a weighted coin).
-This leads to natural questions about the structure of random sum-free
-sets, which have been studied in \cite{cameron:ptrf1987} and
+One thing we get from the bijection between sum-free sets and infinite
+binary sequences is a probability measure on all sum-free sets, taken
+from the measure on binary sequences that considers each entry as a
+flip of a fair coin (or, if desired, of a weighted coin).  This leads
+to natural questions about the structure of random sum-free sets,
+which have been studied in \cite{cameron:ptrf1987} and
 \cite{calkin:dm1998}.
 
 Considering Ulam numbers as an extension of the idea of sum-free sets
