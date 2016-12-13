@@ -2946,10 +2946,8 @@ slightly better:
 
 Thus $\abr{f, E_\eta} \geq \frac{\delta^2}{4}$ for some $\eta$.  But
 $f = A - \delta$, so 
-
 \[\abr{A, E_\eta} \geq \frac{\delta^2}{4} + \abr{\delta, E_\eta} =
   \frac{\delta^2}{4} + \delta \frac{|E_{\eta,N}|}{N}\]
-
 And this is what we wanted to show.
 \end{proof}
 
@@ -2994,7 +2992,8 @@ thinking about regular such sequences:
 \chapter{Structure of $\ulam{1}{2}$}
 
 We now turn specifically to $A = \ulam{1}{2}$, the original sequence
-of Ulam numbers.   
+of Ulam numbers.  Much of the analysis in this section could be ported
+to other Ulam sequences, but we do not do so here.
 
 \section{Distribution of summands}
 
@@ -3019,23 +3018,27 @@ with $a_i < a_j$.  This gives us much structure to play with:
 
 \subsection{Distribution of large summands}
 We note first that if 2 or 3 is the small summand of $a_{n+1}$, and if
-$a_N > $, then the large summand is necesarily $a_n$ (if 2 is the
+$a_n > 6$, then the large summand is necesarily $a_n$ (if 2 is the
 small summand and $a_n$ is not the large summand, then $a_{n+1}$ would
 be $a_n + 1$ which is impossible since this would mean
 $a_n + a_1 = a_{n-1} + a_2$, which violates 1-additivity.  If 3 is the
-small summand and $a_n$ is not the large summand, then $a_{n+1}$ is
-either $a_n + 1$ or $a_n + 2$, either of which would give an honestly
-distinct (since $a_n > 6$) second way of representing $a_{n+1}$ as a
-sum of smaller Ulam numbers, again violating 1-additivity.)
+small summand and $a_n$ is not the large summand, then
+$a_{n+1} = a_{n-1} + 3$ or $a_{n+1} = a_{n-2} + 3$, either way giving
+$a_{n+1} = a_n + 1$ or $a_{n+1} = a_n + 2$, either of which would give
+an honestly distinct (since $a_n > 6$) second way of representing
+$a_{n+1}$ as a sum of smaller Ulam numbers, again violating
+1-additivity.)
 
-This means that as often as 2 is the small summand, (which we will see
-is a large proportion of the time), the large summand will be the last
-thing in the list so far.  When looking at the large summand, then, it
-seems like it may be interesting to consider how many indices from the
-end it lives, rather than its actual value.  We compute these in
-\icode{experiment13}.  Some post-processing of the output gives us
-table \ref{tab:large_summands}, which accounts for over 9000 of the
-$a_n$ for $n \leq 10^4$.
+This means that as often as 2 or 3 is the small summand, (which we
+will see is a large proportion of the time), the large summand will be
+the last thing in the list so far.  When looking at the large summand,
+then, it seems like it may be interesting to consider how many indices
+from the end it lives, rather than its actual value.  That is, for
+small summand $a_i$, we should consider for what values of $j$ is
+$a_n = a_i + a_{n-j}$.  We compute these in \icode{experiment13}.
+Some post-processing of the output gives us table
+\ref{tab:large_summands}, which accounts for over 9000 of the $a_n$
+for $n \leq 10^4$.
 
 \begin{table}
 \caption{Large summands}\label{tab:large_summands}
@@ -3053,15 +3056,15 @@ first $10^4$ Ulam numbers, including only $69$ distinct values of $i$
 and 159 values distinct values of $n-j$.  
 
 Note in particular that there being only 312 distinct such pairs means
-that technically, to compute the first 10000 Ulam numbers, we only
-have to check 312 possibilities for each if we somehow knew which
-possibilities to check ahead of time.
+that technically, to compute the first 10000 Ulam numbers, we would
+only have to check 312 possibilities for each, if we somehow knew
+which possibilities to check ahead of time.
 
 \subsection{Distribution of small summands}
 
 We note with interest the observation of Steinerberger
 \cite{steinerberger:preprint} that $\cos(\alpha a_i) < 0$ for all
-$a_i$ other than 2, 3, 47, and 69.  In particular, thee were also the
+$a_i$ other than 2, 3, 47, and 69.  In particular, these were also the
 $a_i$ that showed up most frequently as summands in our earlier
 computation.  We also note that $\cos(\alpha a_i) < 0$ is just the
 condition that $\normrz{x/\lambda} < \frac14$.
@@ -3176,14 +3179,16 @@ first 11 entries (those on the right end of the distribution).
 Likewise, those on the left end (rows 12-25) seem to have a similar
 pattern.
 
-One possible source for this is that the distribution we're taking the
+One possible reason for this is that the distribution we're taking the
 mean of in the first row, say, is of $2219 a_n \mod{5422}$ where 3 is
 a summand of $a_n$ in the Ulam sequence.  Since 3 is a summand of
 $a_n$ in the sequence, we might instead look at the other summand of
 $a_n$, i.e. $a_n - 3$.  This would lead to us not plotting
 $2219a_n \mod {5422}$, but rather $2219(a_n-3) \mod{5422}$.  We can
 compute these quickly and if we plot these, we get the plot in figure
-\ref{fig:complements}.
+\ref{fig:complements}.  That is, for each small summand $a$, we are
+plotting a histogram for the set of ``complements'' of $a$: 
+\[C_a = \{b \in A : a + b \in A\}\]
 
 \begin{figure}
 \caption{Distribution of $S_a - a$}\label{fig:complements}
@@ -3207,7 +3212,7 @@ conjectures in this direction.  However, one may note that the only
 reason we know other Ulam sequences such as $\ulam{2}{5}$ have
 positive density is that we know they are regular.  So in trying to
 get a handle on the distribution of, say, $\ulam{1}{2}$, we expect
-that the actual positive density result will come from an
+that any actual positive density result will come from an
 understanding of its distribution, rather than vice-versa.
 
 The first question is to attempt to compute the density of the various
@@ -3262,14 +3267,14 @@ And proceed thus:
 \end{enumerate}
 
 There is a more advanced algorithm that leverages the apparent bias of
-such sequences as well, implemented in \cite{knuth:note}, which speed
-this basic algorithm up by, among other things, noting that if we
-track which elements of $A$ are outside the middle third mod $\lambda$
-for a $\lambda$ where there are few such elements, then when we're
-testing whether any new $x$ within the middle third is actually a sum
-of smaller elements of $A$, we only have to look at whether $x - a$ is
-in $A$ where $a$ is one of the (hopefully few) elements of $A$ outside
-the middle third.  
+such sequences as well, implemented in \cite{knuth:note}.  This speeds
+the basic algorithm up by, among other things, noting that if we track
+which elements of $A$ are outside the middle third mod $\lambda$ for a
+$\lambda$ where there are few such elements, then when we're testing
+whether any new $x$ within the middle third is actually a sum of
+smaller elements of $A$, we only have to look at whether $x - a$ is in
+$A$ where $a$ is one of the (hopefully few) elements of $A$ outside
+the middle third.
 
 In any case, the results of our computations give the estimates for
 the densities of these sets found in label \ref{tab:densities}.
@@ -3302,7 +3307,7 @@ $A \subseteq \R/\Z$, coupled with the fact that if
 $\pi_\lambda : \Z^+ \to \R/\Z$ by
 $x \mapsto \frac{x}{\lambda} \mod{1}$, the inverse image
 $\pi_\lambda\inv(A)$ is sum-free in the integers.  For example, the
-set $A = \{1/2\}$ is sum-free in $\R/\Z$, and $\pi_2(A)$ is the odd
+set $A = \{1/2\}$ is sum-free in $\R/\Z$, and $\pi\inv_2(A)$ is the odd
 positive integers, which is sum-free.  Likewise, the $A_\lambda$ from
 earlier (for any irrational $\lambda$), where recall $A_\lambda$ was
 the set of integers that, when reduced (in $\R$) modulo $\lambda$,
@@ -3322,8 +3327,8 @@ integers according to the requirements of 1-additivity (``every
 element is uniquely a sum of previous elements'') and greediness
 (``always choose the smallest such element available'').  In some
 ways, it is the greediness that makes Ulam sequences hard to analyse.
-If we drop this condition, then we get a general class of sequences to
-which belong the Ulam sequences, but also many others:
+If we drop this condition, then we get a general class of sequences
+which contains the Ulam sequences, but also many others:
 
 \begin{definition}\label{def:1additive}
   For $S \subseteq \Z^+$ a finite set (say of size $k$), a
@@ -3351,17 +3356,19 @@ which belong the Ulam sequences, but also many others:
 \end{example}
 
 The last example gives plenty of examples of regular 1-additive
-sequences.  (Indeed, $a = 3, b = 4$ provides an example of a set with
-density apparently higher than that of $\ulam{1}{2}$ despite being
-less greedy: It goes $3, 4, 7, 10, 14, \ldots$, whereas a greedy
-algorithm would include 11 as well.)  
+sequences.  (Indeed, $a = 2, b = 3$ provides an example of a set with
+density apparently higher than that of $\ulam{2}{3}$ despite being
+less greedy: It goes $2, 3, 5, 7, 9, 11, \ldots$, whereas a greedy
+algorithm would include 8 as well.  Nevertheless, $\ulam{2}{3}$
+appears to have density around $\frac{1}{10}$, whereas this less
+greedy set has density $\frac{1}{2}$.)  
 
 Nevertheless, all these examples are regular in the conventional
 ``mod-$m$'' sense.  So we might wonder what the analogue of
-$A_\lambda$ for {\em irrational} $\lambda$ would be for 1-additive sets.
-Indeed, these were our first examples of irregular sum-free sets of
-positive density, so we might first ask whether there even is such a
-thing for 1-additive sets.  It turns out that there is:
+$A_\lambda$ for {\em irrational} $\lambda$ would be for 1-additive
+sets.  Or, more simply, we might first ask whether there even is such
+a thing as an irregular 1-additive set of positive density.  It turns
+out that there is:
 
 \begin{proposition}\label{prop:irr_1add}
   There exists an irregular 1-additive set of positive density.
@@ -3385,47 +3392,51 @@ the required properties.
   More precisely: start with an irrational $\lambda$, an $a$ with
   $a \mod{\lambda}$ lying in $(0, \frac{\lambda}{12})$, and a $b > a$
   with $b \mod{\lambda}$ in $(\frac{11\lambda}{12},\lambda)$, and a
-  $c$ with $c \mod{\lambda}$ in $(\frac\lambda 3, \frac\lambda 2)$,
-  and say further that $a \nmid b$ (for reasons that will become
-  apparent later).
+  $c > b$ with $c \mod{\lambda}$ in
+  $(\frac\lambda 3, \frac\lambda 2)$, and say further that $a \nmid b$
+  (for reasons that will become apparent later).  Also, let
+  $T = (\frac{\lambda}{3}, \frac{2\lambda}{3})$.
 
   Then we will define a sequence of sets $A_n$ which will comprise the
   sequence $A$, as follows: Let $c_1 = c$.  For $n \geq 1$, let
-  $A_n = \{c_n + ka : k \in \Z^+, c+ka\mod{\lambda} \in T\}$, and let
-  $c_{n+1}$ be the largest element of this set (allowing the
-  definition of $A_{n+1}$ to make sense).  
+  $A_n = \{c_n + ka : k \in \Z^+, c+ka\mod{\lambda} \in T\}$ if $n$ is
+  odd, and $A_n = \{c_n + kb : k \in \Z^+, c+ka\mod{\lambda} \in T\}$
+  if $n$ even.  Let $c_{n+1}$ be the largest element of $A_n$
+  (allowing the definition of $A_{n+1}$ to make sense).
 
   Then let $S = \{a, b, c\}$ and $A = S \cup \bigcup_{i=1}^\infty
   A_i$.  
 
   Now let us check the definition: Our base set is $S$.  Every element
   $a_i$ has $a_i < a_{i-1} + a + b$, so the set is has positive
-  density.  This set is not dense mod $\lambda$, but any regular set
-  would have to be (since $\lambda$ is irrational), so $A$ cannot be
-  regular.  It remains to check 1-additivity.  
+  density.  $A$ is not dense mod $\lambda$ (since all but three
+  elements are in $T$) whereas any regular set would have to be (since
+  $\lambda$ is irrational), so $A$ cannot be regular.  It remains to
+  check 1-additivity.
 
   By construction, every element $a_n > c$ is either $a_{n-1} + a$ or
   $a_{n-1}+b$, so every element not in $S$ is a sum of smaller
   elements in at least one way.  Now suppose $a_n$ is a sum of smaller
-  elements in another way also.  Then because $a_n$ is in the middle
-  third, it cannot be a sum of two other elements in the middle third.
-  Thus the only for $a_n$ to be a sum of other elements of $A$ in two
-  different ways is if $a_n - a$ and $a_n - b$ are both in $A$.  
+  elements in another way also.  Then because $a_n$ is in $T$, it
+  cannot be a sum of two other elements in the middle third.  Thus the
+  only for $a_n$ to be a sum of other elements of $A$ in two different
+  ways is if $a_n - a$ and $a_n - b$ are both in $A$.
 
-  But now, say $a_n = c + ax + by$, for some $x \geq 0, y \geq 0$.
-  We know either $a_n - a \in A$ or $a_n - b \in A$.  If $a_n - b \in
-  A$, Then by definition, the next element of $A$ will be $a_n$, and
-  $a_n - b < a_n - a < a_n$, so $a_n - a$ cannot be in $A$.  
+  But now, say $a_n = c + ax + by$, for some $x \geq 0, y \geq 0$.  We
+  know that $a_n \in A_i$ for some $i$.  If $i$ is even, then by
+  definition, the previous element of $A$ will be $a_n - b$, and
+  $a_n - b < a_n - a < a_n$, so $a_n - a$ cannot be in $A$.
 
-  If instead $a_n - a \in A$, then say the place where we started
-  adding $a$s (before $a_n$) was $r$ steps back ($r \geq 1$ since
-  $a_n - a \in A$), i.e. at $c + a(x-r) + by$.  Then the element
-  before this in $A$ would be $c + a(x-r) + b(y-1) < a_n - b$.  Thus
-  for $a_n - b$ to be in $A$, it would have to be an element after
-  $c + a(x-r) + b(y-1)$, i.e. an element of the form
-  $c + a(x-s) + by$.  But $c + a(x-s) + by = c + ax + by - b$ implies
-  $as = b$, which contradicts $a \nmid b$, which was our condition on
-  $a$ and $b$.  
+  If instead $i$ is odd, then $a_n - a \in A$.  Then say
+  $a_{n-r} = \max A_{i-1}$, so $a_n = a_{n-r} + ra$ (and we know
+  $r \geq 1$, since $a \in A_i$ for odd $i$).  Thus
+  $a_{n-r} = c + a(x-r) + by$.  Then the element before this in $A$
+  would be $c + a(x-r) + b(y-1) < a_n - b$.  Thus for $a_n - b$ to be
+  in $A$, it would have to be an element after $c + a(x-r) + b(y-1)$.
+  But all these elements are got by adding $a$ to $a_{n-r}$.  So
+  $a_n - b$ has the form $c + a(x-s) + by$ for $0 \leq s \leq r$.  But
+  $c + a(x-s) + by = c + ax + by - b$ implies $as = b$, which
+  contradicts $a \nmid b$, which was our condition on $a$ and $b$.
 
   Thus $a_n - a$ and $a_n - b$ can never both be in $A$, making $A$
   also 1-additive.
@@ -3457,10 +3468,26 @@ before, except now $a$ and $b$ have larger magnitude mod $\lambda$, so
 they may occasionally hit the ball off the table slightly.  This will
 give us further bats with which to hit the ball--usually bats with
 even greater magnitude mod $\lambda$.  The idea, then, will be to
-always hit the ball with the largest available bat that doesn't send
-it off the table (when possible), so that there is the most
-flexibility for the other side to ensure they are also able to hit the
-ball back onto the table.
+always hit the ball with the smallest available bat (in the sense of
+$\normrz{x}$) that doesn't send it off the table (when possible), so
+that there is the most flexibility for the other side to ensure they
+are also able to hit the ball back onto the table.
+
+If we plot the first 100 elements of $\ulam{1}{9}$ by plotting $n$ on
+the $x$-axis, and $a_n \mod{\lambda}$ on the $y$-axis, then we get a
+picture that shows something of this kind happening in figure
+\ref{fig:pingpong}.  In this picture, the horizontal lines are placed
+at $\frac{k\lambda}{6}$ for $k = 0, \ldots, 6$.  So we see that $1$ is
+very close to the left side mod $\lambda$, and so functions as the
+``left bat'', while every time we go off the other side of the table,
+we get a new ``right bat'', which we can use to move things back to
+the left when they get too close to the edge.
+
+\begin{figure}
+\caption{$(n, a_n \mod{\lambda})$ for $\ulam{1}{9}$ and $n \leq 100$}\label{fig:pingpong}
+\centering
+\includegraphics[scale=0.5]{../figs/u1_9_pingpong.png}
+\end{figure}
 
 \subsection{Conjectures}
 
@@ -3524,25 +3551,25 @@ following theorem:
   There is a universal function $f(\delta)$ with $f(\delta) \to 0$ as
   $\delta \to 0$ such that the following holds: For any $N > 0$ and
   any subset $A \subseteq [N]$ with $\delta N^2$ solutions to $x+y=z$.
-  Then there is a partition of $A$ as $A = B \cup C$ where $B$ is
-  sum-free, $C$ is small--specifically, $|C| \leq f(\delta)N$--and,
-  $B$ and $C$ are disjoint.
+  Then there is a partition of $A$ as $A = B \cup C$ where $B$ and $C$
+  are disjoint, $B$ is sum-free, $C$ is small: $|C| \leq f(\delta)N$.
 \end{theorem}
 
 In the case of the Ulam numbers, assuming they have positive density
-$\delta$, then they have at most $3\delta N$ solutions to $x+y=z$, so
-$A_N$ has $\frac{3\delta}{N} N^2$ solutions, meaning this theorem
-gives us a $A_N = B_N \cup C_N$ where
+$\delta$, then $A_N$ hae at most $3\delta N$ solutions to $x+y=z$.
+That is, $A_N$ has $\frac{3\delta}{N} N^2$ solutions, meaning this
+theorem gives us a $A_N = B_N \cup C_N$ where
 $|C_N| \leq f(\frac{3\delta}{N})N$ and $B_N$ is sum-free.  However,
 this notation is slightly misleading: There isn't a guarantee that
 there is one whole set $C \subseteq \N$ such that $C_N = C \cap [N]$
-as $N$ grows.  It also does not gives us a numerical bound on $|S_N|$
+as $N$ grows.  It also does not guarantee that $C$ is in any way
+related to $S$, and so does not gives us a numerical bound on $|S_N|$
 as $N$ grows.  Thus we have a question:
 
 \begin{question}
   Can we estimate $|S_N|$ associated to a 1-additive set $A$?  Say,
-  can we prove $|S_N| = \Theta(\log(N))$?  (For example, if we plot $\log$
-  of the $i$th small summand against $i$, we get figure
+  can we prove $|S_N| = \Theta(\log(N))$?  (For example, if we plot
+  the logarithm of the $i$th small summand against $i$, we get figure
   \ref{fig:log_ss}.)  Specifically, perhaps, can we take the proof of
   theorem \ref{thm:green_triangle_removal} and in the particular case
   of the Ulam numbers get a good bound for $f$?
@@ -3580,11 +3607,11 @@ which is in turn proven by a technique that appears repeatedly in
 additive combinatorics: The ``energy increment'' argument.  
 
 Broadly, this type of argument (as described in \cite{tao:cup2006})
-goes by quantifying the presence of a certain kind of structure
-present in a function by an ``energy''.  Then, we approximate our
-given function with a low-complexity approximation function (for
-example, the indicator function of a set can be approximated at first
-by the constant function whose value is the density of the set).  The
+goes by quantifying the presence of a certain kind of structure in a
+function by an ``energy''.  Then, we approximate our given function
+with a low-complexity approximation function (for example, the
+indicator function of a set can be approximated at first by the
+constant function whose value is the density of the set).  The
 argument then proceeds to use a dichotomy, much as in the density
 increment case: If the energy of this approximation is large, then
 there is a lot of the desired structure and we are done.  If the
@@ -3594,17 +3621,18 @@ better approximation with increased energy.  Executing this enough
 times, we force our approximation into the large energy setting where
 we can win.
 
-So if we could pin down a more general notion of regularity (such as
-bias modulo some $\lambda$), then we might be able to follow a similar
-plan: Assign a notion of ``energy modulo $\lambda$'' to the
-distribution that is large if the distribution is very non-uniform,
-say, and approximate the indicator function $A$ of $\ulam{1}{2}$ on
-$[N]$ by $\delta = \frac{|A_N|}{N}$.  Then if this has low energy,
-prove that the difference between the function and our approximation
-has Fourier bias (as in \ref{thm:alpha}) and therefore some
-correlation with a non-uniform distribution (as in
-\ref{thm:regularity}), and use that to better approximate the
-indicator function with something of higher energy.
+So if we could pin down a more general notion of regularity (such as a
+precise quantification of ``bias modulo some $\lambda$''), then we
+might be able to follow a similar plan: Assign a notion of ``energy
+modulo $\lambda$'' to the distribution that is large if the
+distribution is very non-uniform, say.  Then, approximate the
+indicator function $A$ of $\ulam{1}{2}$ on $[N]$ by
+$\delta = \frac{|A_N|}{N}$.  If this has low energy, prove that the
+difference between the function and our approximation has Fourier bias
+(as in \ref{thm:alpha}) and therefore some correlation with a
+non-uniform distribution (as in \ref{thm:regularity}), and use that to
+better approximate the indicator function with something of higher
+energy (i.e., more bias).
 
 This plan would first require having a precise notion of ``energy''
 that captures whatever notion of ``regularity'' we would ultimately
@@ -3621,21 +3649,21 @@ directly, and it has been used to study sum-free subsets of integers
 to great effect in \cite{eberhard:ann2014}.  In particular,
 \cite{eberhard:ann2014} works with sum-free sets using a kind of
 ``local-to-global'' argument that has a similar flavour (if very
-different content, because they are doing something fundamentally
-different) to what we are looking for.  
+different content) to what we are looking for.
 
 A likely fruitful future direction, then, would be to understand the
 implications of such regularity results for Ulam numbers.  
 
 \section{Variants of the Ulam problem}
 
-We have already described 1-additive (see definition
-\ref{def:1additive}) sets in greater generality than just the Ulam
-numbers.  We could either modify the initial ``seed set'' or we could
-be less greedy about picking the next elements, but fundamentally,
-these sets are all \relevant and so we expect to be able to say the
-same things about them.  There are, however, other modifications that
-may be worth considering:
+We have already described 1-additive sets (see definition
+\ref{def:1additive}) in greater generality than just the Ulam numbers.
+We could either modify the initial ``seed set'' or we could be less
+greedy about picking the next elements, but fundamentally, these sets
+are all \relevant and so we expect to be able to say the same things
+about them.  There are, however, other modifications that may be worth
+considering for the purpose of being able to prove things, which we
+discuss in this section.
 
 \subsection{Sums of more than two previous elements}
 
@@ -3645,7 +3673,7 @@ two elements.  We could equally define:
 \begin{definition}\label{def:1k_additive}
 A $(1,k)$-additive set is a set $A \subseteq \N$ with an $N$ such
 that, for $x > N$, there is exactly one way to write $x = a_1 + \ldots
-+ a_k$ for $a_i \in A$ and $a_1 \leq \ldots \leq a_k$.  
++ a_k$ for $a_i \in A$ and $a_1 < \ldots < a_k$.  
 \end{definition}
 
 This we would expect to behave similarly, but one consideration draws
@@ -3659,8 +3687,8 @@ a set $A$ for larger $k$ than for, say, $k = 2$ (which in the
 Vinogradov case would be the Goldbach conjecture).
 
 This might lead us to suspect that $(1,k)$-additive sets may be even
-more susceptible to analysis in this way for larger $k$ than $k = 2$,
-which is the case we have been dealing with.
+more susceptible to circle method analysis for larger $k$ than
+$k = 2$, which is the case we have been dealing with.
 
 \subsection{Probabilistic versions}
 
