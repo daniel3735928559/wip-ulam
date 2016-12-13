@@ -1568,8 +1568,8 @@ Fourier spectrum of the various \relevant sets under consideration.
 \section{Large Fourier coefficient}
 
 The initial observation of \cite{steinerberger:preprint} is that the
-Fourier transform of the indicator function of $U(1,2)$ has takes a
-large value at some $\alpha$.  That is,
+Fourier transform of the indicator function of $U(1,2)$ has a large
+value at some $\alpha$.  That is,
 $\widehat{A_N}(\alpha) = \frac1N \sum_{t=1}^N A(t) e^{-it\alpha}$ is
 large relative to $|A_N|$.  This suggests that $t$ being in $A$ is
 correlated with $t+\frac{2\pi}{\alpha} k$ being in $A$ for various
@@ -1579,8 +1579,9 @@ somewhat like a period for $A$.
 \subsection{Computing $\lambda$}
 
 We will start by computing this period for several $U(a,b)$ which are
-not believed to be regular by virtue of having only finitely many even
-numbers.  Specifically, we will look at:
+not believed to have only finitely many even numbers (and hence
+nothing about their regularity is known).  Specifically, we will look
+at:
 
 \begin{itemize}
 \item $(1,v)$ for $v = 2, \ldots, 10$.
@@ -1590,7 +1591,7 @@ numbers.  Specifically, we will look at:
 \end{itemize}
 
 We do this by running \icode{experiment1}, which computes
-$\alpha_{a,b}$ to around 6 decimal places using the first $10^4$
+$\alpha_{a,b}$ to around 5-6 decimal places using the first $10^4$
 elements of each of these sequences.  We get, letting
 $\rho_{a,b} = \widehat{1_{a,b}}(\alpha_{a,b})$, the results summarised
 in table \ref{tab:alpha_ulam}.
@@ -1608,10 +1609,8 @@ in table \ref{tab:alpha_ulam}.
 There are a few possible patterns observed: 
 
 \begin{enumerate}
-\item The fractional part of $\lambda_{1,n}$ remains roughly constant
-  at around $0.416$ for $4 \leq n \leq 10$, and then alternates
-  between $0.708$ and $0.208$ thereafter.  We also note that $2 \times
-  0.708 = 1.416$.  
+\item The fractional part of $|\rho_{1,n}|$ remains roughly constant
+  at around $0.417$ for $4 \leq n$.
 \item None of the $\lambda$s we have computed appear to be obviously
   rational.  (By contrast, when we repeat this in \icode{experiment1A}
   with a known regular Ulam sequence such as $\ulam{2}{5}$, we get
@@ -1631,9 +1630,9 @@ look at $s = 01001, s = 01010$, and $s = 10010$ by running
 \caption{$\alpha$ for sum-free sets}\label{tab:sumfree_alpha}
 \centering
 \begin{tabular}{lllllll}
-$s$ & $\alpha_{s}$ & $\lambda_{s}$ & $|\widehat{1_s}(\alpha_{s})|$ &
+$s$ & $\alpha_{s}$ & $\lambda_{s}$ & $|\rho_s|$ &
                                                                      $\delta_s$
-  & $|\widehat{1_s}(\alpha_{s})|/\delta_s$ & $\widehat{1_s}(\alpha_{s})$
+  & $|\rho_s|/\delta_s$ & $\rho_s$
   \csvreader{datafiles/sumfree_alphas.csv}{}
   {\\\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii}
 \end{tabular}
@@ -1742,7 +1741,7 @@ else there exist $x' < y'$ in $\ulam{a}{b}$ with $x'+y' = x+y$.  Thus,
 if we were to have such a sequence $A$ with only elements that are 1
 mod 3, say all elements above some $M$ are $x_1, x_2, \ldots$, then if
 these are an arithmetic progression, say, then they can ensure that
-excepting $x_1 + x_2$, every sum of thes elements $x_i + x_j$ can also
+excepting $x_1 + x_2$, every sum of these elements $x_i + x_j$ can also
 be expressed as either $x_{i-1} + x_{j+1}$ or $x_{i+1}+x_{j-1}$ so
 that all these sums are excluded from the sequence.  To additionally
 exclude $x_1 + x_2$, we will need some further elements of the
@@ -1753,19 +1752,17 @@ But now, to ensure that $x_i$ are all in $A$, we will need some
 elements that are 0 mod 3 to be the small summands of the $x_i$.  Say
 $y_1, \ldots, y_n$ are all the elements of $A$ that are 0 mod 3, say
 in increasing order.  But then $y_i + y_n$ must not be in the sequence
-for any $i$, which this means that we need some further elements
-$a_i, b_i$ that are 1 and 2 mod 3 respectively to be in the sequence
-and with $a_i+b_i = y_i + y_n$.  And we can continue like this, where
-the more elements that we find must be in the set, the more elements
-we have to add to the set in order to exclude certain sums of these
-elements.  Perhaps this process does terminate, for some $x_i$ in an
-actual set $A$ of the form $\ulam{a}{b}$, or perhaps if one follows it
-to its conclusion as in \cite{schmerl:jct1994}, one might find
-there is in fact no such set.  We do not pursue this project here,
-however.  
+for any $i$, which means that we need some further elements $a_i, b_i$
+that are 1 and 2 mod 3 respectively to be in the sequence and with
+$a_i+b_i = y_i + y_n$.  And we can continue like this, where the more
+elements that we find must be in the set, the more elements we have to
+add to the set in order to exclude certain sums of these elements.
+Perhaps this process does terminate, for some $x_i$ in an actual set
+$A$ of the form $\ulam{a}{b}$, or perhaps if one follows it to its
+conclusion as in \cite{schmerl:jct1994}, one might find there is in
+fact no such set.  We do not pursue this project here, however.
 
-Leaving aside the question of rationality for the moment, even if
-$\lambda$ is irrational, we might still wonder whether it is
+Even if $\lambda$ is irrational, we might still wonder whether it is
 algebraic.  We can use LLL to hunt for the minimal polynomial for
 various $\lambda$.  This is a standard technique: We pick a degree $d$
 and a large $N$ and let $v_i$ (for $0 \leq i \leq d$) be the
@@ -1774,13 +1771,14 @@ $\floor{N\lambda^i}$ in the $d+1$th slot:
 
 \[v_i = \left(0, \ldots, 1, \ldots, 0, N\lambda^i\right)\]
 
-We can then use LLL to find a small integer linear combination
-$w = \sum_{i=0}^d c_i v_i$ that has small norm (say, small relative to
-$N$).  And since the last coordinate of $w$ will be
-$N \sum_i c_i \lambda^i$, the only way the norm of can be close to
-zero is if $\sum_i c_i \lambda^i$ is close to zero, so this could be a
-reasonable guess for the minimal polynomial provided the value we get
-from this polynomial is significantly less than $\frac{1}{N}$.  
+We can then use Lenstra-Lenstra-Lovasz (or ``LLL'') to find a small
+integer linear combination $w = \sum_{i=0}^d c_i v_i$ that has small
+norm (say, small relative to $N$).  And since the last coordinate of
+$w$ will be $N \sum_i c_i \lambda^i$, the only way the norm of can be
+close to zero is if $\sum_i c_i \lambda^i$ is close to zero, so this
+could be a reasonable guess for the minimal polynomial provided the
+value we get from this polynomial is significantly less than
+$\frac{1}{N}$.
 
 In our case, we use SAGE's LLL code in \icode{alg\_lambda.py} to
 compute.  In this case, we use $N = 10^{10}$, so if we get a
@@ -1822,7 +1820,7 @@ large Fourier coefficients, the following definition will be helpful:
   function of that set.)
 \end{definition}
 
-Now, the statement that $A$ has a Large Fourier coefficient could be
+Now, the statement that $A$ has a large Fourier coefficient could be
 thought of conceptually as saying that $A$ cannot be too random.  To
 get a heuristic for what this would mean, suppose $A$ were random in
 the sense that we construct it by going through each element of $[N]$
@@ -1831,7 +1829,7 @@ have $(pN)^2$ pairs $(x, y) \in A^2$.  For any such pair, $x+y$ will
 be in $A$ with probability $p$, so the number of pairs
 $(x, y, x+y) \in A^3$ will be around $p^3 N^2$ as $N$ grows.  So for a
 random set of density $\delta$, we might then expect
-$T(A_N) \approx \delta^3 N^2$ as $N$ grows.  
+$T(A_N) \approx \delta^3 N^2$ as $N$ grows.
 
 But by definition, if $A$ is sum-free, $T(A_N) = 0$ for all $N$, and
 $T(\ulam{a}{b}_N) \leq 3N$ (since each $z \in \ulam{a}{b}$ has at most 3
@@ -1851,8 +1849,8 @@ explains this:
   If $A \subseteq [N]$ is a set of size $\delta N$ such that $T(A)$ is
   bounded by $c N^{2-\epsilon}$ for some constants
   $c > 0, \epsilon > 0$, then there is an $k \in [2N]$ such that
-  $\widehat{A}(\frac{2\pi k}{2N}) \geq \frac{\delta^2}{2} - \frac{c}{\delta
-    N^\epsilon}$.
+  $\widehat{A_N}(\frac{2\pi k}{2N}) \geq \frac{\delta^2}{2} -
+  \frac{c}{\delta N^\epsilon}$.
 \end{theorem}
 
 \begin{proof}
@@ -1864,8 +1862,7 @@ explains this:
   allows us to do this: 
 
   \[T(A) = \sum_{x, y, z = 0}^{N-1} A(x)A(y)A(z)\delta_{x+y-z}\]
-
-  Where $\delta_0 = 1$ and $\delta_x = 0$ for $x \neq 0$.  Then the
+  where $\delta_0 = 1$ and $\delta_x = 0$ for $x \neq 0$.  Then the
   trick is to write 
 
   \[\delta_x = \frac{1}{N} \sum_{t=0}^{N-1} e(\frac{2\pi x t}{N}) = \dft_N 1\]
@@ -1877,9 +1874,7 @@ explains this:
   modulo $2N$.  Thus we can use the formula:
 
   \[\delta_x = \frac{1}{2N} \sum_{t=0}^{2N-1} e(\frac{2\pi x t}{2N}) = \dft_{2N} 1\]
-
   to compute: 
-
   \begin{eqnarray*}
     T(A) &=& \frac{1}{2N}\sum_{x, y, z = 0}^{N-1} A(x)A(y)A(z)\sum_{t=0}^{2N-1}
              e(\frac{2\pi (x+y-z) t}{2N})\\
@@ -1892,11 +1887,9 @@ explains this:
          &=& 4 N^2 \sum_{t=0}^{2N-1} (\dft_{2N}A)(-t)(\dft_{2N}A)(-t)(\dft_{2N}A)(t)\\
          &=& 4 N^2 \sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2(\dft_{2N}A)(-t)
   \end{eqnarray*}
-  
   where the second equality we get by extending $A$ by zero.  
   
   So by assumption, 
-
   \[cN^{2-\epsilon} \geq 4 N^2 \sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2(\dft_{2N}A)(-t)\]
 
   We can pull out the $t = 0$ term which is $\frac{\delta^3}{8}$.  Then we can
@@ -1904,21 +1897,17 @@ explains this:
   $(\dft_{2N} A)(t)$ terms inside the sum with
   $-\max_{t\neq 0} |(\dft_{2N} A)(t)| = -\rho$:
   
-  \[cN^{2-\epsilon} \geq N^2 \frac{\delta^3}{2} - \rho 4 N^2 \sum_{t=1}^{2N-1} |(\dft_{2N} A)(t)|^2\]
+  \[cN^{2-\epsilon} \geq N^2 \frac{\delta^3}{2} - \rho \cdot 4 N^2
+    \sum_{t=1}^{2N-1} |(\dft_{2N} A)(t)|^2\]
 
   Now, by Plancherel we know that
-
   \[\sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2 = \frac{1}{2N}
   \sum_{t=0}^{2N-1} |A(t)|^2 = \frac{1}{2N} |A| = \frac{\delta}{2}\]
-
   so:
-
   \[cN^{2-\epsilon} \geq N^2 \frac{\delta^3}{2} - \rho \cdot 4N^2
     \frac{\delta}{2} = N^2\left(\frac{\delta^3}{2} - \rho\cdot 2
       \delta \right)\]
-
   Or, rearranging, 
-
   \[\rho \geq \frac{\delta^2}{4} - \frac{c}{2\delta N^\epsilon}\]
 
   Thus for if $k$ is the value of $t$ that realises the maximum, then we
@@ -1928,25 +1917,52 @@ explains this:
         t}{2N})\right| \geq \frac{\delta^2}{4} - \frac{c}{2\delta N^\epsilon}\]
   
   But comparing the left side to 
-  
   \[\widehat{A_N}(\frac{2\pi k}{2N}) = \frac{1}{N}\sum_{t=0}^{N-1} A_N(t) e(\frac{-2\pi k
       t}{2N}) = \frac{1}{N}\sum_{t=0}^{2N-1} A_N(t) e(\frac{-2\pi k
       t}{2N})\]
-  
   we get that for some $k \neq 0$
-
   \[|\widehat{A_N}(\frac{2\pi k}{2N})| \geq \frac{\delta^2}{2} - \frac{c}{\delta
       N^\epsilon}\]
-
   as claimed.
 \end{proof}
 
-This gives us a non-zero Fourier coefficient $\alpha_N$ for $A_N$.  As
-$N$ grows, we get a sequence of such $\alpha_N \in \R/2\pi\Z$.  If the
-density eventually stays above some fixed $\delta$ and if the
-$\alpha_N$ have a non-zero limit point $\alpha$, then we can show that
-in fact this $\alpha$ would indeed be a non-zero Fourier coefficient
-for the whole set $A$ in the sense of definition \ref{def:fourier}: 
+We noticed earlier that the actual complex value of the Fourier
+transform of $A$ for most of the $A$ had large negative real part and
+relatively small imaginary part.  If we look at the proof of the
+theorem, we notice that we can use the fact that
+$(\dft_{2N}A)(t) = \overline{(\dft_{2N}A)(2N-t)}$ to rewrite:
+
+\begin{eqnarray*}
+T(A) &=& 4 N^2 \sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2(\dft_{2N}A)(-t)\\
+ &=& 4 N^2 \sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2\Re((\dft_{2N}A)(t))
+\end{eqnarray*}
+
+Then we can use the same exact proof as before, letting instead
+\[\rho' = \min_{t \neq 0} \Re((\dft_{2N}A)(t))\] which lets us end up with: 
+\[cN^{2-\epsilon} \geq N^2\left(\frac{\delta^3}{2} + \rho'\cdot 2 \delta
+  \right)\]
+Thus we end up with \[\rho' \leq -\left(\frac{\delta^2}{2} -
+    \frac{c}{2\delta N^\epsilon}\right)\]
+
+Finally, comparing once again the discrete Fourier transform to the
+definition of $\widehat{A_N}$, we conclude that just as the magnitude
+of some Fourier coefficent must be large, so too must the real part
+also be large and negative (as observed earlier in table
+\ref{tab:alpha_ulam}):
+
+\begin{corollary}\label{thm:alpha_real}
+  If $A$ is as in the theorem, then there is a $k \in [2N]$ such that
+  $\Re(\widehat{A_N}(\frac{2\pi k}{2N})) \leq -\left(\frac{\delta^2}{2} -
+  \frac{c}{\delta N^\epsilon}\right)$.
+\end{corollary}
+
+The theorem gives us a non-zero Fourier coefficient $\alpha_N$ for
+$A_N$.  As $N$ grows, we get a sequence of such
+$\alpha_N \in \R/2\pi\Z$.  If the density eventually stays above some
+fixed $\delta$ and if the $\alpha_N$ have a non-zero limit point
+$\alpha$, then we can show that in fact this $\alpha$ would indeed be
+a non-zero Fourier coefficient for the whole set $A$ in the sense of
+definition \ref{def:fourier}:
 
 % \begin{corollary}\label{thm:alpha}
 %   If $A \subseteq \N$ is a sequence of positive integers of upper
@@ -1957,14 +1973,15 @@ for the whole set $A$ in the sense of definition \ref{def:fourier}:
 %   $\widehat{A}(\alpha) \geq \frac{\delta^2}{2}$.
 % \end{corollary}
 
-\begin{corollary}\label{thm:alpha}
+\begin{theorem}\label{thm:alpha}
   If $A \subseteq \N$ is a sequence of positive integers of density
   $\delta > 0$ such that for all $N$, $T(A_N)$ is bounded by
   $c N^{2-\epsilon}$ for some constants $c > 0, \epsilon > 0$, and
   suppose further that $\alpha$ is a nonzero limiting point of the
   $\alpha_N$ that the theorem guarantees us.  Then
-  $\widehat{A}(\alpha) \geq \frac{\delta^2}{2}$.
-\end{corollary}
+  $\widehat{A}(\alpha) \geq \frac{\delta^2}{2}$, supposing that the
+  limit $\widehat{A}(\alpha)$ does in fact exist.
+\end{theorem}
 
 \begin{example}
   For example, in the Ulam sequence we know by construction that
@@ -1980,7 +1997,7 @@ for the whole set $A$ in the sense of definition \ref{def:fourier}:
   $j \to \infty$, for each $j$ we can find $N_j$ with
   $\frac{|A_{N_j}|}{N_j} > \delta-\frac{1}{j}$.
 
-  Thus, by the theorem, there is an $\alpha_j = \frac{2\pi k_j}{2N}$
+  Thus, by the theorem, there is an $\alpha_j = \frac{2\pi k_j}{2N_j}$
   with
   $\widehat{A_{N_j}}(\alpha_j) \geq
   \frac{\delta^2}{2}-\frac{\delta}{j} - \frac{1}{2j^2}$.
@@ -1993,11 +2010,7 @@ for the whole set $A$ in the sense of definition \ref{def:fourier}:
   convergent subsequence of these values).  So then we would like to
   conclude that $\widehat{A}(\alpha) \geq \frac{\delta^2}{2}$.
   However, this claim involves swapping some limits, so let us be more
-  careful:
-  
-  Why does it follow that
-  $\widehat{A}(\alpha) \geq \frac{\delta^2}{2}$?  That is, we have
-  that
+  careful: We have that
   $\lim_{j \to \infty} \widehat{A_{N_j}}(\alpha_j) \geq
   \frac{\delta^2}{2}$, but we need to show that in fact the same is
   true for $\lim_{j \to \infty} \widehat{A_{N_j}}(\alpha)$.
@@ -2006,14 +2019,13 @@ for the whole set $A$ in the sense of definition \ref{def:fourier}:
   $\epsilon_j \to 0$ as $j \to \infty$.  We want to show that in fact
   $\widehat{A_{N_j}}(\alpha) \geq \frac{\delta^2}{2} - o(j) -
   O(\epsilon_j)$.  But now we can compute using Taylor's theorem, with
-  some$\beta_j$ between $\alpha_j$ and $\alpha$, and using the fact
+  some $\beta_j$ between $\alpha_j$ and $\alpha$, and using the fact
   that
   $\left|\sum_{t=0}^{N-1} t e(-tx)\right| =
   \left|\frac{d}{dx}\sum_{t=0}^{N-1} e(-tx)\right| =
   \left|\frac{d}{dx} \frac{e(-Nx) -1}{e(-x)-1}\right| \leq
   \frac{2+2N}{C^2} \leq \frac{3N}{C^2}$ if $|e(-x)-1| \geq C$ and if
   $N \geq 2$:
-
   \begin{eqnarray*}
     \widehat{A_{N_j}}(\alpha) &=& \frac{1}{N_j} \sum_{t=0}^{N-1} A(t)
                                   e(-t(\alpha_j+\epsilon_j))\\
@@ -2027,52 +2039,31 @@ for the whole set $A$ in the sense of definition \ref{def:fourier}:
                               &=& \frac{\delta^2}{2} - \frac{1}{j}
                                   - \frac{3\epsilon_j}{C^2}\\
   \end{eqnarray*}
-
-  Provided $|e(\alpha_j) - 1| \geq C$ for all $j$ (which is possible
+  provided $|e(\alpha_j) - 1| \geq C$ for all $j$ (which is possible
   provided $\alpha \neq 0$ and we take $j$ large enough).
 
   Thus indeed,
   $\lim_{j \to \infty} \widehat{A_{N_j}}(\alpha) \geq
-  \frac{\delta^2}{2}$, which means exactly that
+  \frac{\delta^2}{2}$, which, because we are assuming that the actual
+  limit $\widehat{A}(\alpha)$ exist, gives that
   $\widehat{A}(\alpha) \geq \frac{\delta^2}{2}$, as desired.
 \end{proof}
-
-We noticed earlier that the actual complex value of the Fourier
-transform of $A$ for most of the $A$ had large real part and small
-imaginary part.  If we look at the proof of the theorem, we notice
-that we can use the fact that
-$(\dft_{2N}A)(t) = \overline{(\dft_{2N}A)(2N-t)}$ to rewrite:
-
-\begin{eqnarray*}
-T(A) &=& 4 N^2 \sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2(\dft_{2N}A)(-t)\\
- &=& 4 N^2 \sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2\Re((\dft_{2N}A)(t))
-\end{eqnarray*}
-
-Then we can use the same exact proof as before, letting instead
-\[\rho = \max_{t \neq 0} |\Re((\dft_{2N}A)(t))|\] to conclude that
-just as the magnitude of some Fourier coefficent must be large, so too
-must the real part also be large:
-
-\begin{corollary}\label{thm:alpha_real}
-  If $A$ is as in the theorem, then there is a $k \in [2N]$ such that
-  $|\Re(\widehat{A}(\frac{2\pi k}{2N}))| \geq \frac{\delta^2}{2} -
-  \frac{c}{\delta N^\epsilon}$.
-\end{corollary}
 
 Some remarks: 
 
 \begin{remark}
   As we mentioned before, this bound for the Ulam sequence, which
   works out to around $0.00245$ is not anywhere near as good as the
-  computed estimate of $0.056$.  However, this finds a rational $k/N$
-  where the Fourier transform is large for \textit{every} $N$, whereas
-  experimentally the large value of around $0.056$ only occurs
+  computed estimate of $0.056$.  However, this method finds a rational
+  $k/N$ where the Fourier transform is large for \textit{every} $N$,
+  whereas experimentally the large value of around $0.056$ only occurs
   actually at $\alpha$ and can only be observed at rational $k/N$ that
   are good approximations to $\alpha$.  In particular, we also observe
   that for some $N$, the largest Fourier coefficient might honestly
   only be as large as $\frac{\delta^2}{2}$.  So any approach that
-  gives a large Fourier coefficient in $\frac{2\pi}{N}\Z/\Z$ for all
-  $N$ should not give a Fourier coefficient as large as we expect.
+  gives a large Fourier coefficient in
+  $\left(\frac{2\pi}{N}\Z\right)/\Z$ for all $N$ should not give a
+  Fourier coefficient as large as we expect.
 \end{remark}
 
 % \begin{remark}
@@ -2098,7 +2089,7 @@ Some remarks:
   It is interesting to note that this argument does not provide an
   obvious way to take advantage of the uniformity with which solutions
   to $x+y=z$ occur in the Ulam case.  For example, it also applies to
-  a sequence where $a_{2^i+1}, \ldots, a_{2^(i+1)-1}$ have no
+  a sequence where $a_{2^i+1}, \ldots, a_{2^{i+1}-1}$ have no
   representations but $a_{2^i}$ has $2^{i-1}$ representations for each
   $i$ (in which case the number of representations is not bounded
   above, but is growing, albeit sort of slowly and non-uniformly).
@@ -2108,7 +2099,7 @@ Some remarks:
 
 Knowing that the spectrum of $A$ has some nonzero $\alpha$, this
 suggests at least that $\widehat{A}(n\alpha)$ would also be nonzero
-for $n \in \Z$.  
+for $n \in \Z$ (again, ignoring convergence issues).
 
 Further, we also have the theorem of Weyl from \cite{weyl:ann1916}
 that tells us that for any infinite sequence $a_n$, the set of
@@ -2121,13 +2112,11 @@ whether for our particular \relevant sets there are any others.
 There is some computational evidence that suggests that the spectrum
 of $\ulam{1}{2}$ should consist only of $\alpha\Z$.  We can
 brute-force compute $\widehat{A_N}(t)$ for many values of $t$ between
-0 and $\pi$.  Plancherel tells us that over $x \in \frac1{N}\Z/\Z$,
-the average value of
-
-\[\left|\sum_{t=0}^{N-1} f(t) e(-2\pi xt)\right|\]
-
-will be around $\sqrt{N}$, so in this computation, we want to look at
-the values that are significantly larger than $\sqrt{N}$.  However, if
+0 and $\pi$.  Plancherel tells us that over $x \in \Z/N$, the average
+value of
+\[\left|\sum_{t=0}^{N-1} A_N(t) e(-\frac{2\pi xt}{N})\right|\]
+will be around $\sqrt{|A_N|}$, so in this computation, we want to look at
+the values that are significantly larger than $\sqrt{|A_N|}$.  However, if
 we are looking at finite $N$, then while this is the average size we
 still expect some random variation to put some values over this mark.
 To account for this, then, we look at values above $\sqrt{2N}$ in the
@@ -2267,9 +2256,7 @@ computational evidence in its favour:
   If $A$ is a \relevant set of positive integers, and
   $\widehat{A}(\alpha) \neq 0$, then for $d \in \Z$ with $|d| \leq \sqrt{N}$ with $d \neq 0$,
   we have
-
   \[\widehat{A_N}(d\alpha) \leq \frac{C}{d}\]
-
   for some constant $C$ independent of $N$.  
 \end{conjecture}
 
