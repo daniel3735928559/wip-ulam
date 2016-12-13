@@ -1,7 +1,7 @@
 \documentclass{report}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amsthm,amssymb,graphicx,setspace,mathrsfs,mathstyle,listings,color}
-\usepackage{csvsimple,longtable}
+\usepackage{csvsimple,longtable,url}
 %\topmargin 0in
 %\headheight 0in
 %\headsep .2in
@@ -231,7 +231,7 @@ we shall use throughout this document:
 \item If $A \subseteq \N$, let $A_N$ denote $A \cap [N]$.  
 \item If $f(N)$ is a function: 
 \begin{itemize}
-\item $f$ is $\O(g(N))$ if there is a constant $C > 0$ such that $f(N)
+\item $f$ is $O(g(N))$ if there is a constant $C > 0$ such that $f(N)
   \leq C g(N)$ for $N$ sufficiently large.
 \item $f$ is $\Omega(g(N))$ if there is a constant $C > 0$ such that
   $f(N) \geq C g(N)$ for $N$ sufficiently large.
@@ -1204,11 +1204,8 @@ $\FF_q^n$ such that the equation $\alpha a_1 + \beta a_2 + \gamma a_3
   is bounded above by $2 m_{d/2}$.  Since the size of the support of
   $P_d$ was already bounded below by $m_d - q^n + |A|$ we can apply
   this argument to $P_d$ and conclude that
-  
   \[2 m_{d/2} \geq m_d - q^n + |A|\]
-  
   i.e.
-  
   \[|A| \leq 2 m_{d/2} - m_d + q^n\]
 
   Choosing a particular value of $d$ and bounding these quantities is
@@ -1771,14 +1768,14 @@ $\floor{N\lambda^i}$ in the $d+1$th slot:
 
 \[v_i = \left(0, \ldots, 1, \ldots, 0, N\lambda^i\right)\]
 
-We can then use Lenstra-Lenstra-Lovasz (or ``LLL'') to find a small
-integer linear combination $w = \sum_{i=0}^d c_i v_i$ that has small
-norm (say, small relative to $N$).  And since the last coordinate of
-$w$ will be $N \sum_i c_i \lambda^i$, the only way the norm of can be
-close to zero is if $\sum_i c_i \lambda^i$ is close to zero, so this
-could be a reasonable guess for the minimal polynomial provided the
-value we get from this polynomial is significantly less than
-$\frac{1}{N}$.
+We can then use the Lenstra-Lenstra-Lovasz (or ``LLL'') algorithm to
+find a small integer linear combination $w = \sum_{i=0}^d c_i v_i$
+that has small norm (say, small relative to $N$).  And since the last
+coordinate of $w$ will be $N \sum_i c_i \lambda^i$, the only way the
+norm of can be close to zero is if $\sum_i c_i \lambda^i$ is close to
+zero, so this could be a reasonable guess for the minimal polynomial
+provided the value we get from this polynomial is significantly less
+than $\frac{1}{N}$.
 
 In our case, we use SAGE's LLL code in \icode{alg\_lambda.py} to
 compute.  In this case, we use $N = 10^{10}$, so if we get a
@@ -1938,10 +1935,10 @@ T(A) &=& 4 N^2 \sum_{t=0}^{2N-1} |(\dft_{2N}A)(t)|^2(\dft_{2N}A)(-t)\\
 \end{eqnarray*}
 
 Then we can use the same exact proof as before, letting instead
-\[\rho' = \min_{t \neq 0} \Re((\dft_{2N}A)(t))\] which lets us end up with: 
+\[\rho' = \min_{t \neq 0} \Re((\dft_{2N}A)(t))\] which gives us:
 \[cN^{2-\epsilon} \geq N^2\left(\frac{\delta^3}{2} + \rho'\cdot 2 \delta
   \right)\]
-Thus we end up with \[\rho' \leq -\left(\frac{\delta^2}{2} -
+Thus we end up with \[\rho' \leq -\left(\frac{\delta^2}{4} -
     \frac{c}{2\delta N^\epsilon}\right)\]
 
 Finally, comparing once again the discrete Fourier transform to the
@@ -2698,9 +2695,9 @@ So, particularly if we use the approximation given in equation
 And so if the argument of $(\dft_{2N}A)(\alpha)$ is close to $\pi$ and
 if $\eta$ is small enough, then hopefully the term we've pulled out of
 the sum dominates this expression and we get that
-$r_{A_N + A_N}(x) = O(N)$.  But this requires very precise control
-over the argument of $(\dft_{2N}A)(k\alpha)$ that we do not currently
-have.
+$r_{A_N + A_N}(x) = \Omega(N)$.  But this requires very precise
+control over the argument of $(\dft_{2N}A)(k\alpha)$ that we do not
+currently have.
 
 However, at least for truly sum-free sets, we can still pull out a
 theorem (as always, conditional on various conjectures about the
@@ -2714,7 +2711,7 @@ allowing us to ignore the argument issue completely:
   Let $A$ be an \relevant set of positive integers with
   $|A_N| = \delta N$.  Suppose that $A$ has spectrum $\alpha\Z$, that
   it satisfes conjecture \ref{conj:decay}, and that the error in
-  equation \ref{eqn:rAAsum_err} in fact satisfies $R_N = o(N)$
+  equation \ref{eqn:rAAsum_err} in fact satisfies $|R_N| = o(N)$
   (conjecture \ref{conj:spec_estimate}).  Then for some $\eta > 0$,
   $\norm{x/\lambda} < \eta$ implies $r_{A_N-A_N}(x) = \Omega(N)$.
 \end{theorem}
@@ -2785,7 +2782,7 @@ then this means that $x$ is a summand for many elements of $A$:
 
 \begin{corollary}If $A$ is an Ulam sequence, then there is an
   $\eta > 0$ such that $\normrz{x/\lambda_A} < \eta$ implies that $x$
-  appears as a summand for elements of $A_N$ some $\Omega(N)$ times.
+  appears as a summand for elements of $A_N$ $\Omega(N)$ times.
 \end{corollary}
 
 We will see examples of this observation in section 7.
@@ -3528,7 +3525,8 @@ answering separate, related questions.
 
 There are a number of results and techniques that have seen
 application to related problems that we suspect may allow for further
-progress in future study of this problem.  
+progress in future study of this problem.  We briefly describe four of
+them in this section.
 
 \subsection{Triangle removal}
 
@@ -3680,11 +3678,11 @@ This we would expect to behave similarly, but one consideration draws
 us to this type of set specifically: When we were trying before to
 estimate $r_{A+A}(x)$ using the large spectrum $\alpha\Z$, this
 essentially amounted to using the circle method.  In classical
-applications of the circle method, (for example, the proof of
-Vinogradov's theorem), we find that the circle method is much better
-at counting representations of a given $x$ by sums of $k$ elements of
-a set $A$ for larger $k$ than for, say, $k = 2$ (which in the
-Vinogradov case would be the Goldbach conjecture).
+applications of the circle method (for example, the proof of
+Vinogradov's theorem) we find that the circle method is much better at
+counting representations of a given $x$ by sums of $k$ elements of a
+set $A$ for larger $k$ than for, say, $k = 2$ (which in the Vinogradov
+case would be the Goldbach conjecture).
 
 This might lead us to suspect that $(1,k)$-additive sets may be even
 more susceptible to circle method analysis for larger $k$ than
@@ -3697,8 +3695,8 @@ binary sequences is a probability measure on all sum-free sets, taken
 from the measure on binary sequences that considers each entry as a
 flip of a fair coin (or, if desired, of a weighted coin).  This leads
 to natural questions about the structure of random sum-free sets,
-which have been studied in \cite{cameron:ptrf1987} and
-\cite{calkin:dm1998}.
+which have been studied in \cite{calkin:dm1998} and
+\cite{cameron:ptrf1987}.
 
 Considering Ulam numbers as an extension of the idea of sum-free sets
 to considering sets $A$ whose elements $x$ have $r_{A+A}(x)$ small, we
