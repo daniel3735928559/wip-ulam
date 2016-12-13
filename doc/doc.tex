@@ -296,7 +296,7 @@ sense strongly correlated.
 In this document, we come to a first result in this direction: theorem
 \ref{thm:regularity}, which gives such a $\lambda$ and a set
 $E \subseteq \R/\lambda\Z$ that is ``more correlated than expected''
-with $A$.  We also show (proposition \ref{prop:regular_sumfree}) that
+with $A$.  We also show (theorem \ref{thm:regular_sumfree}) that
 regular Ulam sequences are eventually equivalent to lifts of a
 sum-free subset of some $\Z/m$.
 
@@ -2359,8 +2359,9 @@ coefficient at $\alpha$ suggests $A$ should not be equidistributed
 modulo $\lambda = \frac{2\pi}{\alpha}$.  Indeed, we have
 experimentally found large Fourier coefficients for many of the
 sequences we have considered, and if we take the distribution of these
-sequences modulo the corresponding $\lambda$ values, we get
-non-uniform, continuous-looking distributions as in \ref{fig:dist_sample}.
+sequences modulo the corresponding values of $\lambda$, we get
+non-uniform, continuous-looking distributions as in figure
+\ref{fig:dist_sample}.
 
 \begin{figure}
 \caption{Some distribuions of $A$ mod $\lambda_A$}\label{fig:dist_sample}
@@ -2380,10 +2381,10 @@ distributions.
 
 \section{Distrubution of $r_{A+A}$}
 
-The first observation is that the common feature of the \relevant sets
-that we have been considering is that $x$ being in one of these sets
-$A$ is determined by how many ways we can write $x$ as a sum $x = a+b$
-for $a, b \in A$.  To study this, we make the following definitions:
+The common feature of the \relevant sets that we have been considering
+is that whether $x$ is in one of these sets $A$ is determined by how
+many ways we can write $x$ as a sum $x = a+b$ for $a, b \in A$.  To
+study this, we make the following definitions:
 
 \begin{definition}For $A \subseteq \N$, define the \textbf{sum
     representation counting function} $r_{A+A}$ by
@@ -2407,12 +2408,11 @@ in an Ulam sequence $A$, $r_{A-A}(x)$ is the number of times $x$ is
 used as a summand in $A$.  (We note that $r_{A-A}$ may be infinite if
 $A$ is infinite, but it will make sense when we truncate $A$.)
 
-But we can write a formulae for $r_{A+A}(x)$ and $r_{A-A}(x)$ in terms
+But we can write formulae for $r_{A+A}(x)$ and $r_{A-A}(x)$ in terms
 of the indicator function of $A$:
 
 \[r_{A+A}(x) = \sum_{0 < y < x} A(y)A(x-y)\]
 \[r_{A-A}(x) = \sum_{0 < y} A(y)A(x+y)\]
-
 which are exactly the definition of the convolution $(A \ast A)(x)$
 and cross-correlation $(A \star A)(x)$ respectively.
 
@@ -2457,11 +2457,11 @@ the plots in figure \ref{fig:rAA}.
 \end{center}
 \end{figure}
 
-The general pattern here seems to be that near 0, all these
-distributions are large, and within in the middle third, they are all close
-to zero, and then in between, we can get substantial fluctuations,
-from the relatively extreme example of $\ulam{2}{3}$, to the very
-sedate examples provided by the sum-free sets, or by $\ulam{1}{4}$.  
+The general pattern here seems to be that all these distributions are
+large near 0, all close to 0 within the middle third of the interval,
+and have some substantial fluctuations in between, from the relatively
+extreme example of $\ulam{2}{3}$, to the more sedate examples provided
+by the sum-free sets, or by $\ulam{1}{4}$.
 
 These two observations would suggest that near 0, we should not have
 any elements of these sequences, and that most of the elements should
@@ -2491,9 +2491,9 @@ $\alpha\Z$, in particular for $A_N$ we have
 $\widehat{A_N}(k\alpha) \leq \frac{C}{k}$ for $k$ up to around
 $c\sqrt{N}$ for some constant $c$, and we have lower bounds for
 $(\dft_{2N}A)(\alpha)$.  We can then approximate this sum using these
-large Fourier coefficients and lumping the rest into an error term
-$R_N$ that we expect (but were unable to prove) is small enough to
-ignore.  Precisely : 
+large Fourier coefficients and lump the rest into an error term $R_N$
+that we expect (but were unable to prove) is small enough to ignore.
+Precisely :
 
 
 \begin{conjecture}\label{conj:spec_estimate}
@@ -2508,7 +2508,7 @@ ignore.  Precisely :
   r_{A_N + A_N}(x) = 2N\sum_{|k| < c'\sqrt{N}}(\dft_{2N}A)^2(k \alpha) e(k\alpha x) + R'_N
 \end{equation}
   
-Where $R_N$ and $R'_N$ are both $o(N)$ as $N \to \infty$.  
+Where $|R_N|$ and $|R'_N|$ are both $o(N)$ as $N \to \infty$.  
 \end{conjecture}
 
 \begin{proof}[Computational evidence]
@@ -2566,7 +2566,7 @@ we plotted above:
 \begin{proposition}
   Let $A$ be one of our \relevant sets, and let $\frac{m}{k}$ be a
   rational approximation to $\lambda_A$, so $\alpha$ is approximated
-  by $\widetilde{\alpha} = \frac{2\pi k}{m}$.  Then $f_N(x)$ be the
+  by $\widetilde{\alpha} = \frac{2\pi k}{m}$.  Let $f_N(x)$ be the
   function from $\Z/m \to \R$ that averages the values of
   $r_{A_N+A_N}(t)$ for $t = x \mod{\lambda}$, i.e. $kt = x \mod{m}$.
 
@@ -2605,16 +2605,17 @@ summation, we get:
 
 \end{proof}
 
-Thus if we had more precise knowledge of the argumnet of
-$\widehat{A_N}(\alpha)$ we could deduce, for example, that when $x$ is
-close to zero, that this is large (since it would be dominated by the
-first two terms), or that when $x$ is close to $\frac{m}{2}$, this
-should be small since it is an alternating sum.
+Thus if we had more precise knowledge of the argument of
+$\widehat{A_N}(\alpha)$ we could perhaps deduce the features we want.
+For example, when $x$ is close to zero, this sum would be dominated by
+the first two terms and so we should be able to show that it is large.
+Or when $x$ is close to $\frac{m}{2}$, this sum should be small since
+it will then be an alternating sum.
 
-\section{Distrubution mod $\lambda$}
+\section{Distribution mod $\lambda$}
 
 As mentioned, the distributions of various $U(a,b)$ and $\theta(s)$
-modulo their respective $\lambda$ values. are non-uniform, and seem to
+modulo their respective $\lambda$ values are non-uniform, and seem to
 have most (but not all) of their support in the middle third of the
 interval $[0,\lambda]$.  For example, if we take the first $10^4$
 elements of each sequence and take a rational approximation
@@ -2647,9 +2648,6 @@ There are many observations to be made, among which:
 \begin{enumerate}
 \item There seem to be few elements of each $A$ in some interval
   around 0 modulo $\lambda$.
-\item For Ulam sequences, the $x$ that fail to be in the sequence on
-  account of $r^*_{A+A}(x) = 0$ all lie close to $\frac\lambda2$
-  modulo $\lambda$.  
 \item The support of these distributions seems to usually contain the
   middle third modulo $\lambda$.  
 \item The distribution of $\ulam{1}{n}$ seems like it might be
@@ -2669,18 +2667,17 @@ $x$ and an integer: $\normrz{x} = \min_{n \in \Z} |x-n|$.
 \end{definition}
 
 Thus $\normrz{x} \leq \frac12$ always, and $x$ is in the ``middle
-third'', i.e $[\lambda/3, 2\lambda/3]$ mod $\lambda$ precisely if
-$\normrz{x/\lambda} \geq \frac13$.  Likewise, an interval, (say of
-radius $\eta$) around zero (mod $\lambda$) is expressed by the
-condition $\normrz{x/\lambda} < \eta$.  
+third'', i.e $\left(\frac{\lambda}{3}, \frac{2\lambda}{3}\right)$ mod
+$\lambda$ precisely if $\normrz{x/\lambda} > \frac13$.  Likewise, an
+interval, (say of radius $\eta$) around zero (mod $\lambda$) is
+expressed by the condition $\normrz{x/\lambda} < \eta$.
 
 \subsection{No elements close to 0 mod $\lambda$}
 
-So we move first, as promised, to investigate why it appears that
-there are no elements of $A$ close to integer multiples of $\lambda$.
-
-The distributions of $r_{A+A}$ would suggest that the reason is that
-$x$ that are close to $\lambda\Z$ have $r_{A+A}(x)$ large.  
+As promised, we move first to investigate why it appears that there
+are no elements of $A$ close to integer multiples of $\lambda$.  The
+distributions of $r_{A+A}$ would suggest that the reason is that $x$
+that are close to $\lambda\Z$ have $r_{A+A}(x)$ large.
 
 As we saw in equation \ref{eqn:rAAsum}, we can express this in terms
 of the spectrum of $A$, and hopefully can therefore extract some
@@ -2693,33 +2690,33 @@ So, particularly if we use the approximation given in equation
 \begin{eqnarray*}
   r_{A_N + A_N}(x) &=& 2N \sum_{|k| < c\sqrt{N}}
                        (\dft_{2N}A)(k\alpha)^2 e(k\alpha x) + R_N\\
-                   &\approx& 2N (\frac{\delta^2}{2} +
+                   &\approx& 2N \left(\frac{\delta^2}{2} +
                              2\Re((\dft_{2N}A)(\alpha)^2 e(\eta)) + \sum_{k > 1}
-                             2\Re((\dft_{2N}A)(k\alpha)^2 e(k\eta))) + R_N\\
+                             2\Re((\dft_{2N}A)(k\alpha)^2 e(k\eta))\right) + R_N\\
 \end{eqnarray*}
 
 And so if the argument of $(\dft_{2N}A)(\alpha)$ is close to $\pi$ and
-$\eta$ is small enough, then hopefully this first term is (or perhaps
-the first few are) larger than the error and the remaining sums and we
-get that $r_{A_N + A_N}(x) = O(N)$.  However this requires very
-precise control over the argument of $(\dft_{2N}A)(k\alpha)$ that we
-do not currently have.
+if $\eta$ is small enough, then hopefully the term we've pulled out of
+the sum dominates this expression and we get that
+$r_{A_N + A_N}(x) = O(N)$.  But this requires very precise control
+over the argument of $(\dft_{2N}A)(k\alpha)$ that we do not currently
+have.
 
 However, at least for truly sum-free sets, we can still pull out a
-theorem (as always, conditional on small error) of this kind by using
-the fact that for a sum-free set, an element can be in the set $A$
-only if $r_{A-A}(x) = 0$ also.  And, recalling equations
-\ref{eqn:rAAsum} and \ref{eqn:rAAsum_err}, this we can compute using
-only the magnitudes of the Fourier coefficients, allowing us to ignore
-the argument issue completely:
+theorem (as always, conditional on various conjectures about the
+spectrum) of this kind by using the fact that for a sum-free set, an
+element can be in the set $A$ only if $r_{A-A}(x) = 0$ also.  And,
+recalling equations \ref{eqn:rAAsum} and \ref{eqn:rAAsum_err}, this we
+can compute using only the magnitudes of the Fourier coefficients,
+allowing us to ignore the argument issue completely:
 
 \begin{theorem}\label{thm:hole1}
-  Let $A$ is a \relevant set of positive integers with
+  Let $A$ be an \relevant set of positive integers with
   $|A_N| = \delta N$.  Suppose that $A$ has spectrum $\alpha\Z$, that
   it satisfes conjecture \ref{conj:decay}, and that the error in
-  equation \ref{eqn:rAAsum_err} in fact satisfies $R_N = o(1/N)$.
-  Then for some $\eta > 0$, $\norm{x/\lambda} < \eta$ implies
-  $r_{A_N-A_N}(x) = \Omega(N)$.
+  equation \ref{eqn:rAAsum_err} in fact satisfies $R_N = o(N)$
+  (conjecture \ref{conj:spec_estimate}).  Then for some $\eta > 0$,
+  $\norm{x/\lambda} < \eta$ implies $r_{A_N-A_N}(x) = \Omega(N)$.
 \end{theorem}
 
 \begin{proof}
@@ -2730,9 +2727,7 @@ the argument issue completely:
   for doing this, let $|\widehat{A_N}(\alpha)| = \rho$ (we know
   $\rho > \frac{\delta^2}{2} - O(1/N)$ by \ref{thm:alpha_finitary}),
   and let $k_0$ be such that
-
   \[\delta^2 + \rho^2 - 4 C^2 \sum_{k=k_0}^\infty \frac{1}{k^2} > 0\]
-
   (which we know is possible since $\delta > 0, \rho > 0$, and since
   the the sum converges, and so approaches 0 as $k_0 \to \infty$).
   Then if we choose $\eta$ to guarantee that
@@ -2740,14 +2735,13 @@ the argument issue completely:
   for all $k < k_0$), then as $N$ gets large, we have:
 
   \begin{eqnarray*}
-    r_{A_N - A_N}(x) &=& 2N \left(\sum_{|k| < c\sqrt{N}}
-                       (\dft_{2N}A)(k\alpha)^2 e(k\alpha x) + R_N\right)\\
+    r_{A_N - A_N}(x) &=& 2N \sum_{|k| < c\sqrt{N}}
+                       (\dft_{2N}A)(k\alpha)^2 e(k\alpha x) + R_N\\
                      &\geq& N \delta^2 + 2N
                             |\widehat{A_N}(\alpha)|^2
                             \Re(e_N(\alpha x)) - 2N \sum_{|k| \geq k_0}
-                            |\widehat{A_N}(k\alpha)|^2\\
+                            |\widehat{A_N}(k\alpha)|^2 - |R_N|
   \end{eqnarray*}
-
   where here, we are using that
   $\Re(|\widehat{A_N}(k\alpha)|^2 e(k\alpha x)) \geq 0$ for
   $1 < k < k_0$ by choice of $\eta$, and that
@@ -2756,22 +2750,23 @@ the argument issue completely:
 
   \begin{eqnarray*}
     r_{A_N - A_N}(x) &\geq& \frac{\delta^2}{2} N + \frac{\rho^2}{2} N
-                            - 2N \sum_{|k| \geq k_0} |\widehat{A_N}(k\alpha)|^2\\
+                            - 2N \sum_{|k| \geq k_0}
+                            |\widehat{A_N}(k\alpha)|^2 - |R_N|\\
                      &\geq& \frac{\delta^2}{2} N + \frac{\rho^2}{2} N
                             - 2C^2 N \sum_{|k| \geq k_0}
-                            \frac{1}{k^2}\\
+                            \frac{1}{k^2} - |R_N|\\
   \end{eqnarray*}
-
 
   Using \ref{conj:decay} to conclude
   $|\widehat{A_N}(k\alpha)| \leq \frac{C}{k}$ for some constant $C$.
+  Thus:
 
-  \begin{eqnarray*}
-    &\geq& \frac{N}{2}\left(\delta^2 + \rho^2 - 4C^2 \sum_{|k| \geq k_0} \frac{1}{k^2}\right)\\
-  \end{eqnarray*}
-  
-  Which we know by choice of $k_0$ is $O(N)$, as desired.  
-
+  \[r_{A_N - A_N}(x) \geq \frac{N}{2}\left(\delta^2 + \rho^2 - 4C^2
+      \sum_{|k| \geq k_0} \frac{1}{k^2} - \frac{2|R_N|}{N}\right)\]
+  which we know by choice of $k_0$ that for $N$ large enough (so that
+  conjecture \ref{conj:spec_estimate} can kick in to allow us to
+  ignore the $R_N$ term) the value in parentheses is positive, and so
+  the whole expression is $\Omega(N)$, as desired.
 \end{proof}
 
 For sum-free $A$, this automatically guarantees that no integer within
@@ -2793,7 +2788,7 @@ then this means that $x$ is a summand for many elements of $A$:
   appears as a summand for elements of $A_N$ some $\Omega(N)$ times.
 \end{corollary}
 
-We will seem examples of this observation in section 7.
+We will see examples of this observation in section 7.
 
 % Also, one will note that the bound we used on the tail sum in the
 % above proof was very crude--simply the triangle inequality.  In fact,
@@ -2847,7 +2842,7 @@ We will seem examples of this observation in section 7.
 Another behaviour suggested by the distribution of $r_{A+A}$ concerns
 non-Ulam numbers, and specifically numbers $x$ that fail to be Ulam
 because $r^*_{A+A}(x) = 0$.  The fact that it appears
-$r^*_{A+A}(x) > 0$ outside the middle third suggests that all of these
+$r_{A+A}(x) > 0$ outside the middle third suggests that all of these
 would lie within the middle third.
 
 Indeed, if we take such numbers and plot their distribution mod
@@ -2874,8 +2869,8 @@ These plots share many features with the distributions of the Ulam
 numbers modulo $\lambda$, bolstering the idea that it isn't the
 feature of ``being an Ulam number'' as such that creates the
 distribution, but simply the relationship between $r_{A+A}(x)$ and
-being in $A$.  Specifically, for Ulam sequences $A$,
-$x \in A \iff r_{A+A}(x)$ is small, whether it is 2 or 3 and so
+being in $A$.  Specifically, for Ulam sequences $A$, $x$ being in $A$
+is related to $r_{A+A}(x)$ is small, whether it is 2 or 3 and so
 $x \in A$ or it is literally 0, and $x$ is in the sets we're
 considering in this section, such $x$'s still show the same bias
 modulo $\lambda$,
@@ -2890,7 +2885,7 @@ qualify by having no representations, as enumerated in table
   $N$}\label{tab:nonsums_count}
 \centering
 \begin{tabular}{lll}
-$A$ & $N$ (with $|A_N| = 10^4$) & $|x < N : r^*_{A+A}(x) = 0|$\\
+$A$ & $N$ (with $|A_N| = 10^4$) & $|\{x < N : r^*_{A+A}(x) = 0\}|$\\
 $\ulam{1}{2}$ & 132788 & 24415\\
 $\ulam{1}{3}$ & 78819 & 13445\\
 $\ulam{1}{9}$ & 58114 & 7859\\
@@ -2932,20 +2927,21 @@ slightly better:
 \begin{proof}
   Let $f(t) = A(t) - \delta$ be the ``balanced'' indicator function of
   $A$.  Then we know from \ref{thm:alpha_real} that $\frac{1}{N}\sum_{t=0}^{N-1}
-  f(t)\Re(e(\alpha t)) \geq \frac{\delta^2}{2}$.  The key here is to
+  f(t)\Re(e(\alpha t)) \leq -\frac{\delta^2}{2}$.  The key here is to
   write: 
 
   \[\Re(e(\alpha t)) = 1-\int_{-1}^1 E_\eta(t)d\eta\]
 
   Then 
   \begin{eqnarray*}
-    \frac{\delta^2}{2} &\leq& \frac{1}{N}\sum_{t=0}^{N-1}
+    \frac{\delta^2}{2} &\leq& -\frac{1}{N}\sum_{t=0}^{N-1}
                               f(t)\Re(e(\alpha t)) \\
-                       &=& \frac{1}{N}\sum_{t=0}^{N-1}
-                           f(t) -  \frac{1}{N}\sum_{t=0}^{N-1}
+                       &=& -\frac{1}{N}\sum_{t=0}^{N-1}
+                           f(t) +  \frac{1}{N}\sum_{t=0}^{N-1}
                            \int_{-1}^1 f(t) E_\eta(t)d\eta\\
-                       &\leq& \abs{\int_{-1}^1 \frac{1}{N}\sum_{t=0}^{N-1} f(t) E_\eta(t)}d\eta\\
-                       &\leq& \abs{\int_{-1}^1 \abr{f, E_\eta} d\eta}
+                       &=& \frac{1}{N}\sum_{t=0}^{N-1}
+                           \int_{-1}^1 f(t) E_\eta(t)d\eta\\
+                       &=& \int_{-1}^1 \abr{f, E_\eta} d\eta
 \end{eqnarray*}
 
 Thus $\abr{f, E_\eta} \geq \frac{\delta^2}{4}$ for some $\eta$.  But
@@ -2962,13 +2958,13 @@ namely towards some statement that large \relevant sets are \relevant
 for local reasons.  Another simpler example of this comes from
 thinking about regular such sequences:
 
-\begin{proposition}\label{prop:regular_sumfree}
+\begin{theorem}\label{thm:regular_sumfree}
   If $A$ is a regular 1-additive or sum-free set, then there is an
   $N > 0$, an $m$, and a sum-free $E \subseteq \Z/m$ such that if
   $\pi : \Z \to \Z/m$ is the quotient map, then $A$ and $E$ agree for
   all integers larger than $N$.  In other words, such $A$ eventually
   agree with a locally sum-free set. 
-\end{proposition}
+\end{theorem}
 
 \begin{proof}
   If $A$ is regular, then there is an $N > 0$ and a modulus $m$ with a
@@ -2981,14 +2977,18 @@ thinking about regular such sequences:
   without loss, that $0 \leq a_r < m$ for all $r$, then
   $a_i + a_j = a_k + m\epsilon$ for $\epsilon = 0$ or $\epsilon = 1$.
 
-  Now, $x = Nm + a_i$, $y = Nm + a_j$, $z = (N+1)m + a_i$,
-  $w = (N+1)m+a_j$, and $(2N+2+\epsilon)m + a_k$ are all distinct
-  elements of $A$.  However, $x+w \in A$ and $y+z \in A$, and
-  $x + w = y + z$, contradicting the 1-additivity of $A$.
+  Now, define five numbers $x, y, z, w, c$ by $x = Nm + a_i$,
+  $y = Nm + a_j$, $z = (N+1)m + a_i$, $w = (N+1)m+a_j$, and
+  $c = (2N+2+\epsilon)m + a_k$.  These are all distinct, since
+  $0 \leq a_i, a_j, a_k < m$.  They are also all in $A$, since they
+  are in $E$ modulo $m$, and are all greater than $N$.  However,
+  $x+w = c$ and $y+z = c$.  So, $c$, an element of $A$, has two
+  distinct representations as sums of distinct smaller elements of
+  $A$, contradicting the 1-additivity of $A$.
 
   Thus $E$ had to have been sum-free, and then we have that for
   $x > N$, $x \in A \iff x \in \pi\inv(E)$, where $\pi : \Z \to \Z/m$
-  is the quotient map, as desired.
+  is the quotient map and $E \subseteq \Z/m$ is sum-free, as desired.
 \end{proof}
 
 \chapter{Structure of $\ulam{1}{2}$}
