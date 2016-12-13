@@ -92,9 +92,9 @@ as 23).
 
 One thing that makes the sequence interesting is that it seems
 historically to have been very difficult to prove anything about it.
-We know, for example, that it must be infinite, since, given the first
-$n$ elements $a_1, \ldots, a_n$, we can always find at least one
-number that satisfies the first two criteria above, namely
+We know, for example, that it must be infinite: given the first $n$
+elements $a_1, \ldots, a_n$, we can always find at least one number
+that satisfies the first two criteria above, namely
 $a_{n-1} + a_{n-2}$.  Thus there must be a smallest such number, which
 is therefore the next Ulam number.  However we do not know whether
 this sequence has positive density in any sense.
@@ -116,16 +116,16 @@ following sense:
 
 Regular sequences are very easy to describe--we could specify them
 (after some initial segment) by a set of congruence classes modulo
-some (possibly large) $m$.  In particular, a regular Ulam-like
-sequence will be far easier to compute than the definition of an Ulam
-sequence would naively suggest.
+some (possibly large) $m$.  In particular, a regular sequence
+$\ulam{u}{v}$ will be far easier to compute than the definition would
+naively suggest.
 
-There are other initial values that are variously known to and
-believed to give rise to regular sequences, also.  See, for example,
+There are other initial values that are variously known to or believed
+to give rise to regular sequences, also.  See, for example,
 \cite{finch:em1992}.  That said, many Ulam-type sequences appear not
-to be regular, among them the $(1,2)$- and $(2,3)$-Ulam sequences.  So
-we might wonder if these exhibit some other kind of similar pattern,
-though perhaps not as rigid as that for the $(2,5)$-Ulam sequence.  
+to be regular, among them $\ulam{1}{2}$ and $\ulam{2}{3}$.  So we
+might wonder if these exhibit some other kind of similar pattern,
+though perhaps not as rigid as that for, say, $\ulam{2}{5}$.
 
 In looking for hidden regularity, one might take a signal processing
 approach to the sequence and try, for example, to Fourier transform
@@ -133,22 +133,20 @@ the indicator function of the sequence and see if the spectrum has any
 interesting features.  In \cite{steinerberger:preprint}, Stefan
 Steinerberger does exactly that and finds that the spectrum has a
 large spike at 0 (suggesting some flavour of positive density) as well
-as another at some $\alpha \in \R/\Z$ (and, therefore, at its
-harmonics), and seemingly nowhere else.
+as another at some $\alpha \in \R/\Z$ (and also, therefore, at its
+harmonics $n\alpha$ for $n \in \Z, n \neq 0$), and seemingly nowhere
+else.
 
-More precisely if $A = \ulam{1}{2}$ is the set of Ulam numbers, and by
-abuse of notation we also use $A$ to denote the indicator function of
-the set $A$, then we can define a ``Fourier transform'' by:
-
-\[f_N(x) = \frac{1}{N}\sum_{t=1}^N A(t) e(tx)\] 
-
-Where $e(x) = e^{ix}$.  If
-$A_N = A \cap [N] = A \cap \{1, \ldots, N\}$ denotes the ``truncation
-of $A$ at $N$'', then in the case of the Ulam sequence, what is
-observed numerically is that $f_N(0) = \delta \approx 0.07$ is the
-density of the sequence.  It is clear that $f_N(x)$ cannot ever be
-larger than this.  However, for one particular value of
-$\alpha \in \R/2\pi\Z$ (namely $\alpha = 2.571447\ldots$), we find
+More precisely if $A$ is a subset of the natural numbers, and by abuse
+of notation we also use $A$ to denote the indicator function of the
+set $A$, then we can define a ``Fourier transform'' by:
+\[f_N(x) = \frac{1}{N}\sum_{t=1}^N A(t) e(tx)\] where $e(x) = e^{ix}$.
+In the case of where $A = \ulam{1}{2}$, what is observed numerically
+is that $f_N(0)$ approaches the density of the sequence
+$\delta \approx 0.07$ as $N \to \infty$.  Looking at the definition of
+$f_N$, it is clear that $f_N(x)$ cannot ever be larger than this
+$\delta$.  However, for one particular value of $\alpha \in \R/2\pi\Z$
+(namely $\alpha = 2.571447\ldots$), we find
 $f_N(\alpha) \approx 0.8 \delta$, even as $N \to \infty$, and for
 $k \in \Z$, $f_N(k \alpha)$ is also some non-zero value that shrinks
 with $k$.  For example, for $N = 100000$, we compute this for a few
@@ -161,22 +159,22 @@ conjugates of these).  The output is in table
 \label{tab:intro_fourier_coeffs}
 \centering
 \begin{tabular}{ll}
-  $k$ & $\widehat{A}(k\alpha)$
+  $k$ & $|f_N(k\alpha)|$\\
+  0 & $\delta$
   \csvreader{datafiles/harmonics_u1_2.csv}{}
   {\\\csvcoli & \csvcolii}
 \end{tabular}
 \end{table}
 
-and as $N$ gets large, it appears that
-$\widehat{A_N}(\beta) \to 0$ as $N \to \infty$ for all other
-$\beta \notin \alpha\Z$.
+As $N$ gets large, it appears that $f_N(\beta) \to 0$ as
+$N \to \infty$ for all other $\beta \notin \alpha\Z$.
 
 From a signal processing perspective, this might suggest that the set
 $A$ has some periodicity mod
 $\frac {2\pi} \alpha \approx 2.443442\ldots$.  Using $5422/2219$ as a
-rational approximation to this, we can plot the distribution of $A_N$
-for, say, $N = 10^8$ modulo this number.  This is done in figure
-\ref{fig:intro_dist}.  
+rational approximation to this, we can plot the distribution of the
+first $10^8$ elements of $A$ modulo this number.  This is done in
+figure \ref{fig:intro_dist}.
 
 \begin{figure}
 \caption{Distribution of $A$ modulo $\frac{2\pi}{\alpha}$}\label{fig:intro_dist}
@@ -188,7 +186,7 @@ for, say, $N = 10^8$ modulo this number.  This is done in figure
 This has some notable features: 
 
 \begin{itemize}
-\item From the value of $\widehat{A}(0)$, it looks like the Ulam
+\item From the value of $f_N(0)$, it looks like the Ulam
   sequence has small but nonzero density (in fact, around $0.07$).
 
 \item As noted in \cite{steinerberger:preprint} it looks like as we increase $N$
@@ -209,7 +207,7 @@ naturally leads to many questions.  We will list a larger number of
 these in section 3, but we give a sampling now: 
 
 \begin{enumerate}
-\item What is the $\alpha$ that we have computed as comprising the
+\item What is the $\alpha$ that appears to account for the entire
   spectrum of the Ulam numbers?  Is it irrational?  Transcendental?
 
 \item What feature of the Ulam numbers gives rise to this
@@ -223,6 +221,26 @@ these in section 3, but we give a sampling now:
   regularity that even the irregular-looking sequences do satisfy?
 \end{enumerate}
 
+\subsection{Notation}
+
+Before we get to our results, we provide a few pieces of notation that
+we shall use throughout this document: 
+
+\begin{itemize}
+\item Denote by $[N]$ the set $\{1, \ldots, N\}$.
+\item If $A \subseteq \N$, let $A_N$ denote $A \cap [N]$.  
+\item If $f(N)$ is a function: 
+\begin{itemize}
+\item $f$ is $\O(g(N))$ if there is a constant $C > 0$ such that $f(N)
+  \leq C g(N)$ for $N$ sufficiently large.
+\item $f$ is $\Omega(g(N))$ if there is a constant $C > 0$ such that
+  $f(N) \geq C g(N)$ for $N$ sufficiently large.
+\item $f$ is $\Theta(g(N))$ if there are constants $C, C' > 0$ such
+  that $C g(N) \leq f(N) \leq C' g(N)$.
+\end{itemize}
+\item For $x \in \R$, let $e(x)$ denote $e^{ix}$.
+\end{itemize}
+
 \section{Results}
 
 In this document, we do not provide a complete explanation for the
@@ -232,11 +250,12 @@ that the set $A$ of Ulam numbers has the property that the number of
 pairs $(x, y) \in A^2$ with $x + y \in A$ is unusually small.  For
 example, in a randomly generated set $B$ of density $\delta$, we might
 expect that $B_N$ has about $\delta N$ elements, and hence
-$\delta^2 N^2$ pairs of elements, of whose sums maybe $\delta$ will be
-in $A$.  So we expect about $\delta^3 N^2$, or, generally,
-$\Theta(N^2)$ such sums.  If we have fewer of these, say
-$O(N^{2-\epsilon})$ for some $\epsilon > 0$, then that suggests that
-the set cannot be purely random.  So we define:
+$\delta^2 N^2$ pairs of elements.  Of these pairs, we expect $\delta$
+to be the proportion of them whose sums are also in $A$.  That is, we
+expect about $\delta^3 N^2$, or, generally, $\Theta(N^2)$ solutions to
+$x + y = z$ with all $x, y, z \in A$.  If we have fewer of these, say
+$O(N^{2-\epsilon})$ for some $\epsilon > 0$, then that would suggest
+that the set cannot be purely random.  So we define:
 
 \begin{definition}Call a set $A$ of positive integers
   \textbf{\relevant}if there is a constant $C \geq 0$ and
@@ -257,7 +276,7 @@ the set cannot be purely random.  So we define:
 
 \begin{example}
   A set $A$ is called ``sum-free'' if for every $N$, $T(A_N) = 0$.
-  These sets are thus also \relevant, and indeed will provide examples
+  These sets are thus also \relevant and indeed will provide examples
   of the same phenomena that are in some ways simpler and more extreme
   than the Ulam numbers.
 \end{example}
@@ -269,10 +288,10 @@ sets.
 
 We suspect that the nature of this structure is roughly ``correlation
 with a periodic sum-free set''.  More precisely, that there should be
-an $\lambda \in \R$ such that if $\pi : \R \to \R/\Z$ is the map
+a $\lambda \in \R$ such that if $\pi : \R \to \R/\Z$ is the map
 $x \mapsto \lambda x\mod{1}$, then there is an actually sum-free
 subset $E \subseteq \R/\Z$ such that $A$ and $\pi\inv(E)$ are in some
-sense strongly correlated.  
+sense strongly correlated.
 
 In this document, we come to a first result in this direction: theorem
 \ref{thm:regularity}, which gives such a $\lambda$ and a set
@@ -285,8 +304,9 @@ To get such results, we first prove a theorem (theorem
 \ref{thm:alpha_finitary}) that \relevant sets are guaranteed (in a
 certain sense) a large Fourier coefficient $\alpha$ in their spectrum.
 We also show in theorem \ref{thm:hole1}, granting certain statements
-about the Fourier spectrum that we could not prove, that circle-method
-type arguments to entail certain features of this distribution.
+about the Fourier spectrum that we could not prove, that certain
+features of this distribution should follow from arguments in the vein
+of the circle method.
 
 Finally, turning our attention from the general study of \relevant
 sets to the Ulam numbers in particular, we consider the combinatorial
@@ -321,10 +341,9 @@ $x\in \R/2\pi\Z$:
 
 \[\widehat{A_N}(x) = \frac{1}{N} \sum_{t=0}^{N-1} A(x) e(tx)\]
 
-(Where, recall, $A_N = A \cap [N]$.)  Also define
+Also define
 
 \[\widehat{A}(x) = \lim_{N \to \infty} \widehat{A_N}(x)\]
-
 if this limit converges.  
 \end{definition}
 
@@ -343,9 +362,8 @@ definition:
 
 \begin{definition}
   For $f : \Z/N \to \C$, let the \textbf{discrete Fourier transform}
-  of $f$ be a function $\dft_N f$ defined by
-  \[(\dft_N f)(k) = \sum_{t=0}^{N-1} f(t) e(\frac{-2\pi k t}{N})\]
-  where $e(x) = e^{ix}$.
+  of $f$ be a function $\dft_N f$ defined for $k \in \Z/N$ by:
+  \[(\dft_N f)(k) = \frac{1}{N} \sum_{t=0}^{N-1} f(t) e(-\frac{2\pi k t}{N})\]
 \end{definition}
 
 This definition satisfies many properties, which are standard from
@@ -363,21 +381,19 @@ If $f : \Z/N \to \C$, then:
   $(\dft_N f)(0) = \delta$, and $|(\dft_N f)(x)| \leq \delta$ for all
   $x \in \Z/N$.
 
-\item (Fourier inversion):
-  $(\dft_N\inv f)(x) = \frac{1}{N} \overline{(\dft_N f)(-x)}$ for all
-  $x \in \Z/N$.
+\item (Fourier inversion): $(\dft_N\inv f)(x) = N (\dft_N f)(-x)$ for
+  all $x \in \Z/N$.
 
 \item (Convolution formula): For two functions $f, g : \Z/N \to \C$,
-  we have \[(\dft_N (fg))(x) = (\dft_N f \ast \dft_N g)(x)\] for all
+  we have \[(\dft_N (f \ast g))(x) = N(\dft_N f)(x)(\dft_N g)(x)\] for all
   $x \in \Z/N$, where $(F \ast G)(x) = \sum_{t=0}^{N-1} F(t)G(x-t)$ is
   the convolution of $F$ and $G$.
 
 \item (Cross-correlation formula): For two functions
   $f, g : \Z/N \to \C$, we have
-  \[(\dft_N (f\overline{g}))(x) = (\dft_N f \star \dft_N g)(x)\] for
-  all $x \in \Z/N$, where
-  $(F \star G)(x) = \sum_{t=0}^{N-1} F(t)G(t+x)$ is the
-  cross-correlation of $F$ and $G$.
+  \[(\dft_N (f \star g))(x) = N(\dft_N f)(-x)(\dft_N g)(x)\] for all
+  $x \in \Z/N$, where $(F \star G)(x) = \sum_{t=0}^{N-1} F(t)G(t+x)$
+  is the cross-correlation of $F$ and $G$.
 
 \item (Parseval's identity): For $f : \Z/N \to \C$, we
   have
@@ -388,7 +404,7 @@ If $f : \Z/N \to \C$, then:
 
 \section{Known regularity results}
 
-If we want to prove this kind of generalised regularity statement, it
+If we want to prove some kind of generalised regularity statement, it
 might help to understand existing proofs of regularity (i.e. that
 consecutive differences are eventually periodic) in cases where this
 is known to hold.  We discuss two such results in this section.
@@ -408,7 +424,7 @@ odd.  Since it can be written as sum of two earlier terms, and it is
 odd, one of its summands must be even.  And since it can be written in
 such a sum in a unique way, this is saying that $n - e_i$ is in the
 sequence for a unique $i$ from 1 to $s$.  This is finitely many things
-to check.
+to check, from which regularity should follow.
 
 More precisely:
 
@@ -421,7 +437,6 @@ More precisely:
   finite recurrence:
 
   \[x_n = \sum_{i=1}^s 1(x_{n-e_i})\]
-  
   where $1(x)$ is 0 unless $x = 1$, in which case $1(x) = 1$.  In
   particular, $0 < x_n \leq s$ for all odd $n > e_s$.  Note also that
   $x_n$ depends on a finite range of earlier $x_i$'s:
@@ -442,7 +457,7 @@ More precisely:
                                                   = B_{n+N}$}\\
     &=& (x_{n}, x_{n-2}, \ldots, x_{n+2-e_s}) \text{ as noted
                                                 above}\\
-              &=& B_{n+2}\\
+              &=& B_{n+2}
   \end{eqnarray*}
 
   So in fact $B_{n+N+2} = B_{n+2}$ and we can proceed by induction to
@@ -467,8 +482,9 @@ regular:
 \end{itemize}
 \end{conjecture}
 
-In particular the this would imply that all of these sequences are
-regular, although it may not be the complete list of regular $U(a,b)$.
+In particular this would imply that all of these sequences are
+regular, although the above may not be the complete list of regular
+$U(a,b)$.
 
 \subsection{Regularity of $U(2,2n+3)$}
 
@@ -549,15 +565,12 @@ of these sets has finitely many evens.  Specifically:
   expressing $x$ as a sum of elements of $U(2,v)$ in multiple ways.  
 
   For example, the second lemma tells us that some odd between $x-3v$
-  and $x-v$, say $x-v-2i$ (for some $0 \leq i \leq v$) is in
-  $U(2,v)$.  But we know everything of the form $v+2i$ with $0 \leq i
-  \leq v$ is in $U(2,v)$ as well, so: 
-
-  \[x = (x-v-2i)+(v+2i)\]
-
-  is the qualifying expression for $x$ as a sum of smaller elements.
-  Since this expression must be unique, we also know that $x-v-2j$ for
-  $0 \leq j \leq v$ and $j \neq i$ cannot be in $U(2,v)$.  
+  and $x-v$, say $x-v-2i$ (for some $0 \leq i \leq v$) is in $U(2,v)$.
+  But we know everything of the form $v+2i$ with $0 \leq i \leq v$ is
+  in $U(2,v)$ as well, so \[x = (x-v-2i)+(v+2i)\] is the qualifying
+  expression for $x$ as a sum of smaller elements.  Since this
+  expression must be unique, we also know that $x-v-2j$ for
+  $0 \leq j \leq v$ and $j \neq i$ cannot be in $U(2,v)$.
 
   To get a second such expression (and therefore a contradiction), we
   will look also at the odd elements from $x-5v$ to $x-3v$, using our
@@ -645,13 +658,11 @@ More formally:
   sets that partition the natural numbers: The target set $A$, the
   excluded set $E$, and the disqualified set $D$.  For each
   $n \in \N$, iteratively select a set for $n$ as follows:
-
 \[\begin{cases}
 n \in A+A &\implies n \in D\\
 n \notin A+A \text{ and } s_k = 1 &\implies n \in A\\
 n \notin A+A \text{ and } s_k = 0 &\implies n \in E
 \end{cases}\]
-
 where, at each stage, $k = |A|+|E|+1$ is the index of the first
 element of $s$ that we have yet to consult. 
 
@@ -703,19 +714,21 @@ known that if a sum-free set $A$ is regular (as defined
 above--i.e. its sequence of successive differences is ultimately
 periodic), then its decision sequence $\theta\inv(A)$ must also be
 ultimately periodic \cite{cameron:sc1987}.  Conversely, many periodic
-decision sequences give rise to provably regular sum-rfee sets.  For
-example, if for a finite string $s$, $\overline{s}$ denotes the
-infinite string got by repeating $s$ forever, then all $s$ of length
+decision sequences give rise to provably regular sum-free sets.  For
+example, say for a finite string $s$ that $\overline{s}$ denotes the
+infinite string got by repeating $s$ forever.  Then all $s$ of length
 five are known to have $\theta(\overline{s})$ regular except
 $s = 01001$, $s = 01010$, and $s = 10010$.  For example,
-$\theta(01001) = \{2, 6, 9, 14, 19, 26, 29, 36, 39, 47, 54, 64, 69,
-79, 84, 91, 96, \ldots\}$ has been computed extensively and no period
-has been identified.  There is other computational evidence in
-\cite{calkin:int2005} that this sequence may not be periodic beyond
-just brute force attempts to compute a period for it.  Nevertheless,
-there is no known example of an ultimately periodic decision sequence
-for which we can actually prove its corresponding sum-free set is
-non-regular.
+$\theta(\overline{01001})$ (which we will somewhat abusively refer to
+as $\theta(01001)$) starts
+$\{2, 6, 9, 14, 19, 26, 29, 36, 39, 47, 54, 64, 69, 79, 84, 91, 96,
+\ldots\}$ and has been computed extensively with no period being
+identified to date.  Beyond the failure of brute force attempts to
+find a period for it, there is other computational evidence in
+\cite{calkin:int2005} that this sequence may not be periodic.
+Nevertheless, there is no known example of an ultimately periodic
+decision sequence for which we can actually prove its corresponding
+sum-free set is non-regular.
 
 \subsection{Density and regularity}
 
@@ -732,9 +745,9 @@ on what we mean by ``density'':
   $\delta$.
 \end{definition}
 
-Since this may not always exist, we might work with another number
-that always will exist and that, in cases when the density does not
-exist, provides what should be thought of as at least an upper bound: 
+Since this may not always exist, we might work with another quantity
+that will always exist and that, in cases when the density does not
+exist, provides what should be thought of as at least an upper bound:
 
 \begin{definition}
   A subset $A \subset \Z^+$ has \textbf{upper density} $\delta$ if
@@ -820,13 +833,9 @@ Thus $2|B_N| + 3(|A_N| - |B_N|) \leq N+2$, i.e.
 Now we have a relationship between $|B|$ and $|A|$, so we can pair
 this with our earlier inequality relating the two of them to $N$ and
 find:
-
 \[2|A_N| + 3|A_N| - N - 2 \leq N+x \]
-
-or
- 
+or 
 \[\frac{|A_N|}{N} \leq \frac25+o(1) \]
-
 as we wanted.
 
 \textbf{Case 2: $A$ has consecutive elements:} In the case where $A$
@@ -892,9 +901,7 @@ $|A_N| + |A_N| + (|A_N| - |B_N|) \leq N+x$ or:
 Dropping this into the first inequality and rearranging, we get:
 
 \[2|A_N|+(d-1)(3|A_N|-N-x) \leq N+a+d-1\]
-
 which simplifies to: 
-
 \[\frac{|A_N|}{N} \leq \frac{d}{3d-1} + o(1)\]
 
 Since $d \geq 2$ (as we are assuming we have at least two consecutive
@@ -919,7 +926,7 @@ there the integers are equidistributed modulo any irrational.  For
 example, there is at least one $n$ that is equivalent to an integer in
 the interval $\left(\frac{\alpha}{3m}-k,\frac{2\alpha}{3m}-k\right)$
 modulo the irrational number $\frac{\alpha}{m}$.  Then it is clear
-that $mn+k$ will reduce to
+that $mn+k$ will reduce to an element of
 $\left(\frac{\alpha}{3},\frac{2\alpha}{3}\right)$ mod $\alpha$,
 meaning that $mn+k \in A_\alpha$ as desired.
 
@@ -956,7 +963,7 @@ meaning that $mn+k \in A_\alpha$ as desired.
 
 \section{Roth's theorem}
 
-Roth's theorem is about the number 3-term arithmetic progressions
+Roth's theorem is about the number of 3-term arithmetic progressions
 $x, y, z$ in a set $A \subseteq \Z^+$.  Specifically: 
 
 \begin{theorem}[Roth's theorem]
@@ -978,8 +985,8 @@ As it turns out, many new techniques in additive combinatorics cut
 their teeth on Roth's theorem, and so there are many proofs, from
 those that use probabilistic techniques to ergodic theory.  We will
 discuss one in particular: The density increment proof.  We will not
-give the complete proof, but will simply work through the part that is
-relevant to our study and will outline the rest.
+give the complete proof, but will simply work at a high level through
+the part that is relevant to our study and will outline the rest.
 
 \subsection{Density increment proof}
 
@@ -1003,10 +1010,10 @@ then one can find a long arithmetic progression that has large
 intersection with $A$, and on which $A$ in fact has higher density
 than it had originally.  We can repeat this step (the ``density
 increment'') as often as needed until either our intersected $A$ has
-no large Fourier coefficient (in which case we are done as above) or
-else $A$'s density in the arithmetic progression increases to 1.  If
-we are careful about it, we can ensure that at least 3 elements will
-still remain by the time we get to this point.
+no large Fourier coefficient (in which case we are done as before) or
+else $A$'s density in the arithmetic progression increases to 1.  And
+if we are careful about it, we can ensure that at least 3 elements
+will still remain by the time we get to this point.
 
 \begin{proof}[Proof of Roth's theorem via density increment]
 
@@ -1015,29 +1022,40 @@ still remain by the time we get to this point.
   $N/2$, then a solution to $x+z=2y$ in $\Z/N$ is an honest solution
   to $x+z=2y$ in $A$ viewed as a subset of $\Z$.  
 
-  If $A$ is a set of density $\delta$ in $\Z/N$, then the number $S$
-  of solutions to $x+z=2y$ is counted by: 
+  If $A$ is a set of density $\delta$ in $\Z/N$, with all elements of
+  $A$ less than $N/2$, then the number $S$ of solutions to $x+z=2y$ is
+  counted by:
 
   \[S = \sum_{x, y, z = 0}^{N-1}A(x)A(y)A(z)\delta_{x+y-z}\]
 
   Where $\delta_x = 1$ if $x = 0$, else $\delta_x = 0$.  Then, writing
 
   \[\delta_x = \frac{1}{N}\sum_{t=0}^{N-1}e(\frac{2\pi tx}{N}) =
-    \dft_N 1\]
+    \widehat{1}\]
 
-  we can substitute this into our expression for $S$ and rearrange to
-  find: 
+  we can substitute this into our expression for $S$ and rearrange,
+  where for the sake of brevity (and only for the duration of this
+  proof), we depart from our previous notation and denote by
+  $\widehat{A}$ the discrete Fourier transform 
 
-  \[S = N^2 \sum_{t=0}^{N-1} \widehat{A_N}(t)\widehat{A_N}(t)\widehat{A_N}(-2t)\]
+  \[\widehat{A}(x) = \frac{1}{N}\sum_{t=0}^{N-1}e(\frac{2\pi tx}{N})\]
+
+  On doing so, we find:
+
+  \[S = N^2 \sum_{t=0}^{N-1} \widehat{A}(t)\widehat{A}(t)\widehat{A}(-2t)\]
+
+  The idea will be to pull out the $t = 0$ term of this sum, note that
+  this is large and that if all other terms are small, than it
+  dominates and guarantees $S > 0$.  Precisely:
 
   \begin{eqnarray*}
-    S &=& N^2 \sum_{t=0}^{N-1} \widehat{A_N}(t)\widehat{A_N}(t)\widehat{A_N}(-2t) \\
-    S &=& N^2 \delta^3 + N^2 \sum_{t=1}^{N-1} \widehat{A_N}(t)\widehat{A_N}(t)\widehat{A_N}(-2t) \\
-      &=& \delta^3 N^2 + N^2 \sum_{t=0}^{N-1} \widehat{A_N}(t)^2\widehat{A_N}(-2t) \\
-      &\geq& \delta^3 N^2 - \sup_t |\widehat{A_N}(-2t)| N^2 \sum_{t=0}^{N-1} |\widehat{A_N}(t)|^2 \\
-      &=& \delta^3 N^2 - \sup_t |\widehat{A_N}(-2t)| N \sum_{t=0}^{N-1} |1_A(t)|^2 \\
-      &=& \delta^3 N^2 - \sup_t |\widehat{A_N}(-2t)| N |A|\\
-      &=& \delta^3 N^2 - \sup_k |\widehat{A_N}(k)| \delta N^2
+    S &=& N^2 \sum_{t=0}^{N-1} \widehat{A}(t)\widehat{A}(t)\widehat{A}(-2t) \\
+    S &=& N^2 \delta^3 + N^2 \sum_{t=1}^{N-1} \widehat{A}(t)\widehat{A}(t)\widehat{A}(-2t) \\
+      &=& \delta^3 N^2 + N^2 \sum_{t=0}^{N-1} \widehat{A}(t)^2\widehat{A}(-2t) \\
+      &\geq& \delta^3 N^2 - \sup_t |\widehat{A}(-2t)| N^2 \sum_{t=0}^{N-1} |\widehat{A}(t)|^2 \\
+      &=& \delta^3 N^2 - \sup_t |\widehat{A}(-2t)| N \sum_{t=0}^{N-1} |A(t)|^2 \\
+      &=& \delta^3 N^2 - \sup_t |\widehat{A}(-2t)| N |A|\\
+      &=& \delta^3 N^2 - \sup_k |\widehat{A}(k)| \delta N^2
   \end{eqnarray*}
 
   So if there is no large Fourier coefficient--that is, every Fourier
@@ -1045,21 +1063,21 @@ still remain by the time we get to this point.
   
   \[S \geq (\delta^3 - \delta\epsilon) N^2\]
 
-  So if $\epsilon < \delta^2$, then $S > 0$, at which point there is at
-  lest one solution, as desired.  
+  In particular, if $\epsilon < \delta^2$, then $S > 0$, at which
+  point there is at least one solution, as desired.
   
   If, on the other hand, there is a $k$ such that
-  $|\widehat{A_N}(k)| \geq \delta^2 N$, then this argument does not
+  $|\widehat{A}(k)| \geq \delta^2 N$, then this argument does not
   guarantee a solution.  However, in that case, let $P = d[1,L]$ be
-  the arithmetic progression of length$L$ and difference $d$
+  the arithmetic progression of length $L$ and difference $d$
   $\{d, 2d, \ldots ,Ld\}$ ($d$ to be chosen later).  We want an
   arithmetic progression in which $A$ has higher density than it has
   in $\Z/N$ at large.  In other words, we want to find an $a$ that
-  makes $Q(a) = |A \cap (P+a)| = 1_A \star 1_P(a)$ large.  But this we
+  makes $Q(a) = |A \cap (P+a)| = (A \star P)(a)$ large.  But this we
   can analyse using Fourier analysis:
   
   \begin{eqnarray*}
-    \widehat{Q}(s) = \widehat{A_N}(s) \overline{\widehat{P}(s)}
+    \widehat{Q}(s) = \widehat{A}(s) \overline{\widehat{P}(s)}
   \end{eqnarray*}
   
   Further, we know that for all $s \neq 0$,
@@ -1069,7 +1087,7 @@ still remain by the time we get to this point.
 
 \begin{eqnarray*}
   \sum_a Q(a) &\geq& |\widehat{Q}(k)| \\
-              &=& |\widehat{A_N}(k)| |\widehat{P}(k)| \\
+              &=& |\widehat{A}(k)| |\widehat{P}(k)| \\
               &\geq& \epsilon N |\widehat{P}(k)| 
 \end{eqnarray*}
 
@@ -1128,9 +1146,9 @@ in many places, for example \cite{roth:jlm1953}.
 
 There have been several recent developments in a finite field setting
 on analogous problems (specifically, the work of Croot, Lev, and Pach
-\cite{croot:preprint} on length-3 arithmetic progression-free sets
-in $\FF_4^n$ and subsequent work by others \cite{ellenberg:preprint}
-pushing it to $\FF_3^n$.
+\cite{croot:preprint} on length-3 arithmetic progression-free sets in
+$\FF_4^n$ and subsequent work by others \cite{ellenberg:preprint}
+pushing it to $\FF_3^n$).
 
 We will recall the method used here by outlining the proof in
 \cite{ellenberg:preprint}, in view of the possibility of later asking
@@ -1152,7 +1170,6 @@ $\FF_q^n$ such that the equation $\alpha a_1 + \beta a_2 + \gamma a_3
   (this is more or less a trick).  Then
 
   \[\dim(V_d) >= m_d - (q^n - |A|)\]
-  
   (since the requirement to vanish on the complement of $2A$ is at most
   $q^n - |A|$ conditions).
   
@@ -1162,29 +1179,31 @@ $\FF_q^n$ such that the equation $\alpha a_1 + \beta a_2 + \gamma a_3
   \[|\supp(P_d)| >= m_d - q^n + |A|\]
   
   Now for the last bit: If we have a degree-$d$ polynomial $P$
-  vanishing on the complement of $2A$, then we can form the $|A|$ by
-  $|A|$ matrix $M$ whose $i,j$ entry is $P(a_i + a_j)$ where $a_i$ are
-  the elements of $A$.  First of all, because for $i$ and $j$
-  different, $a_i+a_j$ is never in $2A$, the off-diagonal terms all
-  vanish, whereas because the diagonal terms are $P(2a_i)$, they may
-  or may not vanish.
+  vanishing on the complement of $2A$, then we can form the
+  $|A|$-by-$|A|$ matrix $M$ whose $i,j$ entry is $P(a_i + a_j)$ where
+  $a_i$ are the elements of $A$.  First of all, because for $i$ and
+  $j$ different, $a_i+a_j$ is never in $2A$, the off-diagonal terms
+  all vanish, whereas because the diagonal terms are $P(2a_i)$, they
+  may or may not vanish.
   
   
   We can brutally expand this polynomial into a sum of monomials:
   
   \[P(a_i + a_j) = \sum_{\text{monomials $m$,$m'$ of degree $d$ or less}} c_{m,m'} m(a_i) m'(a_j)\]
   
-  Further, in each term at least one of m and m' has degree at most d/2, so we can sum over 
+  Further, in each term at least one of m and m' has degree at most
+  $d/2$, so we can sum over
   
   \[P(a_i + a_j) = \displaystyle\sum_{\text{monomials $m$ of degree $d/2$ or less}} c_{m} m(a_i) F_m(a_j) + c'_m m(a_j) G_m(a_i)\]
   
-  So $M$ is a linear combiantion of $2 m_{d/2}$ matrices $(m(a_i)
-  F_m(a_j))$ each of which, as the exterior product of two vectors, has
-  rank 1.  Thus the rank of $M$ is at most $2 m_{d/2}$.  And since $M$ is
-  diagonal, this means that in fact on $2A$, $P$ has only $2 m_{d/2}$ non-zero
-  points.  So the support of $P$ is bounded above by $2 m_{d/2}$.  Since the
-  support of $P_d$ was already bounded below by $m_d - q^n + |A|$ we can
-  apply this argument to $P_d$ and conclude that
+  So $M$ is a linear combiantion of $2 m_{d/2}$ matrices
+  $(m(a_i) F_m(a_j))$ each of which, as the exterior product of two
+  vectors, has rank 1.  Thus the rank of $M$ is at most $2 m_{d/2}$.
+  And since $M$ is diagonal, this means that in fact on $2A$, $P$ has
+  only $2 m_{d/2}$ non-zero points.  So the size of the support of $P$
+  is bounded above by $2 m_{d/2}$.  Since the size of the support of
+  $P_d$ was already bounded below by $m_d - q^n + |A|$ we can apply
+  this argument to $P_d$ and conclude that
   
   \[2 m_{d/2} \geq m_d - q^n + |A|\]
   
@@ -1195,8 +1214,8 @@ $\FF_q^n$ such that the equation $\alpha a_1 + \beta a_2 + \gamma a_3
   Choosing a particular value of $d$ and bounding these quantities is
   all that remains.  In \cite{ellenberg:preprint} they take
   $d = 2(q-1)n/3$ and use Cramer's theorem to bound $m_d$ and related
-  quantities in terms of the claimed exponential.  We refer to the
-  paper for details.
+  quantities to get the claimed exponential bound on $|A|$.  We refer
+  to the paper for details.
 \end{proof}
 
 \chapter{Questions}
@@ -1204,8 +1223,7 @@ $\FF_q^n$ such that the equation $\alpha a_1 + \beta a_2 + \gamma a_3
 Bearing in mind this landscape of ideas, theorems, and techniques, we
 now raise some questions in the particular context of the Ulam numbers
 and related sequences, and the various phenomena that we observe
-around them.  In addition, we shall give definitions in this section
-to allow us to formulate our questions precisely.
+around them.  
 
 \section{Ulam sequences}
 
@@ -1332,8 +1350,8 @@ question from \cite{steinerberger:preprint}:
 We can ask a lot more than just about the distribution's continuity,
 however.  The distributions particularly for other Ulam-like sequences
 such as $U(2,3)$ look like they have some further internal structure
-as a sum of perhaps smaller, more regular-looking peaks.  So we can
-ask somewhat broadly about this also: 
+as a sum of perhaps smaller, more normal-looking peaks.  So we can ask
+somewhat broadly about this also:
 
 \begin{question}\label{qn:shape}
   What gives this distribution its particular shape?  For example,
@@ -1343,11 +1361,10 @@ ask somewhat broadly about this also:
 
 \section{Sum-free sets}
 
-We start noting the same dichotomy that existed with 1-additive sets
+We start noting the same dichotomy that existed with Ulam sequences
 seems present for sum-free sets as well: Many sum-free sets with
-easy-to-describe decision sequences (much as the procedure for
-generating Ulam numbers was in algorithmic) are provably regular, but
-for some we do not know whether they are regular.  For instance, we
+easy-to-describe decision sequences are provably regular, but others
+we do not know whether or not they are regular.  For instance, we
 might start with the aforementioned ``smallest'' three examples:
 
 \begin{question}\label{qn:sumfree_regularity}
@@ -1376,12 +1393,12 @@ to ask similar questions with the these sets:
   resulting sum-free set?
 \end{question}
 
-In the sum-free case, the work of Luczak outlined above gives some
+In the sum-free case, the work of Luczak outlined earlier gives some
 relationship between the regularity of a sum-free set and its density
 (saying in his case that a sum-free set that contained an even number
-(i.e. whose image mod 2 was everything) had density bounded by
-$\frac25$--a meaningful improvement from the automatic bound of
-$\frac12$ on the density of an arbitrary sum-free set.
+(i.e. a sum-free set whose image mod 2 was all of $\Z/2$) had density
+bounded by $\frac25$--a meaningful improvement from the automatic
+bound of $\frac12$ on the density of an arbitrary sum-free set.
 
 On the other hand, the construction of Erdos tells us that there exist
 sum-free sets with density $\frac13$ whose image mod $m$, for all $m$,
@@ -1416,7 +1433,9 @@ like:
 \begin{question}
   Is there anything we can say about about a set $A \subseteq \N$
   where $C'N^{2-\epsilon'} \leq T(A_N) \leq CN^{2-\epsilon}$ for some
-  $\epsilon < \epsilon' < 1$ and constants $C, C' > 0$, say?
+  $\epsilon < \epsilon' < 1$ and constants $C, C' > 0$, say?  For
+  example, do the phenomena we have observed here continue for such
+  sets even as $\epsilon'$ gets small?
 \end{question}
 
 \chapter{Strategy}
@@ -1456,8 +1475,7 @@ remainder of this document:
 \begin{enumerate}
 \item First, we study the large Fourier coefficient $\alpha$ and
   corresponding period $\lambda = \frac{2\pi}{\alpha}$ of various Ulam
-  sequences $U(a,b)$ and sum-free $\theta(s)$ (collectively,
-  ``\relevant sets'').  Specifically:
+  sequences $U(a,b)$ and sum-free $\theta(s)$.  Specifically:
   \begin{enumerate}
   \item We use a computer program to estimate the maximal Fourier
     coefficient of many such sequences.
@@ -1476,9 +1494,8 @@ remainder of this document:
 \item We then study the complete spectrum of various \relevant sets,
   specifically:
   \begin{enumerate}
-  \item We then study the complete spectrum of \relevant sets $A$,
-    computing via computer program any other nonzero values of the
-    respective Fourier transforms.  We will find that the Fourier
+  \item We compute via computer program any other nonzero values of
+    the respective Fourier transforms.  We will find that the Fourier
     transform for the sets we consider appears to be supported only on
     $\alpha\Z$.
   \item We construct an example of a sum-free set with a Fourier
@@ -1498,12 +1515,11 @@ remainder of this document:
   \item The definition of such $A$ means that whether a given $x$ is
     in $A$ is controlled largely by $r_{A+A}(x)$--the number of
     representations of $x$ as a sum of elements of $A$.  So we start
-    by studying the distribution of this.  We use a computer to
-    generate plots of this that suggest a high degree of regularity in
-    the behaviour of this function, and we show that an estimate of
-    the function using the ``major arcs'' coming from the Fourier
-    spectrum bear this out, which will give us at least a very
-    plausible conjecture about the behaviour of this function.
+    by studying the distribution of this function.  We use a computer
+    to generate plots of this that suggest a high degree of regularity
+    in its behaviour, and we show that an estimate of the function
+    using the ``major arcs'' coming from the Fourier spectrum bears
+    this out.
   \item Having come to some understanding of $r_{A+A}$ using the
     Fourier spectrum, we will use this to attempt to deduce features
     of the distribution itself, ultimately proving a mild theorem
@@ -1801,7 +1817,9 @@ large Fourier coefficients, the following definition will be helpful:
 
   \[T(f) = \sum_{x,y \in [N]} f(x)f(y)f(x+y)\]
 
-  (So in particular, $T(A) = T(1_A)$.)
+  (So in particular, $T(A) = T(A)$, where the left side denotes $T$ of
+  the set $A$, and the right side denotes $T$ of the indicator
+  function of that set.)
 \end{definition}
 
 Now, the statement that $A$ has a Large Fourier coefficient could be
